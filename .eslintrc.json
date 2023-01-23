@@ -22,9 +22,21 @@
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:react/jsx-runtime",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "airbnb"
     ],
     "rules": {
-        "@typescript-eslint/consistent-type-imports": "warn"
-    }
+        "@typescript-eslint/consistent-type-imports": "warn",
+        "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+          ]
+    },
+    "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
 }
