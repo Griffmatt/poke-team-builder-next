@@ -22,7 +22,7 @@ const getBaseUrl = () => {
  * A set of typesafe react-query hooks for your tRPC API
  */
 export const api = createTRPCNext<AppRouter>({
-    config() {
+    config({ctx}) {
         return {
             /**
              * Transformer used for data de-serialization from the server
@@ -51,7 +51,7 @@ export const api = createTRPCNext<AppRouter>({
      * Whether tRPC should await queries when server rendering pages
      * @see https://trpc.io/docs/nextjs#ssr-boolean-default-false
      */
-    ssr: false,
+    ssr: true,
 })
 
 /**

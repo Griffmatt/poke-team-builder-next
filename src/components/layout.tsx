@@ -14,7 +14,7 @@ export default function Layout({ children }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Navbar />
-            <main>{children}</main>
+            <main className="max-w-screen-2xl mx-auto p-4">{children}</main>
         </div>
     )
 }
