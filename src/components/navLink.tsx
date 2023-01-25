@@ -26,7 +26,7 @@ function NavLink({ href, children, className, exact }: Props) {
         <Link
             href={href}
             className={`${
-                isActive ? `border-b-2 border-dark dark:border-light` : null
+                isActive ? `border-b-2 dark:border-primary` : null
             } ${className}`}
         >
             {children}

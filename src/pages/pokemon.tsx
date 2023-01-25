@@ -25,7 +25,7 @@ const Pokemon: NextPage = () => {
 
     return (
         <main className="grid gap-4">
-            <div className="flex justify-between">
+            <div className="flex justify-between text-">
                 <h2>Pokemon listed here!</h2>
                 <input placeholder="Search for a pokemon..." type="text" onChange={(event) => debounceQuery(event.target.value.toLowerCase())} className="px-4 py-2 rounded-2xl w-60 text-black outline-none"/>
             </div>
@@ -34,7 +34,7 @@ const Pokemon: NextPage = () => {
                     return (
                         <div
                             key={pokemon?.name}
-                            className="aspect-[4/5] w-full rounded-2xl border-2 border-stone-600"
+                            className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
                         >
                             <PokemonCard pokemonName={pokemon.name} />
                         </div>
