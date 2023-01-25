@@ -15,7 +15,7 @@ export const statisticsRouter = createTRPCRouter({
         })
 
         const totalPokemon = pokemonCounted.reduce((a, b) => a + b.amount, 0)
-        const pokemonData = pokemonCounted.sort((a, b) => b.amount - a.amount).slice(0, 9)
-        return {totalPokemon, pokemonData}
+        const topPokemon = pokemonCounted.sort((a, b) => b.amount - a.amount).slice(0, 10)
+        return {totalPokemon, topPokemon}
     }),
 })
