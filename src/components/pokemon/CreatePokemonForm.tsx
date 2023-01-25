@@ -48,6 +48,7 @@ interface Props {
 const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
     const { data: session } = useSession()
     const router = useRouter()
+    const SHINY_ODDS = 10
 
     const [ability, setAbility] = useState<string>(
         pokemon.abilities[0]?.ability.name ?? ''
@@ -82,27 +83,6 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
         handleIvChange,
     } = useHandleIvChange()
 
-    const pokemonData = {
-        userId: session?.user?.id as string,
-        name: pokemon.name,
-        ability: ability,
-        nature: nature,
-        heldItem: heldItem,
-        shiny: (Math.floor(Math.random() * 100) + 1) === 34,
-        moves: {
-            createMany: {
-                data: [
-                    { move: firstMove, moveOrder: 1 },
-                    { move: secondMove, moveOrder: 2 },
-                    { move: thirdMove, moveOrder: 3 },
-                    { move: fourthMove, moveOrder: 4 },
-                ],
-            },
-        },
-        evs: { createMany: { data: evs } },
-        ivs: { createMany: { data: ivs } },
-    }
-
     const mutation = api.pokemon.postPokemon.useMutation({
         onSuccess: () => {
             router.push('/pokemon')
@@ -113,6 +93,26 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
         event.preventDefault()
         const user = session?.user
         if (!user) return null
+        const pokemonData = {
+            userId: session?.user?.id as string,
+            name: pokemon.name,
+            ability: ability,
+            nature: nature,
+            heldItem: heldItem,
+            shiny: Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+            moves: {
+                createMany: {
+                    data: [
+                        { move: firstMove, moveOrder: 1 },
+                        { move: secondMove, moveOrder: 2 },
+                        { move: thirdMove, moveOrder: 3 },
+                        { move: fourthMove, moveOrder: 4 },
+                    ],
+                },
+            },
+            evs: { createMany: { data: evs } },
+            ivs: { createMany: { data: ivs } },
+        }
 
         mutation.mutate(pokemonData)
 
