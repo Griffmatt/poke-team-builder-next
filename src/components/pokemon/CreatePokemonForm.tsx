@@ -11,25 +11,6 @@ import firstLetterUpperCase from '../../utils/firstLetterUpperCase'
 import { Pokemon } from 'pokenode-ts'
 import { api } from '../../utils/api'
 import { useRouter } from 'next/router'
-import formatPokemonData from './formatPokemonData'
-
-interface EvStats {
-    hitpointsEv: number
-    attackEv: number
-    defenseEv: number
-    specialAttackEv: number
-    specialDefenseEv: number
-    speedEv: number
-}
-
-interface IvStats {
-    hitpointsIv: number
-    attackIv: number
-    defenseIv: number
-    specialAttackIv: number
-    specialDefenseIv: number
-    speedIv: number
-}
 
 const natures = [
     'Adamant',
@@ -57,23 +38,6 @@ const natures = [
     'Sassy',
     'Serious',
     'Timid',
-]
-
-const stats = [
-    { name: 'Hitpoints', evValue: 'hitpointsEv', ivValue: 'hitpointsIv' },
-    { name: 'Attack', evValue: 'attackEv', ivValue: 'attackIv' },
-    { name: 'Defense', evValue: 'defenseEv', ivValue: 'defenseIv' },
-    {
-        name: 'Special Attack',
-        evValue: 'specialAttackEv',
-        ivValue: 'specialAttackIv',
-    },
-    {
-        name: 'Special Defense',
-        evValue: 'specialDefenseEv',
-        ivValue: 'specialDefenseIv',
-    },
-    { name: 'Speed', evValue: 'speedEv', ivValue: 'speedIv' },
 ]
 
 interface Props {
@@ -104,22 +68,40 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
         pokemon.moves[3]?.move.name ?? ''
     )
 
-    const { evs, decreaseEv, increaseEv, handleEvChange } = useHandleEvChange()
+    const {
+        evsArr: evs,
+        decreaseEv,
+        increaseEv,
+        handleEvChange,
+    } = useHandleEvChange()
 
-    const { ivs, decreaseIv, increaseIv, handleIvChange } = useHandleIvChange()
+    const {
+        ivsArr: ivs,
+        decreaseIv,
+        increaseIv,
+        handleIvChange,
+    } = useHandleIvChange()
 
-    const pokemonData = formatPokemonData({
-        pokemonName: pokemon.name,
-        ability,
-        nature,
-        heldItem,
-        firstMove,
-        secondMove,
-        thirdMove,
-        fourthMove,
-        ivs,
-        evs,
-    })
+    const pokemonData = {
+        userId: session?.user?.id as string,
+        name: pokemon.name,
+        ability: ability,
+        nature: nature,
+        heldItem: heldItem,
+        shiny: (Math.floor(Math.random() * 100) + 1) === 34,
+        moves: {
+            createMany: {
+                data: [
+                    { move: firstMove, moveOrder: 1 },
+                    { move: secondMove, moveOrder: 2 },
+                    { move: thirdMove, moveOrder: 3 },
+                    { move: fourthMove, moveOrder: 4 },
+                ],
+            },
+        },
+        evs: { createMany: { data: evs } },
+        ivs: { createMany: { data: ivs } },
+    }
 
     const mutation = api.pokemon.postPokemon.useMutation({
         onSuccess: () => {
@@ -130,20 +112,6 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const user = session?.user
-        const statsArr = []
-        for (const key in evs) {
-            statsArr.push({
-                stat: key,
-                value: evs[key as keyof EvStats],
-            })
-        }
-        for (const key in ivs) {
-            statsArr.push({
-                stat: key,
-                value: ivs[key as keyof IvStats],
-            })
-        }
-
         if (!user) return null
 
         mutation.mutate(pokemonData)
@@ -243,31 +211,31 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
             </div>
             <div>
                 <h2>Evs</h2>
-                {stats.map((stat) => {
+                {evs.map((stat) => {
                     return (
-                        <label className="flex flex-col" key={stat.evValue}>
-                            {stat.name}
+                        <label className="flex flex-col" key={`${stat.stat}EV`}>
+                            {stat.stat}
                             <div className="flex w-full gap-2">
                                 <button
                                     className="w-8 rounded-xl"
-                                    onClick={() => decreaseEv(stat.evValue)}
+                                    onClick={() => decreaseEv(stat.stat)}
                                     type="button"
                                 >
                                     -
                                 </button>
                                 <input
                                     className="w-full"
-                                    value={evs[stat.evValue as keyof EvStats]}
+                                    value={stat.value}
                                     onChange={(event) =>
                                         handleEvChange(
                                             Number(event.target.value),
-                                            stat.evValue
+                                            stat.stat
                                         )
                                     }
                                 />
                                 <button
                                     className="w-8 rounded-xl"
-                                    onClick={() => increaseEv(stat.evValue)}
+                                    onClick={() => increaseEv(stat.stat)}
                                     type="button"
                                 >
                                     +
@@ -278,32 +246,32 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                 })}
             </div>
             <div>
-                <h2>Ivs</h2>
-                {stats.map((stat) => {
+                <h2>ivs</h2>
+                {ivs.map((stat) => {
                     return (
-                        <label className="flex flex-col" key={stat.ivValue}>
-                            {stat.name}
+                        <label className="flex flex-col" key={`${stat.stat}EV`}>
+                            {stat.stat}
                             <div className="flex w-full gap-2">
                                 <button
                                     className="w-8 rounded-xl"
-                                    onClick={() => decreaseIv(stat.ivValue)}
+                                    onClick={() => decreaseIv(stat.stat)}
                                     type="button"
                                 >
                                     -
                                 </button>
                                 <input
                                     className="w-full"
-                                    value={ivs[stat.ivValue as keyof IvStats]}
+                                    value={stat.value}
                                     onChange={(event) =>
                                         handleIvChange(
                                             Number(event.target.value),
-                                            stat.ivValue
+                                            stat.stat
                                         )
                                     }
                                 />
                                 <button
                                     className="w-8 rounded-xl"
-                                    onClick={() => increaseIv(stat.ivValue)}
+                                    onClick={() => increaseIv(stat.stat)}
                                     type="button"
                                 >
                                     +

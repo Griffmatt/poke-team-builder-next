@@ -6,7 +6,8 @@ export const pokemonRouter = createTRPCRouter({
         return ctx.prisma.createdPokemon.findMany({
             include: {
                 moves: true,
-                stats: true,
+                evs: true,
+                ivs: true,
                 teams: true,
             },
         })
@@ -19,6 +20,7 @@ export const pokemonRouter = createTRPCRouter({
                 ability: z.string(),
                 nature: z.string(),
                 heldItem: z.string(),
+                shiny: z.boolean(),
                 moves: z.object({
                     createMany: z.object({
                         data: z.array(
@@ -29,7 +31,17 @@ export const pokemonRouter = createTRPCRouter({
                         ),
                     }),
                 }),
-                stats: z.object({
+                evs: z.object({
+                    createMany: z.object({
+                        data: z.array(
+                            z.object({
+                                stat: z.string(),
+                                value: z.number(),
+                            })
+                        ),
+                    }),
+                }),
+                ivs: z.object({
                     createMany: z.object({
                         data: z.array(
                             z.object({
@@ -44,7 +56,7 @@ export const pokemonRouter = createTRPCRouter({
         .mutation(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.create({
                 data: input,
-                include: { stats: true, moves: true },
+                include: { moves: true, ivs: true, evs: true,},
             })
         }),
 })

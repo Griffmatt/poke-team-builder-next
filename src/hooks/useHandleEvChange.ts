@@ -1,46 +1,46 @@
 import { useState } from 'react'
 
-interface EvStats {
-    hitpointsEv: number
-    attackEv: number
-    defenseEv: number
-    specialAttackEv: number
-    specialDefenseEv: number
-    speedEv: number
+interface Stats {
+    Hitpoints: number
+    Attack: number
+    Defense: number
+    'Special Attack': number
+    'Special Defense': number
+    'Speed': number
 }
 
-export default function useHandleEvChange(defaultStats?: EvStats) {
+export default function useHandleEvChange(defaultStats?: Stats) {
     const [evs, setEvs] = useState({
-        hitpointsEv: defaultStats?.hitpointsEv ?? 0,
-        attackEv: defaultStats?.attackEv ?? 0,
-        defenseEv: defaultStats?.defenseEv ?? 0,
-        specialAttackEv: defaultStats?.specialAttackEv ?? 0,
-        specialDefenseEv: defaultStats?.specialDefenseEv ?? 0,
-        speedEv: defaultStats?.speedEv ?? 0,
+        Hitpoints: defaultStats?.Hitpoints ?? 0,
+        Attack: defaultStats?.Attack ?? 0,
+        Defense: defaultStats?.Defense ?? 0,
+        'Special Attack': defaultStats?.['Special Attack'] ?? 0,
+        'Special Defense': defaultStats?.['Special Defense'] ?? 0,
+        Speed: defaultStats?.Speed ?? 0,
     })
 
     const decreaseEv = (currentStat: string) => {
-        if (evs[currentStat as keyof EvStats] <= 0) return
+        if (evs[currentStat as keyof Stats] <= 0) return
 
         setEvs({
             ...evs,
             [currentStat]:
-                evs[currentStat as keyof EvStats] -
-                (evs[currentStat as keyof EvStats] % 4 || 4),
+                evs[currentStat as keyof Stats] -
+                (evs[currentStat as keyof Stats] % 4 || 4),
         })
     }
 
     const increaseEv = (currentStat: string) => {
         let total = 4
         for (const stat in evs) {
-            total += evs[stat as keyof EvStats]
+            total += evs[stat as keyof Stats]
         }
-        if (total > 511 || evs[currentStat as keyof EvStats] + 4 > 255) return
+        if (total > 511 || evs[currentStat as keyof Stats] + 4 > 255) return
         setEvs({
             ...evs,
             [currentStat]:
-                evs[currentStat as keyof EvStats] +
-                (4 - (evs[currentStat as keyof EvStats] % 4)),
+                evs[currentStat as keyof Stats] +
+                (4 - (evs[currentStat as keyof Stats] % 4)),
         })
     }
 
@@ -53,7 +53,7 @@ export default function useHandleEvChange(defaultStats?: EvStats) {
         }
         for (const stat in evs) {
             if (stat === currentStat) continue
-            total -= evs[stat as keyof EvStats]
+            total -= evs[stat as keyof Stats]
         }
 
         if (value > total || value >= 252) {
@@ -64,5 +64,13 @@ export default function useHandleEvChange(defaultStats?: EvStats) {
         setEvs({ ...evs, [currentStat]: value })
     }
 
-    return { evs, decreaseEv, increaseEv, handleEvChange }
+    const evsArr = []
+        for (const key in evs) {
+            evsArr.push({
+                stat: key,
+                value: evs[key as keyof Stats],
+            })
+        }
+
+    return { evsArr, decreaseEv, increaseEv, handleEvChange }
 }
