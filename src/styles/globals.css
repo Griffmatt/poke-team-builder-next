@@ -8,19 +8,19 @@ body {
 }
 
 h1 {
-    @apply text-2xl;
+    @apply text-2xl font-extrabold;
 }
 
 h2 {
-    @apply text-xl text-primary;
+    @apply text-xl text-primary font-bold;
 }
 
 h3 {
-    @apply text-lg;
+    @apply text-lg font-semibold;
 }
 
 h4 {
-    @apply text-base;
+    @apply text-base font-medium;
 }
 
 p {

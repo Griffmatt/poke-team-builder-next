@@ -1,6 +1,6 @@
 import { type NextPage } from 'next'
 import { useRouter } from 'next/router'
-import PokemonCard from '../../components/pokemon/pokemonCard'
+import PokemonCard from '../../components/pokemonCard'
 import { api } from '../../utils/api'
 
 const Boxes: NextPage = () => {
@@ -9,8 +9,12 @@ const Boxes: NextPage = () => {
     const { data: pokemons } = api.pokemon.getUsersPokemon.useQuery({
         userId: userId as string,
     })
+    const { data: user } = api.users.getUser.useQuery({
+        userId: userId as string,
+    })
     return (
         <main className="grid gap-4">
+            <h2>{user?.name}'s Boxes</h2>
             <div className="pokemonCardGrid">
                 {pokemons?.map((pokemon) => {
                     return (

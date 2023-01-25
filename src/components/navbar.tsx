@@ -8,7 +8,7 @@ export default function NavBar() {
     if (user === undefined) return null
 
     return (
-        <div className="mx-auto flex max-w-[40rem] justify-around p-3">
+        <div className="mx-auto flex max-w-[40rem] justify-around p-3 sticky">
             <NavLink href="/">
                 <h2>Home</h2>
             </NavLink>

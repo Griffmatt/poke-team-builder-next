@@ -1,12 +1,12 @@
 import { useSession } from 'next-auth/react'
 import React, { FormEvent, useState } from 'react'
 
-import PokemonCard from './pokemonCard'
+import PokemonCard from '../pokemonCard'
 import MovesInput from './movesInput'
 
 import useHandleEvChange from '../../hooks/useHandleEvChange'
 import useHandleIvChange from '../../hooks/useHandleIvChange'
-import firstLetterUpperCase from '../../utils/firstLetterUpperCase'
+import formatString from '../../utils/formatString'
 
 import { Pokemon } from 'pokenode-ts'
 import { api } from '../../utils/api'
@@ -133,12 +133,12 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                     Ability
                     <select
                         onChange={(event) => setAbility(event.target.value)}
-                        value={firstLetterUpperCase(ability)}
+                        value={formatString(ability)}
                     >
                         {pokemon.abilities.map((ability) => {
                             return (
                                 <option key={ability.ability.name}>
-                                    {firstLetterUpperCase(ability.ability.name)}
+                                    {formatString(ability.ability.name)}
                                 </option>
                             )
                         })}
@@ -149,7 +149,7 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                     <select
                         className="text-dark"
                         onChange={(event) => setNature(event.target.value)}
-                        value={firstLetterUpperCase(nature)}
+                        value={formatString(nature)}
                     >
                         {natures.map((nature: string) => {
                             return <option key={nature}>{nature}</option>
@@ -160,7 +160,7 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                     Held Item
                     <select
                         onChange={(event) => setHeldItem(event.target.value)}
-                        value={firstLetterUpperCase(heldItem)}
+                        value={formatString(heldItem)}
                     >
                         {heldItems
                             .sort((a, b) => {
@@ -175,7 +175,7 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                             .map((heldItem: any) => {
                                 return (
                                     <option key={heldItem.name}>
-                                        {firstLetterUpperCase(heldItem.name)}
+                                        {formatString(heldItem.name)}
                                     </option>
                                 )
                             })}

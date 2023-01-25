@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
-import PokemonCard from '../../components/pokemon/pokemonCard'
+import PokemonCard from '../../components/pokemonCard'
 import { api } from '../../utils/api'
 
 let timer: NodeJS.Timeout | undefined
@@ -38,7 +38,7 @@ const Pokemon: NextPage = () => {
                     return (
                         <Link
                             href={`/pokemon/${pokemon.name}/create`}
-                            key={pokemon?.name}
+                            key={pokemon.name}
                             className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
                         >
                             <PokemonCard pokemonName={pokemon.name} />
