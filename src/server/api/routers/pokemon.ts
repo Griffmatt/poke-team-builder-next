@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc'
 
 export const pokemonRouter = createTRPCRouter({
-    getAll: publicProcedure.query(({ ctx }) => {
+    getAllPokemon: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.createdPokemon.findMany({
             include: {
                 moves: true,
