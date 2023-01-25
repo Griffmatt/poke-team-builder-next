@@ -4,7 +4,6 @@ import { api } from '../utils/api'
 const Home: NextPage = () => {
     const { data: users } = api.users.getSuggestedUsers.useQuery()
     const { data: topPokemon } = api.pokemon.getAllPokemon.useQuery()
-    console.log(users)
     return (
         <main>
             <div className="grid gap-4">

@@ -28,5 +28,21 @@ p {
 }
 
 input {
-    @apply dark:bg-dark-3 dark:text-white;
+    @apply rounded-xl p-1 px-3  dark:bg-dark-2 dark:text-light;
+}
+
+select {
+    @apply  rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
+}
+
+button {
+    @apply bg-primary text-light;
+}
+
+button[type='button'] {
+    @apply text-xl font-bold text-primary dark:bg-dark-3;
+}
+
+button[type='submit'] {
+    @apply dark:bg-dark-3 text-light;
 }

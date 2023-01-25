@@ -1,7 +1,10 @@
 import { type NextPage } from 'next'
+import Link from 'next/link'
 import { useState } from 'react'
+import PokemonCard  from '../../components/pokemon/pokemonCard'
+import { api } from '../../utils/api'
 
-import { api } from '../utils/api'
+
 
 let timer: NodeJS.Timeout | undefined
 
@@ -35,12 +38,13 @@ const Pokemon: NextPage = () => {
             <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-5">
                 {limitPokemon?.map((pokemon) => {
                     return (
-                        <div
+                        <Link
+                        href={`/pokemon/${pokemon.name}/create`}
                             key={pokemon?.name}
                             className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
                         >
                             <PokemonCard pokemonName={pokemon.name} />
-                        </div>
+                        </Link>
                     )
                 })}
             </div>
@@ -48,21 +52,5 @@ const Pokemon: NextPage = () => {
     )
 }
 
-const PokemonCard = ({ pokemonName }: { pokemonName: string }) => {
-    const { data: pokemon } = api.pokeApi.getPokemonByName.useQuery({
-        name: pokemonName,
-    })
-    return (
-        <>
-            <div className="aspect-square">
-                <img
-                    src={pokemon?.sprites.front_default ?? ''}
-                    className="w-full"
-                />
-            </div>
-            <h3 className="text-center">{pokemon?.name}</h3>
-        </>
-    )
-}
 
 export default Pokemon

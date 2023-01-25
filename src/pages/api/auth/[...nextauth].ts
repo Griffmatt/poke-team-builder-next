@@ -12,7 +12,6 @@ export const authOptions: NextAuthOptions = {
         session({ session, user }) {
             if (session.user) {
                 session.user.id = user.id
-                console.log(user)
             }
             return session
         },
