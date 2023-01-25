@@ -1,5 +1,5 @@
 import NavLink from './navLink'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function NavBar() {
     const { data } = useSession()
@@ -23,7 +23,10 @@ export default function NavBar() {
                     <h2>Boxes</h2>
                 </NavLink>
             ) : (
-                <button className="bg-transparent text-dark dark:text-light">
+                <button
+                    className="bg-transparent text-dark dark:text-light"
+                    onClick={() => signIn()}
+                >
                     Login
                 </button>
             )}

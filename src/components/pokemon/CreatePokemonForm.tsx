@@ -9,6 +9,9 @@ import useHandleIvChange from '../../hooks/useHandleIvChange'
 import firstLetterUpperCase from '../../utils/firstLetterUpperCase'
 
 import { Pokemon } from 'pokenode-ts'
+import { api } from '../../utils/api'
+import { useRouter } from 'next/router'
+import formatPokemonData from './formatPokemonData'
 
 interface EvStats {
     hitpointsEv: number
@@ -80,6 +83,7 @@ interface Props {
 
 const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
     const { data: session } = useSession()
+    const router = useRouter()
 
     const [ability, setAbility] = useState<string>(
         pokemon.abilities[0]?.ability.name ?? ''
@@ -104,18 +108,47 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
 
     const { ivs, decreaseIv, increaseIv, handleIvChange } = useHandleIvChange()
 
+    const pokemonData = formatPokemonData({
+        pokemonName: pokemon.name,
+        ability,
+        nature,
+        heldItem,
+        firstMove,
+        secondMove,
+        thirdMove,
+        fourthMove,
+        ivs,
+        evs,
+    })
+
+    const mutation = api.pokemon.postPokemon.useMutation({
+        onSuccess: () => {
+            router.push('/pokemon')
+        },
+    })
+
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const data = {
-            userId: session?.user?.id,
-            name: pokemon.name,
-            ability: ability,
-            nature: nature,
-            heldItem: heldItem,
-            moves: [firstMove, secondMove, thirdMove, fourthMove],
-            stats: [{ ...evs }, { ...ivs }],
+        const user = session?.user
+        const statsArr = []
+        for (const key in evs) {
+            statsArr.push({
+                stat: key,
+                value: evs[key as keyof EvStats],
+            })
         }
-        return data
+        for (const key in ivs) {
+            statsArr.push({
+                stat: key,
+                value: ivs[key as keyof IvStats],
+            })
+        }
+
+        if (!user) return null
+
+        mutation.mutate(pokemonData)
+
+        return null
     }
 
     return (
