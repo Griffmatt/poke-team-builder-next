@@ -14,8 +14,11 @@ model CreatedPokemon {
   ability   String
   nature    String
   heldItem  String
+  shiny    Boolean
+  createdAt DateTime          @default(now())
   moves     PokemonMoves[]
-  stats     PokemonStats[]
+  evs       PokemonEvs[]
+  ivs       PokemonIvs[]
   teams     PokemonOnTeam[]
   favorited favoritePokemon[]
   User      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -30,7 +33,16 @@ model PokemonMoves {
   @@unique([move, pokemonId])
 }
 
-model PokemonStats {
+model PokemonEvs {
+  stat           String
+  value          Int
+  pokemonId      String
+  CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+
+  @@unique([stat, pokemonId])
+}
+
+model PokemonIvs {
   stat           String
   value          Int
   pokemonId      String
@@ -53,6 +65,7 @@ model Team {
   userId    String
   teamStyle String
   teamName  String
+  createdAt DateTime        @default(now())
   pokemon   PokemonOnTeam[]
   favorited favoriteTeams[]
   user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -109,6 +122,7 @@ model User {
   email           String?           @unique
   emailVerified   DateTime?
   image           String?
+  userName        String?           @unique
   accounts        Account[]
   sessions        Session[]
   pokemon         CreatedPokemon[]
