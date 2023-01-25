@@ -11,7 +11,7 @@ import { pokeApiRouter } from './routers/pokeApi'
 export const appRouter = createTRPCRouter({
     users: usersRouter,
     pokemon: pokemonRouter,
-    pokeApi: pokeApiRouter
+    pokeApi: pokeApiRouter,
 })
 
 // export type definition of API

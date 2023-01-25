@@ -11,8 +11,11 @@ const Home: NextPage = () => {
                 <div className="grid grid-cols-5 place-items-center">
                     {users?.slice(0, 4).map((user) => {
                         return (
-                            <div className="w-fit grid gap-2" key={user.id}>
-                                <img src={user.image ?? ''} className="rounded-full" />
+                            <div className="grid w-fit gap-2" key={user.id}>
+                                <img
+                                    src={user.image ?? ''}
+                                    className="rounded-full"
+                                />
                                 <h3 className="text-center">{user.name}</h3>
                             </div>
                         )

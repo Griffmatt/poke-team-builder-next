@@ -9,7 +9,7 @@ const itemApi = new ItemClient()
 
 export const pokeApiRouter = createTRPCRouter({
     getPokemon: publicProcedure
-        .input(z.object({limit: z.number() }))
+        .input(z.object({ limit: z.number() }))
         .query(({ input }) => {
             return api.listPokemons(0, input.limit)
         }),
