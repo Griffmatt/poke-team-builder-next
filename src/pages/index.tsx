@@ -9,6 +9,7 @@ const Home: NextPage = () => {
     const topPokemon = topPokemonData?.topPokemon
     const { format: formatPercentage } = Intl.NumberFormat("en-US", {
         style: "percent",
+        minimumFractionDigits: 2
     })
     return (
         <main>
