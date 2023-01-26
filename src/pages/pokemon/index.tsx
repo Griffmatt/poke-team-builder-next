@@ -4,7 +4,6 @@ import { useState } from 'react'
 import PokemonCard from '../../components/pokemonCard'
 import { api } from '../../utils/api'
 
-
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState('')
@@ -33,19 +32,29 @@ const Pokemon: NextPage = () => {
                     className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
                 />
             </div>
-            <div className="pokemonCardGrid">
-                {limitPokemon?.map((pokemon) => {
-                    return (
-                        <Link
-                            href={`/pokemon/${pokemon.name}/create`}
-                            key={pokemon.name}
-                            className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
-                        >
-                            <PokemonCard pokemonName={pokemon.name} />
-                        </Link>
-                    )
-                })}
-            </div>
+            {limitPokemon?.length === 0 ? (
+                <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl text-center dark:bg-dark-2">
+                    <h2>
+                        There were no results
+                        <br /> for your query
+                    </h2>
+                    <h3>{query}</h3>
+                </div>
+            ) : (
+                <div className="pokemonCardGrid">
+                    {limitPokemon?.map((pokemon) => {
+                        return (
+                            <Link
+                                href={`/pokemon/${pokemon.name}/create`}
+                                key={pokemon.name}
+                                className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
+                            >
+                                <PokemonCard pokemonName={pokemon.name} />
+                            </Link>
+                        )
+                    })}
+                </div>
+            )}
         </main>
     )
 }
