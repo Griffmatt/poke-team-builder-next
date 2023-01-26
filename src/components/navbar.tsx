@@ -1,7 +1,7 @@
-import NavLink from './ui/navLink'
-import { signIn, useSession } from 'next-auth/react'
+import { NavLink } from "./ui/navLink"
+import { signIn, useSession } from "next-auth/react"
 
-export default function NavBar() {
+const NavBar = () => {
     const { data } = useSession()
     const user = data?.user
 
@@ -31,3 +31,5 @@ export default function NavBar() {
         </div>
     )
 }
+
+export { NavBar }

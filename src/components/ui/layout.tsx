@@ -1,11 +1,11 @@
-import Navbar from '../navbar'
-import Head from 'next/head'
+import { NavBar } from "../navbar"
+import Head from "next/head"
 
 interface Props {
     children: JSX.Element
 }
 
-export default function Layout({ children }: Props) {
+const Layout = ({ children }: Props) => {
     return (
         <div className="dark">
             <Head>
@@ -14,10 +14,12 @@ export default function Layout({ children }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className=" sticky top-0 dark:bg-dark/75">
-                <Navbar />
+                <NavBar />
             </div>
 
             <div className="mx-auto max-w-screen-xl p-4">{children}</div>
         </div>
     )
 }
+
+export { Layout }

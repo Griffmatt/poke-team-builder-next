@@ -1,12 +1,12 @@
-import { type NextPage } from 'next'
-import Link from 'next/link'
-import { useState } from 'react'
-import PokemonCard from '../../components/pokemonCard'
-import { api } from '../../utils/api'
+import { type NextPage } from "next"
+import Link from "next/link"
+import { useState } from "react"
+import { PokemonCard } from "../../components/pokemonCard"
+import { api } from "../../utils/api"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
-    const [query, setQuery] = useState('')
+    const [query, setQuery] = useState("")
     const POKEMON_LIMIT = 24
 
     let timer: NodeJS.Timeout | undefined
@@ -47,8 +47,8 @@ const Pokemon: NextPage = () => {
                     {limitPokemon?.map((pokemon) => {
                         return (
                             <Link
-                                href={`/pokemon/${pokemon.name}/create`}
                                 key={pokemon.name}
+                                href={`/pokemon/${pokemon.name}/create`}
                                 className="pokemon-card"
                             >
                                 <PokemonCard pokemonName={pokemon.name} />

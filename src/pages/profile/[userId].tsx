@@ -1,9 +1,12 @@
 import { type NextPage } from "next"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import PokemonCard from "../../components/pokemonCard"
+
 import { api } from "../../utils/api"
+
+import Link from "next/link"
+import { PokemonCard } from "../../components/pokemonCard"
+import { ProfileNav } from "../../components/profile/profileNav"
 
 const Boxes: NextPage = () => {
     const router = useRouter()
@@ -37,17 +40,7 @@ const Boxes: NextPage = () => {
                 </div>
                 <h2>{user?.name}</h2>
             </div>
-            <div className="flex justify-center gap-3">
-                <Link href="/boxes">
-                    <h3>Pokemon</h3>
-                </Link>
-                <Link href="/boxes">
-                    <h3>Teams</h3>
-                </Link>
-                <Link href="/boxes">
-                    <h3>Settings</h3>
-                </Link>
-            </div>
+            <ProfileNav selected="pokemon" userId={userId as string} />
             <input
                 placeholder="Search for a pokemon..."
                 type="text"
@@ -62,12 +55,16 @@ const Boxes: NextPage = () => {
                 <div className="pokemon-card-grid">
                     {filterPokemon?.map((pokemon) => {
                         return (
-                            <div className="pokemon-card">
+                            <Link
+                                key={pokemon.id}
+                                className="pokemon-card"
+                                href={`/pokemon/${pokemon.name}/${pokemon.id}/update`}
+                            >
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
                                 />
-                            </div>
+                            </Link>
                         )
                     })}
                 </div>

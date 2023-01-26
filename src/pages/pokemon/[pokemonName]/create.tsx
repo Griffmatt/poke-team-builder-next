@@ -1,7 +1,7 @@
 import { type NextPage } from "next"
 import { api } from "../../../utils/api"
 import { useRouter } from "next/router"
-import CreatePokemonForm from "../../../components/pokemon/CreatePokemonForm"
+import { PokemonForm } from "../../../components/pokemon/PokemonForm"
 
 const CreatePokemon: NextPage = () => {
     const router = useRouter()
@@ -16,10 +16,7 @@ const CreatePokemon: NextPage = () => {
         <>
             <h1>Creating pokemon</h1>
             {pokemon && heldItems && (
-                <CreatePokemonForm
-                    pokemon={pokemon}
-                    heldItems={heldItems.results}
-                />
+                <PokemonForm pokemon={pokemon} heldItems={heldItems.results} />
             )}
         </>
     )

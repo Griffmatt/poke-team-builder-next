@@ -1,7 +1,7 @@
-import { type NextPage } from 'next'
-import Link from 'next/link'
-import PokemonCard from '../components/pokemonCard'
-import { api } from '../utils/api'
+import { type NextPage } from "next"
+import { api } from "../utils/api"
+import Link from "next/link"
+import {PokemonCard} from "../components/pokemonCard"
 
 const Home: NextPage = () => {
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
@@ -16,13 +16,10 @@ const Home: NextPage = () => {
                     <div className="pokemon-card-grid">
                         {topPokemon.map((pokemon) => {
                             return (
-                                <Link
-                                    href={`/pokemon/${pokemon.name}/create`}
-                                    key={pokemon.name}
-                                    className="pokemon-card"
-                                >
+                                <Link key={pokemon.name} href={`/pokemon/${pokemon.name}/create`} className="pokemon-card">
                                     <PokemonCard
                                         pokemonName={pokemon.name}
+                                        href={`/pokemon/${pokemon.name}/create`}
                                         amount={(
                                             (pokemon.amount / totalPokemon) *
                                             100
@@ -38,19 +35,19 @@ const Home: NextPage = () => {
                 <h2>What to do?</h2>
                 <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
                     <Link
-                        href={'/pokemon'}
+                        href={"/pokemon"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
                         <h2>Create Pokemon</h2>
                     </Link>
                     <Link
-                        href={'/teams'}
+                        href={"/teams"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
                         <h2>View Teams</h2>
                     </Link>
                     <Link
-                        href={'/boxes'}
+                        href={"/boxes"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
                         <h2>View Profile</h2>

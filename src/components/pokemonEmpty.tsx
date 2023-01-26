@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link"
 
 const PokemonEmpty = ({ query }: { query: string }) => {
     if (query) {
@@ -21,4 +21,4 @@ const PokemonEmpty = ({ query }: { query: string }) => {
     )
 }
 
-export default PokemonEmpty
+export { PokemonEmpty }

@@ -4,6 +4,7 @@
 
 body {
     padding-left: calc(100vw - 100%);
+    box-sizing: border-box;
     @apply w-full bg-dark text-light;
 }
 
@@ -43,11 +44,11 @@ button {
     @apply bg-primary text-light;
 }
 
-button[type='button'] {
+button[type="button"] {
     @apply text-xl font-bold text-primary dark:bg-dark-3;
 }
 
-button[type='submit'] {
+button[type="submit"] {
     @apply text-light dark:bg-dark-3;
 }
 
@@ -56,7 +57,7 @@ button[type='submit'] {
 }
 
 .pokemon-card {
-    @apply aspect-[4/5] w-full rounded-2xl bg-dark-2 outline-4 dark:hover:bg-dark-3;
+    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 bg-dark-2 dark:hover:bg-dark-3;
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -1,7 +1,7 @@
 import { type NextPage } from "next"
-import Link from "next/link"
-import BoxesNav from "../../components/boxes/boxesNav"
 import { api } from "../../utils/api"
+import Link from "next/link"
+import {BoxesNav} from "../../components/boxes/boxesNav"
 
 const Boxes: NextPage = () => {
     const { data: users } = api.users.getSuggestedUsers.useQuery()

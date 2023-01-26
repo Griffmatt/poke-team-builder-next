@@ -1,4 +1,4 @@
-import firstLetterUpperCase from '../../utils/formatString'
+import firstLetterUpperCase from "../../utils/formatString"
 
 interface Props {
     order: string
@@ -7,7 +7,7 @@ interface Props {
     setMove: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function MovesInput({ order, moves, move, setMove }: Props) {
+const MovesInput = ({ order, moves, move, setMove }: Props) => {
     return (
         <label className="flex flex-col">
             {order} Move
@@ -37,3 +37,5 @@ export default function MovesInput({ order, moves, move, setMove }: Props) {
         </label>
     )
 }
+
+export { MovesInput }

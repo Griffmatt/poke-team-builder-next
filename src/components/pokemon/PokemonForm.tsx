@@ -1,72 +1,54 @@
-import { useSession } from 'next-auth/react'
-import { FormEvent, useState } from 'react'
+import { useSession } from "next-auth/react"
+import { FormEvent, useState } from "react"
+import type { inferProcedureOutput } from "@trpc/server"
+import { type AppRouter } from "../../server/api/root"
 
-import PokemonCard from '../pokemonCard'
-import MovesInput from './movesInput'
+import { MovesInput } from "./movesInput"
 
-import useHandleEvChange from '../../hooks/useHandleEvChange'
-import useHandleIvChange from '../../hooks/useHandleIvChange'
-import formatString from '../../utils/formatString'
+import useHandleEvChange from "../../hooks/useHandleEvChange"
+import useHandleIvChange from "../../hooks/useHandleIvChange"
+import formatString from "../../utils/formatString"
+import { natures } from "../../assets/natures"
 
-import { Pokemon } from 'pokenode-ts'
-import { api } from '../../utils/api'
-import { useRouter } from 'next/router'
+import { Pokemon } from "pokenode-ts"
+import { api } from "../../utils/api"
+import { useRouter } from "next/router"
+import { PokemonCard } from "../pokemonCard"
 
-const natures = [
-    'Adamant',
-    'Bashful',
-    'Bold',
-    'Brave',
-    'Calm',
-    'Careful',
-    'Docile',
-    'Gentle',
-    'Hardy',
-    'Hasty',
-    'Impish',
-    'Jolly',
-    'Lax',
-    'Lonely',
-    'Mild',
-    'Modest',
-    'Naive',
-    'Naughty',
-    'Quiet',
-    'Quirky',
-    'Rash',
-    'Relaxed',
-    'Sassy',
-    'Serious',
-    'Timid',
-]
+type CreatedPokemon = inferProcedureOutput<
+    AppRouter["pokemon"]["getSinglePokemon"]
+>
 
 interface Props {
     pokemon: Pokemon
     heldItems: { name: string }[]
+    createdPokemon?: CreatedPokemon
 }
 
-const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
+const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
     const router = useRouter()
     const SHINY_ODDS = 10
 
     const [ability, setAbility] = useState<string>(
-        pokemon.abilities[0].ability.name
+        createdPokemon?.nature ?? pokemon.abilities[0].ability.name
     )
-    const [nature, setNature] = useState<string>('Adamant')
-    const [heldItem, setHeldItem] = useState<string>(heldItems[0].name)
+    const [nature, setNature] = useState<string>("Adamant")
+    const [heldItem, setHeldItem] = useState<string>(
+        createdPokemon?.heldItem ?? heldItems[0].name
+    )
 
     const [firstMove, setFirstMove] = useState<string>(
-        pokemon.moves[0].move.name
+        createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name
     )
     const [secondMove, setSecondMove] = useState<string>(
-        pokemon.moves[1].move.name
+        createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name
     )
     const [thirdMove, setThirdMove] = useState<string>(
-        pokemon.moves[2].move.name
+        createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name
     )
     const [fourthMove, setFourthMove] = useState<string>(
-        pokemon.moves[3].move.name
+        createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
     )
 
     const {
@@ -74,18 +56,18 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
         decreaseEv,
         increaseEv,
         handleEvChange,
-    } = useHandleEvChange()
+    } = useHandleEvChange(createdPokemon?.evs)
 
     const {
         ivsArr: ivs,
         decreaseIv,
         increaseIv,
         handleIvChange,
-    } = useHandleIvChange()
+    } = useHandleIvChange(createdPokemon?.evs)
 
-    const mutation = api.pokemon.postPokemon.useMutation({
+    const createMutation = api.pokemon.postPokemon.useMutation({
         onSuccess: () => {
-            router.push('/pokemon')
+            router.push("/pokemon")
         },
     })
 
@@ -114,7 +96,11 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
             ivs: { createMany: { data: ivs } },
         }
 
-        mutation.mutate(pokemonData)
+        if (createdPokemon) {
+            return null
+        }
+
+        createMutation.mutate(pokemonData)
 
         return null
     }
@@ -125,7 +111,10 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
             onSubmit={(event) => handleSubmit(event)}
         >
             <div className="w-full md:col-span-2 md:row-span-3 lg:col-span-1">
-                <PokemonCard pokemonName={pokemon.name} />
+                <PokemonCard
+                    pokemonName={pokemon.name}
+                    createdPokemon={createdPokemon}
+                />
             </div>
             <div>
                 <h2>Pokemon Info</h2>
@@ -185,25 +174,25 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
             <div>
                 <h2>Moves</h2>
                 <MovesInput
-                    order={'First'}
+                    order={"First"}
                     moves={pokemon.moves}
                     move={firstMove}
                     setMove={setFirstMove}
                 />
                 <MovesInput
-                    order={'Second'}
+                    order={"Second"}
                     moves={pokemon.moves}
                     move={secondMove}
                     setMove={setSecondMove}
                 />
                 <MovesInput
-                    order={'Third'}
+                    order={"Third"}
                     moves={pokemon.moves}
                     move={thirdMove}
                     setMove={setThirdMove}
                 />
                 <MovesInput
-                    order={'Fourth'}
+                    order={"Fourth"}
                     moves={pokemon.moves}
                     move={fourthMove}
                     setMove={setFourthMove}
@@ -285,10 +274,10 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
                 className="w-full rounded-xl p-4 md:col-span-2"
                 type="submit"
             >
-                Create Pokemon
+                {createdPokemon ? "Update Pokemon" : "Create Pokemon"}
             </button>
         </form>
     )
 }
 
-export default CreatePokemonForm
+export { PokemonForm }

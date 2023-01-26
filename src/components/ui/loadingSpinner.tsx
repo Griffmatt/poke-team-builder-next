@@ -6,4 +6,4 @@ const LoadingSpinner = () => {
     )
 }
 
-export default LoadingSpinner
+export { LoadingSpinner }

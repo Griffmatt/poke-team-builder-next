@@ -1,7 +1,5 @@
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-
-export { NavLink }
+import { useRouter } from "next/router"
+import Link from "next/link"
 
 interface Props {
     href: string
@@ -10,15 +8,15 @@ interface Props {
     exact?: boolean
 }
 
-function NavLink({ href, children, className, exact }: Props) {
+const NavLink = ({ href, children, className, exact }: Props) => {
     const { pathname } = useRouter()
     let isActive = false
     if (exact) {
         isActive = pathname === href
     }
     if (!exact) {
-        const path = pathname.split('/')
-        const to = href.split('/')
+        const path = pathname.split("/")
+        const to = href.split("/")
         isActive = path[1] === to[1]
     }
 
@@ -34,4 +32,4 @@ function NavLink({ href, children, className, exact }: Props) {
     )
 }
 
-export default NavLink
+export { NavLink }

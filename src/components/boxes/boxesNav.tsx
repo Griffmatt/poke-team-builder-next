@@ -17,4 +17,4 @@ const BoxesNav = ({ selected }: Props) => {
     )
 }
 
-export default BoxesNav
+export { BoxesNav } 

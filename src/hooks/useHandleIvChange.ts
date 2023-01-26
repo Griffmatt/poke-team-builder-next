@@ -1,22 +1,34 @@
-import { useState } from 'react'
+import { useState } from "react"
+
+interface StatsArr {
+    stat: string
+    value: number
+}
 
 interface Stats {
     Hitpoints: number
     Attack: number
     Defense: number
-    'Special Attack': number
-    'Special Defense': number
+    "Special Attack": number
+    "Special Defense": number
     Speed: number
 }
 
-export default function useHandleEvChange(defaultStats?: Stats) {
+export default function useHandleEvChange(defaultStats?: StatsArr[]) {
+    let currentStats = null
+    if (defaultStats) {
+        currentStats = defaultStats.reduce((statObj, stat) => {
+            return { ...statObj, [stat.stat]: stat.value }
+        }, {} as Stats)
+    }
+
     const [ivs, setIvs] = useState({
-        Hitpoints: defaultStats?.Hitpoints ?? 31,
-        Attack: defaultStats?.Attack ?? 31,
-        Defense: defaultStats?.Defense ?? 31,
-        'Special Attack': defaultStats?.['Special Attack'] ?? 31,
-        'Special Defense': defaultStats?.['Special Defense'] ?? 31,
-        Speed: defaultStats?.Speed ?? 31,
+        Hitpoints: currentStats?.Hitpoints ?? 31,
+        Attack: currentStats?.Attack ?? 31,
+        Defense: currentStats?.Defense ?? 31,
+        "Special Attack": currentStats?.["Special Attack"] ?? 31,
+        "Special Defense": currentStats?.["Special Defense"] ?? 31,
+        Speed: currentStats?.Speed ?? 31,
     })
 
     const decreaseIv = (currentStat: string) => {

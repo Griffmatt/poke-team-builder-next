@@ -1,20 +1,23 @@
-import { api } from '../utils/api'
-import type { inferProcedureOutput } from '@trpc/server'
-import { AppRouter } from '../server/api/root'
-import formatString from '../utils/formatString'
-import LoadingSpinner from './ui/loadingSpinner'
+import type { inferProcedureOutput } from "@trpc/server"
+import { type AppRouter } from "../server/api/root"
+
+import { api } from "../utils/api"
+import formatString from "../utils/formatString"
+
+import { LoadingSpinner } from "./ui/loadingSpinner"
 
 type createdPokemon = inferProcedureOutput<
-    AppRouter['pokemon']['getSinglePokemon']
+    AppRouter["pokemon"]["getSinglePokemon"]
 >
 
 interface Props {
     pokemonName: string
     createdPokemon?: createdPokemon
     amount?: string
+    href?: string
 }
 
-const PokemonCard = ({ pokemonName, createdPokemon, amount }: Props) => {
+const PokemonCard = ({ pokemonName, createdPokemon, amount, href }: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
     })
@@ -26,16 +29,16 @@ const PokemonCard = ({ pokemonName, createdPokemon, amount }: Props) => {
     if (isLoading) return <LoadingSpinner />
 
     return (
-        <>
-            <div className="aspect-square">
+        <div className="grid gap-4 p-3">
+            <div className="aspect-square rounded-full bg-dark">
                 {pokemonImage && <img src={pokemonImage} className="w-full" />}
             </div>
             <h3 className="text-center">
-                {formatString(pokemon?.name ?? 'null')}
+                {formatString(pokemon?.name ?? "null")}
             </h3>
             {amount && <h3 className="text-center">{`${amount}%`}</h3>}
-        </>
+        </div>
     )
 }
 
-export default PokemonCard
+export { PokemonCard }
