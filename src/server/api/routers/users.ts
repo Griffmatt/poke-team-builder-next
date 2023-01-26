@@ -4,6 +4,7 @@ import { createTRPCRouter, publicProcedure } from '../trpc'
 export const usersRouter = createTRPCRouter({
     getSuggestedUsers: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.user.findMany({
+            take: 10,
             select: {
                 name: true,
                 image: true,

@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react'
-import React, { FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 import PokemonCard from '../pokemonCard'
 import MovesInput from './movesInput'
@@ -51,22 +51,22 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
     const SHINY_ODDS = 10
 
     const [ability, setAbility] = useState<string>(
-        pokemon.abilities[0]?.ability.name ?? ''
+        pokemon.abilities[0].ability.name
     )
     const [nature, setNature] = useState<string>('Adamant')
-    const [heldItem, setHeldItem] = useState<string>(heldItems[0]?.name ?? '')
+    const [heldItem, setHeldItem] = useState<string>(heldItems[0].name)
 
     const [firstMove, setFirstMove] = useState<string>(
-        pokemon.moves[0]?.move.name ?? ''
+        pokemon.moves[0].move.name
     )
     const [secondMove, setSecondMove] = useState<string>(
-        pokemon.moves[1]?.move.name ?? ''
+        pokemon.moves[1].move.name
     )
     const [thirdMove, setThirdMove] = useState<string>(
-        pokemon.moves[2]?.move.name ?? ''
+        pokemon.moves[2].move.name
     )
     const [fourthMove, setFourthMove] = useState<string>(
-        pokemon.moves[3]?.move.name ?? ''
+        pokemon.moves[3].move.name
     )
 
     const {
@@ -121,10 +121,10 @@ const CreatePokemonForm = ({ pokemon, heldItems }: Props) => {
 
     return (
         <form
-            className="grid gap-3 p-2 lg:grid-cols-4"
+            className="grid gap-3 p-2 md:grid-cols-4 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
-            <div className="w-full md:col-span-2 md:row-span-3">
+            <div className="w-full md:col-span-2 md:row-span-3 lg:col-span-1">
                 <PokemonCard pokemonName={pokemon.name} />
             </div>
             <div>

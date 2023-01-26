@@ -6,7 +6,7 @@ interface Stats {
     Defense: number
     'Special Attack': number
     'Special Defense': number
-    'Speed': number
+    Speed: number
 }
 
 export default function useHandleEvChange(defaultStats?: Stats) {
@@ -62,12 +62,12 @@ export default function useHandleEvChange(defaultStats?: Stats) {
 
     const ivsArr = []
 
-        for (const key in ivs) {
-            ivsArr.push({
-                stat: key,
-                value: ivs[key as keyof Stats],
-            })
-        }
+    for (const key in ivs) {
+        ivsArr.push({
+            stat: key,
+            value: ivs[key as keyof Stats],
+        })
+    }
 
     return { ivsArr, decreaseIv, increaseIv, handleIvChange }
 }

@@ -4,7 +4,11 @@
 
 body {
     padding-left: calc(100vw - 100%);
-    @apply w-full bg-dark text-white;
+    @apply w-full bg-dark text-light;
+}
+
+main {
+    @apply grid gap-4;
 }
 
 h1 {
@@ -12,7 +16,7 @@ h1 {
 }
 
 h2 {
-    @apply text-xl text-primary font-bold;
+    @apply text-xl font-bold text-primary;
 }
 
 h3 {
@@ -32,7 +36,7 @@ input {
 }
 
 select {
-    @apply  rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
+    @apply rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
 }
 
 button {
@@ -44,9 +48,19 @@ button[type='button'] {
 }
 
 button[type='submit'] {
-    @apply dark:bg-dark-3 text-light;
+    @apply text-light dark:bg-dark-3;
 }
 
-.pokemonCardGrid {
-    @apply grid grid-cols-2 place-items-center gap-2 md:grid-cols-5 lg:grid-cols-5;
+.pokemon-card-grid {
+    @apply grid grid-cols-2 place-items-center gap-2 md:grid-cols-4 xl:grid-cols-6;
+}
+
+.pokemon-card {
+    @apply aspect-[4/5] w-full rounded-2xl bg-dark-2 outline-4 dark:hover:bg-dark-3;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

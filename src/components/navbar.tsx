@@ -1,5 +1,5 @@
-import NavLink from './navLink'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import NavLink from './ui/navLink'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function NavBar() {
     const { data } = useSession()
@@ -16,13 +16,13 @@ export default function NavBar() {
             <NavLink href="/teams">
                 <h2>Teams</h2>
             </NavLink>
-            <NavLink href={`${user? `/boxes/${user.id}`: null}`}>
+            <NavLink href="/boxes">
                 <h2>Boxes</h2>
             </NavLink>
             {user ? (
-                <button className="bg-transparent" onClick={() => signOut()}>
-                    <h2>Sign Out</h2>
-                </button>
+                <NavLink href={`${user ? `/profile/${user.id}` : null}`}>
+                    <h2>Profile</h2>
+                </NavLink>
             ) : (
                 <button className="bg-transparent" onClick={() => signIn()}>
                     <h2>Sign In</h2>

@@ -1,4 +1,3 @@
-import React from 'react'
 import firstLetterUpperCase from '../../utils/formatString'
 
 interface Props {

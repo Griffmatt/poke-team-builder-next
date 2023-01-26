@@ -2,7 +2,7 @@ import { createTRPCRouter, publicProcedure } from '../trpc'
 
 export const statisticsRouter = createTRPCRouter({
     getTopPokemon: publicProcedure.query(async ({ ctx }) => {
-        const pokemonArr = await ctx.prisma.createdPokemon.findMany()
+        const pokemonArr = await ctx.prisma.createdPokemon.findMany({})
         const pokemonMap = new Map<string, number>()
         let pokemonCounted = [] as { name: string; amount: number }[]
         pokemonArr?.forEach((pokemon) => {
@@ -15,7 +15,9 @@ export const statisticsRouter = createTRPCRouter({
         })
 
         const totalPokemon = pokemonCounted.reduce((a, b) => a + b.amount, 0)
-        const topPokemon = pokemonCounted.sort((a, b) => b.amount - a.amount).slice(0, 10)
-        return {totalPokemon, topPokemon}
+        const topPokemon = pokemonCounted
+            .sort((a, b) => b.amount - a.amount)
+            .slice(0, 12)
+        return { totalPokemon, topPokemon }
     }),
 })

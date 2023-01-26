@@ -13,7 +13,7 @@ export const appRouter = createTRPCRouter({
     users: usersRouter,
     pokemon: pokemonRouter,
     pokeApi: pokeApiRouter,
-    statistics: statisticsRouter
+    statistics: statisticsRouter,
 })
 
 // export type definition of API

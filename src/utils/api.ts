@@ -53,19 +53,19 @@ export const api = createTRPCNext<AppRouter>({
      */
     ssr: true,
     responseMeta({ ctx, clientErrors }) {
-      if (clientErrors.length) {
-        // propagate http first error from API calls
+        if (clientErrors.length) {
+            // propagate http first error from API calls
+            return {
+                status: clientErrors[0]?.data?.httpStatus ?? 500,
+            }
+        }
+        // cache request for 1 day + revalidate once every second
+        const ONE_DAY_IN_SECONDS = 60 * 60 * 24
         return {
-          status: clientErrors[0]?.data?.httpStatus ?? 500,
-        };
-      }
-      // cache request for 1 day + revalidate once every second
-      const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
-      return {
-        headers: {
-          'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
-        },
-      };
+            headers: {
+                'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+            },
+        }
     },
 })
 

@@ -12,17 +12,19 @@ export const pokemonRouter = createTRPCRouter({
             },
         })
     }),
-    getSinglePokemon: publicProcedure.input(z.object({ pokemonId: z.string() })).query(({ ctx, input }) => {
-        return ctx.prisma.createdPokemon.findUnique({
-            where: {id: input.pokemonId},
-            include: {
-                moves: true,
-                evs: true,
-                ivs: true,
-                teams: true,
-            },
-        })
-    }),
+    getSinglePokemon: publicProcedure
+        .input(z.object({ pokemonId: z.string() }))
+        .query(({ ctx, input }) => {
+            return ctx.prisma.createdPokemon.findUnique({
+                where: { id: input.pokemonId },
+                include: {
+                    moves: true,
+                    evs: true,
+                    ivs: true,
+                    teams: true,
+                },
+            })
+        }),
     getUsersPokemon: publicProcedure
         .input(z.object({ userId: z.string() }))
         .query(({ ctx, input }) => {

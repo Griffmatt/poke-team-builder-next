@@ -1,15 +1,14 @@
-import { type NextPage } from 'next'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import PokemonCard from '../../components/pokemonCard'
-import LoadingSpinner from '../../components/ui/loadingSpinner'
-import { api } from '../../utils/api'
+import { type NextPage } from "next"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import PokemonCard from "../../components/pokemonCard"
+import { api } from "../../utils/api"
 
 const Boxes: NextPage = () => {
     const router = useRouter()
     const { userId } = router.query
-    const [query, setQuery] = useState('')
+    const [query, setQuery] = useState("")
 
     const { data: pokemons } = api.pokemon.getUsersPokemon.useQuery({
         userId: userId as string,
@@ -25,36 +24,45 @@ const Boxes: NextPage = () => {
     }
 
     const filterPokemon = pokemons?.filter((pokemon) =>
-        query === 'shiny' ? pokemon.shiny : pokemon.name.includes(query)
+        query === "shiny" ? pokemon.shiny : pokemon.name.includes(query)
     )
 
-    if (!user)
-        return (
-            <div className="h-[75vh]">
-                <LoadingSpinner />
-            </div>
-        )
-
     return (
-        <main className="grid gap-4">
-            <div className="flex justify-between">
-                <h2>{user?.name}'s Boxes</h2>
-                <input
-                    placeholder="Search for a pokemon..."
-                    type="text"
-                    onChange={(event) =>
-                        debounceQuery(event.target.value.toLowerCase())
-                    }
-                    className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
-                />
+        <main>
+            <div className="grid gap-3">
+                <div>
+                    {user && (
+                        <img src={user.image ?? ""} className="rounded-full" />
+                    )}
+                </div>
+                <h2>{user?.name}</h2>
             </div>
+            <div className="flex justify-center gap-3">
+                <Link href="/boxes">
+                    <h3>Pokemon</h3>
+                </Link>
+                <Link href="/boxes">
+                    <h3>Teams</h3>
+                </Link>
+                <Link href="/boxes">
+                    <h3>Settings</h3>
+                </Link>
+            </div>
+            <input
+                placeholder="Search for a pokemon..."
+                type="text"
+                onChange={(event) =>
+                    debounceQuery(event.target.value.toLowerCase())
+                }
+                className="ml-auto w-60 rounded-2xl px-4 py-2 text-black outline-none"
+            />
             {filterPokemon?.length === 0 ? (
                 <PokemonEmpty query={query} />
             ) : (
-                <div className="pokemonCardGrid">
+                <div className="pokemon-card-grid">
                     {filterPokemon?.map((pokemon) => {
                         return (
-                            <div className="aspect-[4/5] w-full rounded-2xl bg-dark-2">
+                            <div className="pokemon-card">
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}

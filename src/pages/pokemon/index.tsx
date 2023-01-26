@@ -7,6 +7,7 @@ import { api } from '../../utils/api'
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState('')
+    const POKEMON_LIMIT = 24
 
     let timer: NodeJS.Timeout | undefined
     const debounceQuery = (queryValue: string) => {
@@ -17,10 +18,11 @@ const Pokemon: NextPage = () => {
     const limitPokemon =
         pokemons?.results
             .filter((pokemon) => pokemon.name.includes(query))
-            .slice(0, 20) ?? pokemons?.results.slice(0, 20)
+            .slice(0, POKEMON_LIMIT) ??
+        pokemons?.results.slice(0, POKEMON_LIMIT)
 
     return (
-        <main className="grid gap-4">
+        <main>
             <div className="flex justify-between">
                 <h2>Pokedex</h2>
                 <input
@@ -41,13 +43,13 @@ const Pokemon: NextPage = () => {
                     <h3>{query}</h3>
                 </div>
             ) : (
-                <div className="pokemonCardGrid">
+                <div className="pokemon-card-grid">
                     {limitPokemon?.map((pokemon) => {
                         return (
                             <Link
                                 href={`/pokemon/${pokemon.name}/create`}
                                 key={pokemon.name}
-                                className="aspect-[4/5] w-full rounded-2xl bg-dark-2"
+                                className="pokemon-card"
                             >
                                 <PokemonCard pokemonName={pokemon.name} />
                             </Link>
