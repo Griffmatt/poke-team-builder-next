@@ -6,7 +6,7 @@ const NavBar = () => {
     const user = data?.user
 
     return (
-        <div className="mx-auto flex max-w-[40rem] justify-around p-3">
+        <div className="mx-auto flex max-w-[40rem] gap-6  p-3">
             <NavLink href="/">
                 <h2>Home</h2>
             </NavLink>
@@ -19,11 +19,14 @@ const NavBar = () => {
             <NavLink href="/boxes">
                 <h2>Boxes</h2>
             </NavLink>
-            {user ? (
+
+            {user && (
                 <NavLink href={`${user ? `/profile/${user.id}` : null}`}>
                     <h2>Profile</h2>
                 </NavLink>
-            ) : (
+            )}
+
+            {data !== undefined && !user && (
                 <button className="bg-transparent" onClick={() => signIn()}>
                     <h2>Sign In</h2>
                 </button>

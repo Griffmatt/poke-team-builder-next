@@ -19,7 +19,7 @@ const UpdatePokemon: NextPage = () => {
     return (
         <>
             <h1>Creating pokemon</h1>
-            {pokemon && heldItems && (
+            {pokemon && heldItems && createdPokemon && (
                 <PokemonForm
                     pokemon={pokemon}
                     heldItems={heldItems.results}

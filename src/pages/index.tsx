@@ -1,12 +1,15 @@
 import { type NextPage } from "next"
 import { api } from "../utils/api"
 import Link from "next/link"
-import {PokemonCard} from "../components/pokemonCard"
+import { PokemonCard } from "../components/pokemonCard"
 
 const Home: NextPage = () => {
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
     const totalPokemon = topPokemonData?.totalPokemon
     const topPokemon = topPokemonData?.topPokemon
+    const { format: formatPercentage } = Intl.NumberFormat("en-US", {
+        style: "percent",
+    })
     return (
         <main>
             {topPokemon && totalPokemon && (
@@ -16,14 +19,16 @@ const Home: NextPage = () => {
                     <div className="pokemon-card-grid">
                         {topPokemon.map((pokemon) => {
                             return (
-                                <Link key={pokemon.name} href={`/pokemon/${pokemon.name}/create`} className="pokemon-card">
+                                <Link
+                                    key={pokemon.name}
+                                    href={`/pokemon/${pokemon.name}/create`}
+                                    className="pokemon-card"
+                                >
                                     <PokemonCard
                                         pokemonName={pokemon.name}
-                                        href={`/pokemon/${pokemon.name}/create`}
-                                        amount={(
-                                            (pokemon.amount / totalPokemon) *
-                                            100
-                                        ).toFixed(2)}
+                                        percentage={formatPercentage(
+                                            pokemon.amount / totalPokemon
+                                        )}
                                     />
                                 </Link>
                             )

@@ -13,11 +13,10 @@ type createdPokemon = inferProcedureOutput<
 interface Props {
     pokemonName: string
     createdPokemon?: createdPokemon
-    amount?: string
-    href?: string
+    percentage?: string
 }
 
-const PokemonCard = ({ pokemonName, createdPokemon, amount, href }: Props) => {
+const PokemonCard = ({ pokemonName, createdPokemon, percentage}: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
     })
@@ -36,7 +35,7 @@ const PokemonCard = ({ pokemonName, createdPokemon, amount, href }: Props) => {
             <h3 className="text-center">
                 {formatString(pokemon?.name ?? "null")}
             </h3>
-            {amount && <h3 className="text-center">{`${amount}%`}</h3>}
+            {percentage && <h3 className="text-center">{percentage}</h3>}
         </div>
     )
 }

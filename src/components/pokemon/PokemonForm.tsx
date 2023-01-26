@@ -26,6 +26,7 @@ interface Props {
 }
 
 const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
+    console.log(createdPokemon)
     const { data: session } = useSession()
     const router = useRouter()
     const SHINY_ODDS = 10
@@ -63,7 +64,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         decreaseIv,
         increaseIv,
         handleIvChange,
-    } = useHandleIvChange(createdPokemon?.evs)
+    } = useHandleIvChange(createdPokemon?.ivs)
 
     const createMutation = api.pokemon.postPokemon.useMutation({
         onSuccess: () => {
