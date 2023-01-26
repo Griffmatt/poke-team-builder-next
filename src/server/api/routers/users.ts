@@ -3,7 +3,14 @@ import { createTRPCRouter, publicProcedure } from '../trpc'
 
 export const usersRouter = createTRPCRouter({
     getSuggestedUsers: publicProcedure.query(({ ctx }) => {
-        return ctx.prisma.user.findMany()
+        return ctx.prisma.user.findMany({
+            select: {
+                name: true,
+                image: true,
+                userName: true,
+                id: true,
+            },
+        })
     }),
 
     getUser: publicProcedure
@@ -17,6 +24,7 @@ export const usersRouter = createTRPCRouter({
                     name: true,
                     image: true,
                     userName: true,
+                    id: true,
                 },
             })
         }),

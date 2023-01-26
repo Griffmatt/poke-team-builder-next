@@ -4,12 +4,12 @@ import { useState } from 'react'
 import PokemonCard from '../../components/pokemonCard'
 import { api } from '../../utils/api'
 
-let timer: NodeJS.Timeout | undefined
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState('')
 
+    let timer: NodeJS.Timeout | undefined
     const debounceQuery = (queryValue: string) => {
         clearTimeout(timer)
         timer = setTimeout(() => setQuery(queryValue), 1000)
@@ -23,7 +23,7 @@ const Pokemon: NextPage = () => {
     return (
         <main className="grid gap-4">
             <div className="flex justify-between">
-                <h2>Pokemon listed here!</h2>
+                <h2>Pokedex</h2>
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
