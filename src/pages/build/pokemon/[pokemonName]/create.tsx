@@ -1,7 +1,8 @@
 import { type NextPage } from "next"
-import { api } from "../../../utils/api"
+import { api } from "../../../../utils/api"
 import { useRouter } from "next/router"
-import { PokemonForm } from "../../../components/pokemon/PokemonForm"
+import { PokemonForm } from "../../../../components/build/pokemon/PokemonForm"
+
 
 const CreatePokemon: NextPage = () => {
     const router = useRouter()

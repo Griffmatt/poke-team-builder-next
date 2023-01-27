@@ -11,7 +11,7 @@ const ProfileNav = ({ selected, userId }: Props) => {
                 <Link href={`/profile/${userId}`}>
                     <h3 className={selected === "pokemon" ? "border-b-2" : ''}>Pokemon</h3>
                 </Link>
-                <Link href={`/profile/${userId}`}>
+                <Link href={`/profile/${userId}/teams`}>
                     <h3 className={selected === "teams" ? "border-b-2" : ''}>Teams</h3>
                 </Link>
                 <Link href={`/profile/${userId}`}>

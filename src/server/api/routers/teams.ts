@@ -6,7 +6,7 @@ export const teamsRouter = createTRPCRouter({
         return ctx.prisma.team.findMany({
             include: {
                 pokemon: {
-                    include: {
+                    select: {
                         createdPokemon: true,
                     },
                 },
@@ -26,7 +26,7 @@ export const teamsRouter = createTRPCRouter({
                 },
                 include: {
                     pokemon: {
-                        include: {
+                        select: {
                             createdPokemon: true,
                         },
                     },
@@ -46,20 +46,20 @@ export const teamsRouter = createTRPCRouter({
                 },
                 include: {
                     pokemon: {
-                        include: {
+                        select: {
                             createdPokemon: true,
                         },
                     },
                 },
             })
         }),
-    createTeam: protectedProcedure
+    buildTeam: protectedProcedure
         .input(
             z.object({
                 userId: z.string(),
                 teamStyle: z.string(),
                 teamName: z.string(),
-                pokemonIds: z.object({
+                pokemon: z.object({
                     createMany: z.object({
                         data: z.array(
                             z.object({
@@ -70,7 +70,7 @@ export const teamsRouter = createTRPCRouter({
                 }),
             })
         )
-        .query(({ ctx, input }) => {
+        .mutation(({ ctx, input }) => {
             return ctx.prisma.team.create({
                 data: input,
             })
@@ -81,7 +81,7 @@ export const teamsRouter = createTRPCRouter({
                 teamId: z.string(),
             })
         )
-        .query(({ ctx, input }) => {
+        .mutation(({ ctx, input }) => {
             return ctx.prisma.team.delete({
                 where: {
                     id: input.teamId,

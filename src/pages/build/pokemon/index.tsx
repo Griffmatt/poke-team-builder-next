@@ -1,8 +1,9 @@
 import { type NextPage } from "next"
 import Link from "next/link"
 import { useState } from "react"
-import { PokemonCard } from "../../components/pokemonCard"
-import { api } from "../../utils/api"
+import { BuildNav } from "../../../components/build/buildNav"
+import { PokemonCard } from "../../../components/pokemonCard"
+import { api } from "../../../utils/api"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
@@ -34,6 +35,7 @@ const Pokemon: NextPage = () => {
                     className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
                 />
             </div>
+            <BuildNav selected="pokemon" />
             {limitPokemon?.length === 0 ? (
                 <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl text-center dark:bg-dark-2">
                     <h2>

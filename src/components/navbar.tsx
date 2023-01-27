@@ -10,17 +10,14 @@ const NavBar = () => {
             <NavLink href="/">
                 <h2>Home</h2>
             </NavLink>
-            <NavLink href="/pokemon">
-                <h2>Pokemon</h2>
-            </NavLink>
-            <NavLink href="/teams">
-                <h2>Teams</h2>
+            <NavLink href="/build/pokemon">
+                <h2>Build</h2>
             </NavLink>
             <NavLink href="/boxes">
                 <h2>Boxes</h2>
             </NavLink>
             {user ? (
-                <NavLink href={`${user ? `/profile/${user.id}` : null}`}>
+                <NavLink href={`/profile/${user.id}`}>
                     <h2>Profile</h2>
                 </NavLink>
             ) : (

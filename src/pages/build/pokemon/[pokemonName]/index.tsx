@@ -1,6 +1,6 @@
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
-import { api } from "../../../utils/api"
+import { api } from "../../../../utils/api"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()

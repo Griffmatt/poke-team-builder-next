@@ -46,7 +46,7 @@ export const pokemonRouter = createTRPCRouter({
                 },
             })
         }),
-    createPokemon: protectedProcedure
+    buildPokemon: protectedProcedure
         .input(
             z.object({
                 userId: z.string(),

@@ -1,4 +1,4 @@
-import firstLetterUpperCase from "../../utils/formatString"
+import firstLetterUpperCase from "../../../utils/formatString"
 
 interface Props {
     order: string

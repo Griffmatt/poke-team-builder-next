@@ -1,19 +1,19 @@
 import { useSession } from "next-auth/react"
 import { FormEvent, useState } from "react"
 import type { inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../../server/api/root"
+import { type AppRouter } from "../../../server/api/root"
 
 import { MovesInput } from "./movesInput"
 
-import useHandleEvChange from "../../hooks/useHandleEvChange"
-import useHandleIvChange from "../../hooks/useHandleIvChange"
-import formatString from "../../utils/formatString"
-import { natures } from "../../assets/natures"
+import useHandleEvChange from "../../../hooks/useHandleEvChange"
+import useHandleIvChange from "../../../hooks/useHandleIvChange"
+import formatString from "../../../utils/formatString"
+import { natures } from "../../../assets/natures"
 
 import { Pokemon } from "pokenode-ts"
-import { api } from "../../utils/api"
+import { api } from "../../../utils/api"
 import { useRouter } from "next/router"
-import { PokemonCard } from "../pokemonCard"
+import { PokemonCard } from "../../pokemonCard"
 
 type CreatedPokemon = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]
@@ -68,7 +68,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         handleIvChange,
     } = useHandleIvChange(createdPokemon?.ivs)
 
-    const createMutation = api.pokemon.createPokemon.useMutation({
+    const createMutation = api.pokemon.buildPokemon.useMutation({
         onSuccess: () => {
             router.push("/pokemon")
         },
