@@ -8,7 +8,7 @@ import Link from "next/link"
 import { PokemonCard } from "../../components/pokemonCard"
 import { ProfileNav } from "../../components/profile/profileNav"
 
-const Boxes: NextPage = () => {
+const ProfilePokemon: NextPage = () => {
     const router = useRouter()
     const { userId } = router.query
     const [query, setQuery] = useState("")
@@ -73,7 +73,7 @@ const Boxes: NextPage = () => {
     )
 }
 
-export default Boxes
+export default ProfilePokemon
 
 const PokemonEmpty = ({ query }: { query: string }) => {
     if (query) {

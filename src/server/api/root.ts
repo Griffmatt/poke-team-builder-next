@@ -3,6 +3,7 @@ import { usersRouter } from './routers/users'
 import { pokemonRouter } from './routers/pokemon'
 import { pokeApiRouter } from './routers/pokeApi'
 import { statisticsRouter } from './routers/statistics'
+import { teamsRouter } from './routers/teams'
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ import { statisticsRouter } from './routers/statistics'
 export const appRouter = createTRPCRouter({
     users: usersRouter,
     pokemon: pokemonRouter,
+    teams: teamsRouter,
     pokeApi: pokeApiRouter,
     statistics: statisticsRouter,
 })

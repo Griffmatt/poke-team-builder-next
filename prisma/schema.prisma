@@ -21,14 +21,14 @@ model CreatedPokemon {
   ivs       PokemonIvs[]
   teams     PokemonOnTeam[]
   favorited favoritePokemon[]
-  User      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model PokemonMoves {
   move           String
   pokemonId      String
   moveOrder      Int
-  CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
 
   @@unique([moveOrder, pokemonId])
 }
@@ -37,7 +37,7 @@ model PokemonEvs {
   stat           String
   value          Int
   pokemonId      String
-  CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
 
   @@unique([stat, pokemonId])
 }
@@ -46,7 +46,7 @@ model PokemonIvs {
   stat           String
   value          Int
   pokemonId      String
-  CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
 
   @@unique([stat, pokemonId])
 }
@@ -54,7 +54,7 @@ model PokemonIvs {
 model PokemonOnTeam {
   pokemonId      String
   teamId         String
-  CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
   team           Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   @@unique([pokemonId, teamId])
