@@ -30,7 +30,7 @@ model PokemonMoves {
   moveOrder      Int
   CreatedPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
 
-  @@unique([move, pokemonId])
+  @@unique([moveOrder, pokemonId])
 }
 
 model PokemonEvs {

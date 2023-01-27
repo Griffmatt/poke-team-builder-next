@@ -7,7 +7,7 @@ const UpdatePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName, pokemonId } = router.query
 
-    const { data: pokemon, isLoading: loading1 } = api.pokeApi.getPokemonByName.useQuery({
+    const { data: pokemon } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName as string,
     })
     const { data: heldItems } = api.pokeApi.getHeldItems.useQuery()
@@ -15,10 +15,6 @@ const UpdatePokemon: NextPage = () => {
     const { data: createdPokemon} = api.pokemon.getSinglePokemon.useQuery({
         pokemonId: pokemonId as string,
     })
-
-    const isLoading = loading1
-
-    if(isLoading) return <div>Loading...</div>
 
     return (
         <>
