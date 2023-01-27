@@ -22,7 +22,7 @@ const Home: NextPage = () => {
                             return (
                                 <Link
                                     key={pokemon.name}
-                                    href={`/pokemon/${pokemon.name}/create`}
+                                    href={`/build/pokemon/${pokemon.name}/create`}
                                     className="pokemon-card"
                                 >
                                     <PokemonCard
@@ -41,16 +41,16 @@ const Home: NextPage = () => {
                 <h2>What to do?</h2>
                 <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
                     <Link
-                        href={"/pokemon"}
+                        href={"/build/pokemon"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
-                        <h2>Create Pokemon</h2>
+                        <h2>Build Pokemon</h2>
                     </Link>
                     <Link
-                        href={"/teams"}
+                        href={"/build/team"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
-                        <h2>View Teams</h2>
+                        <h2>Build Team</h2>
                     </Link>
                     <Link
                         href={"/boxes"}

@@ -50,7 +50,7 @@ const Pokemon: NextPage = () => {
                         return (
                             <Link
                                 key={pokemon.name}
-                                href={`/pokemon/${pokemon.name}/create`}
+                                href={`/build/pokemon/${pokemon.name}/create`}
                                 className="pokemon-card"
                             >
                                 <PokemonCard pokemonName={pokemon.name} />
