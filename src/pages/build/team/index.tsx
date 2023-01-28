@@ -1,15 +1,24 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 import { BuildNav } from "../../../components/build/buildNav"
 import { PokemonCard } from "../../../components/pokemonCard"
+import { PokemonEmpty } from "../../../components/pokemonEmpty"
 import { useBuildTeam } from "../../../hooks/useBuildTeam"
 import { api } from "../../../utils/api"
 
-const Team: NextPage = () => {
+const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
     const { data: pokemons } = api.pokemon.getUsersPokemon.useQuery({
         userId: session?.user?.id as string,
     })
+    const [query, setQuery] = useState("")
+
+    let timer: NodeJS.Timeout | undefined
+    const debounceQuery = (queryValue: string) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => setQuery(queryValue), 1000)
+    }
 
     const {
         addPokemonToTeam,
@@ -27,7 +36,17 @@ const Team: NextPage = () => {
 
     return (
         <main>
-            <h2>Build Team</h2>
+            <div className="flex justify-between">
+                <h2>Build Team</h2>
+                <input
+                    placeholder="Search for a pokemon..."
+                    type="text"
+                    onChange={(event) =>
+                        debounceQuery(event.target.value.toLowerCase())
+                    }
+                    className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
+                />
+            </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="pokemon-card-grid">
@@ -58,23 +77,27 @@ const Team: NextPage = () => {
                     Build Team
                 </button>
             </div>
-            <div className="pokemon-card-grid">
-                {filteredPokemon?.map((pokemon) => {
-                    return (
-                        <button
-                            className="pokemon-card"
-                            onClick={() => addPokemonToTeam(pokemon)}
-                        >
-                            <PokemonCard
-                                pokemonName={pokemon.name}
-                                createdPokemon={pokemon}
-                            />
-                        </button>
-                    )
-                })}
-            </div>
+            {filteredPokemon?.length === 0 ? (
+                <PokemonEmpty query={query} />
+            ) : (
+                <div className="pokemon-card-grid">
+                    {filteredPokemon?.map((pokemon) => {
+                        return (
+                            <button
+                                className="pokemon-card"
+                                onClick={() => addPokemonToTeam(pokemon)}
+                            >
+                                <PokemonCard
+                                    pokemonName={pokemon.name}
+                                    createdPokemon={pokemon}
+                                />
+                            </button>
+                        )
+                    })}
+                </div>
+            )}
         </main>
     )
 }
 
-export default Team
+export default BuildTeam

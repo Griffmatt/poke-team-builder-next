@@ -41,15 +41,11 @@ select {
 }
 
 button {
-    @apply bg-primary text-light;
+    @apply text-light dark:bg-dark-3;
 }
 
 button[type="button"] {
     @apply text-xl font-bold text-primary dark:bg-dark-3;
-}
-
-button[type="submit"] {
-    @apply text-light dark:bg-dark-3;
 }
 
 .pokemon-card-grid {

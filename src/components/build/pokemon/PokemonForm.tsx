@@ -70,7 +70,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
     const createMutation = api.pokemon.buildPokemon.useMutation({
         onSuccess: () => {
-            router.push("/pokemon")
+            router.push("/build/pokemon")
         },
     })
 

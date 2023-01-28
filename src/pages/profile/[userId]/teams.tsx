@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { api } from "../../../utils/api"
 import { ProfileNav } from "../../../components/profile/profileNav"
 import { PokemonCard } from "../../../components/pokemonCard"
+import Link from "next/link"
 
 const ProfileTeams: NextPage = () => {
     const router = useRouter()
@@ -29,13 +30,11 @@ const ProfileTeams: NextPage = () => {
             </div>
             <ProfileNav selected="teams" userId={userId as string} />
             <div className="grid gap-3">
-                <h3>Teams</h3>
                 {teams?.map((team) => {
-                    console.log(team)
                     return (
                         <>
                             <h3>{team.teamName}</h3>
-                            <div className="pokemon-card-grid">
+                            <Link href={`/team/${team.id}`} className="pokemon-card-grid">
                                 {team.pokemon.map((pokemon) => {
                                     return (
                                         <div className="pokemon-card">
@@ -47,7 +46,7 @@ const ProfileTeams: NextPage = () => {
                                         </div>
                                     )
                                 })}
-                            </div>
+                            </Link>
                         </>
                     )
                 })}
