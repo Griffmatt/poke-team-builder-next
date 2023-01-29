@@ -1,4 +1,4 @@
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const statisticsRouter = createTRPCRouter({
     getTopPokemon: publicProcedure.query(async ({ ctx }) => {
@@ -16,7 +16,14 @@ export const statisticsRouter = createTRPCRouter({
 
         const totalPokemon = pokemonCounted.reduce((a, b) => a + b.amount, 0)
         const topPokemon = pokemonCounted
-            .sort((a, b) => b.amount - a.amount)
+            .sort((a, b) => {
+                if (b.amount === a.amount) {
+                    const sortName = [a.name, b.name].sort()
+                    if (sortName[0] === b.name) return 1
+                    return -1
+                }
+                return b.amount - a.amount
+            })
             .slice(0, 12)
         return { totalPokemon, topPokemon }
     }),

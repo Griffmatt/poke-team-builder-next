@@ -41,7 +41,7 @@ select {
 }
 
 button {
-    @apply text-light dark:bg-dark-3 dark:hover:bg-dark-2;
+    @apply text-light dark:bg-dark-3 dark:hover:bg-dark-3/50;
 }
 
 button[type="button"] {

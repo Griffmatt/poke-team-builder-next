@@ -19,7 +19,7 @@ export default function DeleteModal({
     pokemonId,
 }: Props) {
     const deleteTeam = deleteTeamMutation(userId, teamId as string)
-    const deletePokemon = deletePokemonMutation(userId, pokemonId as string)
+    const deletePokemon = deletePokemonMutation(userId, pokemonId as string, name)
 
     const handleDelete = () => {
         if (teamId)
@@ -39,7 +39,7 @@ export default function DeleteModal({
             onClick={() => setShowModal(false)}
         >
             <div
-                className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-light p-10 dark:bg-dark"
+                className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-light p-10 dark:bg-dark-2"
                 onClick={(event) => event?.stopPropagation()}
             >
                 <h2>Confirm Delete</h2>

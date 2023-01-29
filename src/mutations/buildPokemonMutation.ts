@@ -42,6 +42,8 @@ export const buildPokemonMutation = (
                 userId: userId,
             })
 
+            const topPokemonData = apiContext.statistics.getTopPokemon.getData()
+
             const buildPokemonData = {
                 id: "placeHolderIdPokemon",
                 userId: userId,
@@ -68,7 +70,33 @@ export const buildPokemonMutation = (
                     ...pastPokemon,
                 ])
             }
-            return { pastPokemon }
+
+            if (topPokemonData) {
+                const pokeStats = topPokemonData.topPokemon.map((pokeData) => {
+                    if (
+                        pokeData.name.toLowerCase() ===
+                        pokemon.name.toLowerCase()
+                    )
+                        return {
+                            name: pokeData.name,
+                            amount: pokeData.amount + 1,
+                        }
+                    return pokeData
+                })
+                const newData = {
+                    totalPokemon: topPokemonData.totalPokemon + 1,
+                    topPokemon: pokeStats.sort((a, b) => {
+                        if (b.amount === a.amount) {
+                            const sortName = [a.name, b.name].sort()
+                            if (sortName[0] === b.name) return 1
+                            return -1
+                        }
+                        return b.amount - a.amount
+                    }),
+                }
+                apiContext.statistics.getTopPokemon.setData(undefined, newData)
+            }
+            return { pastPokemon, topPokemonData }
         },
         onSuccess: () => {
             router.push(`/profile/${userId}`)
@@ -80,11 +108,18 @@ export const buildPokemonMutation = (
                     context.pastPokemon
                 )
             }
+            if (context?.topPokemonData) {
+                apiContext.statistics.getTopPokemon.setData(
+                    undefined,
+                    context?.topPokemonData
+                )
+            }
         },
         onSettled: () => {
             apiContext.pokemon.getUsersPokemon.invalidate({
                 userId: userId,
             })
+            apiContext.statistics.getTopPokemon.invalidate()
         },
     })
     return buildMutation
