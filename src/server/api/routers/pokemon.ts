@@ -57,7 +57,7 @@ export const pokemonRouter = createTRPCRouter({
                     userId: input.userId,
                 },
                 orderBy: {
-                        createdAt: "desc",
+                    createdAt: "desc",
                 },
                 include: {
                     moves: {
@@ -85,7 +85,7 @@ export const pokemonRouter = createTRPCRouter({
                         },
                         orderBy: {
                             stat: "desc",
-                        }
+                        },
                     },
                     teams: true,
                 },
@@ -214,5 +214,18 @@ export const pokemonRouter = createTRPCRouter({
             ])
 
             return results
+        }),
+    deletePokemon: protectedProcedure
+        .input(
+            z.object({
+                pokemonId: z.string(),
+            })
+        )
+        .mutation(({ ctx, input }) => {
+            return ctx.prisma.createdPokemon.delete({
+                where: {
+                    id: input.pokemonId,
+                },
+            })
         }),
 })

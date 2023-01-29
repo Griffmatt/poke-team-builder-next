@@ -70,7 +70,6 @@ export const updatePokemonMutation = (
             }
 
             if (pastPokemonStats) {
-                console.log(updatePokemonData)
                 apiContext.pokemon.getSinglePokemon.setData(
                     { pokemonId: createdPokemon!.id },
                     updatePokemonData

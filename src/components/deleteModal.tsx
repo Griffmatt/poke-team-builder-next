@@ -1,3 +1,4 @@
+import { deletePokemonMutation } from "../mutations/deletePokemonMutation"
 import { deleteTeamMutation } from "../mutations/deleteTeamMutation"
 
 interface Props {
@@ -18,13 +19,16 @@ export default function DeleteModal({
     pokemonId,
 }: Props) {
     const deleteTeam = deleteTeamMutation(userId, teamId as string)
+    const deletePokemon = deletePokemonMutation(userId, pokemonId as string)
 
     const handleDelete = () => {
         if (teamId)
             deleteTeam.mutate({
                 id: teamId,
             })
-        if (pokemonId) return null
+        if (pokemonId) deletePokemon.mutate({
+            pokemonId: pokemonId
+        })
     }
 
     return (

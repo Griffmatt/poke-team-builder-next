@@ -6,6 +6,7 @@ import PokemonCardWithStats from "../../../components/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
+import DeleteModal from "../../../components/deleteModal"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
@@ -19,7 +20,8 @@ const SinglePokemon: NextPage = () => {
         userId: userId as string,
     })
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+
 
     return (
         <main>
@@ -45,7 +47,7 @@ const SinglePokemon: NextPage = () => {
                         <div className="flex justify-between">
                             {session?.user?.id === user?.id ? (
                                 <>
-                                    <button className="btn-red w-fit rounded-2xl py-2 px-4" onClick={() => setModalOpen(true)}>
+                                    <button className="btn-red w-fit rounded-2xl py-2 px-4" onClick={() => setShowModal(true)}>
                                         Delete
                                     </button>
                                     <Link
@@ -63,7 +65,7 @@ const SinglePokemon: NextPage = () => {
                             )}
                         </div>
                     </div>
-                    {modalOpen && <div></div>}
+                    {showModal && <DeleteModal userId={userId as string} name={pokemon.name} showModal={showModal} setShowModal={setShowModal} pokemonId={pokemonId as string}/>}
                 </>
             )}
         </main>

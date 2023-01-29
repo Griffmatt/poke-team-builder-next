@@ -51,7 +51,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const [fourthMove, setFourthMove] = useState<string>(
         createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
     )
-    const [shiny] = useState(Math.floor(Math.random() * SHINY_ODDS) + 1 === 7)
+    const [shiny] = useState(createdPokemon?.shiny ? createdPokemon.shiny : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7)
 
     const {
         evsArr: evs,

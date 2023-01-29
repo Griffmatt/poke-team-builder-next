@@ -27,14 +27,13 @@ const PokemonCard = ({
         name: pokemonName,
     })
 
-    const pokemonImage =
-        createdPokemon?.shiny || shiny
-            ? pokemon?.sprites.front_shiny
-            : pokemon?.sprites.front_default
-
     if (isLoading) return <LoadingSpinner />
     const firstType = pokemon?.types[0].type.name
     const secondType = pokemon?.types[1]?.type.name
+    const pokemonImage =
+        createdPokemon && createdPokemon?.shiny || shiny
+            ? pokemon?.sprites.front_shiny
+            : pokemon?.sprites.front_default
 
     return (
         <div className="p-3">
