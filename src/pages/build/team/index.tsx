@@ -60,12 +60,12 @@ const BuildTeam: NextPage = () => {
                                     className="pokemon-card"
                                     onClick={() =>
                                         removePokemonFromTeam(
-                                            pokemon?.id as string
+                                            pokemon!.id
                                         )
                                     }
                                 >
                                     <PokemonCard
-                                        pokemonName={pokemon?.name as string}
+                                        pokemonName={pokemon!.name}
                                         createdPokemon={pokemon}
                                     />
                                 </div>

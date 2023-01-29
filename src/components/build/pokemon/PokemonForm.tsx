@@ -10,14 +10,15 @@ import useHandleIvChange from "../../../hooks/useHandleIvChange"
 import formatString from "../../../utils/formatString"
 import { natures } from "../../../assets/natures"
 
-import { Pokemon } from "pokenode-ts"
-import { api } from "../../../utils/api"
-import { useRouter } from "next/router"
 import { PokemonCard } from "../../pokemonCard"
+
+import { updatePokemonMutation } from "../../../mutations/updatePokemonMutation"
+import { buildPokemonMutation } from "../../../mutations/buildPokemonMutation"
 
 type CreatedPokemon = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]
 >
+type Pokemon = inferProcedureOutput<AppRouter["pokeApi"]["getPokemonByName"]>
 
 interface Props {
     pokemon: Pokemon
@@ -27,9 +28,6 @@ interface Props {
 
 const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
-    const router = useRouter()
-    const apiContext = api.useContext()
-    console.log(createdPokemon)
     const SHINY_ODDS = 10
     const [ability, setAbility] = useState<string>(
         createdPokemon?.ability ?? pokemon.abilities[0].ability.name
@@ -53,6 +51,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const [fourthMove, setFourthMove] = useState<string>(
         createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
     )
+    const [shiny] = useState(Math.floor(Math.random() * SHINY_ODDS) + 1 === 7)
 
     const {
         evsArr: evs,
@@ -68,64 +67,75 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         handleIvChange,
     } = useHandleIvChange(createdPokemon?.ivs)
 
-    const createMutation = api.pokemon.buildPokemon.useMutation({
-        onSuccess: () => {
-            router.push("/build/pokemon")
-        },
-    })
+    const pokemonValues = {
+        ability,
+        nature,
+        heldItem,
+        shiny,
+        firstMove,
+        secondMove,
+        thirdMove,
+        fourthMove,
+        evs,
+        ivs,
+    }
 
-    const updateMutation = api.pokemon.updatePokemon.useMutation({
-        onSuccess: () => {
-            apiContext.pokemon.getSinglePokemon.invalidate()
-            router.push(`/profile/${session?.user?.id}`)
-        },
-    })
+    const buildPokemon = buildPokemonMutation(
+        session!.user!.id,
+        pokemon,
+        pokemonValues
+    )
+
+    const updatePokemon = updatePokemonMutation(
+        session!.user!.id,
+        createdPokemon as CreatedPokemon,
+        pokemonValues
+    )
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const user = session?.user
         if (!user) return null
 
-        const updatePokemonData = {
-            id: createdPokemon?.id as string,
-            ability: ability,
-            nature: nature,
-            heldItem: heldItem,
-            moves: [
-                {
-                    move: firstMove,
-                    moveOrder: 1,
-                },
-                {
-                    move: secondMove,
-                    moveOrder: 2,
-                },
-                {
-                    move: thirdMove,
-                    moveOrder: 3,
-                },
-                {
-                    move: fourthMove,
-                    moveOrder: 4,
-                },
-            ],
-            evs: evs,
-
-            ivs: ivs,
-        }
-
         if (createdPokemon) {
-            updateMutation.mutate(updatePokemonData)
+            const updatePokemonData = {
+                id: createdPokemon.id,
+                ability: ability,
+                nature: nature,
+                heldItem: heldItem,
+                moves: [
+                    {
+                        move: firstMove,
+                        moveOrder: 1,
+                    },
+                    {
+                        move: secondMove,
+                        moveOrder: 2,
+                    },
+                    {
+                        move: thirdMove,
+                        moveOrder: 3,
+                    },
+                    {
+                        move: fourthMove,
+                        moveOrder: 4,
+                    },
+                ],
+                evs: evs,
+
+                ivs: ivs,
+            }
+            updatePokemon.mutate(updatePokemonData)
             return null
         }
 
         const createPokemonData = {
-            userId: session?.user?.id as string,
+            userId: session!.user!.id,
             name: pokemon.name,
             ability: ability,
             nature: nature,
             heldItem: heldItem,
-            shiny: Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+            shiny: shiny,
             moves: {
                 createMany: {
                     data: [
@@ -140,7 +150,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             ivs: { createMany: { data: ivs } },
         }
 
-        createMutation.mutate(createPokemonData)
+        buildPokemon.mutate(createPokemonData)
 
         return null
     }

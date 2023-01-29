@@ -1,5 +1,4 @@
-import router from "next/router"
-import { api } from "../utils/api"
+import { deleteTeamMutation } from "../mutations/deleteTeamMutation"
 
 interface Props {
     userId: string
@@ -18,46 +17,11 @@ export default function DeleteModal({
     teamId,
     pokemonId,
 }: Props) {
-    const apiContext = api.useContext()
-    const deleteTeamMutation = api.teams.deleteTeam.useMutation({
-        onMutate: async (variables) => {
-            // Cancel current queries for the todos list
-
-            // Create optimistic todo
-
-            const pastTeams = apiContext.teams.getUserTeams.getData({
-                userId: userId,
-            })
-
-            if (pastTeams) {
-                apiContext.teams.getUserTeams.setData(
-                    { userId: userId },
-                    pastTeams.filter((team) => {
-                        return team.id !== teamId
-                    })
-                )
-            }
-            return { pastTeams }
-        },
-        onSuccess: (result, variables, context) => {
-            router.push(`/profile/${userId}/teams`)
-        },
-        onError: (error, variables, context) => {
-            if (context?.pastTeams) {
-                apiContext.teams.getUserTeams.setData(
-                    { userId: userId },
-                    context.pastTeams
-                )
-            }
-        },
-        onSettled: () => {
-            apiContext.teams.getUserTeams.invalidate({ userId: userId })
-        },
-    })
+    const deleteTeam = deleteTeamMutation(userId, teamId as string)
 
     const handleDelete = () => {
         if (teamId)
-            deleteTeamMutation.mutate({
+            deleteTeam.mutate({
                 id: teamId,
             })
         if (pokemonId) return null

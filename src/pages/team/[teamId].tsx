@@ -22,12 +22,12 @@ const Team: NextPage = () => {
 
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map(({ createdPokemon }) => {
-            return { pokemonId: createdPokemon.id as string }
+            return { pokemonId: createdPokemon.id }
         })
         copyTeamMutation.mutate({
-            userId: session?.user?.id as string,
-            teamName: team?.teamName as string,
-            teamStyle: team?.teamStyle as string,
+            userId: session!.user!.id,
+            teamName: team!.teamName,
+            teamStyle: team!.teamStyle,
             originalTrainerId: team?.userId,
             pokemon: {
                 createMany: {
@@ -44,7 +44,7 @@ const Team: NextPage = () => {
                     <h1>{team?.teamName}</h1>
                     <h2>{team?.teamStyle}</h2>
                     {team?.originalTrainerId && (
-                        <OriginalTrainer id={team?.originalTrainerId} />
+                        <OriginalTrainer id={team.originalTrainerId} />
                     )}
                 </div>
                 {session?.user?.id === team?.userId ? (
@@ -92,7 +92,7 @@ export default Team
 
 const OriginalTrainer = ({ id }: { id: string }) => {
     const { data: user } = api.users.getUser.useQuery({
-        userId: id as string,
+        userId: id,
     })
     return (
         <>

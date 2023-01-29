@@ -19,12 +19,32 @@ export const pokemonRouter = createTRPCRouter({
                 where: { id: input.pokemonId },
                 include: {
                     moves: {
+                        select: {
+                            move: true,
+                            moveOrder: true,
+                        },
                         orderBy: {
                             moveOrder: "asc",
                         },
                     },
-                    evs: true,
-                    ivs: true,
+                    evs: {
+                        select: {
+                            stat: true,
+                            value: true,
+                        },
+                        orderBy: {
+                            stat: "asc",
+                        },
+                    },
+                    ivs: {
+                        select: {
+                            stat: true,
+                            value: true,
+                        },
+                        orderBy: {
+                            stat: "asc",
+                        },
+                    },
                     teams: true,
                 },
             })
@@ -33,15 +53,40 @@ export const pokemonRouter = createTRPCRouter({
         .input(z.object({ userId: z.string() }))
         .query(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.findMany({
-                where: { userId: input.userId },
+                where: {
+                    userId: input.userId,
+                },
+                orderBy: {
+                        createdAt: "desc",
+                },
                 include: {
                     moves: {
+                        select: {
+                            move: true,
+                            moveOrder: true,
+                        },
                         orderBy: {
                             moveOrder: "asc",
                         },
                     },
-                    evs: true,
-                    ivs: true,
+                    evs: {
+                        select: {
+                            stat: true,
+                            value: true,
+                        },
+                        orderBy: {
+                            stat: "desc",
+                        },
+                    },
+                    ivs: {
+                        select: {
+                            stat: true,
+                            value: true,
+                        },
+                        orderBy: {
+                            stat: "desc",
+                        }
+                    },
                     teams: true,
                 },
             })

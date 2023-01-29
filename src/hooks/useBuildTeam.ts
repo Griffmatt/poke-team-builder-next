@@ -17,21 +17,21 @@ export function useBuildTeam(userId: string) {
     const apiContext = api.useContext()
 
     const buildTeamMutation = api.teams.buildTeam.useMutation({
-        onMutate: async (variables) => {
+        onMutate: async () => {
             const pastTeams = apiContext.teams.getUserTeams.getData({
                 userId: userId,
             })
 
             const formatPokemon = pokemonOnTeam.map((pokemon) => {
                 return {
-                    id: pokemon?.id as string,
-                    userId: pokemon?.userId as string,
-                    name: pokemon?.name as string,
-                    ability: pokemon?.ability as string,
-                    nature: pokemon?.nature as string,
-                    heldItem: pokemon?.heldItem as string,
-                    shiny: pokemon?.shiny as boolean,
-                    createdAt: pokemon?.createdAt as Date,
+                    id: pokemon!.id,
+                    userId: pokemon!.userId,
+                    name: pokemon!.name,
+                    ability: pokemon!.ability,
+                    nature: pokemon!.nature,
+                    heldItem: pokemon!.heldItem,
+                    shiny: pokemon!.shiny ,
+                    createdAt: pokemon!.createdAt,
                 }
             })
 

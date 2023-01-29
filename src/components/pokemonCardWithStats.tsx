@@ -38,7 +38,7 @@ export default function PokemonCardWithStats({
         : pokemon?.sprites.front_default
     return (
         <div className="flex aspect-[4/5] flex-col justify-between p-4 text-center">
-            <h2>{formatString(createdPokemon?.name as string)}</h2>
+            <h2>{formatString(createdPokemon!.name)}</h2>
             <div className="h-fit justify-between lg:flex">
                 <div className="aspect-square w-full">
                     {pokemonImage && (
@@ -67,15 +67,15 @@ export default function PokemonCardWithStats({
                     </div>
                     <div>
                         <h2>Ability</h2>
-                        <p>{formatString(createdPokemon?.ability as string)}</p>
+                        <p>{formatString(createdPokemon!.ability)}</p>
                     </div>
                     <div>
                         <h2>Nature</h2>
-                        <p>{formatString(createdPokemon?.nature as string)}</p>
+                        <p>{formatString(createdPokemon!.nature)}</p>
                     </div>
                     <div>
                         <h2>Held Item</h2>
-                        <p>{formatString(createdPokemon?.heldItem as string)}</p>
+                        <p>{formatString(createdPokemon!.heldItem)}</p>
                     </div>
                     <div className="mx-auto w-fit">
                         <h2>Moves</h2>
