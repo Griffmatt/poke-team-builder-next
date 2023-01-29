@@ -21,6 +21,10 @@ const ProfilePokemon: NextPage = () => {
         userId: userId as string,
     })
 
+    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+        userId: userId as string,
+    })
+
     let timer: NodeJS.Timeout | undefined
     const debounceQuery = (queryValue: string) => {
         clearTimeout(timer)
@@ -64,6 +68,7 @@ const ProfilePokemon: NextPage = () => {
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
+                                    favorite={favorites?.includes(pokemon.id)}
                                 />
                             </Link>
                         )

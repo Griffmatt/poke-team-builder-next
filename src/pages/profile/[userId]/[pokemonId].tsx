@@ -36,7 +36,7 @@ const SinglePokemon: NextPage = () => {
                     <h2>
                         {user?.name}'s {pokemon?.name}
                     </h2>
-                    <div className="mx-auto grid gap-3 md:w-[25vw]">
+                    <div className="mx-auto grid gap-3 w-[80%] md:w-[50%] lg:w-[40%]">
                         <div className="pokemon-card">
                             <PokemonCardWithStats
                                 pokemonName={pokemon.name}

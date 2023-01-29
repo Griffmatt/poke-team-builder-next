@@ -1,4 +1,5 @@
 import { type inferProcedureOutput } from "@trpc/server"
+import { useSession } from "next-auth/react"
 import { type AppRouter } from "../server/api/root"
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
@@ -27,9 +28,108 @@ export default function PokemonCardWithStats({
     pokemonName,
     createdPokemon,
 }: Props) {
-    const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
-        name: pokemonName,
+    const { data: session } = useSession()
+    const apiContext = api.useContext()
+
+    const [favorited, pokemonData] = api.useQueries((q) => {
+        return [
+            q.favorite.checkFavorite({
+                userId: session?.user?.id as string,
+                pokemonId: createdPokemon!.id,
+            }),
+            q.pokeApi.getPokemonByName({
+                name: pokemonName,
+            }),
+        ]
     })
+
+    const favorite = favorited.data
+    const pokemon = pokemonData.data
+    const isLoading = favorited.isLoading || pokemonData.isLoading
+
+    const addFavorite = api.favorite.favoritePokemon.useMutation({
+        onMutate: async () => {
+            const userFavorites =
+                apiContext.favorite.getUserFavoritePokemon.getData({
+                    userId: session?.user?.id as string,
+                })
+
+            apiContext.favorite.checkFavorite.setData(
+                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
+                true
+            )
+
+            if (userFavorites) {
+                apiContext.favorite.getUserFavoritePokemon.setData(
+                    { userId: session!.user!.id },
+                    [...userFavorites, createdPokemon!.id]
+                )
+            }
+
+            return { userFavorites }
+        },
+        onError: (error, variables, context) => {
+            apiContext.favorite.checkFavorite.setData(
+                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
+                false
+            )
+            apiContext.favorite.getUserFavoritePokemon.setData(
+                { userId: session!.user!.id },
+                context?.userFavorites
+            )
+        },
+        onSettled: () => {
+            apiContext.favorite.checkFavorite.invalidate()
+            apiContext.favorite.getUserFavoritePokemon.invalidate()
+        },
+    })
+    const removeFavorite = api.favorite.unfavoritePokemon.useMutation({
+        onMutate: async () => {
+            const userFavorites =
+                apiContext.favorite.getUserFavoritePokemon.getData({
+                    userId: session?.user?.id as string,
+                })
+            apiContext.favorite.checkFavorite.setData(
+                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
+                false
+            )
+
+            if (userFavorites) {
+                apiContext.favorite.getUserFavoritePokemon.setData(
+                    { userId: session!.user!.id },
+                    userFavorites.filter((fav) => fav !== createdPokemon?.id)
+                )
+            }
+
+            return { userFavorites }
+        },
+        onError: (error, variables, context) => {
+            apiContext.favorite.checkFavorite.setData(
+                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
+                true
+            )
+            apiContext.favorite.getUserFavoritePokemon.setData(
+                { userId: session!.user!.id },
+                context?.userFavorites
+            )
+        },
+        onSettled: () => {
+            apiContext.favorite.checkFavorite.invalidate()
+            apiContext.favorite.getUserFavoritePokemon.invalidate()
+        },
+    })
+
+    const handleFavorite = () => {
+        favorite
+            ? removeFavorite.mutate({
+                  pokemonId: createdPokemon!.id,
+                  userId: session!.user!.id,
+              })
+            : addFavorite.mutate({
+                  pokemonId: createdPokemon!.id,
+                  userId: session!.user!.id,
+              })
+    }
 
     if (isLoading) return <LoadingSpinner />
 
@@ -40,13 +140,23 @@ export default function PokemonCardWithStats({
         <div className="flex aspect-[4/5] flex-col justify-between p-4 text-center">
             <h2>{formatString(createdPokemon!.name)}</h2>
             <div className="h-fit justify-between lg:flex">
-                <div className="aspect-square w-full">
+                <div className="relative my-auto aspect-square w-full">
                     {pokemonImage && (
                         <img
                             src={pokemonImage}
                             className="aspect-square w-full"
                         />
                     )}
+                    <button
+                        className=" absolute top-0 right-0 rounded-full"
+                        onClick={handleFavorite}
+                    >
+                        <div
+                            className={`h-10 w-10 rounded-full ${
+                                favorite ? "bg-lime-400" : "bg-slate-500"
+                            }`}
+                        ></div>
+                    </button>
                 </div>
                 <div className="h-fit lg:w-[50%]">
                     <div>

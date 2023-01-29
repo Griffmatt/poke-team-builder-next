@@ -93,7 +93,7 @@ export const updatePokemonMutation = (
             return { pastPokemon }
         },
         onSuccess: () => {
-            router.push("/build/pokemon")
+            router.push(`/profile/${userId}`)
         },
         onError: (error, variables, context) => {
             if (context?.pastPokemon) {

@@ -15,6 +15,7 @@ interface Props {
     shiny?: boolean
     createdPokemon?: createdPokemon
     percentage?: string
+    favorite?: boolean
 }
 
 const PokemonCard = ({
@@ -22,6 +23,7 @@ const PokemonCard = ({
     createdPokemon,
     percentage,
     shiny,
+    favorite,
 }: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
@@ -31,27 +33,34 @@ const PokemonCard = ({
     const firstType = pokemon?.types[0].type.name
     const secondType = pokemon?.types[1]?.type.name
     const pokemonImage =
-        createdPokemon && createdPokemon?.shiny || shiny
+        (createdPokemon && createdPokemon?.shiny) || shiny
             ? pokemon?.sprites.front_shiny
             : pokemon?.sprites.front_default
 
     return (
-        <div className="p-3">
-            <div className="aspect-square rounded-full bg-dark">
-                {pokemonImage && <img src={pokemonImage} className="w-full" />}
-            </div>
-            <h4 className="text-center">
-                {formatString(pokemon?.name ?? "null")}
-            </h4>
-            {percentage ? (
-                <h4 className="text-center">{percentage}</h4>
-            ) : (
-                <div className="flex justify-center gap-2">
-                    <h4>{firstType}</h4>
-                    <h4>{secondType}</h4>
+        <>
+            <div className="p-3">
+                <div className="aspect-square rounded-full bg-dark">
+                    {pokemonImage && (
+                        <img src={pokemonImage} className="w-full" />
+                    )}
                 </div>
+                <h4 className="text-center">
+                    {formatString(pokemon?.name ?? "null")}
+                </h4>
+                {percentage ? (
+                    <h4 className="text-center">{percentage}</h4>
+                ) : (
+                    <div className="flex justify-center gap-2">
+                        <h4>{firstType}</h4>
+                        <h4>{secondType}</h4>
+                    </div>
+                )}
+            </div>
+            {favorite && (
+                <div className="absolute top-0 right-0 h-10 w-10 rounded-full bg-lime-400"></div>
             )}
-        </div>
+        </>
     )
 }
 
