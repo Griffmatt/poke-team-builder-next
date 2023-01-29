@@ -41,11 +41,15 @@ select {
 }
 
 button {
-    @apply text-light dark:bg-dark-3;
+    @apply text-light dark:bg-dark-3 dark:hover:bg-dark-2;
 }
 
 button[type="button"] {
     @apply text-xl font-bold text-primary dark:bg-dark-3;
+}
+
+.btn-red{
+    @apply bg-red-600 !important;
 }
 
 .pokemon-card-grid {
@@ -53,7 +57,7 @@ button[type="button"] {
 }
 
 .pokemon-card {
-    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 bg-dark-2 dark:hover:bg-dark-3;
+    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2 dark:hover:bg-dark-3;
 }
 
 .no-scrollbar::-webkit-scrollbar {

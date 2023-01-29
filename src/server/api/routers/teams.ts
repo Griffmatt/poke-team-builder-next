@@ -47,7 +47,18 @@ export const teamsRouter = createTRPCRouter({
                 include: {
                     pokemon: {
                         select: {
-                            createdPokemon: true,
+                            createdPokemon: {
+                                include: {
+                                    moves: {
+                                        orderBy: {
+                                            moveOrder: "asc",
+                                        },
+                                    },
+                                    evs: true,
+                                    ivs: true,
+                                    teams: true
+                                }
+                            }
                         },
                     },
                 },
@@ -59,6 +70,7 @@ export const teamsRouter = createTRPCRouter({
                 userId: z.string(),
                 teamStyle: z.string(),
                 teamName: z.string(),
+                originalTrainerId: z.string().nullish(),
                 pokemon: z.object({
                     createMany: z.object({
                         data: z.array(
@@ -78,13 +90,13 @@ export const teamsRouter = createTRPCRouter({
     deleteTeam: protectedProcedure
         .input(
             z.object({
-                teamId: z.string(),
+                id: z.string(),
             })
         )
         .mutation(({ ctx, input }) => {
             return ctx.prisma.team.delete({
                 where: {
-                    id: input.teamId,
+                    id: input.id,
                 },
             })
         }),

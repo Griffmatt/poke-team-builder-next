@@ -59,7 +59,7 @@ const ProfilePokemon: NextPage = () => {
                             <Link
                                 key={pokemon.id}
                                 className="pokemon-card"
-                                href={`/build/pokemon/${pokemon.name}/${pokemon.id}/update`}
+                                href={`/profile/${user?.id}/${pokemon.id}/`}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}

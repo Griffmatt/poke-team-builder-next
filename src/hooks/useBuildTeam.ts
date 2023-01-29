@@ -14,9 +14,9 @@ export function useBuildTeam(userId: string) {
     const [teamName, setTeamName] = useState("Team Name")
 
     const buildTeamMutation = api.teams.buildTeam.useMutation({
-      onSuccess: () => {
-        router.push("/build/pokemon")
-    },
+        onSuccess: () => {
+            router.push(`/profile/${userId}/teams`)
+        },
     })
 
     const addPokemonToTeam = (pokemon: createdPokemon) => {
@@ -46,10 +46,11 @@ export function useBuildTeam(userId: string) {
         const pokemonIds = pokemonOnTeam.map((pokemon) => {
             return { pokemonId: pokemon?.id as string }
         })
-        await buildTeamMutation.mutate({
+        buildTeamMutation.mutate({
             userId: userId,
             teamName: teamName,
-            teamStyle: "double",
+            teamStyle: "Double",
+            originalTrainerId: null,
             pokemon: {
                 createMany: {
                     data: pokemonIds,
@@ -65,6 +66,7 @@ export function useBuildTeam(userId: string) {
         removePokemonFromTeam,
         buildTeam,
         pokemonOnTeam,
+        setPokemonOnTeam,
         teamName,
         setTeamName,
     }

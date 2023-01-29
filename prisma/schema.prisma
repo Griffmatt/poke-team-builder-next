@@ -63,6 +63,7 @@ model PokemonOnTeam {
 model Team {
   id        String          @id @default(cuid())
   userId    String
+  originalTrainerId String?
   teamStyle String
   teamName  String
   createdAt DateTime        @default(now())

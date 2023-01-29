@@ -8,7 +8,7 @@ import { api } from "../../../utils/api"
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
-    const POKEMON_LIMIT = 24
+    const POKEMON_LIMIT = 42
 
     let timer: NodeJS.Timeout | undefined
     const debounceQuery = (queryValue: string) => {
