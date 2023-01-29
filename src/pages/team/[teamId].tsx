@@ -4,24 +4,21 @@ import { useRouter } from "next/router"
 import PokemonCardWithStats from "../../components/pokemonCardWithStats"
 import { api } from "../../utils/api"
 import Link from "next/link"
+import DeleteModal from "../../components/deleteModal"
+import { useState } from "react"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
     const router = useRouter()
-
     const { teamId } = router.query
+
+    const [showModal, setShowModal] = useState(false)
 
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
 
     const copyTeamMutation = api.teams.buildTeam.useMutation()
-
-    const deleteTeamMutation = api.teams.deleteTeam.useMutation({
-        onSuccess: () => {
-            router.push(`/profile/${team?.userId}/teams`)
-        },
-    })
 
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map(({ createdPokemon }) => {
@@ -46,22 +43,25 @@ const Team: NextPage = () => {
                 <div>
                     <h1>{team?.teamName}</h1>
                     <h2>{team?.teamStyle}</h2>
-                    {team?.originalTrainerId && <OriginalTrainer id={team?.originalTrainerId} />}
+                    {team?.originalTrainerId && (
+                        <OriginalTrainer id={team?.originalTrainerId} />
+                    )}
                 </div>
-                <button
-                    className="h-fit rounded-2xl px-4 py-2"
-                    onClick={() =>
-                        deleteTeamMutation.mutate({ id: teamId as string })
-                    }
-                >
-                    Delete Team
-                </button>
-                <button
-                    className="h-fit rounded-2xl px-4 py-2"
-                    onClick={handleCopy}
-                >
-                    Copy Team
-                </button>
+                {session?.user?.id === team?.userId ? (
+                    <button
+                        className="btn-red h-fit rounded-2xl px-4 py-2"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Delete Team
+                    </button>
+                ) : (
+                    <button
+                        className="h-fit rounded-2xl px-4 py-2"
+                        onClick={handleCopy}
+                    >
+                        Copy Team
+                    </button>
+                )}
             </div>
             <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-3">
                 {team?.pokemon.map(({ createdPokemon }) => {
@@ -75,12 +75,20 @@ const Team: NextPage = () => {
                     )
                 })}
             </div>
+            {team && (
+                <DeleteModal
+                    userId={team?.userId}
+                    name={team?.teamName}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    teamId={team?.id}
+                />
+            )}
         </main>
     )
 }
 
 export default Team
-
 
 const OriginalTrainer = ({ id }: { id: string }) => {
     const { data: user } = api.users.getUser.useQuery({
@@ -89,7 +97,10 @@ const OriginalTrainer = ({ id }: { id: string }) => {
     return (
         <>
             {user && (
-                <Link href={`/profile/${user?.id}`} className="hover:border-b-2">
+                <Link
+                    href={`/profile/${user?.id}`}
+                    className="hover:border-b-2"
+                >
                     <h2>Original Trainer: {user?.name}</h2>
                 </Link>
             )}

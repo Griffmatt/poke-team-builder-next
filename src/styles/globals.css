@@ -37,7 +37,7 @@ input {
 }
 
 select {
-    @apply rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
+    @apply rounded-xl p-1 px-3 dark:bg-dark-3 dark:text-light;
 }
 
 button {
@@ -49,7 +49,7 @@ button[type="button"] {
 }
 
 .btn-red{
-    @apply bg-red-600 !important;
+    @apply bg-red-600 dark:hover:bg-red-700 !important;
 }
 
 .pokemon-card-grid {
@@ -57,7 +57,10 @@ button[type="button"] {
 }
 
 .pokemon-card {
-    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2 dark:hover:bg-dark-3;
+    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2;
+}
+a.pokemon-card{
+    @apply dark:hover:bg-dark-3
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -12,18 +12,25 @@ type createdPokemon = inferProcedureOutput<
 
 interface Props {
     pokemonName: string
+    shiny?: boolean
     createdPokemon?: createdPokemon
     percentage?: string
 }
 
-const PokemonCard = ({ pokemonName, createdPokemon, percentage }: Props) => {
+const PokemonCard = ({
+    pokemonName,
+    createdPokemon,
+    percentage,
+    shiny,
+}: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
     })
 
-    const pokemonImage = createdPokemon?.shiny
-        ? pokemon?.sprites.front_shiny
-        : pokemon?.sprites.front_default
+    const pokemonImage =
+        createdPokemon?.shiny || shiny
+            ? pokemon?.sprites.front_shiny
+            : pokemon?.sprites.front_default
 
     if (isLoading) return <LoadingSpinner />
     const firstType = pokemon?.types[0].type.name

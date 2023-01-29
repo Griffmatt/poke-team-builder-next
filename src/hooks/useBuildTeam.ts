@@ -12,10 +12,58 @@ export function useBuildTeam(userId: string) {
     const router = useRouter()
     const [pokemonOnTeam, setPokemonOnTeam] = useState<createdPokemon[]>([])
     const [teamName, setTeamName] = useState("Team Name")
+    const [teamStyle] = useState("Double")
+
+    const apiContext = api.useContext()
 
     const buildTeamMutation = api.teams.buildTeam.useMutation({
+        onMutate: async (variables) => {
+            const pastTeams = apiContext.teams.getUserTeams.getData({
+                userId: userId,
+            })
+
+            const formatPokemon = pokemonOnTeam.map((pokemon) => {
+                return {
+                    id: pokemon?.id as string,
+                    userId: pokemon?.userId as string,
+                    name: pokemon?.name as string,
+                    ability: pokemon?.ability as string,
+                    nature: pokemon?.nature as string,
+                    heldItem: pokemon?.heldItem as string,
+                    shiny: pokemon?.shiny as boolean,
+                    createdAt: pokemon?.createdAt as Date,
+                }
+            })
+
+            if (pastTeams) {
+                apiContext.teams.getUserTeams.setData({ userId: userId }, [
+                    ...pastTeams,
+                    {
+                        id: "idPlaceHolder",
+                        userId: userId,
+                        originalTrainerId: null,
+                        teamStyle: teamStyle,
+                        teamName: teamName,
+                        createdAt: new Date(),
+                        pokemon: formatPokemon
+                    },
+                ])
+            }
+            return { pastTeams }
+        },
         onSuccess: () => {
             router.push(`/profile/${userId}/teams`)
+        },
+        onError: (error, variables, context) => {
+            if (context?.pastTeams) {
+                apiContext.teams.getUserTeams.setData(
+                    { userId: userId },
+                    context.pastTeams
+                )
+            }
+        },
+        onSettled: () => {
+            apiContext.teams.getUserTeams.invalidate({ userId: userId })
         },
     })
 
@@ -49,7 +97,7 @@ export function useBuildTeam(userId: string) {
         buildTeamMutation.mutate({
             userId: userId,
             teamName: teamName,
-            teamStyle: "Double",
+            teamStyle: teamStyle,
             originalTrainerId: null,
             pokemon: {
                 createMany: {

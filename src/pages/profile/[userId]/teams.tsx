@@ -40,13 +40,14 @@ const ProfileTeams: NextPage = () => {
                                     href={`/team/${team.id}`}
                                     className="pokemon-card-grid"
                                 >
-                                    {team.pokemon.map(({ createdPokemon }) => {
+                                    {team.pokemon.map((pokemon) => {
                                         return (
-                                            <div className="pokemon-card" key={createdPokemon.id}>
+                                            <div className="pokemon-card" key={pokemon.id}>
                                                 <PokemonCard
                                                     pokemonName={
-                                                        createdPokemon.name
+                                                        pokemon.name
                                                     }
+                                                    shiny={pokemon.shiny}
                                                 />
                                             </div>
                                         )

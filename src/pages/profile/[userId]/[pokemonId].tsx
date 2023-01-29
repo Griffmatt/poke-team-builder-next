@@ -50,9 +50,10 @@ const SinglePokemon: NextPage = () => {
                                     </button>
                                     <Link
                                         href={`/build/pokemon/${pokemon.name}/${pokemon.id}/update`}
-                                        className="w-fit rounded-2xl py-2 px-4 dark:bg-dark-3"
                                     >
-                                        Update
+                                        <button className="w-fit rounded-2xl py-2 px-4">
+                                            Update
+                                        </button>
                                     </Link>
                                 </>
                             ) : (
