@@ -1,4 +1,6 @@
 import { useSession } from "next-auth/react"
+import { addFavoritePokemonMutation } from "../mutations/addFavoritePokemonMutation"
+import { removeFavoritePokemonMutation } from "../mutations/removeFavoritePokemonMutation"
 import { CreatedPokemon } from "../types/trpc"
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
@@ -26,124 +28,21 @@ export const PokemonCardWithStats = ({
     favorite,
 }: Props) => {
     const { data: session } = useSession()
-    const apiContext = api.useContext()
 
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
     })
 
-    const addFavorite = api.favorite.favoritePokemon.useMutation({
-        onMutate: async () => {
-            const userFavorites =
-                apiContext.favorite.getUserFavoritePokemon.getData({
-                    userId: session?.user!.id as string,
-                })
-
-            const usersPokemon = apiContext.pokemon.getUsersPokemon.getData({
-                userId: session?.user!.id as string,
-            })
-
-            if (session?.user!.id === createdPokemon?.userId && usersPokemon) {
-                const mapPokemon = usersPokemon.map((userPokemon) => {
-                    if (userPokemon.id === createdPokemon?.id)
-                        return { ...userPokemon, favorited: true }
-
-                    return userPokemon
-                })
-                apiContext.pokemon.getUsersPokemon.setData(
-                    {
-                        userId: session?.user?.id as string,
-                    },
-                    mapPokemon
-                )
-            }
-
-            if (userFavorites) {
-                apiContext.favorite.getUserFavoritePokemon.setData(
-                    { userId: session?.user!.id as string },
-                    [...userFavorites, createdPokemon!.id]
-                )
-            }
-
-            return { userFavorites, usersPokemon }
-        },
-        onError: (error, variables, context) => {
-            apiContext.favorite.getUserFavoritePokemon.setData(
-                { userId: session!.user!.id },
-                context?.userFavorites
-            )
-            apiContext.pokemon.getUsersPokemon.setData(
-                {
-                    userId: session?.user?.id as string,
-                },
-                context?.usersPokemon
-            )
-        },
-        onSettled: () => {
-            apiContext.favorite.getUserFavoritePokemon.invalidate()
-            apiContext.pokemon.getUsersPokemon.invalidate()
-        },
-    })
-    const removeFavorite = api.favorite.unfavoritePokemon.useMutation({
-        onMutate: async () => {
-            const userFavorites =
-                apiContext.favorite.getUserFavoritePokemon.getData({
-                    userId: session?.user?.id as string,
-                })
-
-            const usersPokemon = apiContext.pokemon.getUsersPokemon.getData({
-                userId: session?.user?.id as string,
-            })
-
-            if (session?.user?.id === createdPokemon?.userId && usersPokemon) {
-                const mapPokemon = usersPokemon.map((userPokemon) => {
-                    if (userPokemon.id === createdPokemon?.id)
-                        return { ...userPokemon, favorited: false }
-
-                    return userPokemon
-                })
-                apiContext.pokemon.getUsersPokemon.setData(
-                    {
-                        userId: session?.user?.id as string,
-                    },
-                    mapPokemon
-                )
-            }
-
-            if (userFavorites) {
-                apiContext.favorite.getUserFavoritePokemon.setData(
-                    { userId: session!.user!.id },
-                    userFavorites.filter((fav) => fav !== createdPokemon?.id)
-                )
-            }
-
-            return { userFavorites, usersPokemon }
-        },
-        onError: (error, variables, context) => {
-            apiContext.favorite.getUserFavoritePokemon.setData(
-                { userId: session!.user!.id },
-                context?.userFavorites
-            )
-            apiContext.pokemon.getUsersPokemon.setData(
-                {
-                    userId: session?.user?.id as string,
-                },
-                context?.usersPokemon
-            )
-        },
-        onSettled: () => {
-            apiContext.favorite.getUserFavoritePokemon.invalidate()
-            apiContext.pokemon.getUsersPokemon.invalidate()
-        },
-    })
+    const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
+    const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
 
     const handleFavorite = () => {
         favorite
-            ? removeFavorite.mutate({
+            ? removeFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
                   userId: session!.user!.id,
               })
-            : addFavorite.mutate({
+            : addFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
                   userId: session!.user!.id,
               })

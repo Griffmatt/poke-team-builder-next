@@ -3,7 +3,7 @@ import { AppRouter } from "../server/api/root";
 
 type CreatedPokemonFavorited = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]
-> & { favorited: boolean}
+>
 
 type CreatedPokemon = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]

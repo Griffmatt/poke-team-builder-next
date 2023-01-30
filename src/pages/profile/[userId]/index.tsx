@@ -55,6 +55,7 @@ const ProfilePokemon: NextPage = () => {
             ) : (
                 <div className="pokemon-card-grid">
                     {filterPokemon?.map((pokemon) => {
+                        const favorited = pokemon.favorited[0]?.userId === pokemon.userId
                         return (
                             <Link
                                 key={pokemon.id}
@@ -64,7 +65,7 @@ const ProfilePokemon: NextPage = () => {
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
-                                    favorite={pokemon.favorited}
+                                    favorite={favorited}
                                 />
                             </Link>
                         )

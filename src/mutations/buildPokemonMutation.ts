@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { Pokemon } from "pokenode-ts"
 import { api } from "../utils/api"
+import { sortByFavorited } from "../utils/sortByFavorited"
 
 interface UpdateValues {
     ability: string
@@ -50,7 +51,7 @@ export const buildPokemonMutation = (
                 heldItem: heldItem,
                 shiny: shiny,
                 createdAt: new Date(),
-                favorited: false,
+                favorited: [],
                 moves: [
                     { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },
@@ -63,10 +64,11 @@ export const buildPokemonMutation = (
             }
 
             if (pastPokemon) {
-                apiContext.pokemon.getUsersPokemon.setData({ userId: userId }, [
+                const sortFavorites = sortByFavorited([
                     buildPokemonData,
                     ...pastPokemon,
                 ])
+                apiContext.pokemon.getUsersPokemon.setData({ userId: userId }, sortFavorites)
             }
 
             if (topPokemonData) {

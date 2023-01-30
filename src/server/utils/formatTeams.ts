@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 
-const teams = Prisma.validator<Prisma.TeamArgs>()({
+const  teams =  Prisma.validator<Prisma.TeamArgs>()({
     include: {
         pokemon: {
             select: {

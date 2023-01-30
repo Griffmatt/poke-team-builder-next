@@ -21,7 +21,7 @@ const NavBar = () => {
                     <h2>Profile</h2>
                 </NavLink>
             ) : (
-                <button className="bg-transparent" onClick={() => signIn()}>
+                <button className="btn-transparent" onClick={() => signIn()}>
                     <h2>Sign In</h2>
                 </button>
             )}

@@ -52,7 +52,7 @@ export const updatePokemonMutation = (
                 heldItem: heldItem,
                 shiny: shiny,
                 createdAt: createdPokemon!.createdAt,
-                favorited: createdPokemon!.favorited,
+                favorited: [],
                 moves: [
                     { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },

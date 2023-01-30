@@ -75,6 +75,7 @@ model Team {
 model favoritePokemon {
   pokemonId      String
   userId         String
+  favoritedAt DateTime @default(now())
   createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -84,6 +85,7 @@ model favoritePokemon {
 model favoriteTeams {
   teamId String
   userId String
+  favoritedAt DateTime @default(now())
   team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 

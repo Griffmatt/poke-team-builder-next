@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { sortByFavorited } from "../../../utils/sortByFavorited"
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc"
 
 export const pokemonRouter = createTRPCRouter({
@@ -85,9 +86,6 @@ export const pokemonRouter = createTRPCRouter({
                 where: {
                     userId: input.userId,
                 },
-                orderBy: {
-                    createdAt: "desc",
-                },
                 include: {
                     moves: {
                         select: {
@@ -123,17 +121,14 @@ export const pokemonRouter = createTRPCRouter({
                         },
                         select: {
                             userId: true,
+                            favoritedAt: true
                         },
                     },
                 },
             })
 
-            const pokemonArr = results.map((pokemon) => {
-                let favorited = pokemon.favorited[0]?.userId === input.userId
-                return { ...pokemon, favorited: favorited }
-            })
-
-            return pokemonArr
+            const sortedPokemon = sortByFavorited(results)
+            return sortedPokemon
         }),
     buildPokemon: protectedProcedure
         .input(
