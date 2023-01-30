@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 
-const  teams =  Prisma.validator<Prisma.TeamArgs>()({
+const teams = Prisma.validator<Prisma.TeamArgs>()({
     include: {
         pokemon: {
             select: {
@@ -24,7 +24,13 @@ const  teams =  Prisma.validator<Prisma.TeamArgs>()({
                                 value: true,
                             },
                         },
-                        teams: true
+                        teams: true,
+                        favorited: {
+                            select: {
+                                userId: true,
+                                favoritedAt: true,
+                            },
+                        },
                     },
                 },
             },
@@ -57,6 +63,7 @@ export const formatTeams = (results: teamsArr) =>
                     evs: createdPokemon.evs,
                     ivs: createdPokemon.ivs,
                     teams: createdPokemon.teams,
+                    favorited: createdPokemon.favorited
                 }
             }),
         }

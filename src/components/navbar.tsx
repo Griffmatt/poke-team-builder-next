@@ -2,8 +2,7 @@ import { NavLink } from "./ui/navLink"
 import { signIn, useSession } from "next-auth/react"
 
 const NavBar = () => {
-    const { data } = useSession()
-    const user = data?.user
+    const { data: session } = useSession()
 
     return (
         <div className="mx-auto flex max-w-[40rem] justify-center gap-6  p-3">
@@ -16,8 +15,8 @@ const NavBar = () => {
             <NavLink href="/boxes">
                 <h2>Boxes</h2>
             </NavLink>
-            {user ? (
-                <NavLink href={`/profile/${user.id}`}>
+            {session?.user ? (
+                <NavLink href={`/profile/${session?.user?.id}`}>
                     <h2>Profile</h2>
                 </NavLink>
             ) : (

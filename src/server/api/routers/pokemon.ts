@@ -76,6 +76,12 @@ export const pokemonRouter = createTRPCRouter({
                         },
                     },
                     teams: true,
+                    favorited: {
+                        select: {
+                            userId: true,
+                            favoritedAt: true,
+                        },
+                    },
                 },
             })
         }),
@@ -121,7 +127,7 @@ export const pokemonRouter = createTRPCRouter({
                         },
                         select: {
                             userId: true,
-                            favoritedAt: true
+                            favoritedAt: true,
                         },
                     },
                 },

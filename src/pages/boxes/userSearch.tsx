@@ -15,7 +15,7 @@ const Boxes: NextPage = () => {
                     {users?.map((user) => {
                         return (
                             <Link
-                                href={`/boxes/${user.id}`}
+                                href={`/profile/${user.id}`}
                                 className="grid w-fit gap-2"
                                 key={user.id}
                             >

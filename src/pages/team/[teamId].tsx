@@ -1,7 +1,7 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import {PokemonCardWithStats} from "../../components/pokemonCardWithStats"
+import { PokemonCardWithStats } from "../../components/pokemonCardWithStats"
 import { api } from "../../utils/api"
 import Link from "next/link"
 import DeleteModal from "../../components/deleteModal"
@@ -28,11 +28,11 @@ const Team: NextPage = () => {
             return { pokemonId: pokemon.id }
         })
         copyTeamMutation.mutate({
-            userId: session!.user!.id,
+            userId: session?.user!.id as string,
             teamName: team!.teamName,
             teamStyle: team!.teamStyle,
             originalTrainerId: team?.userId,
-            pokemon: pokemonIds ?? []
+            pokemon: pokemonIds ?? [],
         })
     }
 

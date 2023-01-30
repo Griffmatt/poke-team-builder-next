@@ -13,12 +13,12 @@ import { PokemonCard } from "../../pokemonCard"
 import { updatePokemonMutation } from "../../../mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "../../../mutations/buildPokemonMutation"
 import { Pokemon } from "pokenode-ts"
-import { CreatedPokemonFavorited } from "../../../types/trpc"
+import { CreatedPokemon } from "../../../types/trpc"
 
 interface Props {
     pokemon: Pokemon
     heldItems: { name: string }[]
-    createdPokemon?: CreatedPokemonFavorited
+    createdPokemon?: CreatedPokemon
 }
 
 const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
@@ -80,14 +80,14 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     }
 
     const buildPokemon = buildPokemonMutation(
-        session!.user!.id,
+        session?.user!.id as string,
         pokemon,
         pokemonValues
     )
 
     const updatePokemon = updatePokemonMutation(
-        session!.user!.id,
-        createdPokemon as CreatedPokemonFavorited,
+        session?.user!.id as string,
+        createdPokemon as CreatedPokemon,
         pokemonValues
     )
 
@@ -129,7 +129,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         }
 
         const createPokemonData = {
-            userId: session!.user!.id,
+            userId: session?.user!.id,
             name: pokemon.name,
             ability: ability,
             nature: nature,

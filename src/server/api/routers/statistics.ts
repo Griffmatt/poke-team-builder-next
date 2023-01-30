@@ -27,4 +27,49 @@ export const statisticsRouter = createTRPCRouter({
             .slice(0, 12)
         return { totalPokemon, topPokemon }
     }),
+    getPopularPokemon: publicProcedure.query(async ({ ctx }) => {
+        const results = await ctx.prisma.createdPokemon.findMany({
+            include: {
+                moves: {
+                    select: {
+                        move: true,
+                        moveOrder: true,
+                    },
+                    orderBy: {
+                        moveOrder: "asc",
+                    },
+                },
+                evs: {
+                    select: {
+                        stat: true,
+                        value: true,
+                    },
+                    orderBy: {
+                        stat: "desc",
+                    },
+                },
+                ivs: {
+                    select: {
+                        stat: true,
+                        value: true,
+                    },
+                    orderBy: {
+                        stat: "desc",
+                    },
+                },
+                teams: true,
+                favorited: {
+                    select: {
+                        userId: true,
+                        favoritedAt: true,
+                    },
+                },
+            },
+        })
+        results.sort((a, b) => {
+            return b.favorited.length - a.favorited.length
+        })
+
+        return results
+    }),
 })

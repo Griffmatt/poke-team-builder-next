@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { CreatedPokemonFavorited } from "../types/trpc"
+import { CreatedPokemon } from "../types/trpc"
 import { api } from "../utils/api"
 interface UpdateValues {
     ability: string
@@ -16,7 +16,7 @@ interface UpdateValues {
 
 export const updatePokemonMutation = (
     userId: string,
-    createdPokemon: CreatedPokemonFavorited,
+    createdPokemon: CreatedPokemon,
     {
         ability,
         nature,

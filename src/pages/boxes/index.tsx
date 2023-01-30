@@ -1,6 +1,6 @@
 import { type NextPage } from "next"
 import { BoxesNav } from "../../components/boxes/boxesNav"
-
+import { PopularPokemon } from "../../components/boxes/popularPokemon"
 const Boxes: NextPage = () => {
     return (
         <main>
@@ -9,9 +9,7 @@ const Boxes: NextPage = () => {
             <div className="grid gap-3">
                 <h3>Popular Teams</h3>
             </div>
-            <div className="grid gap-3">
-                <h3>Popular Pokemon</h3>
-            </div>
+            <PopularPokemon />
         </main>
     )
 }

@@ -38,6 +38,12 @@ export const teamsRouter = createTRPCRouter({
                                     },
                                 },
                                 teams: true,
+                                favorited: {
+                                    select: {
+                                        userId: true,
+                                        favoritedAt: true,
+                                    },
+                                },
                             },
                         },
                     },
@@ -93,6 +99,12 @@ export const teamsRouter = createTRPCRouter({
                                         },
                                     },
                                     teams: true,
+                                    favorited: {
+                                        select: {
+                                            userId: true,
+                                            favoritedAt: true,
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -121,13 +133,39 @@ export const teamsRouter = createTRPCRouter({
                             createdPokemon: {
                                 include: {
                                     moves: {
+                                        select: {
+                                            move: true,
+                                            moveOrder: true,
+                                        },
                                         orderBy: {
                                             moveOrder: "asc",
                                         },
                                     },
-                                    evs: true,
-                                    ivs: true,
+                                    evs: {
+                                        select: {
+                                            stat: true,
+                                            value: true,
+                                        },
+                                        orderBy: {
+                                            stat: "desc",
+                                        },
+                                    },
+                                    ivs: {
+                                        select: {
+                                            stat: true,
+                                            value: true,
+                                        },
+                                        orderBy: {
+                                            stat: "desc",
+                                        },
+                                    },
                                     teams: true,
+                                    favorited: {
+                                        select: {
+                                            userId: true,
+                                            favoritedAt: true,
+                                        },
+                                    },
                                 },
                             },
                         },

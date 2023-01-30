@@ -51,7 +51,7 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
         },
         onError: (error, variables, context) => {
             apiContext.favorite.getUserFavoritePokemon.setData(
-                { userId: session!.user!.id },
+                { userId: session?.user!.id as string},
                 context?.userFavorites
             )
             apiContext.pokemon.getUsersPokemon.setData(

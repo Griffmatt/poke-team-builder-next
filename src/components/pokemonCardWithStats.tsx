@@ -37,14 +37,15 @@ export const PokemonCardWithStats = ({
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
 
     const handleFavorite = () => {
+        if(!session?.user) return null
         favorite
             ? removeFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
-                  userId: session!.user!.id,
+                  userId: session.user!.id,
               })
             : addFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
-                  userId: session!.user!.id,
+                  userId: session.user!.id,
               })
     }
 
