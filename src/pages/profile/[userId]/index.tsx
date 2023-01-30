@@ -8,9 +8,11 @@ import Link from "next/link"
 import { PokemonCard } from "../../../components/pokemonCard"
 import { ProfileNav } from "../../../components/profile/profileNav"
 import { PokemonEmpty } from "../../../components/pokemonEmpty"
+import { useSession } from "next-auth/react"
 
 const ProfilePokemon: NextPage = () => {
     const router = useRouter()
+    const { data: session } = useSession()
     const { userId } = router.query
     const [query, setQuery] = useState("")
 
@@ -20,9 +22,8 @@ const ProfilePokemon: NextPage = () => {
     const { data: user } = api.users.getUser.useQuery({
         userId: userId as string,
     })
-
     const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
-        userId: userId as string,
+        userId: session?.user?.id as string,
     })
 
     let timer: NodeJS.Timeout | undefined
@@ -80,4 +81,3 @@ const ProfilePokemon: NextPage = () => {
 }
 
 export default ProfilePokemon
-

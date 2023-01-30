@@ -47,7 +47,7 @@ const ProfileTeams: NextPage = () => {
                                                     pokemonName={
                                                         pokemon.name
                                                     }
-                                                    shiny={pokemon.shiny}
+                                                    createdPokemon={pokemon}
                                                 />
                                             </div>
                                         )

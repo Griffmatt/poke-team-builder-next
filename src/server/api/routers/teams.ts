@@ -8,7 +8,18 @@ export const teamsRouter = createTRPCRouter({
             include: {
                 pokemon: {
                     select: {
-                        createdPokemon: true,
+                        createdPokemon: {
+                            include: {
+                                moves: {
+                                    orderBy: {
+                                        moveOrder: "asc",
+                                    },
+                                },
+                                evs: true,
+                                ivs: true,
+                                teams: true,
+                            },
+                        },
                     },
                 },
             },
@@ -32,7 +43,18 @@ export const teamsRouter = createTRPCRouter({
                 include: {
                     pokemon: {
                         select: {
-                            createdPokemon: true,
+                            createdPokemon: {
+                                include: {
+                                    moves: {
+                                        orderBy: {
+                                            moveOrder: "asc",
+                                        },
+                                    },
+                                    evs: true,
+                                    ivs: true,
+                                    teams: true,
+                                },
+                            },
                         },
                     },
                 },
@@ -48,8 +70,8 @@ export const teamsRouter = createTRPCRouter({
                 teamId: z.string(),
             })
         )
-        .query(({ ctx, input }) => {
-            return ctx.prisma.team.findUnique({
+        .query(async ({ ctx, input }) => {
+            const results = await ctx.prisma.team.findUnique({
                 where: {
                     id: input.teamId,
                 },
@@ -72,6 +94,11 @@ export const teamsRouter = createTRPCRouter({
                     },
                 },
             })
+            if(results === null) return null
+
+            const formatResults = formatTeams([results])
+
+            return formatResults[0]
         }),
     buildTeam: protectedProcedure
         .input(

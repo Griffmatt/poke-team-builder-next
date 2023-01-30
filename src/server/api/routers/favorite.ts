@@ -16,19 +16,6 @@ export const favoriteRouter = createTRPCRouter({
             })
             return formatFavorites
         }),
-    checkFavorite: publicProcedure
-        .input(z.object({ userId: z.string(), pokemonId: z.string() }))
-        .query(async ({ ctx, input }) => {
-            const favorite = await ctx.prisma.favoritePokemon.findUnique({
-                where: {
-                    pokemonId_userId: {
-                        userId: input.userId,
-                        pokemonId: input.pokemonId,
-                    },
-                },
-            })
-            return favorite !== null
-        }),
     favoritePokemon: protectedProcedure
         .input(z.object({ userId: z.string(), pokemonId: z.string() }))
         .mutation(({ ctx, input }) => {

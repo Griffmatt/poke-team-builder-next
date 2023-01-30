@@ -19,6 +19,9 @@ const SinglePokemon: NextPage = () => {
     const { data: user } = api.users.getUser.useQuery({
         userId: userId as string,
     })
+    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+        userId: session?.user?.id as string
+    })
 
     const [showModal, setShowModal] = useState(false)
 
@@ -41,6 +44,7 @@ const SinglePokemon: NextPage = () => {
                             <PokemonCardWithStats
                                 pokemonName={pokemon.name}
                                 createdPokemon={pokemon}
+                                favorite={favorites?.includes(pokemon.id)}
                             />
                         </div>
 

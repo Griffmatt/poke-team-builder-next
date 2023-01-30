@@ -17,12 +17,15 @@ const Team: NextPage = () => {
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
+    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+        userId: session?.user?.id as string
+    })
 
     const copyTeamMutation = api.teams.buildTeam.useMutation()
 
     const handleCopy = () => {
-        const pokemonIds = team?.pokemon.map(({ createdPokemon }) => {
-            return { pokemonId: createdPokemon.id }
+        const pokemonIds = team?.pokemon.map((pokemon) => {
+            return { pokemonId: pokemon.id }
         })
         copyTeamMutation.mutate({
             userId: session!.user!.id,
@@ -64,12 +67,13 @@ const Team: NextPage = () => {
                 )}
             </div>
             <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-3">
-                {team?.pokemon.map(({ createdPokemon }) => {
+                {team?.pokemon.map((pokemon) => {
                     return (
-                        <div key={createdPokemon.id} className="pokemon-card">
+                        <div key={pokemon.id} className="pokemon-card">
                             <PokemonCardWithStats
-                                pokemonName={createdPokemon.name}
-                                createdPokemon={createdPokemon}
+                                pokemonName={pokemon.name}
+                                createdPokemon={pokemon}
+                                favorite={favorites?.includes(pokemon.id)}
                             />
                         </div>
                     )

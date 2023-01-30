@@ -12,6 +12,7 @@ type createdPokemon = inferProcedureOutput<
 interface Props {
     pokemonName: string
     createdPokemon: createdPokemon
+    favorite?: boolean
 }
 
 const formatStat = (statName: string) => {
@@ -27,25 +28,14 @@ const formatStat = (statName: string) => {
 export default function PokemonCardWithStats({
     pokemonName,
     createdPokemon,
+    favorite
 }: Props) {
     const { data: session } = useSession()
     const apiContext = api.useContext()
 
-    const [favorited, pokemonData] = api.useQueries((q) => {
-        return [
-            q.favorite.checkFavorite({
-                userId: session?.user?.id as string,
-                pokemonId: createdPokemon!.id,
-            }),
-            q.pokeApi.getPokemonByName({
-                name: pokemonName,
-            }),
-        ]
+    const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
+        name: pokemonName,
     })
-
-    const favorite = favorited.data
-    const pokemon = pokemonData.data
-    const isLoading = favorited.isLoading || pokemonData.isLoading
 
     const addFavorite = api.favorite.favoritePokemon.useMutation({
         onMutate: async () => {
@@ -53,11 +43,6 @@ export default function PokemonCardWithStats({
                 apiContext.favorite.getUserFavoritePokemon.getData({
                     userId: session?.user?.id as string,
                 })
-
-            apiContext.favorite.checkFavorite.setData(
-                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
-                true
-            )
 
             if (userFavorites) {
                 apiContext.favorite.getUserFavoritePokemon.setData(
@@ -69,17 +54,12 @@ export default function PokemonCardWithStats({
             return { userFavorites }
         },
         onError: (error, variables, context) => {
-            apiContext.favorite.checkFavorite.setData(
-                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
-                false
-            )
             apiContext.favorite.getUserFavoritePokemon.setData(
                 { userId: session!.user!.id },
                 context?.userFavorites
             )
         },
         onSettled: () => {
-            apiContext.favorite.checkFavorite.invalidate()
             apiContext.favorite.getUserFavoritePokemon.invalidate()
         },
     })
@@ -89,10 +69,6 @@ export default function PokemonCardWithStats({
                 apiContext.favorite.getUserFavoritePokemon.getData({
                     userId: session?.user?.id as string,
                 })
-            apiContext.favorite.checkFavorite.setData(
-                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
-                false
-            )
 
             if (userFavorites) {
                 apiContext.favorite.getUserFavoritePokemon.setData(
@@ -104,17 +80,12 @@ export default function PokemonCardWithStats({
             return { userFavorites }
         },
         onError: (error, variables, context) => {
-            apiContext.favorite.checkFavorite.setData(
-                { userId: session!.user!.id, pokemonId: createdPokemon!.id },
-                true
-            )
             apiContext.favorite.getUserFavoritePokemon.setData(
                 { userId: session!.user!.id },
                 context?.userFavorites
             )
         },
         onSettled: () => {
-            apiContext.favorite.checkFavorite.invalidate()
             apiContext.favorite.getUserFavoritePokemon.invalidate()
         },
     })
