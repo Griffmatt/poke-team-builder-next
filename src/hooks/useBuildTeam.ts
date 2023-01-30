@@ -1,16 +1,13 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
-import type { inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../server/api/root"
 import { api } from "../utils/api"
+import { CreatedPokemon } from "../types/trpc"
 
-type createdPokemon = inferProcedureOutput<
-    AppRouter["pokemon"]["getSinglePokemon"]
->
+
 
 export function useBuildTeam(userId: string) {
     const router = useRouter()
-    const [pokemonOnTeam, setPokemonOnTeam] = useState<createdPokemon[]>([])
+    const [pokemonOnTeam, setPokemonOnTeam] = useState<CreatedPokemon[]>([])
     const [teamName, setTeamName] = useState("Team Name")
     const [teamStyle] = useState("Double")
 
@@ -71,7 +68,7 @@ export function useBuildTeam(userId: string) {
         },
     })
 
-    const addPokemonToTeam = (pokemon: createdPokemon) => {
+    const addPokemonToTeam = (pokemon: CreatedPokemon) => {
         if (pokemonOnTeam.length >= 6) return null
         const containsPokemon = pokemonOnTeam.find(
             (pokemonOnTeam) => pokemonOnTeam?.id === pokemon?.id
@@ -103,11 +100,7 @@ export function useBuildTeam(userId: string) {
             teamName: teamName,
             teamStyle: teamStyle,
             originalTrainerId: null,
-            pokemon: {
-                createMany: {
-                    data: pokemonIds,
-                },
-            },
+            pokemon: pokemonIds,
         })
 
         return null

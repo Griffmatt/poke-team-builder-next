@@ -1,9 +1,6 @@
-import { type inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../server/api/root"
 import { useRouter } from "next/router"
+import { Pokemon } from "pokenode-ts"
 import { api } from "../utils/api"
-
-type Pokemon = inferProcedureOutput<AppRouter["pokeApi"]["getPokemonByName"]>
 
 interface UpdateValues {
     ability: string
@@ -55,7 +52,7 @@ export const buildPokemonMutation = (
                 createdAt: new Date(),
                 favorited: false,
                 moves: [
-                    { move: firstMove, moveOrder: 1},
+                    { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },
                     { move: thirdMove, moveOrder: 3 },
                     { move: fourthMove, moveOrder: 4 },

@@ -1,13 +1,6 @@
-import { type inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../server/api/root"
 import { useRouter } from "next/router"
+import { CreatedPokemonFavorited } from "../types/trpc"
 import { api } from "../utils/api"
-
-type CreatedPokemon = inferProcedureOutput<
-    AppRouter["pokemon"]["getSinglePokemon"]
-> & {favorited: boolean}
-
-
 interface UpdateValues {
     ability: string
     nature: string
@@ -23,7 +16,7 @@ interface UpdateValues {
 
 export const updatePokemonMutation = (
     userId: string,
-    createdPokemon: CreatedPokemon,
+    createdPokemon: CreatedPokemonFavorited,
     {
         ability,
         nature,
@@ -59,7 +52,7 @@ export const updatePokemonMutation = (
                 heldItem: heldItem,
                 shiny: shiny,
                 createdAt: createdPokemon!.createdAt,
-                favorited: createdPokemon.favorited,
+                favorited: createdPokemon!.favorited,
                 moves: [
                     { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },

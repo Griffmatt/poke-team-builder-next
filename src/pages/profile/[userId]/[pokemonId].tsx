@@ -2,7 +2,7 @@ import { type NextPage } from "next"
 import { useRouter } from "next/router"
 
 import { api } from "../../../utils/api"
-import PokemonCardWithStats from "../../../components/pokemonCardWithStats"
+import { PokemonCardWithStats } from "../../../components/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
@@ -20,11 +20,10 @@ const SinglePokemon: NextPage = () => {
         userId: userId as string,
     })
     const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string
+        userId: session?.user?.id as string,
     })
 
     const [showModal, setShowModal] = useState(false)
-
 
     return (
         <main>
@@ -39,7 +38,7 @@ const SinglePokemon: NextPage = () => {
                     <h2>
                         {user?.name}'s {pokemon?.name}
                     </h2>
-                    <div className="mx-auto grid gap-3 w-[80%] md:w-[50%] lg:w-[40%]">
+                    <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                         <div className="pokemon-card">
                             <PokemonCardWithStats
                                 pokemonName={pokemon.name}
@@ -51,7 +50,10 @@ const SinglePokemon: NextPage = () => {
                         <div className="flex justify-between">
                             {session?.user?.id === user?.id ? (
                                 <>
-                                    <button className="btn-red w-fit rounded-2xl py-2 px-4" onClick={() => setShowModal(true)}>
+                                    <button
+                                        className="btn-red w-fit rounded-2xl py-2 px-4"
+                                        onClick={() => setShowModal(true)}
+                                    >
                                         Delete
                                     </button>
                                     <Link
@@ -69,7 +71,15 @@ const SinglePokemon: NextPage = () => {
                             )}
                         </div>
                     </div>
-                    {showModal && <DeleteModal userId={userId as string} name={pokemon.name} showModal={showModal} setShowModal={setShowModal} pokemonId={pokemonId as string}/>}
+                    {showModal && (
+                        <DeleteModal
+                            userId={userId as string}
+                            name={pokemon.name}
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            pokemonId={pokemonId as string}
+                        />
+                    )}
                 </>
             )}
         </main>

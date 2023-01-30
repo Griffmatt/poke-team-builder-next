@@ -1,7 +1,5 @@
 import { useSession } from "next-auth/react"
 import { FormEvent, useState } from "react"
-import type { inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../../../server/api/root"
 
 import { MovesInput } from "./movesInput"
 
@@ -14,16 +12,13 @@ import { PokemonCard } from "../../pokemonCard"
 
 import { updatePokemonMutation } from "../../../mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "../../../mutations/buildPokemonMutation"
-
-type CreatedPokemon = inferProcedureOutput<
-    AppRouter["pokemon"]["getSinglePokemon"]
->
-type Pokemon = inferProcedureOutput<AppRouter["pokeApi"]["getPokemonByName"]>
+import { Pokemon } from "pokenode-ts"
+import { CreatedPokemonFavorited } from "../../../types/trpc"
 
 interface Props {
     pokemon: Pokemon
     heldItems: { name: string }[]
-    createdPokemon?: CreatedPokemon
+    createdPokemon?: CreatedPokemonFavorited
 }
 
 const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
@@ -51,7 +46,11 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const [fourthMove, setFourthMove] = useState<string>(
         createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
     )
-    const [shiny] = useState(createdPokemon?.shiny ? createdPokemon.shiny : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7)
+    const [shiny] = useState(
+        createdPokemon?.shiny
+            ? createdPokemon.shiny
+            : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7
+    )
 
     const {
         evsArr: evs,
@@ -88,7 +87,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
     const updatePokemon = updatePokemonMutation(
         session!.user!.id,
-        createdPokemon as CreatedPokemon,
+        createdPokemon as CreatedPokemonFavorited,
         pokemonValues
     )
 
@@ -136,18 +135,14 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             nature: nature,
             heldItem: heldItem,
             shiny: shiny,
-            moves: {
-                createMany: {
-                    data: [
-                        { move: firstMove, moveOrder: 1 },
-                        { move: secondMove, moveOrder: 2 },
-                        { move: thirdMove, moveOrder: 3 },
-                        { move: fourthMove, moveOrder: 4 },
-                    ],
-                },
-            },
-            evs: { createMany: { data: evs } },
-            ivs: { createMany: { data: ivs } },
+            moves: [
+                { move: firstMove, moveOrder: 1 },
+                { move: secondMove, moveOrder: 2 },
+                { move: thirdMove, moveOrder: 3 },
+                { move: fourthMove, moveOrder: 4 },
+            ],
+            evs: evs,
+            ivs: ivs,
         }
 
         buildPokemon.mutate(createPokemonData)

@@ -37,7 +37,7 @@ export const teamsRouter = createTRPCRouter({
                                         stat: "asc",
                                     },
                                 },
-                                teams: true
+                                teams: true,
                             },
                         },
                     },
@@ -92,7 +92,7 @@ export const teamsRouter = createTRPCRouter({
                                             stat: "asc",
                                         },
                                     },
-                                    teams: true
+                                    teams: true,
                                 },
                             },
                         },
@@ -147,20 +147,19 @@ export const teamsRouter = createTRPCRouter({
                 teamStyle: z.string(),
                 teamName: z.string(),
                 originalTrainerId: z.string().nullish(),
-                pokemon: z.object({
-                    createMany: z.object({
-                        data: z.array(
-                            z.object({
-                                pokemonId: z.string(),
-                            })
-                        ),
-                    }),
-                }),
+                pokemon: z.array(
+                    z.object({
+                        pokemonId: z.string(),
+                    })
+                ),
             })
         )
         .mutation(({ ctx, input }) => {
             return ctx.prisma.team.create({
-                data: input,
+                data: {
+                    ...input,
+                    pokemon: { createMany: { data: input.pokemon } },
+                },
             })
         }),
     deleteTeam: protectedProcedure

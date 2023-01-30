@@ -1,18 +1,13 @@
-import type { inferProcedureOutput } from "@trpc/server"
-import { type AppRouter } from "../server/api/root"
+import { CreatedPokemon } from "../types/trpc"
 
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
 
 import { LoadingSpinner } from "./ui/loadingSpinner"
 
-type createdPokemon = inferProcedureOutput<
-    AppRouter["pokemon"]["getSinglePokemon"]
->
-
 interface Props {
     pokemonName: string
-    createdPokemon?: createdPokemon
+    createdPokemon?: CreatedPokemon
     percentage?: string
     favorite?: boolean
 }
@@ -21,7 +16,7 @@ const PokemonCard = ({
     pokemonName,
     createdPokemon,
     percentage,
-    favorite
+    favorite,
 }: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
@@ -31,7 +26,7 @@ const PokemonCard = ({
     const firstType = pokemon?.types[0].type.name
     const secondType = pokemon?.types[1]?.type.name
     const pokemonImage =
-        (createdPokemon && createdPokemon?.shiny) 
+        createdPokemon && createdPokemon?.shiny
             ? pokemon?.sprites.front_shiny
             : pokemon?.sprites.front_default
 

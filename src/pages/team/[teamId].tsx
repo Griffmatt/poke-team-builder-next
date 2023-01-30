@@ -1,7 +1,7 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import PokemonCardWithStats from "../../components/pokemonCardWithStats"
+import {PokemonCardWithStats} from "../../components/pokemonCardWithStats"
 import { api } from "../../utils/api"
 import Link from "next/link"
 import DeleteModal from "../../components/deleteModal"
@@ -18,7 +18,7 @@ const Team: NextPage = () => {
         teamId: teamId as string,
     })
     const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string
+        userId: session?.user?.id as string,
     })
 
     const copyTeamMutation = api.teams.buildTeam.useMutation()
@@ -32,11 +32,7 @@ const Team: NextPage = () => {
             teamName: team!.teamName,
             teamStyle: team!.teamStyle,
             originalTrainerId: team?.userId,
-            pokemon: {
-                createMany: {
-                    data: pokemonIds ?? [],
-                },
-            },
+            pokemon: pokemonIds ?? []
         })
     }
 

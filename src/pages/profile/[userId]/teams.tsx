@@ -42,11 +42,12 @@ const ProfileTeams: NextPage = () => {
                                 >
                                     {team.pokemon.map((pokemon) => {
                                         return (
-                                            <div className="pokemon-card" key={pokemon.id}>
+                                            <div
+                                                className="pokemon-card"
+                                                key={pokemon.id}
+                                            >
                                                 <PokemonCard
-                                                    pokemonName={
-                                                        pokemon.name
-                                                    }
+                                                    pokemonName={pokemon.name}
                                                     createdPokemon={pokemon}
                                                 />
                                             </div>
@@ -57,7 +58,7 @@ const ProfileTeams: NextPage = () => {
                         )
                     })
                 ) : (
-                    <TeamsEmpty userId={user?.id} userName={user?.name}/>
+                    <TeamsEmpty userId={user?.id} userName={user?.name} />
                 )}
             </div>
         </main>
@@ -66,9 +67,18 @@ const ProfileTeams: NextPage = () => {
 
 export default ProfileTeams
 
-const TeamsEmpty = ({ query, userId, userName}: { query?: string, userId?: string, userName?: string | null}) => {
+const TeamsEmpty = ({
+    query,
+    userId,
+    userName,
+}: {
+    query?: string
+    userId?: string
+    userName?: string | null
+}) => {
     const { data: session } = useSession()
-    const className = "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center dark:bg-dark-2"
+    const className =
+        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center dark:bg-dark-2"
     if (query) {
         return (
             <div className={className}>
@@ -78,11 +88,13 @@ const TeamsEmpty = ({ query, userId, userName}: { query?: string, userId?: strin
         )
     }
 
-    if( userId === session?.user?.id){
+    if (userId === session?.user?.id) {
         return (
             <div className={className}>
                 <h2>You haven't created any Teams yet!</h2>
-                <Link href="/build/teams">Click here to view pokemon to create</Link>
+                <Link href="/build/teams">
+                    Click here to view pokemon to create
+                </Link>
             </div>
         )
     }
@@ -93,4 +105,3 @@ const TeamsEmpty = ({ query, userId, userName}: { query?: string, userId?: strin
         </div>
     )
 }
-

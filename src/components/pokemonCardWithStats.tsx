@@ -1,17 +1,12 @@
-import { type inferProcedureOutput } from "@trpc/server"
 import { useSession } from "next-auth/react"
-import { type AppRouter } from "../server/api/root"
+import { CreatedPokemon } from "../types/trpc"
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
 import { LoadingSpinner } from "./ui/loadingSpinner"
 
-type createdPokemon = inferProcedureOutput<
-    AppRouter["pokemon"]["getSinglePokemon"]
->
-
 interface Props {
     pokemonName: string
-    createdPokemon: createdPokemon
+    createdPokemon: CreatedPokemon
     favorite?: boolean
 }
 
@@ -25,11 +20,11 @@ const formatStat = (statName: string) => {
     if (stat === "special defense") return "Spd"
 }
 
-export default function PokemonCardWithStats({
+export const PokemonCardWithStats = ({
     pokemonName,
     createdPokemon,
     favorite,
-}: Props) {
+}: Props) => {
     const { data: session } = useSession()
     const apiContext = api.useContext()
 

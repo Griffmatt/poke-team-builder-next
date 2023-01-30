@@ -4,16 +4,45 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc"
 export const pokemonRouter = createTRPCRouter({
     getAllPokemon: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.createdPokemon.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
             include: {
-                moves: true,
-                evs: true,
-                ivs: true,
+                moves: {
+                    select: {
+                        move: true,
+                        moveOrder: true,
+                    },
+                    orderBy: {
+                        moveOrder: "asc",
+                    },
+                },
+                evs: {
+                    select: {
+                        stat: true,
+                        value: true,
+                    },
+                    orderBy: {
+                        stat: "desc",
+                    },
+                },
+                ivs: {
+                    select: {
+                        stat: true,
+                        value: true,
+                    },
+                    orderBy: {
+                        stat: "desc",
+                    },
+                },
                 teams: true,
             },
         })
     }),
     getSinglePokemon: publicProcedure
-        .input(z.object({ pokemonId: z.string(), userId: z.string().nullish() }))
+        .input(
+            z.object({ pokemonId: z.string(), userId: z.string().nullish() })
+        )
         .query(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.findUnique({
                 where: { id: input.pokemonId },
@@ -115,42 +144,34 @@ export const pokemonRouter = createTRPCRouter({
                 nature: z.string(),
                 heldItem: z.string(),
                 shiny: z.boolean(),
-                moves: z.object({
-                    createMany: z.object({
-                        data: z.array(
-                            z.object({
-                                move: z.string(),
-                                moveOrder: z.number(),
-                            })
-                        ),
-                    }),
-                }),
-                evs: z.object({
-                    createMany: z.object({
-                        data: z.array(
-                            z.object({
-                                stat: z.string(),
-                                value: z.number(),
-                            })
-                        ),
-                    }),
-                }),
-                ivs: z.object({
-                    createMany: z.object({
-                        data: z.array(
-                            z.object({
-                                stat: z.string(),
-                                value: z.number(),
-                            })
-                        ),
-                    }),
-                }),
+                moves: z.array(
+                    z.object({
+                        move: z.string(),
+                        moveOrder: z.number(),
+                    })
+                ),
+                evs: z.array(
+                    z.object({
+                        stat: z.string(),
+                        value: z.number(),
+                    })
+                ),
+                ivs: z.array(
+                    z.object({
+                        stat: z.string(),
+                        value: z.number(),
+                    })
+                ),
             })
         )
         .mutation(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.create({
-                data: input,
-                include: { moves: true, ivs: true, evs: true },
+                data: {
+                    ...input,
+                    moves: { createMany: { data: input.moves } },
+                    evs: { createMany: { data: input.evs } },
+                    ivs: { createMany: { data: input.ivs } },
+                },
             })
         }),
     updatePokemon: protectedProcedure

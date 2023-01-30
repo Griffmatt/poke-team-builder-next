@@ -59,9 +59,7 @@ const BuildTeam: NextPage = () => {
                                     key={pokemon?.id}
                                     className="pokemon-card"
                                     onClick={() =>
-                                        removePokemonFromTeam(
-                                            pokemon!.id
-                                        )
+                                        removePokemonFromTeam(pokemon!.id)
                                     }
                                 >
                                     <PokemonCard
