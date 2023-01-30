@@ -13,9 +13,9 @@ export const pokemonRouter = createTRPCRouter({
         })
     }),
     getSinglePokemon: publicProcedure
-        .input(z.object({ pokemonId: z.string() }))
-        .query(async ({ ctx, input }) => {
-            return await ctx.prisma.createdPokemon.findUnique({
+        .input(z.object({ pokemonId: z.string(), userId: z.string().nullish() }))
+        .query(({ ctx, input }) => {
+            return ctx.prisma.createdPokemon.findUnique({
                 where: { id: input.pokemonId },
                 include: {
                     moves: {
@@ -52,7 +52,7 @@ export const pokemonRouter = createTRPCRouter({
     getUsersPokemon: publicProcedure
         .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {
-            return ctx.prisma.createdPokemon.findMany({
+            const results = await ctx.prisma.createdPokemon.findMany({
                 where: {
                     userId: input.userId,
                 },
@@ -88,8 +88,23 @@ export const pokemonRouter = createTRPCRouter({
                         },
                     },
                     teams: true,
+                    favorited: {
+                        where: {
+                            userId: input.userId,
+                        },
+                        select: {
+                            userId: true,
+                        },
+                    },
                 },
             })
+
+            const pokemonArr = results.map((pokemon) => {
+                let favorited = pokemon.favorited[0]?.userId === input.userId
+                return { ...pokemon, favorited: favorited }
+            })
+
+            return pokemonArr
         }),
     buildPokemon: protectedProcedure
         .input(

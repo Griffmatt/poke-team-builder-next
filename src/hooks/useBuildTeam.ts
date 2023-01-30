@@ -32,6 +32,10 @@ export function useBuildTeam(userId: string) {
                     heldItem: pokemon!.heldItem,
                     shiny: pokemon!.shiny ,
                     createdAt: pokemon!.createdAt,
+                    moves: pokemon!.moves,
+                    ivs: pokemon!.ivs,
+                    evs: pokemon!.evs,
+                    teams: pokemon!.teams
                 }
             })
 

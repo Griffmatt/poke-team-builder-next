@@ -5,7 +5,8 @@ import { api } from "../utils/api"
 
 type CreatedPokemon = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]
->
+> & {favorited: boolean}
+
 
 interface UpdateValues {
     ability: string
@@ -58,6 +59,7 @@ export const updatePokemonMutation = (
                 heldItem: heldItem,
                 shiny: shiny,
                 createdAt: createdPokemon!.createdAt,
+                favorited: createdPokemon.favorited,
                 moves: [
                     { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },

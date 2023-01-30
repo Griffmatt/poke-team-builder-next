@@ -11,13 +11,33 @@ export const teamsRouter = createTRPCRouter({
                         createdPokemon: {
                             include: {
                                 moves: {
+                                    select: {
+                                        move: true,
+                                        moveOrder: true,
+                                    },
                                     orderBy: {
                                         moveOrder: "asc",
                                     },
                                 },
-                                evs: true,
-                                ivs: true,
-                                teams: true,
+                                evs: {
+                                    select: {
+                                        stat: true,
+                                        value: true,
+                                    },
+                                    orderBy: {
+                                        stat: "asc",
+                                    },
+                                },
+                                ivs: {
+                                    select: {
+                                        stat: true,
+                                        value: true,
+                                    },
+                                    orderBy: {
+                                        stat: "asc",
+                                    },
+                                },
+                                teams: true
                             },
                         },
                     },
@@ -46,13 +66,33 @@ export const teamsRouter = createTRPCRouter({
                             createdPokemon: {
                                 include: {
                                     moves: {
+                                        select: {
+                                            move: true,
+                                            moveOrder: true,
+                                        },
                                         orderBy: {
                                             moveOrder: "asc",
                                         },
                                     },
-                                    evs: true,
-                                    ivs: true,
-                                    teams: true,
+                                    evs: {
+                                        select: {
+                                            stat: true,
+                                            value: true,
+                                        },
+                                        orderBy: {
+                                            stat: "asc",
+                                        },
+                                    },
+                                    ivs: {
+                                        select: {
+                                            stat: true,
+                                            value: true,
+                                        },
+                                        orderBy: {
+                                            stat: "asc",
+                                        },
+                                    },
+                                    teams: true
                                 },
                             },
                         },
@@ -94,7 +134,7 @@ export const teamsRouter = createTRPCRouter({
                     },
                 },
             })
-            if(results === null) return null
+            if (results === null) return null
 
             const formatResults = formatTeams([results])
 

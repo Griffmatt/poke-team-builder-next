@@ -28,7 +28,7 @@ const formatStat = (statName: string) => {
 export default function PokemonCardWithStats({
     pokemonName,
     createdPokemon,
-    favorite
+    favorite,
 }: Props) {
     const { data: session } = useSession()
     const apiContext = api.useContext()
@@ -41,26 +41,52 @@ export default function PokemonCardWithStats({
         onMutate: async () => {
             const userFavorites =
                 apiContext.favorite.getUserFavoritePokemon.getData({
-                    userId: session?.user?.id as string,
+                    userId: session?.user!.id as string,
                 })
+
+            const usersPokemon = apiContext.pokemon.getUsersPokemon.getData({
+                userId: session?.user!.id as string,
+            })
+
+            if (session?.user!.id === createdPokemon?.userId && usersPokemon) {
+                const mapPokemon = usersPokemon.map((userPokemon) => {
+                    if (userPokemon.id === createdPokemon?.id)
+                        return { ...userPokemon, favorited: true }
+
+                    return userPokemon
+                })
+                apiContext.pokemon.getUsersPokemon.setData(
+                    {
+                        userId: session?.user?.id as string,
+                    },
+                    mapPokemon
+                )
+            }
 
             if (userFavorites) {
                 apiContext.favorite.getUserFavoritePokemon.setData(
-                    { userId: session!.user!.id },
+                    { userId: session?.user!.id as string },
                     [...userFavorites, createdPokemon!.id]
                 )
             }
 
-            return { userFavorites }
+            return { userFavorites, usersPokemon }
         },
         onError: (error, variables, context) => {
             apiContext.favorite.getUserFavoritePokemon.setData(
                 { userId: session!.user!.id },
                 context?.userFavorites
             )
+            apiContext.pokemon.getUsersPokemon.setData(
+                {
+                    userId: session?.user?.id as string,
+                },
+                context?.usersPokemon
+            )
         },
         onSettled: () => {
             apiContext.favorite.getUserFavoritePokemon.invalidate()
+            apiContext.pokemon.getUsersPokemon.invalidate()
         },
     })
     const removeFavorite = api.favorite.unfavoritePokemon.useMutation({
@@ -70,6 +96,25 @@ export default function PokemonCardWithStats({
                     userId: session?.user?.id as string,
                 })
 
+            const usersPokemon = apiContext.pokemon.getUsersPokemon.getData({
+                userId: session?.user?.id as string,
+            })
+
+            if (session?.user?.id === createdPokemon?.userId && usersPokemon) {
+                const mapPokemon = usersPokemon.map((userPokemon) => {
+                    if (userPokemon.id === createdPokemon?.id)
+                        return { ...userPokemon, favorited: false }
+
+                    return userPokemon
+                })
+                apiContext.pokemon.getUsersPokemon.setData(
+                    {
+                        userId: session?.user?.id as string,
+                    },
+                    mapPokemon
+                )
+            }
+
             if (userFavorites) {
                 apiContext.favorite.getUserFavoritePokemon.setData(
                     { userId: session!.user!.id },
@@ -77,16 +122,23 @@ export default function PokemonCardWithStats({
                 )
             }
 
-            return { userFavorites }
+            return { userFavorites, usersPokemon }
         },
         onError: (error, variables, context) => {
             apiContext.favorite.getUserFavoritePokemon.setData(
                 { userId: session!.user!.id },
                 context?.userFavorites
             )
+            apiContext.pokemon.getUsersPokemon.setData(
+                {
+                    userId: session?.user?.id as string,
+                },
+                context?.usersPokemon
+            )
         },
         onSettled: () => {
             apiContext.favorite.getUserFavoritePokemon.invalidate()
+            apiContext.pokemon.getUsersPokemon.invalidate()
         },
     })
 

@@ -53,8 +53,9 @@ export const buildPokemonMutation = (
                 heldItem: heldItem,
                 shiny: shiny,
                 createdAt: new Date(),
+                favorited: false,
                 moves: [
-                    { move: firstMove, moveOrder: 1 },
+                    { move: firstMove, moveOrder: 1},
                     { move: secondMove, moveOrder: 2 },
                     { move: thirdMove, moveOrder: 3 },
                     { move: fourthMove, moveOrder: 4 },

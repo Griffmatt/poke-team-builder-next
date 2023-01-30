@@ -12,9 +12,6 @@ const BuildTeam: NextPage = () => {
     const { data: pokemons } = api.pokemon.getUsersPokemon.useQuery({
         userId: session?.user?.id as string,
     })
-    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string
-    })
     const [query, setQuery] = useState("")
 
     let timer: NodeJS.Timeout | undefined
@@ -93,7 +90,7 @@ const BuildTeam: NextPage = () => {
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
-                                    favorite={favorites?.includes(pokemon?.id)}
+                                    favorite={pokemon.favorited}
                                 />
                             </button>
                         )

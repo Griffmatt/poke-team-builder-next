@@ -5,13 +5,28 @@ const teams = Prisma.validator<Prisma.TeamArgs>()({
         pokemon: {
             select: {
                 createdPokemon: {
-                    include:{
-                        moves: true,
-                        evs: true,
-                        ivs: true,
-                        teams: true,
-                    }
-                }
+                    include: {
+                        moves: {
+                            select: {
+                                move: true,
+                                moveOrder: true,
+                            },
+                        },
+                        evs: {
+                            select: {
+                                stat: true,
+                                value: true,
+                            },
+                        },
+                        ivs: {
+                            select: {
+                                stat: true,
+                                value: true,
+                            },
+                        },
+                        teams: true
+                    },
+                },
             },
         },
     },
@@ -41,7 +56,7 @@ export const formatTeams = (results: teamsArr) =>
                     moves: createdPokemon.moves,
                     evs: createdPokemon.evs,
                     ivs: createdPokemon.ivs,
-                    teams: createdPokemon.teams
+                    teams: createdPokemon.teams,
                 }
             }),
         }
