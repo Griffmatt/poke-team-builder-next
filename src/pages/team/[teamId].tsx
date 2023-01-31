@@ -1,11 +1,11 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { PokemonCardWithStats } from "../../components/pokemonCardWithStats"
 import { api } from "../../utils/api"
 import Link from "next/link"
 import DeleteModal from "../../components/deleteModal"
 import { useState } from "react"
+import { TeamRow } from "../../components/teamRows"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -17,10 +17,6 @@ const Team: NextPage = () => {
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
-    const { data: favoritePokemon } =
-        api.favorite.getUserFavoritePokemon.useQuery({
-            userId: session?.user?.id as string,
-        })
 
     const { data: favoriteTeams } = api.favorite.getUserFavoriteTeams.useQuery({
         userId: session?.user?.id as string,
@@ -28,10 +24,19 @@ const Team: NextPage = () => {
 
     const teamFavorited = favoriteTeams?.includes(teamId as string)
 
+    const apiContext = api.useContext()
     const copyTeam = api.teams.buildTeam.useMutation()
 
-    const favoriteTeam = api.favorite.favoriteTeam.useMutation()
-    const unfavoriteTeam = api.favorite.unfavoriteTeam.useMutation()
+    const favoriteTeam = api.favorite.favoriteTeam.useMutation({
+        onSettled: () => {
+            apiContext.favorite.getUserFavoriteTeams.invalidate()
+        },
+    })
+    const unfavoriteTeam = api.favorite.unfavoriteTeam.useMutation({
+        onSettled: () => {
+            apiContext.favorite.getUserFavoriteTeams.invalidate()
+        },
+    })
 
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map((pokemon) => {
@@ -74,7 +79,7 @@ const Team: NextPage = () => {
                             className="btn-red h-fit rounded-2xl px-4 py-2"
                             onClick={() => setShowModal(true)}
                         >
-                            Delete Team
+                            Delete
                         </button>
                     ) : (
                         <button
@@ -92,28 +97,17 @@ const Team: NextPage = () => {
                     </button>
                 </div>
             </div>
-            <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-3">
-                {team?.pokemon.map((pokemon) => {
-                    const favorite = favoritePokemon?.includes(pokemon.id)
-                    return (
-                        <div key={pokemon.id} className="pokemon-card">
-                            <PokemonCardWithStats
-                                pokemonName={pokemon.name}
-                                createdPokemon={pokemon}
-                                favorite={favorite}
-                            />
-                        </div>
-                    )
-                })}
-            </div>
             {team && (
-                <DeleteModal
-                    userId={team?.userId}
-                    name={team?.teamName}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    teamId={team?.id}
-                />
+                <>
+                    <TeamRow team={team} withStats={true} />
+                    <DeleteModal
+                        userId={team?.userId}
+                        name={team?.teamName}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        teamId={team?.id}
+                    />
+                </>
             )}
         </main>
     )

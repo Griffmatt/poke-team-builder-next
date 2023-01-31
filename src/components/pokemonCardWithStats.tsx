@@ -5,26 +5,22 @@ import { removeFavoritePokemonMutation } from "../mutations/removeFavoritePokemo
 import { CreatedPokemon } from "../types/trpc"
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
+import { FavoritedButton } from "./ui/favoritedButton"
 import { LoadingSpinner } from "./ui/loadingSpinner"
 
 interface Props {
-    pokemonName: string
     createdPokemon: CreatedPokemon
-    favorite?: boolean
+    favorite: boolean
 }
 
 // Don't wrap with class so that there is skeleton of card when loading data
 
-export const PokemonCardWithStats = ({
-    pokemonName,
-    createdPokemon,
-    favorite,
-}: Props) => {
+export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     const { data: session } = useSession()
     const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
-        name: pokemonName,
+        name: createdPokemon!.name,
     })
 
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
@@ -59,18 +55,7 @@ export const PokemonCardWithStats = ({
                             className="aspect-square w-full"
                         />
                     )}
-                    <button
-                        className=" absolute top-0 right-0 rounded-full"
-                        onClick={handleFavorite}
-                    >
-                        <div
-                            className={`h-10 w-10 rounded-full ${
-                                favorite
-                                    ? "bg-lime-400 hover:bg-lime-400/50"
-                                    : "bg-slate-500 hover:bg-slate-500/50"
-                            }`}
-                        ></div>
-                    </button>
+                    <FavoritedButton favorited={favorite} handleFavorite={handleFavorite}/>
                     {topPoke && (
                         <div className="absolute top-0 left-0 h-10 w-10 rounded-full">
                             Top Poke

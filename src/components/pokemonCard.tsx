@@ -2,6 +2,7 @@ import { CreatedPokemon } from "../types/trpc"
 
 import { api } from "../utils/api"
 import formatString from "../utils/formatString"
+import { FavoritedButton } from "./ui/favoritedButton"
 
 import { LoadingSpinner } from "./ui/loadingSpinner"
 
@@ -53,7 +54,7 @@ const PokemonCard = ({
                 )}
             </div>
             {favorite && (
-                <div className="absolute top-0 right-0 h-10 w-10 rounded-full bg-lime-400"></div>
+                <FavoritedButton favorited={favorite} handleFavorite={null}/>
             )}
         </>
     )

@@ -43,12 +43,12 @@ const SinglePokemon: NextPage = () => {
                     <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                         <div className="pokemon-card">
                             <PokemonCardWithStats
-                                pokemonName={pokemon.name}
                                 createdPokemon={pokemon}
-                                favorite={favorites?.includes(pokemon.id)}
+                                favorite={
+                                    favorites?.includes(pokemon.id) ?? false
+                                }
                             />
                         </div>
-
                         <div className="flex justify-between">
                             {session?.user?.id === user?.id ? (
                                 <>

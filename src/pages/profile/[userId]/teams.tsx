@@ -3,10 +3,10 @@ import { useRouter } from "next/router"
 
 import { api } from "../../../utils/api"
 import { ProfileNav } from "../../../components/profile/profileNav"
-import { PokemonCard } from "../../../components/pokemonCard"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import React from "react"
+import { TeamRows } from "../../../components/teamRows"
 
 const ProfileTeams: NextPage = () => {
     const router = useRouter()
@@ -29,31 +29,7 @@ const ProfileTeams: NextPage = () => {
             />
             <div className="grid gap-3">
                 {teams && teams.length > 0 ? (
-                    teams?.map((team) => {
-                        return (
-                            <React.Fragment key={team.id}>
-                                <h3>{team.teamName}</h3>
-                                <Link
-                                    href={`/team/${team.id}`}
-                                    className="pokemon-card-grid"
-                                >
-                                    {team.pokemon.map((pokemon) => {
-                                        return (
-                                            <div
-                                                className="pokemon-card"
-                                                key={pokemon.id}
-                                            >
-                                                <PokemonCard
-                                                    pokemonName={pokemon.name}
-                                                    createdPokemon={pokemon}
-                                                />
-                                            </div>
-                                        )
-                                    })}
-                                </Link>
-                            </React.Fragment>
-                        )
-                    })
+                    <TeamRows teams={teams} />
                 ) : (
                     <TeamsEmpty userId={user?.id} userName={user?.name} />
                 )}

@@ -5,4 +5,8 @@ type CreatedPokemon = inferProcedureOutput<
     AppRouter["pokemon"]["getSinglePokemon"]
 >
 
-export type { CreatedPokemon }
+type teams = inferProcedureOutput<AppRouter["teams"]["getTeams"]>
+
+type team = inferProcedureOutput<AppRouter["teams"]["getTeam"]>
+
+export type { CreatedPokemon, teams, team}
