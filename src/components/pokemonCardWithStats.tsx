@@ -29,7 +29,7 @@ export const PokemonCardWithStats = ({
     favorite,
 }: Props) => {
     const { data: session } = useSession()
-    const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 0)
+    const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,

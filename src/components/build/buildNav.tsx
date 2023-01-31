@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 interface Props {
@@ -5,6 +6,7 @@ interface Props {
 }
 
 const BuildNav = ({ selected }: Props) => {
+    const { data: session } = useSession()
     return (
         <div className="flex justify-center gap-2">
             <Link href={"/build/pokemon"}>
@@ -12,11 +14,17 @@ const BuildNav = ({ selected }: Props) => {
                     Pokemon
                 </h3>
             </Link>
-            <Link href={"/build/team"}>
+            {session?.user ? (
+                <Link href={"/build/team"}>
+                    <h3 className={selected === "team" ? "border-b-2" : ""}>
+                        Team
+                    </h3>
+                </Link>
+            ) : (
                 <h3 className={selected === "team" ? "border-b-2" : ""}>
                     Team
                 </h3>
-            </Link>
+            )}
         </div>
     )
 }
