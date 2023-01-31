@@ -20,7 +20,7 @@ const Home: NextPage = () => {
                     <h2>Statistics</h2>
                     <h3>Most Used Pokemon</h3>
                     <div className="pokemon-card-grid">
-                        {topPokemon.map((pokemon) => {
+                        {topPokemon.slice(0,12).map((pokemon) => {
                             return (
                                 <Link
                                     key={pokemon.name}

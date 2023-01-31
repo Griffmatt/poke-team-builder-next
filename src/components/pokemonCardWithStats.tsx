@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 import { addFavoritePokemonMutation } from "../mutations/addFavoritePokemonMutation"
 import { removeFavoritePokemonMutation } from "../mutations/removeFavoritePokemonMutation"
 import { CreatedPokemon } from "../types/trpc"
@@ -28,6 +29,7 @@ export const PokemonCardWithStats = ({
     favorite,
 }: Props) => {
     const { data: session } = useSession()
+    const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 0)
 
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
@@ -37,7 +39,7 @@ export const PokemonCardWithStats = ({
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
 
     const handleFavorite = () => {
-        if(!session?.user) return null
+        if (!session?.user) return null
         favorite
             ? removeFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
@@ -75,6 +77,11 @@ export const PokemonCardWithStats = ({
                             }`}
                         ></div>
                     </button>
+                    {topPoke && (
+                        <div className="absolute top-0 left-0 h-10 w-10 rounded-full">
+                            Top Poke
+                        </div>
+                    )}
                 </div>
                 <div className="h-fit lg:w-[50%]">
                     <div>

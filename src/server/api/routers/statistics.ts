@@ -24,7 +24,6 @@ export const statisticsRouter = createTRPCRouter({
                 }
                 return b.amount - a.amount
             })
-            .slice(0, 12)
         return { totalPokemon, topPokemon }
     }),
     getPopularPokemon: publicProcedure.query(async ({ ctx }) => {

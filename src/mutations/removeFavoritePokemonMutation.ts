@@ -57,6 +57,7 @@ const removeFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
         onSettled: () => {
             apiContext.favorite.getUserFavoritePokemon.invalidate()
             apiContext.pokemon.getUsersPokemon.invalidate()
+            apiContext.pokemon.getSinglePokemon.invalidate()
         },
     })
 
