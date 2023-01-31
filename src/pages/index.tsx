@@ -7,38 +7,39 @@ import { signIn, useSession } from "next-auth/react"
 const Home: NextPage = () => {
     const { data: session } = useSession()
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
-    const totalPokemon = topPokemonData?.totalPokemon
-    const topPokemon = topPokemonData?.topPokemon
     const { format: formatPercentage } = Intl.NumberFormat("en-US", {
         style: "percent",
         minimumFractionDigits: 2,
     })
     return (
         <main>
-            {topPokemon && totalPokemon !== undefined && (
-                <div className="grid gap-3">
-                    <h1>Statistics</h1>
-                    <h2>Most Used Pokemon</h2>
-                    <div className="pokemon-card-grid">
-                        {topPokemon.slice(0, 12).map((pokemon) => {
-                            return (
-                                <Link
-                                    key={pokemon.name}
-                                    href={`/build/pokemon/${pokemon.name}/create`}
-                                    className="pokemon-card"
-                                >
-                                    <PokemonCard
-                                        pokemonName={pokemon.name}
-                                        percentage={formatPercentage(
-                                            pokemon.amount / totalPokemon
-                                        )}
-                                    />
-                                </Link>
-                            )
-                        })}
-                    </div>
+            <div className="grid gap-3">
+                <h1>Statistics</h1>
+                <h2>Most Used Pokemon</h2>
+                <div className="pokemon-card-grid aspect-[12/5]">
+                    {topPokemonData &&
+                        topPokemonData.topPokemon
+                            .slice(0, 12)
+                            .map((pokemon) => {
+                                return (
+                                    <Link
+                                        key={pokemon.name}
+                                        href={`/build/pokemon/${pokemon.name}/create`}
+                                        className="pokemon-card"
+                                    >
+                                        <PokemonCard
+                                            pokemonName={pokemon.name}
+                                            percentage={formatPercentage(
+                                                pokemon.amount /
+                                                    topPokemonData.totalPokemon
+                                            )}
+                                        />
+                                    </Link>
+                                )
+                            })}
                 </div>
-            )}
+            </div>
+
             <div className="grid gap-3">
                 <h2>What to do?</h2>
                 <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">

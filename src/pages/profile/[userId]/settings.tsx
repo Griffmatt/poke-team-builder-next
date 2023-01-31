@@ -19,7 +19,12 @@ const ProfileSettings: NextPage = () => {
         if (session?.user?.id !== userId) {
             router.replace("/")
         }
-    }, [session?.user?.id])
+    }, [])
+
+    const handleSignOut = async() => {
+        await signOut()
+        router.replace("/")
+    }
 
     return (
         <main>
@@ -31,7 +36,7 @@ const ProfileSettings: NextPage = () => {
             <div className="grid gap-3 bg-dark-2">
                 <button
                     className="rounded-2xl px-4 py-2"
-                    onClick={() => signOut()}
+                    onClick={handleSignOut}
                 >
                     Log Out
                 </button>
