@@ -37,7 +37,7 @@ const BuildTeam: NextPage = () => {
     return (
         <main>
             <div className="flex justify-between">
-                <h2>Build Team</h2>
+                <h1>Build Team</h1>
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
@@ -55,7 +55,7 @@ const BuildTeam: NextPage = () => {
                     ) : (
                         pokemonOnTeam?.map((pokemon) => {
                             return (
-                                <div
+                                <button
                                     key={pokemon?.id}
                                     className="pokemon-card"
                                     onClick={() =>
@@ -66,7 +66,7 @@ const BuildTeam: NextPage = () => {
                                         pokemonName={pokemon!.name}
                                         createdPokemon={pokemon}
                                     />
-                                </div>
+                                </button>
                             )
                         })
                     )}

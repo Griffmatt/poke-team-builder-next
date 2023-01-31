@@ -17,8 +17,8 @@ const Home: NextPage = () => {
         <main>
             {topPokemon && totalPokemon !== undefined && (
                 <div className="grid gap-3">
-                    <h2>Statistics</h2>
-                    <h3>Most Used Pokemon</h3>
+                    <h1>Statistics</h1>
+                    <h2>Most Used Pokemon</h2>
                     <div className="pokemon-card-grid">
                         {topPokemon.slice(0, 12).map((pokemon) => {
                             return (

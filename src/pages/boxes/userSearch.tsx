@@ -7,7 +7,7 @@ const Boxes: NextPage = () => {
     const { data: users } = api.users.getSuggestedUsers.useQuery()
     return (
         <main>
-            <h2>Boxes</h2>
+            <h1>Boxes</h1>
             <BoxesNav selected="search" />
             <div className="grid gap-3">
                 <h2>Suggested Trainers</h2>

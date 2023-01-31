@@ -7,7 +7,7 @@ export const teamsRouter = createTRPCRouter({
         const results = await ctx.prisma.team.findMany({
             include: {
                 pokemon: {
-                    select: {
+                    include: {
                         createdPokemon: {
                             include: {
                                 moves: {
@@ -147,7 +147,7 @@ export const teamsRouter = createTRPCRouter({
                                             value: true,
                                         },
                                         orderBy: {
-                                            stat: "desc",
+                                            stat: "asc",
                                         },
                                     },
                                     ivs: {
@@ -156,7 +156,7 @@ export const teamsRouter = createTRPCRouter({
                                             value: true,
                                         },
                                         orderBy: {
-                                            stat: "desc",
+                                            stat: "asc",
                                         },
                                     },
                                     teams: true,

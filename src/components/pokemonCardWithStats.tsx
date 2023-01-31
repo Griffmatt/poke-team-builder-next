@@ -23,6 +23,8 @@ const formatStat = (statName: string) => {
     if (stat === "special defense") return "Spd"
 }
 
+// Don't wrap with class so that there is skeleton of card when loading data
+
 export const PokemonCardWithStats = ({
     pokemonName,
     createdPokemon,

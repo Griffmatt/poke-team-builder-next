@@ -25,7 +25,7 @@ const Pokemon: NextPage = () => {
     return (
         <main>
             <div className="flex justify-between">
-                <h2>Pokedex</h2>
+                <h1>Pokedex</h1>
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"

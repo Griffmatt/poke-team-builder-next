@@ -37,9 +37,9 @@ const SinglePokemon: NextPage = () => {
             </button>
             {pokemon && user && (
                 <>
-                    <h2>
+                    <h1>
                         {user?.name}'s {pokemon?.name}
-                    </h2>
+                    </h1>
                     <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                         <div className="pokemon-card">
                             <PokemonCardWithStats

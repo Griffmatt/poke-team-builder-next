@@ -64,12 +64,13 @@ const Team: NextPage = () => {
             </div>
             <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-3">
                 {team?.pokemon.map((pokemon) => {
+                    const favorite = favorites?.includes(pokemon.id)
                     return (
                         <div key={pokemon.id} className="pokemon-card">
                             <PokemonCardWithStats
                                 pokemonName={pokemon.name}
                                 createdPokemon={pokemon}
-                                favorite={favorites?.includes(pokemon.id)}
+                                favorite={favorite}
                             />
                         </div>
                     )

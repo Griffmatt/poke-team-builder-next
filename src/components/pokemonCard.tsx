@@ -12,6 +12,8 @@ interface Props {
     favorite?: boolean
 }
 
+// Don't wrap with class so that there is skeleton of card when loading data
+
 const PokemonCard = ({
     pokemonName,
     createdPokemon,

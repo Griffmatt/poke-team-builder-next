@@ -1,3 +1,4 @@
+import { formatTeams } from "../../utils/formatTeams"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const statisticsRouter = createTRPCRouter({
@@ -26,7 +27,7 @@ export const statisticsRouter = createTRPCRouter({
         return { totalPokemon, topPokemon }
     }),
     getPopularPokemon: publicProcedure.query(async ({ ctx }) => {
-        const results = await ctx.prisma.createdPokemon.findMany({
+        const pokemon = await ctx.prisma.createdPokemon.findMany({
             include: {
                 moves: {
                     select: {
@@ -64,10 +65,71 @@ export const statisticsRouter = createTRPCRouter({
                 },
             },
         })
-        results.sort((a, b) => {
+        pokemon.sort((a, b) => {
             return b.favorited.length - a.favorited.length
         })
 
-        return results
+        return pokemon.slice(0, 12)
+    }),
+    getPopularTeams: publicProcedure.query(async ({ ctx }) => {
+        const teams = await ctx.prisma.team.findMany({
+            include: {
+                favorited: {
+                    select: {
+                        userId: true,
+                        favoritedAt: true,
+                    },
+                },
+                pokemon: {
+                    select: {
+                        createdPokemon: {
+                            include: {
+                                moves: {
+                                    select: {
+                                        move: true,
+                                        moveOrder: true,
+                                    },
+                                    orderBy: {
+                                        moveOrder: "asc",
+                                    },
+                                },
+                                evs: {
+                                    select: {
+                                        stat: true,
+                                        value: true,
+                                    },
+                                    orderBy: {
+                                        stat: "asc",
+                                    },
+                                },
+                                ivs: {
+                                    select: {
+                                        stat: true,
+                                        value: true,
+                                    },
+                                    orderBy: {
+                                        stat: "asc",
+                                    },
+                                },
+                                teams: true,
+                                favorited: {
+                                    select: {
+                                        userId: true,
+                                        favoritedAt: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        })
+        teams.sort((a, b) => {
+            return b.favorited.length - a.favorited.length
+        })
+
+        const teamsFormatted = formatTeams(teams)
+
+        return teamsFormatted.slice(0, 12)
     }),
 })

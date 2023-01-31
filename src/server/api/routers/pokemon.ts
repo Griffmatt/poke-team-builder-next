@@ -108,7 +108,7 @@ export const pokemonRouter = createTRPCRouter({
                             value: true,
                         },
                         orderBy: {
-                            stat: "desc",
+                            stat: "asc",
                         },
                     },
                     ivs: {
@@ -117,14 +117,11 @@ export const pokemonRouter = createTRPCRouter({
                             value: true,
                         },
                         orderBy: {
-                            stat: "desc",
+                            stat: "asc",
                         },
                     },
                     teams: true,
                     favorited: {
-                        where: {
-                            userId: input.userId,
-                        },
                         select: {
                             userId: true,
                             favoritedAt: true,
