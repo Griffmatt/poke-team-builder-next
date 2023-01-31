@@ -14,7 +14,8 @@ model CreatedPokemon {
   ability   String
   nature    String
   heldItem  String
-  shiny    Boolean
+  teraType  String
+  shiny     Boolean
   createdAt DateTime          @default(now())
   moves     PokemonMoves[]
   evs       PokemonEvs[]
@@ -61,21 +62,21 @@ model PokemonOnTeam {
 }
 
 model Team {
-  id        String          @id @default(cuid())
-  userId    String
+  id                String          @id @default(cuid())
+  userId            String
   originalTrainerId String?
-  teamStyle String
-  teamName  String
-  createdAt DateTime        @default(now())
-  favorited favoriteTeams[] 
-  pokemon   PokemonOnTeam[] 
-  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamStyle         String
+  teamName          String
+  createdAt         DateTime        @default(now())
+  favorited         favoriteTeams[]
+  pokemon           PokemonOnTeam[]
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model favoritePokemon {
   pokemonId      String
   userId         String
-  favoritedAt DateTime @default(now())
+  favoritedAt    DateTime       @default(now())
   createdPokemon CreatedPokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -83,11 +84,11 @@ model favoritePokemon {
 }
 
 model favoriteTeams {
-  teamId String
-  userId String
+  teamId      String
+  userId      String
   favoritedAt DateTime @default(now())
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([teamId, userId])
 }

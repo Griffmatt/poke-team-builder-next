@@ -23,27 +23,28 @@ interface Props {
 
 const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
-    const SHINY_ODDS = 10
-    const [ability, setAbility] = useState<string>(
+    const SHINY_ODDS = 100
+    const [ability, setAbility] = useState(
         createdPokemon?.ability ?? pokemon.abilities[0].ability.name
     )
-    const [nature, setNature] = useState<string>(
-        createdPokemon?.nature ?? natures[0]
-    )
-    const [heldItem, setHeldItem] = useState<string>(
+    const [nature, setNature] = useState(createdPokemon?.nature ?? natures[0])
+    const [heldItem, setHeldItem] = useState(
         createdPokemon?.heldItem ?? heldItems[0].name
     )
+    const [teraType, setTeraType] = useState(
+        createdPokemon?.teraType ?? pokemon.types[0].type.name
+    )
 
-    const [firstMove, setFirstMove] = useState<string>(
+    const [firstMove, setFirstMove] = useState(
         createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name
     )
-    const [secondMove, setSecondMove] = useState<string>(
+    const [secondMove, setSecondMove] = useState(
         createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name
     )
-    const [thirdMove, setThirdMove] = useState<string>(
+    const [thirdMove, setThirdMove] = useState(
         createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name
     )
-    const [fourthMove, setFourthMove] = useState<string>(
+    const [fourthMove, setFourthMove] = useState(
         createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
     )
     const [shiny] = useState(
@@ -102,6 +103,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 ability: ability,
                 nature: nature,
                 heldItem: heldItem,
+                teraType: teraType,
                 moves: [
                     {
                         move: firstMove,
@@ -135,6 +137,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             nature: nature,
             heldItem: heldItem,
             shiny: shiny,
+            teraType: teraType,
             moves: [
                 { move: firstMove, moveOrder: 1 },
                 { move: secondMove, moveOrder: 2 },
@@ -206,13 +209,28 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                 }
                                 return 0
                             })
-                            .map((heldItem: any) => {
+                            .map((heldItem) => {
                                 return (
                                     <option key={heldItem.name}>
                                         {formatString(heldItem.name)}
                                     </option>
                                 )
                             })}
+                    </select>
+                </label>
+                <label className="flex flex-col">
+                    Tera Type
+                    <select
+                        onChange={(event) => setTeraType(event.target.value)}
+                        value={formatString(teraType)}
+                    >
+                        {pokemon.types.map(({ type }) => {
+                            return (
+                                <option key={type.name}>
+                                    {formatString(type.name)}
+                                </option>
+                            )
+                        })}
                     </select>
                 </label>
             </div>

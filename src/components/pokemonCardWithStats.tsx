@@ -98,7 +98,7 @@ export const PokemonCardWithStats = ({
                     </div>
                     <div>
                         <h2>Tera Type</h2>
-                        <p>ter type</p>
+                        <p>{formatString(createdPokemon!.teraType)}</p>
                     </div>
                     <div>
                         <h2>Ability</h2>

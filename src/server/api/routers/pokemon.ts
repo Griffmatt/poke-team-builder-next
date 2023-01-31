@@ -145,6 +145,7 @@ export const pokemonRouter = createTRPCRouter({
                 nature: z.string(),
                 heldItem: z.string(),
                 shiny: z.boolean(),
+                teraType: z.string(),
                 moves: z.array(
                     z.object({
                         move: z.string(),

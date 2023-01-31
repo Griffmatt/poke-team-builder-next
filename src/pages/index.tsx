@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     })
     return (
         <main>
-            {topPokemon && totalPokemon && (
+            {topPokemon && totalPokemon !== undefined && (
                 <div className="grid gap-3">
                     <h2>Statistics</h2>
                     <h3>Most Used Pokemon</h3>
