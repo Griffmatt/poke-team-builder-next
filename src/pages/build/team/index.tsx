@@ -23,6 +23,8 @@ const BuildTeam: NextPage = () => {
     const {
         addPokemonToTeam,
         removePokemonFromTeam,
+        teamName, 
+        setTeamName,
         buildTeam,
         pokemonOnTeam,
     } = useBuildTeam(session?.user?.id as string)
@@ -49,8 +51,10 @@ const BuildTeam: NextPage = () => {
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
+            <input className="w-72" value={teamName} onChange={(event) => setTeamName(event.target.value)}/>
                 <div className="pokemon-card-grid">
                     {pokemonOnTeam.length === 0 ? (
+                        //placeholder for when there are no cards to keep page structure
                         <div className="aspect-[4/5] w-full"></div>
                     ) : (
                         pokemonOnTeam?.map((pokemon) => {

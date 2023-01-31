@@ -59,7 +59,7 @@ const updatePokemonInput = z.object({
 const buildTeamInput = z.object({
     userId: z.string(),
     teamStyle: z.string(),
-    teamName: z.string(),
+    teamName: z.string().min(1).max(16),
     originalTrainerId: z.string().nullish(),
     pokemon: z.array(
         z.object({
