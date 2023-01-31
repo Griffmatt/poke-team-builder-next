@@ -1,5 +1,5 @@
 import { formatTeams } from "../../utils/formatTeams"
-import { pokemonInclude, teamsInclude } from "../../utils/types"
+import { pokemonInclude, teamsInclude } from "../../utils/includeConfigs"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const statisticsRouter = createTRPCRouter({

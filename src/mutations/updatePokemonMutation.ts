@@ -63,7 +63,7 @@ export const updatePokemonMutation = (
                 ],
                 evs: evs,
                 ivs: ivs,
-                teams: [],
+                teams: createdPokemon!.teams,
             }
 
             if (pastPokemonStats) {

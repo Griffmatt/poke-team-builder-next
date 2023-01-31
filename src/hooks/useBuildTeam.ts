@@ -26,6 +26,7 @@ export function useBuildTeam(userId: string) {
                     nature: pokemon!.nature,
                     heldItem: pokemon!.heldItem,
                     shiny: pokemon!.shiny,
+                    teraType: pokemon!.teraType,
                     createdAt: pokemon!.createdAt,
                     moves: pokemon!.moves,
                     ivs: pokemon!.ivs,

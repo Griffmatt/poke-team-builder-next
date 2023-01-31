@@ -1,12 +1,13 @@
 import { z } from "zod"
 import { formatTeams } from "../../utils/formatTeams"
-import { teamsInclude } from "../../utils/types"
+import { teamsInclude } from "../../utils/includeConfigs"
+import { buildTeamInput } from "../../utils/inputs"
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 export const teamsRouter = createTRPCRouter({
     getTeams: publicProcedure.query(async ({ ctx }) => {
         const results = await ctx.prisma.team.findMany({
-            ...teamsInclude
+            ...teamsInclude,
         })
 
         const formatResults = formatTeams(results)
@@ -51,19 +52,7 @@ export const teamsRouter = createTRPCRouter({
             return formatResults[0]
         }),
     buildTeam: protectedProcedure
-        .input(
-            z.object({
-                userId: z.string(),
-                teamStyle: z.string(),
-                teamName: z.string(),
-                originalTrainerId: z.string().nullish(),
-                pokemon: z.array(
-                    z.object({
-                        pokemonId: z.string(),
-                    })
-                ),
-            })
-        )
+        .input(buildTeamInput)
         .mutation(({ ctx, input }) => {
             return ctx.prisma.team.create({
                 data: {

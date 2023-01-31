@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { sortByFavorited } from "../../../utils/sortByFavorited"
-import { pokemonInclude } from "../../utils/types"
+import { pokemonInclude } from "../../utils/includeConfigs"
+import { buildPokemonInput, updatePokemonInput } from "../../utils/inputs"
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc"
 
 export const pokemonRouter = createTRPCRouter({
@@ -36,35 +37,7 @@ export const pokemonRouter = createTRPCRouter({
             return sortedPokemon
         }),
     buildPokemon: protectedProcedure
-        .input(
-            z.object({
-                userId: z.string(),
-                name: z.string(),
-                ability: z.string(),
-                nature: z.string(),
-                heldItem: z.string(),
-                shiny: z.boolean(),
-                teraType: z.string(),
-                moves: z.array(
-                    z.object({
-                        move: z.string(),
-                        moveOrder: z.number(),
-                    })
-                ),
-                evs: z.array(
-                    z.object({
-                        stat: z.string(),
-                        value: z.number(),
-                    })
-                ),
-                ivs: z.array(
-                    z.object({
-                        stat: z.string(),
-                        value: z.number(),
-                    })
-                ),
-            })
-        )
+        .input(buildPokemonInput)
         .mutation(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.create({
                 data: {
@@ -76,32 +49,7 @@ export const pokemonRouter = createTRPCRouter({
             })
         }),
     updatePokemon: protectedProcedure
-        .input(
-            z.object({
-                id: z.string(),
-                ability: z.string(),
-                nature: z.string(),
-                heldItem: z.string(),
-                moves: z.array(
-                    z.object({
-                        move: z.string(),
-                        moveOrder: z.number(),
-                    })
-                ),
-                evs: z.array(
-                    z.object({
-                        stat: z.string(),
-                        value: z.number(),
-                    })
-                ),
-                ivs: z.array(
-                    z.object({
-                        stat: z.string(),
-                        value: z.number(),
-                    })
-                ),
-            })
-        )
+        .input(updatePokemonInput)
         .mutation(async ({ ctx, input }) => {
             const pokemonId = input.id
             const pokemonData = {

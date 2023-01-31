@@ -57,7 +57,7 @@ button[type="button"] {
 }
 
 .pokemon-card-grid {
-    @apply grid grid-cols-2 place-items-center gap-2 md:grid-cols-4 xl:grid-cols-6 p-3 bg-dark-2 rounded-2xl;
+    @apply grid grid-cols-2 place-items-center gap-2 p-3 md:grid-cols-4 xl:grid-cols-6;
 }
 
 .pokemon-card {

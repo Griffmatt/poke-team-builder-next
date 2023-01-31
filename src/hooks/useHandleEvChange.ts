@@ -6,12 +6,12 @@ interface StatsArr {
 }
 
 interface Stats {
-    Hitpoints: number
-    Attack: number
-    Defense: number
-    "Special Attack": number
-    "Special Defense": number
-    Speed: number
+    HP: number
+    Att: number
+    Def: number
+    SpA: number
+    SpD: number
+    Spe: number
 }
 
 export default function useHandleEvChange(defaultStats?: StatsArr[]) {
@@ -22,12 +22,12 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
         }, {} as Stats)
     }
     const [evs, setEvs] = useState({
-        Hitpoints: currentStats?.Hitpoints ?? 0,
-        Attack: currentStats?.Attack ?? 0,
-        Defense: currentStats?.Defense ?? 0,
-        "Special Attack": currentStats?.["Special Attack"] ?? 0,
-        "Special Defense": currentStats?.["Special Defense"] ?? 0,
-        Speed: currentStats?.Speed ?? 0,
+        HP: currentStats?.HP ?? 0,
+        Att: currentStats?.Att ?? 0,
+        Def: currentStats?.Def ?? 0,
+        SpA: currentStats?.SpA ?? 0,
+        SpD: currentStats?.SpD ?? 0,
+        Spe: currentStats?.Spe ?? 0,
     })
 
     const decreaseEv = (currentStat: string) => {

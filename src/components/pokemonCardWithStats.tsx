@@ -13,16 +13,6 @@ interface Props {
     favorite?: boolean
 }
 
-const formatStat = (statName: string) => {
-    const stat = statName.toLowerCase()
-    if (stat === "attack") return "Att"
-    if (stat === "defense") return "Def"
-    if (stat === "speed") return "Spe"
-    if (stat === "hitpoints") return "Hp"
-    if (stat === "special attack") return "Spa"
-    if (stat === "special defense") return "Spd"
-}
-
 // Don't wrap with class so that there is skeleton of card when loading data
 
 export const PokemonCardWithStats = ({
@@ -137,7 +127,7 @@ export const PokemonCardWithStats = ({
                         {createdPokemon?.evs.map((ev) => {
                             return (
                                 <div key={`${ev.stat}EV`}>
-                                    <h3>{formatStat(ev.stat)}</h3>
+                                    <h3>{ev.stat}</h3>
                                     <p>{ev.value}</p>
                                 </div>
                             )
@@ -150,7 +140,7 @@ export const PokemonCardWithStats = ({
                         {createdPokemon?.ivs.map((iv) => {
                             return (
                                 <div key={`${iv.stat}IV`}>
-                                    <h3>{formatStat(iv.stat)}</h3>
+                                    <h3>{iv.stat}</h3>
                                     <p>{iv.value}</p>
                                 </div>
                             )
