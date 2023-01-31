@@ -8,6 +8,7 @@ interface Props {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     teamId?: string
     pokemonId?: string
+    pokemonTeams?: string[]
 }
 
 export default function DeleteModal({
@@ -17,9 +18,10 @@ export default function DeleteModal({
     setShowModal,
     teamId,
     pokemonId,
+    pokemonTeams
 }: Props) {
     const deleteTeam = deleteTeamMutation(userId, teamId as string)
-    const deletePokemon = deletePokemonMutation(userId, pokemonId as string, name)
+    const deletePokemon = deletePokemonMutation(userId, pokemonId as string, name, pokemonTeams)
 
     const handleDelete = () => {
         if (teamId)
@@ -27,7 +29,8 @@ export default function DeleteModal({
                 id: teamId,
             })
         if (pokemonId) deletePokemon.mutate({
-            pokemonId: pokemonId
+            pokemonId: pokemonId,
+            pokemonTeams: pokemonTeams as string[]
         })
     }
 

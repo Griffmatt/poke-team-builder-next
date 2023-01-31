@@ -4,7 +4,8 @@ import router from "next/router"
 export const deletePokemonMutation = (
     userId: string,
     pokemonId: string,
-    pokemonName: string
+    pokemonName: string,
+    pokemonTeams?: string[]
 ) => {
     const apiContext = api.useContext()
     const deletePokemon = api.pokemon.deletePokemon.useMutation({
@@ -12,6 +13,21 @@ export const deletePokemonMutation = (
             const pastPokemon = apiContext.pokemon.getUsersPokemon.getData({
                 userId: userId,
             })
+
+            const pastTeams = apiContext.teams.getUserTeams.getData({
+                userId: userId,
+            })
+
+            if (pastTeams) {
+                apiContext.teams.getUserTeams.setData(
+                    {
+                        userId: userId,
+                    },
+                    pastTeams.filter((team) => {
+                        pokemonTeams?.includes(team.id)
+                    })
+                )
+            }
 
             if (pastPokemon) {
                 apiContext.pokemon.getUsersPokemon.setData(
@@ -48,7 +64,7 @@ export const deletePokemonMutation = (
                 }
                 apiContext.statistics.getTopPokemon.setData(undefined, newData)
             }
-            return { pastPokemon }
+            return { pastPokemon, pastTeams }
         },
         onSuccess: () => {
             router.push(`/profile/${userId}`)
@@ -60,11 +76,22 @@ export const deletePokemonMutation = (
                     context.pastPokemon
                 )
             }
+
+            if (context?.pastTeams) {
+                apiContext.teams.getUserTeams.setData(
+                    {
+                        userId: userId,
+                    },
+                    context?.pastTeams
+                )
+            }
         },
         onSettled: () => {
             apiContext.pokemon.getUsersPokemon.invalidate({
                 userId: userId,
             })
+
+            apiContext.teams.getUserTeams.invalidate()
         },
     })
     return deletePokemon

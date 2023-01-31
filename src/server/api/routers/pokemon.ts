@@ -256,13 +256,23 @@ export const pokemonRouter = createTRPCRouter({
         .input(
             z.object({
                 pokemonId: z.string(),
+                pokemonTeams: z.array(z.string()),
             })
         )
-        .mutation(({ ctx, input }) => {
-            return ctx.prisma.createdPokemon.delete({
-                where: {
-                    id: input.pokemonId,
-                },
-            })
+        .mutation(async ({ ctx, input }) => {
+            return await Promise.all([
+                ctx.prisma.createdPokemon.delete({
+                    where: {
+                        id: input.pokemonId,
+                    },
+                }),
+                ...input.pokemonTeams.map((teamId) => {
+                    return ctx.prisma.team.delete({
+                        where: {
+                            id: teamId,
+                        },
+                    })
+                }),
+            ])
         }),
 })

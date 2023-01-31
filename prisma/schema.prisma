@@ -67,8 +67,8 @@ model Team {
   teamStyle String
   teamName  String
   createdAt DateTime        @default(now())
-  pokemon   PokemonOnTeam[]
-  favorited favoriteTeams[]
+  favorited favoriteTeams[] 
+  pokemon   PokemonOnTeam[] 
   user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
