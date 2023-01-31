@@ -11,7 +11,11 @@ const PopularPokemon = () => {
             <div className="pokemon-card-grid">
                 {popularPokemon?.map((pokemon) => {
                     return (
-                        <Link href={`/profile/${pokemon.userId}/${pokemon.id}`} className="pokemon-card">
+                        <Link
+                            href={`/profile/${pokemon.userId}/${pokemon.id}`}
+                            className="pokemon-card"
+                            key={pokemon.id}
+                        >
                             <PokemonCard
                                 pokemonName={pokemon.name}
                                 createdPokemon={pokemon}

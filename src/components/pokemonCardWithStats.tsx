@@ -73,7 +73,9 @@ export const PokemonCardWithStats = ({
                     >
                         <div
                             className={`h-10 w-10 rounded-full ${
-                                favorite ? "bg-lime-400 hover:bg-lime-400/50" : "bg-slate-500 hover:bg-slate-500/50"
+                                favorite
+                                    ? "bg-lime-400 hover:bg-lime-400/50"
+                                    : "bg-slate-500 hover:bg-slate-500/50"
                             }`}
                         ></div>
                     </button>
@@ -132,7 +134,7 @@ export const PokemonCardWithStats = ({
                     <div className="grid grid-cols-3">
                         {createdPokemon?.evs.map((ev) => {
                             return (
-                                <div>
+                                <div key={`${ev.stat}EV`}>
                                     <h3>{formatStat(ev.stat)}</h3>
                                     <p>{ev.value}</p>
                                 </div>
@@ -145,7 +147,7 @@ export const PokemonCardWithStats = ({
                     <div className="grid grid-cols-3">
                         {createdPokemon?.ivs.map((iv) => {
                             return (
-                                <div>
+                                <div key={`${iv.stat}IV`}>
                                     <h3>{formatStat(iv.stat)}</h3>
                                     <p>{iv.value}</p>
                                 </div>

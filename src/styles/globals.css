@@ -48,7 +48,7 @@ button[type="button"] {
     @apply text-xl font-bold text-primary dark:bg-dark-3;
 }
 
-.btn-red{
+.btn-red {
     @apply bg-red-600 dark:hover:bg-red-700 !important;
 }
 
@@ -61,10 +61,10 @@ button[type="button"] {
 }
 
 .pokemon-card {
-    @apply aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2 relative;
+    @apply relative aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2;
 }
-a.pokemon-card{
-    @apply dark:hover:bg-dark-3
+a.pokemon-card {
+    @apply dark:hover:bg-dark-3;
 }
 
 .no-scrollbar::-webkit-scrollbar {

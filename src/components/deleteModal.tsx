@@ -18,20 +18,26 @@ export default function DeleteModal({
     setShowModal,
     teamId,
     pokemonId,
-    pokemonTeams
+    pokemonTeams,
 }: Props) {
     const deleteTeam = deleteTeamMutation(userId, teamId as string)
-    const deletePokemon = deletePokemonMutation(userId, pokemonId as string, name, pokemonTeams)
+    const deletePokemon = deletePokemonMutation(
+        userId,
+        pokemonId as string,
+        name,
+        pokemonTeams
+    )
 
     const handleDelete = () => {
         if (teamId)
             deleteTeam.mutate({
                 id: teamId,
             })
-        if (pokemonId) deletePokemon.mutate({
-            pokemonId: pokemonId,
-            pokemonTeams: pokemonTeams as string[]
-        })
+        if (pokemonId)
+            deletePokemon.mutate({
+                pokemonId: pokemonId,
+                pokemonTeams: pokemonTeams as string[],
+            })
     }
 
     return (

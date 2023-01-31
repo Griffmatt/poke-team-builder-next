@@ -65,7 +65,6 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
         onSettled: () => {
             apiContext.favorite.getUserFavoritePokemon.invalidate()
             apiContext.pokemon.getUsersPokemon.invalidate()
-
         },
     })
     return addFavorite

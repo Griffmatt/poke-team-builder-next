@@ -1,14 +1,14 @@
 import { type NextPage } from "next"
 import { api } from "../../utils/api"
 import Link from "next/link"
-import {BoxesNav} from "../../components/boxes/boxesNav"
+import { BoxesNav } from "../../components/boxes/boxesNav"
 
 const Boxes: NextPage = () => {
     const { data: users } = api.users.getSuggestedUsers.useQuery()
     return (
         <main>
             <h2>Boxes</h2>
-            <BoxesNav selected="search"/>
+            <BoxesNav selected="search" />
             <div className="grid gap-3">
                 <h2>Suggested Trainers</h2>
                 <div className="no-scrollbar flex gap-2 overflow-x-scroll">

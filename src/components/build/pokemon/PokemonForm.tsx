@@ -72,6 +72,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         nature,
         heldItem,
         shiny,
+        teraType,
         firstMove,
         secondMove,
         thirdMove,
@@ -298,10 +299,10 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 })}
             </div>
             <div>
-                <h2>ivs</h2>
+                <h2>Ivs</h2>
                 {ivs.map((stat) => {
                     return (
-                        <label className="flex flex-col" key={`${stat.stat}EV`}>
+                        <label className="flex flex-col" key={`${stat.stat}IV`}>
                             {stat.stat}
                             <div className="flex w-full gap-2">
                                 <button

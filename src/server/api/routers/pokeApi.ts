@@ -1,8 +1,8 @@
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { createTRPCRouter, publicProcedure } from "../trpc"
 
-import { z } from 'zod'
+import { z } from "zod"
 
-import { PokemonClient, ItemClient } from 'pokenode-ts'
+import { PokemonClient, ItemClient } from "pokenode-ts"
 
 const api = new PokemonClient()
 const itemApi = new ItemClient()

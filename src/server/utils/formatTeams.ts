@@ -57,13 +57,14 @@ export const formatTeams = (results: teamsArr) =>
                     ability: createdPokemon.ability,
                     nature: createdPokemon.nature,
                     heldItem: createdPokemon.heldItem,
+                    teraType: createdPokemon.teraType,
                     shiny: createdPokemon.shiny,
                     createdAt: createdPokemon.createdAt,
                     moves: createdPokemon.moves,
                     evs: createdPokemon.evs,
                     ivs: createdPokemon.ivs,
                     teams: createdPokemon.teams,
-                    favorited: createdPokemon.favorited
+                    favorited: createdPokemon.favorited,
                 }
             }),
         }

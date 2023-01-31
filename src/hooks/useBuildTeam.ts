@@ -3,8 +3,6 @@ import { useState } from "react"
 import { api } from "../utils/api"
 import { CreatedPokemon } from "../types/trpc"
 
-
-
 export function useBuildTeam(userId: string) {
     const router = useRouter()
     const [pokemonOnTeam, setPokemonOnTeam] = useState<CreatedPokemon[]>([])
@@ -27,12 +25,13 @@ export function useBuildTeam(userId: string) {
                     ability: pokemon!.ability,
                     nature: pokemon!.nature,
                     heldItem: pokemon!.heldItem,
-                    shiny: pokemon!.shiny ,
+                    shiny: pokemon!.shiny,
                     createdAt: pokemon!.createdAt,
                     moves: pokemon!.moves,
                     ivs: pokemon!.ivs,
                     evs: pokemon!.evs,
-                    teams: pokemon!.teams
+                    teams: pokemon!.teams,
+                    favorited: pokemon!.favorited,
                 }
             })
 
@@ -46,7 +45,7 @@ export function useBuildTeam(userId: string) {
                         teamStyle: teamStyle,
                         teamName: teamName,
                         createdAt: new Date(),
-                        pokemon: formatPokemon
+                        pokemon: formatPokemon,
                     },
                 ])
             }

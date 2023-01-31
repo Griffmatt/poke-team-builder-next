@@ -25,7 +25,7 @@ const SinglePokemon: NextPage = () => {
 
     const [showModal, setShowModal] = useState(false)
 
-    const pokemonTeams = pokemon?.teams.map(team => team.teamId)
+    const pokemonTeams = pokemon?.teams.map((team) => team.teamId)
 
     return (
         <main>

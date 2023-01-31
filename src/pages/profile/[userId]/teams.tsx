@@ -6,6 +6,7 @@ import { ProfileNav } from "../../../components/profile/profileNav"
 import { PokemonCard } from "../../../components/pokemonCard"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
+import React from "react"
 
 const ProfileTeams: NextPage = () => {
     const router = useRouter()
@@ -30,7 +31,7 @@ const ProfileTeams: NextPage = () => {
                 {teams && teams.length > 0 ? (
                     teams?.map((team) => {
                         return (
-                            <>
+                            <React.Fragment key={team.id}>
                                 <h3>{team.teamName}</h3>
                                 <Link
                                     href={`/team/${team.id}`}
@@ -50,7 +51,7 @@ const ProfileTeams: NextPage = () => {
                                         )
                                     })}
                                 </Link>
-                            </>
+                            </React.Fragment>
                         )
                     })
                 ) : (

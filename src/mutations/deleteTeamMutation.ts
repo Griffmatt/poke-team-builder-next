@@ -1,12 +1,10 @@
 import { api } from "../utils/api"
 import router from "next/router"
 
-
 export const deleteTeamMutation = (userId: string, teamId: string) => {
     const apiContext = api.useContext()
     const deleteTeam = api.teams.deleteTeam.useMutation({
         onMutate: async () => {
-
             const pastTeams = apiContext.teams.getUserTeams.getData({
                 userId: userId,
             })

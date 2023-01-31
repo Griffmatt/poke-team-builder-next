@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { z } from "zod"
+import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const usersRouter = createTRPCRouter({
     getSuggestedUsers: publicProcedure.query(({ ctx }) => {

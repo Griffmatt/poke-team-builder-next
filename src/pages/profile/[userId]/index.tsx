@@ -33,8 +33,11 @@ const ProfilePokemon: NextPage = () => {
 
     return (
         <main>
-
-            <ProfileNav selected="pokemon" userId={userId as string} user={user} />
+            <ProfileNav
+                selected="pokemon"
+                userId={userId as string}
+                user={user}
+            />
             <input
                 placeholder="Search for a pokemon..."
                 type="text"
@@ -48,7 +51,8 @@ const ProfilePokemon: NextPage = () => {
             ) : (
                 <div className="pokemon-card-grid">
                     {filterPokemon?.map((pokemon) => {
-                        const favorited = pokemon.favorited[0]?.userId === pokemon.userId
+                        const favorited =
+                            pokemon.favorited[0]?.userId === pokemon.userId
                         return (
                             <Link
                                 key={pokemon.id}

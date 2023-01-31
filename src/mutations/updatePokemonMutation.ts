@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { CreatedPokemon } from "../types/trpc"
 import { api } from "../utils/api"
+import { sortByFavorited } from "../utils/sortByFavorited"
 interface UpdateValues {
     ability: string
     nature: string
@@ -51,8 +52,9 @@ export const updatePokemonMutation = (
                 nature: nature,
                 heldItem: heldItem,
                 shiny: shiny,
+                teraType: createdPokemon!.teraType,
                 createdAt: createdPokemon!.createdAt,
-                favorited: [],
+                favorited: createdPokemon!.favorited,
                 moves: [
                     { move: firstMove, moveOrder: 1 },
                     { move: secondMove, moveOrder: 2 },
@@ -72,17 +74,15 @@ export const updatePokemonMutation = (
             }
 
             if (pastPokemon) {
-                const filterPokemon = pastPokemon.filter(
-                    (pokemon) => pokemon.id !== createdPokemon?.id
-                )
-                const sortPokemon = [...filterPokemon, updatePokemonData].sort(
-                    (a, b) => {
-                       return Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))
-                    }
-                )
+                const sortFavorites = sortByFavorited([
+                    updatePokemonData,
+                    ...pastPokemon.filter(
+                        (pokemon) => pokemon.id !== createdPokemon?.id
+                    ),
+                ])
                 apiContext.pokemon.getUsersPokemon.setData(
                     { userId: userId },
-                    sortPokemon
+                    sortFavorites
                 )
             }
             return { pastPokemon }

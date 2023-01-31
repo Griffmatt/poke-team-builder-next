@@ -80,11 +80,13 @@ const BuildTeam: NextPage = () => {
             ) : (
                 <div className="pokemon-card-grid">
                     {filteredPokemon?.map((pokemon) => {
-                        const favorited = pokemon.favorited[0]?.userId === pokemon.userId
+                        const favorited =
+                            pokemon.favorited[0]?.userId === pokemon.userId
                         return (
                             <button
                                 className="pokemon-card"
                                 onClick={() => addPokemonToTeam(pokemon)}
+                                key={pokemon.id}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}

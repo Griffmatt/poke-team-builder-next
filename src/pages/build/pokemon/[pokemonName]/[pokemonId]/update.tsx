@@ -4,7 +4,6 @@ import { useRouter } from "next/router"
 import { PokemonForm } from "../../../../../components/build/pokemon/PokemonForm"
 import { api } from "../../../../../utils/api"
 
-
 const UpdatePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName, pokemonId } = router.query
@@ -14,7 +13,7 @@ const UpdatePokemon: NextPage = () => {
     })
     const { data: heldItems } = api.pokeApi.getHeldItems.useQuery()
 
-    const { data: createdPokemon} = api.pokemon.getSinglePokemon.useQuery({
+    const { data: createdPokemon } = api.pokemon.getSinglePokemon.useQuery({
         pokemonId: pokemonId as string,
     })
 

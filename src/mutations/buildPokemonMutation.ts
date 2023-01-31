@@ -8,6 +8,7 @@ interface UpdateValues {
     nature: string
     heldItem: string
     shiny: boolean
+    teraType: string
     firstMove: string
     secondMove: string
     thirdMove: string
@@ -24,6 +25,7 @@ export const buildPokemonMutation = (
         nature,
         heldItem,
         shiny,
+        teraType,
         firstMove,
         secondMove,
         thirdMove,
@@ -50,6 +52,7 @@ export const buildPokemonMutation = (
                 nature: nature,
                 heldItem: heldItem,
                 shiny: shiny,
+                teraType: teraType,
                 createdAt: new Date(),
                 favorited: [],
                 moves: [
@@ -68,7 +71,10 @@ export const buildPokemonMutation = (
                     buildPokemonData,
                     ...pastPokemon,
                 ])
-                apiContext.pokemon.getUsersPokemon.setData({ userId: userId }, sortFavorites)
+                apiContext.pokemon.getUsersPokemon.setData(
+                    { userId: userId },
+                    sortFavorites
+                )
             }
 
             if (topPokemonData) {
@@ -83,6 +89,7 @@ export const buildPokemonMutation = (
                         }
                     return pokeData
                 })
+
                 const newData = {
                     totalPokemon: topPokemonData.totalPokemon + 1,
                     topPokemon: pokeStats.sort((a, b) => {

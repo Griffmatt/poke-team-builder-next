@@ -16,8 +16,8 @@ const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
     return (
         <>
-            <div className="grid gap-3 h-44">
-                <div className="w-32 aspect-square">
+            <div className="flex h-44 flex-col justify-between">
+                <div className="aspect-square w-32">
                     {user && (
                         <img src={user.image ?? ""} className="rounded-full" />
                     )}

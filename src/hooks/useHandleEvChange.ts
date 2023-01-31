@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react"
 
 interface StatsArr {
     stat: string
@@ -9,24 +9,24 @@ interface Stats {
     Hitpoints: number
     Attack: number
     Defense: number
-    'Special Attack': number
-    'Special Defense': number
-    'Speed': number
+    "Special Attack": number
+    "Special Defense": number
+    Speed: number
 }
 
 export default function useHandleEvChange(defaultStats?: StatsArr[]) {
     let currentStats = null
-    if(defaultStats){
-        currentStats = defaultStats.reduce((statObj, stat)=>{
-            return {...statObj, [stat.stat]: stat.value}
+    if (defaultStats) {
+        currentStats = defaultStats.reduce((statObj, stat) => {
+            return { ...statObj, [stat.stat]: stat.value }
         }, {} as Stats)
     }
     const [evs, setEvs] = useState({
         Hitpoints: currentStats?.Hitpoints ?? 0,
         Attack: currentStats?.Attack ?? 0,
         Defense: currentStats?.Defense ?? 0,
-        'Special Attack': currentStats?.['Special Attack'] ?? 0,
-        'Special Defense': currentStats?.['Special Defense'] ?? 0,
+        "Special Attack": currentStats?.["Special Attack"] ?? 0,
+        "Special Defense": currentStats?.["Special Defense"] ?? 0,
         Speed: currentStats?.Speed ?? 0,
     })
 
