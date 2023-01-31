@@ -5,7 +5,7 @@ const NavBar = () => {
     const { data: session } = useSession()
 
     return (
-        <div className="mx-auto flex max-w-[40rem] justify-center gap-6  p-3">
+        <div className="mx-auto flex max-w-[40rem] justify-center gap-6 p-3">
             <NavLink href="/">
                 <h2>Home</h2>
             </NavLink>
