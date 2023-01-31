@@ -1,54 +1,12 @@
 import { z } from "zod"
 import { formatTeams } from "../../utils/formatTeams"
+import { teamsInclude } from "../../utils/types"
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 export const teamsRouter = createTRPCRouter({
     getTeams: publicProcedure.query(async ({ ctx }) => {
         const results = await ctx.prisma.team.findMany({
-            include: {
-                pokemon: {
-                    include: {
-                        createdPokemon: {
-                            include: {
-                                moves: {
-                                    select: {
-                                        move: true,
-                                        moveOrder: true,
-                                    },
-                                    orderBy: {
-                                        moveOrder: "asc",
-                                    },
-                                },
-                                evs: {
-                                    select: {
-                                        stat: true,
-                                        value: true,
-                                    },
-                                    orderBy: {
-                                        stat: "asc",
-                                    },
-                                },
-                                ivs: {
-                                    select: {
-                                        stat: true,
-                                        value: true,
-                                    },
-                                    orderBy: {
-                                        stat: "asc",
-                                    },
-                                },
-                                teams: true,
-                                favorited: {
-                                    select: {
-                                        userId: true,
-                                        favoritedAt: true,
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
+            ...teamsInclude
         })
 
         const formatResults = formatTeams(results)
@@ -66,50 +24,7 @@ export const teamsRouter = createTRPCRouter({
                 where: {
                     userId: input.userId,
                 },
-                include: {
-                    pokemon: {
-                        select: {
-                            createdPokemon: {
-                                include: {
-                                    moves: {
-                                        select: {
-                                            move: true,
-                                            moveOrder: true,
-                                        },
-                                        orderBy: {
-                                            moveOrder: "asc",
-                                        },
-                                    },
-                                    evs: {
-                                        select: {
-                                            stat: true,
-                                            value: true,
-                                        },
-                                        orderBy: {
-                                            stat: "asc",
-                                        },
-                                    },
-                                    ivs: {
-                                        select: {
-                                            stat: true,
-                                            value: true,
-                                        },
-                                        orderBy: {
-                                            stat: "asc",
-                                        },
-                                    },
-                                    teams: true,
-                                    favorited: {
-                                        select: {
-                                            userId: true,
-                                            favoritedAt: true,
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
+                ...teamsInclude,
             })
 
             const formatResults = formatTeams(results)
@@ -127,50 +42,7 @@ export const teamsRouter = createTRPCRouter({
                 where: {
                     id: input.teamId,
                 },
-                include: {
-                    pokemon: {
-                        select: {
-                            createdPokemon: {
-                                include: {
-                                    moves: {
-                                        select: {
-                                            move: true,
-                                            moveOrder: true,
-                                        },
-                                        orderBy: {
-                                            moveOrder: "asc",
-                                        },
-                                    },
-                                    evs: {
-                                        select: {
-                                            stat: true,
-                                            value: true,
-                                        },
-                                        orderBy: {
-                                            stat: "asc",
-                                        },
-                                    },
-                                    ivs: {
-                                        select: {
-                                            stat: true,
-                                            value: true,
-                                        },
-                                        orderBy: {
-                                            stat: "asc",
-                                        },
-                                    },
-                                    teams: true,
-                                    favorited: {
-                                        select: {
-                                            userId: true,
-                                            favoritedAt: true,
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
+                ...teamsInclude,
             })
             if (results === null) return null
 

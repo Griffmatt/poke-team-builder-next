@@ -1,44 +1,4 @@
-import { Prisma } from "@prisma/client"
-
-const teams = Prisma.validator<Prisma.TeamArgs>()({
-    include: {
-        pokemon: {
-            select: {
-                createdPokemon: {
-                    include: {
-                        moves: {
-                            select: {
-                                move: true,
-                                moveOrder: true,
-                            },
-                        },
-                        evs: {
-                            select: {
-                                stat: true,
-                                value: true,
-                            },
-                        },
-                        ivs: {
-                            select: {
-                                stat: true,
-                                value: true,
-                            },
-                        },
-                        teams: true,
-                        favorited: {
-                            select: {
-                                userId: true,
-                                favoritedAt: true,
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    },
-})
-
-type teams = Prisma.TeamGetPayload<typeof teams>[]
+import { teams } from "./types"
 
 export const formatTeams = (teamArr: teams) =>{
     return teamArr.map(team => {

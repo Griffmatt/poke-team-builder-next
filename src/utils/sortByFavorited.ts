@@ -43,8 +43,12 @@ type userPokemonArr = Prisma.CreatedPokemonGetPayload<typeof CreatedPokemon>[]
 
 const sortByFavorited = (pokemonArr: userPokemonArr) => {
     return pokemonArr.sort((a, b) => {
-        const y = b.favorited[0]?.userId ? 2 : 1
-        const x = a.favorited[0]?.userId ? 2 : 1
+        const y = b.favorited[0]?.favoritedAt
+            ? Number(b.favorited[0]?.favoritedAt)
+            : 1
+        const x = a.favorited[0]?.favoritedAt
+            ? Number(a.favorited[0]?.favoritedAt)
+            : 1
         if (x === y) {
             return b.createdAt.getTime() - a.createdAt.getTime()
         }

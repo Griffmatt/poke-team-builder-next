@@ -1,4 +1,5 @@
 import { formatTeams } from "../../utils/formatTeams"
+import { pokemonInclude, teamsInclude } from "../../utils/types"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const statisticsRouter = createTRPCRouter({
@@ -28,42 +29,7 @@ export const statisticsRouter = createTRPCRouter({
     }),
     getPopularPokemon: publicProcedure.query(async ({ ctx }) => {
         const pokemon = await ctx.prisma.createdPokemon.findMany({
-            include: {
-                moves: {
-                    select: {
-                        move: true,
-                        moveOrder: true,
-                    },
-                    orderBy: {
-                        moveOrder: "asc",
-                    },
-                },
-                evs: {
-                    select: {
-                        stat: true,
-                        value: true,
-                    },
-                    orderBy: {
-                        stat: "desc",
-                    },
-                },
-                ivs: {
-                    select: {
-                        stat: true,
-                        value: true,
-                    },
-                    orderBy: {
-                        stat: "desc",
-                    },
-                },
-                teams: true,
-                favorited: {
-                    select: {
-                        userId: true,
-                        favoritedAt: true,
-                    },
-                },
-            },
+            ...pokemonInclude,
         })
         pokemon.sort((a, b) => {
             return b.favorited.length - a.favorited.length
@@ -73,56 +39,7 @@ export const statisticsRouter = createTRPCRouter({
     }),
     getPopularTeams: publicProcedure.query(async ({ ctx }) => {
         const teams = await ctx.prisma.team.findMany({
-            include: {
-                favorited: {
-                    select: {
-                        userId: true,
-                        favoritedAt: true,
-                    },
-                },
-                pokemon: {
-                    select: {
-                        createdPokemon: {
-                            include: {
-                                moves: {
-                                    select: {
-                                        move: true,
-                                        moveOrder: true,
-                                    },
-                                    orderBy: {
-                                        moveOrder: "asc",
-                                    },
-                                },
-                                evs: {
-                                    select: {
-                                        stat: true,
-                                        value: true,
-                                    },
-                                    orderBy: {
-                                        stat: "asc",
-                                    },
-                                },
-                                ivs: {
-                                    select: {
-                                        stat: true,
-                                        value: true,
-                                    },
-                                    orderBy: {
-                                        stat: "asc",
-                                    },
-                                },
-                                teams: true,
-                                favorited: {
-                                    select: {
-                                        userId: true,
-                                        favoritedAt: true,
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
+            ...teamsInclude,
         })
         teams.sort((a, b) => {
             return b.favorited.length - a.favorited.length

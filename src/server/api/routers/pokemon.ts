@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { sortByFavorited } from "../../../utils/sortByFavorited"
+import { pokemonInclude } from "../../utils/types"
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc"
 
 export const pokemonRouter = createTRPCRouter({
@@ -8,36 +9,7 @@ export const pokemonRouter = createTRPCRouter({
             orderBy: {
                 createdAt: "desc",
             },
-            include: {
-                moves: {
-                    select: {
-                        move: true,
-                        moveOrder: true,
-                    },
-                    orderBy: {
-                        moveOrder: "asc",
-                    },
-                },
-                evs: {
-                    select: {
-                        stat: true,
-                        value: true,
-                    },
-                    orderBy: {
-                        stat: "desc",
-                    },
-                },
-                ivs: {
-                    select: {
-                        stat: true,
-                        value: true,
-                    },
-                    orderBy: {
-                        stat: "desc",
-                    },
-                },
-                teams: true,
-            },
+            ...pokemonInclude,
         })
     }),
     getSinglePokemon: publicProcedure
@@ -47,42 +19,7 @@ export const pokemonRouter = createTRPCRouter({
         .query(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.findUnique({
                 where: { id: input.pokemonId },
-                include: {
-                    moves: {
-                        select: {
-                            move: true,
-                            moveOrder: true,
-                        },
-                        orderBy: {
-                            moveOrder: "asc",
-                        },
-                    },
-                    evs: {
-                        select: {
-                            stat: true,
-                            value: true,
-                        },
-                        orderBy: {
-                            stat: "asc",
-                        },
-                    },
-                    ivs: {
-                        select: {
-                            stat: true,
-                            value: true,
-                        },
-                        orderBy: {
-                            stat: "asc",
-                        },
-                    },
-                    teams: true,
-                    favorited: {
-                        select: {
-                            userId: true,
-                            favoritedAt: true,
-                        },
-                    },
-                },
+                ...pokemonInclude,
             })
         }),
     getUsersPokemon: publicProcedure
@@ -92,42 +29,7 @@ export const pokemonRouter = createTRPCRouter({
                 where: {
                     userId: input.userId,
                 },
-                include: {
-                    moves: {
-                        select: {
-                            move: true,
-                            moveOrder: true,
-                        },
-                        orderBy: {
-                            moveOrder: "asc",
-                        },
-                    },
-                    evs: {
-                        select: {
-                            stat: true,
-                            value: true,
-                        },
-                        orderBy: {
-                            stat: "asc",
-                        },
-                    },
-                    ivs: {
-                        select: {
-                            stat: true,
-                            value: true,
-                        },
-                        orderBy: {
-                            stat: "asc",
-                        },
-                    },
-                    teams: true,
-                    favorited: {
-                        select: {
-                            userId: true,
-                            favoritedAt: true,
-                        },
-                    },
-                },
+                ...pokemonInclude,
             })
 
             const sortedPokemon = sortByFavorited(results)
