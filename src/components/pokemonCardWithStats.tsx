@@ -73,7 +73,7 @@ export const PokemonCardWithStats = ({
                     >
                         <div
                             className={`h-10 w-10 rounded-full ${
-                                favorite ? "bg-lime-400" : "bg-slate-500"
+                                favorite ? "bg-lime-400 hover:bg-lime-400/50" : "bg-slate-500 hover:bg-slate-500/50"
                             }`}
                         ></div>
                     </button>

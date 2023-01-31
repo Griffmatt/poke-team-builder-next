@@ -33,15 +33,8 @@ const ProfilePokemon: NextPage = () => {
 
     return (
         <main>
-            <div className="grid gap-3">
-                <div>
-                    {user && (
-                        <img src={user.image ?? ""} className="rounded-full" />
-                    )}
-                </div>
-                <h2>{user?.name}</h2>
-            </div>
-            <ProfileNav selected="pokemon" userId={userId as string} />
+
+            <ProfileNav selected="pokemon" userId={userId as string} user={user} />
             <input
                 placeholder="Search for a pokemon..."
                 type="text"

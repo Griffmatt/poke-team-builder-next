@@ -20,7 +20,7 @@ const Home: NextPage = () => {
                     <h2>Statistics</h2>
                     <h3>Most Used Pokemon</h3>
                     <div className="pokemon-card-grid">
-                        {topPokemon.slice(0,12).map((pokemon) => {
+                        {topPokemon.slice(0, 12).map((pokemon) => {
                             return (
                                 <Link
                                     key={pokemon.name}
@@ -48,20 +48,20 @@ const Home: NextPage = () => {
                     >
                         <h2>Build Pokemon</h2>
                     </Link>
-                    {!session?.user ? (
-                        <div
-                            onClick={() => signIn()}
-                            className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
-                        >
-                            <h2>Sign In</h2>
-                        </div>
-                    ) : (
+                    {session?.user ? (
                         <Link
                             href={"/build/team"}
                             className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                         >
                             <h2>Build Team</h2>
                         </Link>
+                    ) : (
+                        <div
+                            onClick={() => signIn()}
+                            className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                        >
+                            <h2>Sign In</h2>
+                        </div>
                     )}
                     <Link
                         href={`/profile/${session?.user?.id}`}

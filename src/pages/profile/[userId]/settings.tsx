@@ -23,15 +23,7 @@ const ProfileSettings: NextPage = () => {
 
     return (
         <main>
-            <div className="grid gap-3">
-                <div>
-                    {user && (
-                        <img src={user.image ?? ""} className="rounded-full" />
-                    )}
-                </div>
-                <h2>{user?.name}</h2>
-            </div>
-            <ProfileNav selected="settings" userId={userId as string} />
+            <ProfileNav selected="settings" userId={userId as string} user={user}/>
             <div className="grid gap-3 bg-dark-2">
                 <button
                     className="rounded-2xl px-4 py-2"

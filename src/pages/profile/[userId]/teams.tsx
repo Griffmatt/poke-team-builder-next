@@ -21,15 +21,11 @@ const ProfileTeams: NextPage = () => {
 
     return (
         <main>
-            <div className="grid gap-3">
-                <div>
-                    {user && (
-                        <img src={user.image ?? ""} className="rounded-full" />
-                    )}
-                </div>
-                <h2>{user?.name}</h2>
-            </div>
-            <ProfileNav selected="teams" userId={userId as string} />
+            <ProfileNav
+                selected="teams"
+                userId={userId as string}
+                user={user}
+            />
             <div className="grid gap-3">
                 {teams && teams.length > 0 ? (
                     teams?.map((team) => {
