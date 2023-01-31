@@ -35,4 +35,36 @@ export const favoriteRouter = createTRPCRouter({
                 },
             })
         }),
+        getUserFavoriteTeams: publicProcedure
+        .input(z.object({ userId: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const favorites = await ctx.prisma.favoriteTeams.findMany({
+                where: {
+                    userId: input.userId,
+                },
+            })
+            const formatFavorites = favorites.map((favorite) => {
+                return favorite.teamId
+            })
+            return formatFavorites
+        }),
+        favoriteTeam: protectedProcedure
+        .input(z.object({ userId: z.string(), teamId: z.string() }))
+        .mutation(({ ctx, input }) => {
+            return ctx.prisma.favoriteTeams.create({
+                data: { teamId: input.teamId, userId: input.userId },
+            })
+        }),
+        unfavoriteTeam: protectedProcedure
+        .input(z.object({ userId: z.string(), teamId: z.string() }))
+        .mutation(({ ctx, input }) => {
+            return ctx.prisma.favoriteTeams.delete({
+                where: {
+                    teamId_userId: {
+                        teamId: input.teamId,
+                        userId: input.userId,
+                    },
+                },
+            })
+        }),
 })

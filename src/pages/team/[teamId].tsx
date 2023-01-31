@@ -17,23 +17,45 @@ const Team: NextPage = () => {
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
-    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+    const { data: favoritePokemon } =
+        api.favorite.getUserFavoritePokemon.useQuery({
+            userId: session?.user?.id as string,
+        })
+
+    const { data: favoriteTeams } = api.favorite.getUserFavoriteTeams.useQuery({
         userId: session?.user?.id as string,
     })
 
-    const copyTeamMutation = api.teams.buildTeam.useMutation()
+    const teamFavorited = favoriteTeams?.includes(teamId as string)
+
+    const copyTeam = api.teams.buildTeam.useMutation()
+
+    const favoriteTeam = api.favorite.favoriteTeam.useMutation()
+    const unfavoriteTeam = api.favorite.unfavoriteTeam.useMutation()
 
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map((pokemon) => {
             return { pokemonId: pokemon.id }
         })
-        copyTeamMutation.mutate({
+        copyTeam.mutate({
             userId: session?.user!.id as string,
             teamName: team!.teamName,
             teamStyle: team!.teamStyle,
             originalTrainerId: team?.userId,
             pokemon: pokemonIds ?? [],
         })
+    }
+
+    const handleFavorite = () => {
+        teamFavorited
+            ? unfavoriteTeam.mutate({
+                  teamId: teamId as string,
+                  userId: session?.user?.id as string,
+              })
+            : favoriteTeam.mutate({
+                  teamId: teamId as string,
+                  userId: session?.user?.id as string,
+              })
     }
 
     return (
@@ -46,25 +68,33 @@ const Team: NextPage = () => {
                         <OriginalTrainer id={team.originalTrainerId} />
                     )}
                 </div>
-                {session?.user?.id === team?.userId ? (
-                    <button
-                        className="btn-red h-fit rounded-2xl px-4 py-2"
-                        onClick={() => setShowModal(true)}
-                    >
-                        Delete Team
-                    </button>
-                ) : (
+                <div className="flex gap-3">
+                    {session?.user?.id === team?.userId ? (
+                        <button
+                            className="btn-red h-fit rounded-2xl px-4 py-2"
+                            onClick={() => setShowModal(true)}
+                        >
+                            Delete Team
+                        </button>
+                    ) : (
+                        <button
+                            className="h-fit rounded-2xl px-4 py-2"
+                            onClick={handleCopy}
+                        >
+                            Copy Team
+                        </button>
+                    )}
                     <button
                         className="h-fit rounded-2xl px-4 py-2"
-                        onClick={handleCopy}
+                        onClick={handleFavorite}
                     >
-                        Copy Team
+                        {teamFavorited ? "Unfavorite Team" : "Favorite Team"}
                     </button>
-                )}
+                </div>
             </div>
             <div className="grid grid-cols-2 place-items-center gap-2 md:grid-cols-3">
                 {team?.pokemon.map((pokemon) => {
-                    const favorite = favorites?.includes(pokemon.id)
+                    const favorite = favoritePokemon?.includes(pokemon.id)
                     return (
                         <div key={pokemon.id} className="pokemon-card">
                             <PokemonCardWithStats
