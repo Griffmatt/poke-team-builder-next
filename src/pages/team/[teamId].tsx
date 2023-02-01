@@ -6,6 +6,7 @@ import Link from "next/link"
 import DeleteModal from "components/deleteModal"
 import { useState } from "react"
 import { TeamRow } from "components/teamRows"
+import { BackButton } from "components/ui/backButton"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -65,6 +66,7 @@ const Team: NextPage = () => {
 
     return (
         <main>
+            <BackButton />
             <div className="flex items-center justify-between">
                 <div>
                     <h1>{team?.teamName}</h1>

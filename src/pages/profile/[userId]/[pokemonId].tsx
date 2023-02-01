@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 import DeleteModal from "components/deleteModal"
+import { BackButton } from "components/ui/backButton"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
@@ -29,12 +30,7 @@ const SinglePokemon: NextPage = () => {
 
     return (
         <main>
-            <button
-                className="w-fit rounded-2xl px-4 py-2"
-                onClick={() => router.back()}
-            >
-                Back
-            </button>
+            <BackButton />
             {pokemon && user && (
                 <>
                     <h1>
