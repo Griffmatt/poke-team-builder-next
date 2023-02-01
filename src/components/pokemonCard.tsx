@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { CreatedPokemon } from "../types/trpc"
 
 import { api } from "../utils/api"
@@ -9,7 +8,6 @@ import { LoadingSpinner } from "./ui/loadingSpinner"
 
 interface Props {
     pokemonName: string
-    linkTo: "build" | "stats" | null
     createdPokemon?: CreatedPokemon
     percentage?: string
     favorite?: boolean
@@ -22,7 +20,6 @@ const PokemonCard = ({
     createdPokemon,
     percentage,
     favorite,
-    linkTo,
 }: Props) => {
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
@@ -37,11 +34,7 @@ const PokemonCard = ({
             : pokemon?.sprites.front_default
 
     return (
-        <PokemonCardWrapper
-            pokemonName={pokemonName}
-            linkTo={linkTo}
-            createdPokemon={createdPokemon}
-        >
+        <>
             <div className="p-3">
                 <div className="aspect-square rounded-full bg-dark">
                     {pokemonImage && (
@@ -59,54 +52,12 @@ const PokemonCard = ({
                         <h4>{secondType}</h4>
                     </div>
                 )}
-                {favorite && (
-                    <FavoritedButton
-                        favorited={favorite}
-                        handleFavorite={null}
-                    />
-                )}
             </div>
-        </PokemonCardWrapper>
+            {favorite && (
+                <FavoritedButton favorited={favorite} handleFavorite={null}/>
+            )}
+        </>
     )
 }
 
 export { PokemonCard }
-
-interface WrapperProps {
-    pokemonName: string
-    linkTo: "build" | "stats" | null
-    children: JSX.Element
-    createdPokemon?: CreatedPokemon
-}
-
-const PokemonCardWrapper = ({
-    pokemonName,
-    linkTo,
-    createdPokemon,
-    children,
-}: WrapperProps) => {
-    const checkForLink = () => {
-        if (linkTo === "stats" && createdPokemon) {
-            return `/profile/${createdPokemon.userId}/${createdPokemon.id}`
-        }
-
-        return `/build/pokemon/${pokemonName}/create`
-    }
-
-    if (linkTo) {
-        return (
-            <Link
-                href={checkForLink()}
-                className="relative aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2 dark:hover:bg-dark-2/50"
-            >
-                {children}
-            </Link>
-        )
-    }
-
-    return (
-        <div className="relative aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2">
-            {children}
-        </div>
-    )
-}

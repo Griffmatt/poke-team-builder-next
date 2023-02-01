@@ -1,25 +1,41 @@
 import { type NextPage } from "next"
 import { api } from "../utils/api"
 import Link from "next/link"
+import { PokemonCard } from "../components/pokemonCard"
 import { signIn, useSession } from "next-auth/react"
 import { CommonTeammates } from "../components/commonTeammates"
-import { PokemonCardGrid } from "../components/pokemonCardGrid"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
+    const { format: formatPercentage } = Intl.NumberFormat("en-US", {
+        style: "percent",
+        minimumFractionDigits: 2,
+    })
     return (
         <main>
             <div className="grid gap-3">
                 <h1>Statistics</h1>
                 <h2>Most Used Pokemon</h2>
-                <div className="aspect-[12/5]">
-                    {topPokemonData && (
-                        <PokemonCardGrid
-                            totalPokemon={topPokemonData}
-                            linkTo="build"
-                        />
-                    )}
+                <div className="pokemon-card-grid aspect-[12/5]">
+                    {topPokemonData &&
+                        topPokemonData.pokemon.slice(0, 12).map((pokemon) => {
+                            return (
+                                <Link
+                                    key={pokemon.name}
+                                    href={`/build/pokemon/${pokemon.name}/create`}
+                                    className="pokemon-card"
+                                >
+                                    <PokemonCard
+                                        pokemonName={pokemon.name}
+                                        percentage={formatPercentage(
+                                            pokemon.amount /
+                                                topPokemonData.total
+                                        )}
+                                    />
+                                </Link>
+                            )
+                        })}
                 </div>
                 <div className="grid gap-3">
                     <h2>Common Teammates</h2>
