@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { BuildNav } from "../../../components/build/buildNav"
 import { PokemonCard } from "../../../components/pokemonCard"
+import { PokemonCardGrid } from "../../../components/pokemonCardGrid"
 import { api } from "../../../utils/api"
 
 const Pokemon: NextPage = () => {
@@ -45,19 +46,9 @@ const Pokemon: NextPage = () => {
                     <h3>{query}</h3>
                 </div>
             ) : (
-                <div className="pokemon-card-grid">
-                    {limitPokemon?.map((pokemon) => {
-                        return (
-                            <Link
-                                key={pokemon.name}
-                                href={`/build/pokemon/${pokemon.name}/create`}
-                                className="pokemon-card"
-                            >
-                                <PokemonCard pokemonName={pokemon.name} />
-                            </Link>
-                        )
-                    })}
-                </div>
+                limitPokemon && (
+                    <PokemonCardGrid pokemonArr={limitPokemon} linkTo="build" />
+                )
             )}
         </main>
     )
