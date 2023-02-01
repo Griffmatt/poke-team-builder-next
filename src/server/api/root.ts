@@ -5,6 +5,7 @@ import { pokeApiRouter } from "./routers/pokeApi"
 import { statisticsRouter } from "./routers/statistics"
 import { teamsRouter } from "./routers/teams"
 import { favoriteRouter } from "./routers/favorite"
+import { mostCommonRouter } from "./routers/mostCommon"
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
     pokeApi: pokeApiRouter,
     statistics: statisticsRouter,
     favorite: favoriteRouter,
+    mostCommon: mostCommonRouter
 })
 
 // export type definition of API

@@ -106,6 +106,11 @@ export function useBuildTeam(userId: string) {
         return null
     }
 
+    const handleNameChange = (value: string) => {
+        if (value.length >= 16) return null
+        setTeamName(value)
+    }
+
     return {
         addPokemonToTeam,
         removePokemonFromTeam,
@@ -113,6 +118,6 @@ export function useBuildTeam(userId: string) {
         pokemonOnTeam,
         setPokemonOnTeam,
         teamName,
-        setTeamName,
+        handleNameChange,
     }
 }

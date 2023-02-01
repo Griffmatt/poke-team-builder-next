@@ -3,6 +3,7 @@ import { api } from "../utils/api"
 import Link from "next/link"
 import { PokemonCard } from "../components/pokemonCard"
 import { signIn, useSession } from "next-auth/react"
+import { CommonTeammates } from "../components/commonTeammates"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
@@ -18,25 +19,33 @@ const Home: NextPage = () => {
                 <h2>Most Used Pokemon</h2>
                 <div className="pokemon-card-grid aspect-[12/5]">
                     {topPokemonData &&
-                        topPokemonData.topPokemon
-                            .slice(0, 12)
-                            .map((pokemon) => {
-                                return (
-                                    <Link
-                                        key={pokemon.name}
-                                        href={`/build/pokemon/${pokemon.name}/create`}
-                                        className="pokemon-card"
-                                    >
-                                        <PokemonCard
-                                            pokemonName={pokemon.name}
-                                            percentage={formatPercentage(
-                                                pokemon.amount /
-                                                    topPokemonData.totalPokemon
-                                            )}
-                                        />
-                                    </Link>
-                                )
-                            })}
+                        topPokemonData.pokemon.slice(0, 12).map((pokemon) => {
+                            return (
+                                <Link
+                                    key={pokemon.name}
+                                    href={`/build/pokemon/${pokemon.name}/create`}
+                                    className="pokemon-card"
+                                >
+                                    <PokemonCard
+                                        pokemonName={pokemon.name}
+                                        percentage={formatPercentage(
+                                            pokemon.amount /
+                                                topPokemonData.totalPokemon
+                                        )}
+                                    />
+                                </Link>
+                            )
+                        })}
+                </div>
+                <div className="grid gap-3">
+                    <h2>Common Teammates</h2>
+                    {topPokemonData?.pokemon.map((pokemon) => {
+                        return (
+                            <div className="grid gap-2" key={pokemon.name}>
+                                <CommonTeammates pokemonName={pokemon.name} />
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
 
