@@ -19,9 +19,12 @@ export const mostCommonRouter = createTRPCRouter({
                 },
             })
 
-            const teamIds = pokemonWithTeams.map((pokemon) => {
-                return pokemon.teams.map((team) => team.teamId)
-            })[0]
+            const teamIds = pokemonWithTeams.reduce((a, b) => {
+                const moves = b.teams.map((team) => team.teamId)
+                return [...a, ...moves]
+            }, [] as string[])
+
+            console.log(teamIds)
 
             const pokemonOnTeams = await ctx.prisma.pokemonOnTeam.findMany({
                 where: {
@@ -59,6 +62,62 @@ export const mostCommonRouter = createTRPCRouter({
 
             const { string: heldItems, total } = countStringArr(heldItemsArr)
 
-            return { heldItems, total}
+            return { heldItems, total }
+        }),
+    nature: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.createdPokemon.findMany({
+                where: {
+                    name: input.pokemonName,
+                },
+            })
+
+            const natureArr = pokemonData.map((pokemon) => pokemon.nature)
+
+            const { string: natures, total } = countStringArr(natureArr)
+
+            return { natures, total }
+        }),
+    ability: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.createdPokemon.findMany({
+                where: {
+                    name: input.pokemonName,
+                },
+            })
+
+            const abilityArr = pokemonData.map((pokemon) => pokemon.ability)
+
+            const { string: abilities, total } = countStringArr(abilityArr)
+
+            return { abilities, total }
+        }),
+
+    moves: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.createdPokemon.findMany({
+                where: {
+                    name: input.pokemonName,
+                },
+                include: {
+                    moves: {
+                        select: {
+                            move: true,
+                        },
+                    },
+                },
+            })
+
+            const movesArr = pokemonData.reduce((a, b) => {
+                const moves = b.moves.map((move) => move.move)
+                return [...a, ...moves]
+            }, [] as string[])
+
+            const { string: moves, total } = countStringArr(movesArr)
+
+            return { moves, total }
         }),
 })
