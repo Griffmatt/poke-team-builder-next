@@ -1,4 +1,4 @@
-import { countPokemon } from "../../utils/countPokemon"
+import { countStringArr } from "../../utils/countStringArr"
 import { formatTeams } from "../../utils/formatTeams"
 import { pokemonInclude, teamsInclude } from "../../utils/includeConfigs"
 import { createTRPCRouter, publicProcedure } from "../trpc"
@@ -6,8 +6,10 @@ import { createTRPCRouter, publicProcedure } from "../trpc"
 export const statisticsRouter = createTRPCRouter({
     getTopPokemon: publicProcedure.query(async ({ ctx }) => {
         const pokemonArr = await ctx.prisma.createdPokemon.findMany({})
-        
-        return countPokemon(pokemonArr)
+        const pokemonNameArr = pokemonArr.map((pokemon) => pokemon.name)
+        const { string: pokemon, total } = countStringArr(pokemonNameArr)
+
+        return { pokemon, total }
     }),
     getPopularPokemon: publicProcedure.query(async ({ ctx }) => {
         const pokemon = await ctx.prisma.createdPokemon.findMany({

@@ -16,7 +16,7 @@ const CommonTeammates = ({ pokemonName }: Props) => {
     })
     return (
         <>
-            {teammates && teammates?.totalPokemon > 0 && (
+            {teammates && teammates?.total > 0 && (
                 <>
                     <h3>{formatString(teammates.pokemonName)}</h3>
                     <div className="pokemon-card-grid">
@@ -25,7 +25,7 @@ const CommonTeammates = ({ pokemonName }: Props) => {
                         </div>
                         {teammates?.pokemon.slice(0, 5).map((pokemon) => {
                             const percentage = formatPercentage(
-                                pokemon.amount / teammates.totalPokemon
+                                pokemon.amount / teammates.total
                             )
                             return (
                                 <div

@@ -30,7 +30,7 @@ const Home: NextPage = () => {
                                         pokemonName={pokemon.name}
                                         percentage={formatPercentage(
                                             pokemon.amount /
-                                                topPokemonData.totalPokemon
+                                                topPokemonData.total
                                         )}
                                     />
                                 </Link>

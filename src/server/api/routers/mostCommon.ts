@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { countPokemon } from "../../utils/countPokemon"
+import { countStringArr } from "../../utils/countStringArr"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const mostCommonRouter = createTRPCRouter({
@@ -39,11 +39,26 @@ export const mostCommonRouter = createTRPCRouter({
                 },
             })
 
-            const mapPokemon = pokemonOnTeams.map(
-                (pokemon) => pokemon.createdPokemon
+            const pokemonNames = pokemonOnTeams.map(
+                (pokemon) => pokemon.createdPokemon.name
             )
-            const count = countPokemon(mapPokemon)
+            const { string: pokemon, total } = countStringArr(pokemonNames)
 
-            return {...count, pokemonName: input.pokemonName}
+            return { pokemon, total, pokemonName: input.pokemonName }
+        }),
+    heldItems: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.createdPokemon.findMany({
+                where: {
+                    name: input.pokemonName,
+                },
+            })
+
+            const heldItemsArr = pokemonData.map((pokemon) => pokemon.heldItem)
+
+            const { string: heldItems, total } = countStringArr(heldItemsArr)
+
+            return { heldItems, total}
         }),
 })
