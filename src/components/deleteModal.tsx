@@ -1,5 +1,5 @@
-import { deletePokemonMutation } from "../mutations/deletePokemonMutation"
-import { deleteTeamMutation } from "../mutations/deleteTeamMutation"
+import { deletePokemonMutation } from "mutations/deletePokemonMutation"
+import { deleteTeamMutation } from "mutations/deleteTeamMutation"
 
 interface Props {
     userId: string

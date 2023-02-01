@@ -3,17 +3,17 @@ import { FormEvent, useState } from "react"
 
 import { MovesInput } from "./movesInput"
 
-import useHandleEvChange from "../../../hooks/useHandleEvChange"
-import useHandleIvChange from "../../../hooks/useHandleIvChange"
-import formatString from "../../../utils/formatString"
-import { natures } from "../../../assets/natures"
+import useHandleEvChange from "hooks/useHandleEvChange"
+import useHandleIvChange from "hooks/useHandleIvChange"
+import formatString from "utils/formatString"
+import { natures } from "assets/natures"
 
-import { PokemonCard } from "../../pokemonCard"
+import { PokemonCard } from "components/pokemonCard"
 
-import { updatePokemonMutation } from "../../../mutations/updatePokemonMutation"
-import { buildPokemonMutation } from "../../../mutations/buildPokemonMutation"
+import { updatePokemonMutation } from "mutations/updatePokemonMutation"
+import { buildPokemonMutation } from "mutations/buildPokemonMutation"
 import { Pokemon } from "pokenode-ts"
-import { CreatedPokemon } from "../../../types/trpc"
+import { CreatedPokemon } from "types/trpc"
 
 interface Props {
     pokemon: Pokemon

@@ -1,9 +1,9 @@
 import { type NextPage } from "next"
-import { api } from "../utils/api"
+import { api } from "utils/api"
 import Link from "next/link"
-import { PokemonCard } from "../components/pokemonCard"
+import { PokemonCard } from "components/pokemonCard"
 import { signIn, useSession } from "next-auth/react"
-import { CommonTeammates } from "../components/commonTeammates"
+import { CommonTeammates } from "components/commonTeammates"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()

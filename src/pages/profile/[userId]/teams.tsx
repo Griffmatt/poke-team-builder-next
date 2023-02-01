@@ -1,12 +1,12 @@
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
 
-import { api } from "../../../utils/api"
-import { ProfileNav } from "../../../components/profile/profileNav"
+import { api } from "utils/api"
+import { ProfileNav } from "components/profile/profileNav"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import React from "react"
-import { TeamRows } from "../../../components/teamRows"
+import { TeamRows } from "components/teamRows"
 
 const ProfileTeams: NextPage = () => {
     const router = useRouter()

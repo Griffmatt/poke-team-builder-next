@@ -2,12 +2,12 @@ import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
-import { api } from "../../../utils/api"
+import { api } from "utils/api"
 
 import Link from "next/link"
-import { PokemonCard } from "../../../components/pokemonCard"
-import { ProfileNav } from "../../../components/profile/profileNav"
-import { PokemonEmpty } from "../../../components/pokemonEmpty"
+import { PokemonCard } from "components/pokemonCard"
+import { ProfileNav } from "components/profile/profileNav"
+import { PokemonEmpty } from "components/pokemonEmpty"
 
 const ProfilePokemon: NextPage = () => {
     const router = useRouter()

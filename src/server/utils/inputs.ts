@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 const stats = ["HP", "Att", "Def", "SpD", "SpA", "Spe"] as [string, ...string[]]
 

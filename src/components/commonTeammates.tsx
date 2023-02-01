@@ -1,5 +1,5 @@
-import { api } from "../utils/api"
-import formatString from "../utils/formatString"
+import { api } from "utils/api"
+import formatString from "utils/formatString"
 import { PokemonCard } from "./pokemonCard"
 
 interface Props {

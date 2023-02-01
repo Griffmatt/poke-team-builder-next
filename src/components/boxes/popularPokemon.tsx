@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { api } from "../../utils/api"
+import { api } from "utils/api"
 import { PokemonCard } from "../pokemonCard"
 
 const PopularPokemon = () => {

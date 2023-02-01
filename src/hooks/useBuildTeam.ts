@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { api } from "../utils/api"
-import { CreatedPokemon } from "../types/trpc"
+import { api } from "utils/api"
+import { CreatedPokemon } from "types/trpc"
 
 export function useBuildTeam(userId: string) {
     const router = useRouter()

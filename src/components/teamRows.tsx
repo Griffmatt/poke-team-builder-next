@@ -43,9 +43,10 @@ interface TeamRow {
 
 export const TeamRow = ({ team, withStats }: TeamRow) => {
     const { data: session } = useSession()
-    const { data: favoritePokemon} = api.favorite.getUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string
-    })
+    const { data: favoritePokemon } =
+        api.favorite.getUserFavoritePokemon.useQuery({
+            userId: session?.user?.id as string,
+        })
     return (
         <div
             className={`${
@@ -59,7 +60,10 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
                 return (
                     <div className="pokemon-card" key={pokemon.id}>
                         {withStats ? (
-                            <PokemonCardWithStats createdPokemon={pokemon} favorite={favorite}/>
+                            <PokemonCardWithStats
+                                createdPokemon={pokemon}
+                                favorite={favorite}
+                            />
                         ) : (
                             <PokemonCard
                                 pokemonName={pokemon.name}

@@ -1,11 +1,11 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { api } from "../../utils/api"
+import { api } from "utils/api"
 import Link from "next/link"
-import DeleteModal from "../../components/deleteModal"
+import DeleteModal from "components/deleteModal"
 import { useState } from "react"
-import { TeamRow } from "../../components/teamRows"
+import { TeamRow } from "components/teamRows"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()

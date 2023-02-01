@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { addFavoritePokemonMutation } from "../mutations/addFavoritePokemonMutation"
-import { removeFavoritePokemonMutation } from "../mutations/removeFavoritePokemonMutation"
-import { CreatedPokemon } from "../types/trpc"
-import { api } from "../utils/api"
-import formatString from "../utils/formatString"
+import { addFavoritePokemonMutation } from "mutations/addFavoritePokemonMutation"
+import { removeFavoritePokemonMutation } from "mutations/removeFavoritePokemonMutation"
+import { CreatedPokemon } from "types/trpc"
+import { api } from "utils/api"
+import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 import { LoadingSpinner } from "./ui/loadingSpinner"
 
@@ -55,7 +55,10 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                             className="aspect-square w-full"
                         />
                     )}
-                    <FavoritedButton favorited={favorite} handleFavorite={handleFavorite}/>
+                    <FavoritedButton
+                        favorited={favorite}
+                        handleFavorite={handleFavorite}
+                    />
                     {topPoke && (
                         <div className="absolute top-0 left-0 h-10 w-10 rounded-full">
                             Top Poke

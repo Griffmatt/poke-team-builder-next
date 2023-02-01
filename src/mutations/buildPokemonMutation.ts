@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { Pokemon } from "pokenode-ts"
-import { api } from "../utils/api"
-import { sortByFavorited } from "../utils/sortByFavorited"
+import { api } from "utils/api"
+import { sortByFavorited } from "utils/sortByFavorited"
 
 interface UpdateValues {
     ability: string
@@ -78,7 +78,7 @@ export const buildPokemonMutation = (
             }
 
             if (topPokemonData) {
-                const pokeStats = topPokemonData.topPokemon.map((pokeData) => {
+                const pokeStats = topPokemonData.pokemon.map((pokeData) => {
                     if (
                         pokeData.name.toLowerCase() ===
                         pokemon.name.toLowerCase()
@@ -91,8 +91,8 @@ export const buildPokemonMutation = (
                 })
 
                 const newData = {
-                    totalPokemon: topPokemonData.totalPokemon + 1,
-                    topPokemon: pokeStats.sort((a, b) => {
+                    total: topPokemonData.total + 1,
+                    pokemon: pokeStats.sort((a, b) => {
                         if (b.amount === a.amount) {
                             const sortName = [a.name, b.name].sort()
                             if (sortName[0] === b.name) return 1

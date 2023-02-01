@@ -40,7 +40,7 @@ export const deletePokemonMutation = (
             const topPokemonData = apiContext.statistics.getTopPokemon.getData()
 
             if (topPokemonData) {
-                const pokeStats = topPokemonData.topPokemon.map((pokeData) => {
+                const pokeStats = topPokemonData.pokemon.map((pokeData) => {
                     if (
                         pokeData.name.toLowerCase() ===
                         pokemonName.toLowerCase()
@@ -52,8 +52,8 @@ export const deletePokemonMutation = (
                     return pokeData
                 })
                 const newData = {
-                    totalPokemon: topPokemonData.totalPokemon - 1,
-                    topPokemon: pokeStats.sort((a, b) => {
+                    total: topPokemonData.total - 1,
+                    pokemon: pokeStats.sort((a, b) => {
                         if (b.amount === a.amount) {
                             const sortName = [a.name, b.name].sort()
                             if (sortName[0] === b.name) return 1

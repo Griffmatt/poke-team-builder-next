@@ -1,9 +1,9 @@
 import { type NextPage } from "next"
 import Link from "next/link"
 import { useState } from "react"
-import { BuildNav } from "../../../components/build/buildNav"
-import { PokemonCard } from "../../../components/pokemonCard"
-import { api } from "../../../utils/api"
+import { BuildNav } from "components/build/buildNav"
+import { PokemonCard } from "components/pokemonCard"
+import { api } from "utils/api"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })

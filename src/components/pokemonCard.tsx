@@ -1,7 +1,7 @@
 import { CreatedPokemon } from "../types/trpc"
 
-import { api } from "../utils/api"
-import formatString from "../utils/formatString"
+import { api } from "utils/api"
+import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 
 import { LoadingSpinner } from "./ui/loadingSpinner"
@@ -54,7 +54,7 @@ const PokemonCard = ({
                 )}
             </div>
             {favorite && (
-                <FavoritedButton favorited={favorite} handleFavorite={null}/>
+                <FavoritedButton favorited={favorite} handleFavorite={null} />
             )}
         </>
     )

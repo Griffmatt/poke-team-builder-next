@@ -19,7 +19,7 @@ export const appRouter = createTRPCRouter({
     pokeApi: pokeApiRouter,
     statistics: statisticsRouter,
     favorite: favoriteRouter,
-    mostCommon: mostCommonRouter
+    mostCommon: mostCommonRouter,
 })
 
 // export type definition of API

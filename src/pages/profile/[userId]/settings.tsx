@@ -1,8 +1,8 @@
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
 
-import { api } from "../../../utils/api"
-import { ProfileNav } from "../../../components/profile/profileNav"
+import { api } from "utils/api"
+import { ProfileNav } from "components/profile/profileNav"
 import { signOut, useSession } from "next-auth/react"
 import { useEffect } from "react"
 
@@ -21,7 +21,7 @@ const ProfileSettings: NextPage = () => {
         }
     }, [])
 
-    const handleSignOut = async() => {
+    const handleSignOut = async () => {
         await signOut()
         router.replace("/")
     }

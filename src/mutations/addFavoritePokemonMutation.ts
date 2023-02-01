@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react"
-import { api } from "../utils/api"
-import { sortByFavorited } from "../utils/sortByFavorited"
-import { CreatedPokemon } from "../types/trpc"
+import { api } from "utils/api"
+import { sortByFavorited } from "utils/sortByFavorited"
+import { CreatedPokemon } from "types/trpc"
 
 const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
     const apiContext = api.useContext()

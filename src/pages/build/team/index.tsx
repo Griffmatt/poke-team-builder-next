@@ -1,11 +1,11 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { BuildNav } from "../../../components/build/buildNav"
-import { PokemonCard } from "../../../components/pokemonCard"
-import { PokemonEmpty } from "../../../components/pokemonEmpty"
-import { useBuildTeam } from "../../../hooks/useBuildTeam"
-import { api } from "../../../utils/api"
+import { BuildNav } from "components/build/buildNav"
+import { PokemonCard } from "components/pokemonCard"
+import { PokemonEmpty } from "components/pokemonEmpty"
+import { useBuildTeam } from "hooks/useBuildTeam"
+import { api } from "utils/api"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -59,7 +59,7 @@ const BuildTeam: NextPage = () => {
                 <div className="pokemon-card-grid">
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
-                        <div className="aspect-[4/5] w-full"/>
+                        <div className="aspect-[4/5] w-full" />
                     ) : (
                         pokemonOnTeam?.map((pokemon) => {
                             return (
