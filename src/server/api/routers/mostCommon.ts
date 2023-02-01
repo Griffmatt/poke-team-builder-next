@@ -24,6 +24,8 @@ export const mostCommonRouter = createTRPCRouter({
                 return [...a, ...moves]
             }, [] as string[])
 
+            console.log(teamIds)
+
             const pokemonOnTeams = await ctx.prisma.pokemonOnTeam.findMany({
                 where: {
                     NOT: {
