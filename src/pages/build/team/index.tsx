@@ -39,7 +39,7 @@ const BuildTeam: NextPage = () => {
     return (
         <main>
             <div className="flex justify-between">
-                <h1>Build Team</h1>
+                <h1>Building Team</h1>
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"

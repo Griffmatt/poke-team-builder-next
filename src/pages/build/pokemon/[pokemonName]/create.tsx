@@ -14,7 +14,7 @@ const CreatePokemon: NextPage = () => {
 
     return (
         <>
-            <h1>Creating pokemon</h1>
+            <h1>Building pokemon</h1>
             {pokemon && heldItems && (
                 <PokemonForm pokemon={pokemon} heldItems={heldItems.results} />
             )}

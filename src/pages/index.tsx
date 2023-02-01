@@ -23,7 +23,7 @@ const Home: NextPage = () => {
                             return (
                                 <Link
                                     key={pokemon.name}
-                                    href={`/build/pokemon/${pokemon.name}/create`}
+                                    href={`/build/pokemon/${pokemon.name}`}
                                     className="pokemon-card"
                                 >
                                     <PokemonCard
