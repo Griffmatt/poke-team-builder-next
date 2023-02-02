@@ -42,7 +42,7 @@ export default function DeleteModal({
 
     return (
         <div
-            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-dark/50 ${
+            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-dark/75 ${
                 showModal ? "grid grid-rows-3" : "hidden"
             }`}
             onClick={() => setShowModal(false)}

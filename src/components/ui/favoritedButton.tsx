@@ -1,27 +1,41 @@
 interface Props {
     favorited: boolean
-    handleFavorite: (() => void) | null
+    handleFavorite?: (() => void) | null
+    absolute?: boolean
 }
 
-export const FavoritedButton = ({ favorited, handleFavorite }: Props) => {
-    const handleClick = () => {
-        if (handleFavorite) handleFavorite()
-
-        return null
-    }
+export const FavoritedButton = ({
+    favorited,
+    handleFavorite = null,
+    absolute = true,
+}: Props) => {
+    const wrapperClass = absolute
+        ? "absolute top-0 right-0 rounded-full"
+        : "rounded-full"
 
     return (
-        <button
-            className=" absolute top-0 right-0 rounded-full"
-            onClick={handleClick}
-        >
-            <div
-                className={`h-10 w-10 rounded-full ${
-                    favorited
-                        ? "bg-favorited"
-                        : "bg-dark-3 hover:bg-favorited/50"
-                }`}
-            />
-        </button>
+        <>
+            {handleFavorite ? (
+                <button className={wrapperClass} onClick={handleFavorite}>
+                    <div
+                        className={`h-10 w-10 rounded-full ${
+                            favorited
+                                ? "bg-favorited"
+                                : "bg-dark-3 hover:bg-favorited/50"
+                        }`}
+                    />
+                </button>
+            ) : (
+                <div className={wrapperClass}>
+                    <div
+                        className={`h-10 w-10 rounded-full ${
+                            favorited
+                                ? "bg-favorited"
+                                : "bg-dark-3 hover:bg-favorited/50"
+                        }`}
+                    />
+                </div>
+            )}
+        </>
     )
 }

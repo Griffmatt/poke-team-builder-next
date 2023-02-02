@@ -6,6 +6,7 @@ import { team } from "../types/trpc"
 import { api } from "../utils/api"
 import { PokemonCard } from "./pokemonCard"
 import { PokemonCardWithStats } from "./pokemonCardWithStats"
+import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {
     teams: teams
@@ -24,7 +25,7 @@ export const TeamRows = ({ teams }: TeamRows) => {
                     <React.Fragment key={team.id}>
                         <div className="flex justify-between">
                             <h3>{team.teamName}</h3>
-                            {favorited && <h3>Favorited</h3>}
+                            {favorited && <FavoritedButton favorited={favorited} absolute={false} />}
                         </div>
                         <Link href={`/team/${team.id}`}>
                             <TeamRow team={team} withStats={false} />

@@ -18,6 +18,7 @@ module.exports = {
                 dark: "#0f172a",
                 "dark-2": "#1e293b",
                 "dark-3": "#374151",
+                "dark-4": "#3f3f46",
                 att: "#ea580c",
                 hp: "#e11d48",
                 def: "#1d4ed8",

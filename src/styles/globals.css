@@ -37,11 +37,11 @@ input {
 }
 
 select {
-    @apply rounded-xl p-1 px-3 dark:bg-dark-3 dark:text-light;
+    @apply rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
 }
 
 button {
-    @apply text-light dark:bg-dark-2 dark:hover:bg-dark-3;
+    @apply text-light dark:bg-dark-3;
 }
 
 button[type="button"] {

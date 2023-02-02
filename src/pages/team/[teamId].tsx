@@ -7,6 +7,7 @@ import DeleteModal from "components/deleteModal"
 import { useState } from "react"
 import { TeamRow } from "components/teamRows"
 import { BackButton } from "components/ui/backButton"
+import { FavoritedButton } from "components/ui/favoritedButton"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -63,6 +64,14 @@ const Team: NextPage = () => {
                   userId: session?.user?.id as string,
               })
     }
+    let winPercentage
+
+    if (team) {
+        winPercentage =
+            team.wins / team.wins + team.loses === 0
+                ? 1
+                : team.wins + team.loses
+    }
 
     return (
         <main>
@@ -70,7 +79,21 @@ const Team: NextPage = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h1>{team?.teamName}</h1>
-                    <h2>{team?.teamStyle}</h2>
+                    <div className="flex gap-2">
+                        <h2>{team?.teamStyle}</h2>
+                        <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                            <h4 className="align-middle">
+                                Total Wins: {team?.wins}
+                            </h4>
+                        </div>
+                        {team && (
+                            <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                                <h4 className="align-middle">
+                                    Win Percentage: {winPercentage}
+                                </h4>
+                            </div>
+                        )}
+                    </div>
                     {team?.originalTrainerId && (
                         <OriginalTrainer id={team.originalTrainerId} />
                     )}
@@ -91,12 +114,11 @@ const Team: NextPage = () => {
                             Copy Team
                         </button>
                     )}
-                    <button
-                        className="h-fit rounded-2xl px-4 py-2"
-                        onClick={handleFavorite}
-                    >
-                        {teamFavorited ? "Unfavorite Team" : "Favorite Team"}
-                    </button>
+                    <FavoritedButton
+                        favorited={teamFavorited ?? false}
+                        handleFavorite={handleFavorite}
+                        absolute={false}
+                    />
                 </div>
             </div>
             {team && (

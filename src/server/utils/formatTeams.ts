@@ -8,6 +8,8 @@ export const formatTeams = (teamArr: teams) => {
             originalTrainerId: team.originalTrainerId,
             teamStyle: team.teamStyle,
             teamName: team.teamName,
+            wins: team.wins,
+            loses: team.loses,
             createdAt: team.createdAt,
             pokemon: team.pokemon.map(({ createdPokemon }) => {
                 return {

@@ -15,7 +15,7 @@ export const CommonDataCard = ({ data, total }: Props) => {
                     data.amount / total
                 )
                 return (
-                    <div className="flex justify-between rounded bg-dark-3 px-4 py-2" key={data.name}>
+                    <div className="flex justify-between rounded dark:bg-dark-2 px-4 py-2" key={data.name}>
                         <h4>{formatString(data.name)}</h4>
                         <h5>{percentage}</h5>
                     </div>

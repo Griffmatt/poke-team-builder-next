@@ -3,6 +3,7 @@ import { CommonHeldItems } from "components/commonData/commonHeldItems"
 import { CommonMoves } from "components/commonData/commonMoves"
 import { CommonNatures } from "components/commonData/commonNatures"
 import { CommonTeammates } from "components/commonData/commonTeammates"
+import { CommonTeraTypes } from "components/commonData/commonTeraTypes"
 import { PokemonCard } from "components/pokemonCard"
 import { BackButton } from "components/ui/backButton"
 import { type NextPage } from "next"
@@ -71,9 +72,12 @@ const SinglePokemon: NextPage = () => {
                     <div className="md:col-span-2">
                         <h2>Data</h2>
                         <CommonTeammates pokemonName={pokemon.name} />
-                        <div className=" grid gap-2 md:grid-cols-3">
+                        <div className="grid gap-2 md:grid-cols-2">
                             <CommonNatures pokemonName={pokemon.name} />
                             <CommonAbilities pokemonName={pokemon.name} />
+                        </div>
+                        <div className="grid gap-2 md:grid-cols-2">
+                            <CommonTeraTypes pokemonName={pokemon.name} />
                             <CommonHeldItems pokemonName={pokemon.name} />
                         </div>
                         <CommonMoves pokemonName={pokemon.name} />
@@ -82,13 +86,13 @@ const SinglePokemon: NextPage = () => {
                         <div className="grid gap-3 md:col-span-2 md:grid-cols-2 lg:col-start-2">
                             <Link
                                 href={`/build/pokemon/${pokemon?.name}/create`}
-                                className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-2 dark:hover:bg-dark-3"
+                                className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                             >
                                 See Builds
                             </Link>
                             <Link
                                 href={`/build/pokemon/${pokemon?.name}/create`}
-                                className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-2 dark:hover:bg-dark-3"
+                                className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                             >
                                 Build Pokemon
                             </Link>

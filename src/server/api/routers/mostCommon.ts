@@ -24,8 +24,6 @@ export const mostCommonRouter = createTRPCRouter({
                 return [...a, ...moves]
             }, [] as string[])
 
-            console.log(teamIds)
-
             const pokemonOnTeams = await ctx.prisma.pokemonOnTeam.findMany({
                 where: {
                     NOT: {
@@ -93,6 +91,21 @@ export const mostCommonRouter = createTRPCRouter({
             const { string: abilities, total } = countStringArr(abilityArr)
 
             return { abilities, total }
+        }),
+        teraType: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.createdPokemon.findMany({
+                where: {
+                    name: input.pokemonName,
+                },
+            })
+
+            const teraTypeArr = pokemonData.map((pokemon) => pokemon.teraType)
+
+            const { string: teraTypes, total } = countStringArr(teraTypeArr)
+
+            return { teraTypes, total }
         }),
 
     moves: publicProcedure

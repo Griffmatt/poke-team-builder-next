@@ -53,9 +53,7 @@ const PokemonCard = ({
                     </div>
                 )}
             </div>
-            {favorite && (
-                <FavoritedButton favorited={favorite} handleFavorite={null} />
-            )}
+            {favorite && <FavoritedButton favorited={favorite} />}
         </>
     )
 }
