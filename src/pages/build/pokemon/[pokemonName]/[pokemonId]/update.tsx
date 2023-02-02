@@ -20,7 +20,7 @@ const UpdatePokemon: NextPage = () => {
 
     return (
         <main>
-        <BackButton/>
+            <BackButton />
             <h1>Updating pokemon</h1>
             {pokemon && heldItems && createdPokemon && (
                 <PokemonForm

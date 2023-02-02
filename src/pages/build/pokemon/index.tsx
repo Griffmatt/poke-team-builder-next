@@ -24,7 +24,7 @@ const Pokemon: NextPage = () => {
 
     return (
         <main>
-            <div className="flex justify-between">
+            <div className="flex flex-col justify-between gap-2 md:flex-row">
                 <h1>Pokedex</h1>
                 <input
                     placeholder="Search for a pokemon..."
@@ -32,7 +32,7 @@ const Pokemon: NextPage = () => {
                     onChange={(event) =>
                         debounceQuery(event.target.value.toLowerCase())
                     }
-                    className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
+                    className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                 />
             </div>
             <BuildNav selected="pokemon" />

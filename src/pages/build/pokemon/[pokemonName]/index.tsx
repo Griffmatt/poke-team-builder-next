@@ -31,7 +31,7 @@ const SinglePokemon: NextPage = () => {
             <h1>PokeDex Entry</h1>
             {pokemon && (
                 <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="w-full lg:row-span-2">
+                    <div className="w-full xl:row-span-2">
                         <PokemonCard pokemonName={pokemon.name} />
                     </div>
                     <div className="lg:col-span-2">
@@ -69,7 +69,7 @@ const SinglePokemon: NextPage = () => {
                             <h3>Total Stats: {totalStats}</h3>
                         </div>
                     </div>
-                    <div className="md:col-span-2">
+                    <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
                         <h2>Data</h2>
                         <CommonTeammates pokemonName={pokemon.name} />
                         <div className="grid gap-2 md:grid-cols-2">

@@ -38,7 +38,7 @@ const BuildTeam: NextPage = () => {
 
     return (
         <main>
-            <div className="flex justify-between">
+            <div className="flex flex-col justify-between gap-2 md:flex-row">
                 <h1>Building Team</h1>
                 <input
                     placeholder="Search for a pokemon..."
@@ -46,13 +46,13 @@ const BuildTeam: NextPage = () => {
                     onChange={(event) =>
                         debounceQuery(event.target.value.toLowerCase())
                     }
-                    className="w-60 rounded-2xl px-4 py-2 text-black outline-none"
+                    className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                 />
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <input
-                    className="w-72"
+                    className="md:w-72"
                     value={teamName}
                     onChange={(event) => handleNameChange(event.target.value)}
                 />

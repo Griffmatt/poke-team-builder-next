@@ -10,7 +10,7 @@ export const FavoritedButton = ({
     absolute = true,
 }: Props) => {
     const wrapperClass = absolute
-        ? "absolute top-0 right-0 rounded-full"
+        ? "absolute top-1 right-1 rounded-full"
         : "rounded-full"
 
     return (

@@ -92,7 +92,7 @@ export const mostCommonRouter = createTRPCRouter({
 
             return { abilities, total }
         }),
-        teraType: publicProcedure
+    teraType: publicProcedure
         .input(z.object({ pokemonName: z.string() }))
         .query(async ({ ctx, input }) => {
             const pokemonData = await ctx.prisma.createdPokemon.findMany({

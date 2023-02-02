@@ -44,7 +44,7 @@ const ProfilePokemon: NextPage = () => {
                 onChange={(event) =>
                     debounceQuery(event.target.value.toLowerCase())
                 }
-                className="ml-auto w-60 rounded-2xl px-4 py-2 text-black outline-none"
+                className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
             />
             {filterPokemon?.length === 0 ? (
                 <PokemonEmpty query={query} />
