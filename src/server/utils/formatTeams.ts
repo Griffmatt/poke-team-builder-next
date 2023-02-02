@@ -9,7 +9,7 @@ export const formatTeams = (teamArr: teams) => {
             teamStyle: team.teamStyle,
             teamName: team.teamName,
             wins: team.wins,
-            loses: team.loses,
+            battles: team.battles,
             createdAt: team.createdAt,
             pokemon: team.pokemon.map(({ createdPokemon }) => {
                 return {

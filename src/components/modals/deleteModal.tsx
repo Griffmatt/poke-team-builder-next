@@ -42,13 +42,13 @@ export default function DeleteModal({
 
     return (
         <div
-            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-dark/75 ${
+            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-light/5 ${
                 showModal ? "grid grid-rows-3" : "hidden"
             }`}
             onClick={() => setShowModal(false)}
         >
             <div
-                className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-light p-10 dark:bg-dark-2"
+                className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-light p-10 dark:bg-dark"
                 onClick={(event) => event?.stopPropagation()}
             >
                 <h2>Confirm Delete</h2>

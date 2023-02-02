@@ -77,9 +77,9 @@ export const teamsRouter = createTRPCRouter({
     addBattle: protectedProcedure.input(z.object({
         teamId: z.string(),
         won: z.boolean()
-    })).query(({ ctx, input}) => {
+    })).mutation(({ ctx, input}) => {
         const increment = input.won ? 1 : 0
-        return prisma?.team.update({
+        return ctx.prisma.team.update({
             where: {
                 id: input.teamId
             },

@@ -6,7 +6,7 @@ import { PokemonCardWithStats } from "components/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
-import DeleteModal from "components/deleteModal"
+import DeleteModal from "components/modals/deleteModal"
 import { BackButton } from "components/ui/backButton"
 
 const SinglePokemon: NextPage = () => {

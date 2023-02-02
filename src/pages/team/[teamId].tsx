@@ -3,18 +3,22 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { api } from "utils/api"
 import Link from "next/link"
-import DeleteModal from "components/deleteModal"
+import DeleteModal from "components/modals/deleteModal"
 import { useState } from "react"
 import { TeamRow } from "components/teamRows"
 import { BackButton } from "components/ui/backButton"
 import { FavoritedButton } from "components/ui/favoritedButton"
+import BattleModal from "components/modals/battleModal"
+import { formatPercentage } from "utils/formatPercentage"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const { teamId } = router.query
 
-    const [showModal, setShowModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showBattleModal, setShowBattleModal] = useState(false)
+    const [battleStatus, setBattleStatus] = useState<"Won" | "Lost">("Lost")
 
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
@@ -64,13 +68,21 @@ const Team: NextPage = () => {
                   userId: session?.user?.id as string,
               })
     }
+
+    const handleWin = () => {
+        setShowBattleModal(true)
+        setBattleStatus("Won")
+    }
+
+    const handleLose = () => {
+        setShowBattleModal(true)
+        setBattleStatus("Lost")
+    }
+
     let winPercentage
 
     if (team) {
-        winPercentage =
-            team.wins / team.wins + team.loses === 0
-                ? 1
-                : team.wins + team.loses
+        winPercentage = (team.wins / (team.battles === 0 ? 1 : team.battles))
     }
 
     return (
@@ -89,7 +101,7 @@ const Team: NextPage = () => {
                         {team && (
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
                                 <h4 className="align-middle">
-                                    Win Percentage: {winPercentage}
+                                    Win Percentage: {formatPercentage(winPercentage ?? 0)}
                                 </h4>
                             </div>
                         )}
@@ -100,12 +112,26 @@ const Team: NextPage = () => {
                 </div>
                 <div className="flex gap-3">
                     {session?.user?.id === team?.userId ? (
-                        <button
-                            className="btn-red h-fit rounded-2xl px-4 py-2"
-                            onClick={() => setShowModal(true)}
-                        >
-                            Delete
-                        </button>
+                        <>
+                            <button
+                                className="btn-red h-fit rounded-2xl px-4 py-2"
+                                onClick={() => setShowDeleteModal(true)}
+                            >
+                                Delete
+                            </button>
+                            <button
+                                className="h-fit rounded-2xl px-4 py-2"
+                                onClick={handleLose}
+                            >
+                                Lost
+                            </button>
+                            <button
+                                className="h-fit rounded-2xl px-4 py-2"
+                                onClick={handleWin}
+                            >
+                                Won
+                            </button>
+                        </>
                     ) : (
                         <button
                             className="h-fit rounded-2xl px-4 py-2"
@@ -127,9 +153,15 @@ const Team: NextPage = () => {
                     <DeleteModal
                         userId={team?.userId}
                         name={team?.teamName}
-                        showModal={showModal}
-                        setShowModal={setShowModal}
+                        showModal={showDeleteModal}
+                        setShowModal={setShowDeleteModal}
                         teamId={team?.id}
+                    />
+                    <BattleModal
+                        showModal={showBattleModal}
+                        setShowModal={setShowBattleModal}
+                        teamId={team?.id}
+                        battleStatus={battleStatus}
                     />
                 </>
             )}
