@@ -14,7 +14,12 @@ export const CommonAbilities = ({ pokemonName }: Props) => {
             {abilities && abilities?.total > 0 && (
                 <div className="w-full">
                     <h3>Common Abilities</h3>
-                    <CommonDataCard data={abilities.abilities} total={abilities.total}/>
+                    <div className="grid gap-1">
+                        <CommonDataCard
+                            data={abilities.abilities}
+                            total={abilities.total}
+                        />
+                    </div>
                 </div>
             )}
         </>

@@ -9,7 +9,7 @@ interface Props {
 
 const MovesInput = ({ order, moves, move, setMove }: Props) => {
     return (
-        <label className="flex flex-col">
+        <label className="grid">
             {order} Move
             <select
                 className="text-dark"

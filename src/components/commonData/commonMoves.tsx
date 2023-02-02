@@ -4,20 +4,20 @@ import { CommonDataCard } from "./commonDataCards"
 interface Props {
     pokemonName: string
 }
-export const CommonNatures = ({ pokemonName }: Props) => {
-    const { data: natures } = api.mostCommon.nature.useQuery({
+export const CommonMoves = ({ pokemonName }: Props) => {
+    const { data: moves } = api.mostCommon.moves.useQuery({
         pokemonName: pokemonName,
     })
 
     return (
         <>
-            {natures && natures?.total > 0 && (
+            {moves && moves?.total > 0 && (
                 <div className="w-full">
-                    <h3>Common Natures</h3>
-                    <div className="grid gap-1">
+                    <h3>Common Moves</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
                         <CommonDataCard
-                            data={natures.natures}
-                            total={natures.total}
+                            data={moves.moves}
+                            total={moves.total}
                         />
                     </div>
                 </div>

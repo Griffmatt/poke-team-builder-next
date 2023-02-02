@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { api } from "utils/api"
 import { formatPercentage } from "utils/formatPercentage"
 import { PokemonCard } from "../pokemonCard"
@@ -15,13 +16,14 @@ const CommonTeammates = ({ pokemonName }: Props) => {
             {teammates && teammates?.total > 0 && (
                 <div>
                     <h3>Common Teammates</h3>
-                    <div className="pokemon-card-grid">
+                    <div className="pokemon-card-grid md:grid-cols-3 lg:grid-cols-6">
                         {teammates?.pokemon.slice(0, 6).map((pokemon) => {
                             const percentage = formatPercentage(
                                 pokemon.amount / teammates.total
                             )
                             return (
-                                <div
+                                <Link
+                                    href={`/build/pokemon/${pokemon.name}`}
                                     className="pokemon-card"
                                     key={pokemon.name}
                                 >
@@ -29,7 +31,7 @@ const CommonTeammates = ({ pokemonName }: Props) => {
                                         pokemonName={pokemon.name}
                                         percentage={percentage}
                                     />
-                                </div>
+                                </Link>
                             )
                         })}
                     </div>

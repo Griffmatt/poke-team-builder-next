@@ -1,5 +1,6 @@
 import { CommonAbilities } from "components/commonData/commonAbilities"
 import { CommonHeldItems } from "components/commonData/commonHeldItems"
+import { CommonMoves } from "components/commonData/commonMoves"
 import { CommonNatures } from "components/commonData/commonNatures"
 import { CommonTeammates } from "components/commonData/commonTeammates"
 import { PokemonCard } from "components/pokemonCard"
@@ -28,11 +29,11 @@ const SinglePokemon: NextPage = () => {
             <BackButton />
             <h1>PokeDex Entry</h1>
             {pokemon && (
-                <div className="grid gap-3 p-2 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="w-full md:row-span-2 lg:col-span-1">
+                <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="w-full lg:row-span-2">
                         <PokemonCard pokemonName={pokemon.name} />
                     </div>
-                    <div className="md:col-span-2 h-fit">
+                    <div className="lg:col-span-2">
                         <h2>Stats</h2>
                         <div>
                             {pokemon.stats.map((stat) => {
@@ -45,12 +46,15 @@ const SinglePokemon: NextPage = () => {
                                 const percentage = Math.trunc(
                                     (limitNumber / maxNumber) * 100
                                 )
-                                    totalStats += stat.base_stat
-                                    const bgColor = formatStat(stat.stat.name)
+                                totalStats += stat.base_stat
+                                const bgColor = formatStat(stat.stat.name)
                                 return (
-                                    <div key={pokemon.name}>
-                                        <h3>{formatString(stat.stat.name)}: {stat.base_stat}</h3>
-                                        <div className="h-6 bg-dark-2 rounded-full">
+                                    <div key={stat.stat.name}>
+                                        <h3>
+                                            {formatString(stat.stat.name)}:{" "}
+                                            {stat.base_stat}
+                                        </h3>
+                                        <div className="h-6 rounded-full bg-dark-2">
                                             <div
                                                 style={{
                                                     width: `${percentage}%`,
@@ -67,14 +71,15 @@ const SinglePokemon: NextPage = () => {
                     <div className="md:col-span-2">
                         <h2>Data</h2>
                         <CommonTeammates pokemonName={pokemon.name} />
-                        <div className=" flex justify-center gap-2">
+                        <div className=" grid gap-2 md:grid-cols-3">
                             <CommonNatures pokemonName={pokemon.name} />
                             <CommonAbilities pokemonName={pokemon.name} />
                             <CommonHeldItems pokemonName={pokemon.name} />
                         </div>
+                        <CommonMoves pokemonName={pokemon.name} />
                     </div>
                     {session?.user?.id && (
-                        <div className="grid gap-3 md:col-span-2 md:col-start-2 lg:col-start-3">
+                        <div className="grid gap-3 md:col-span-2 md:grid-cols-2 lg:col-start-2">
                             <Link
                                 href={`/build/pokemon/${pokemon?.name}/create`}
                                 className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-2 dark:hover:bg-dark-3"

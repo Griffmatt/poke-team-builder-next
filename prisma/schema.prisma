@@ -64,6 +64,8 @@ model PokemonOnTeam {
 model Team {
   id                String          @id @default(cuid())
   userId            String
+  wins  Int @default(0)
+  loses Int @default(0)
   originalTrainerId String?
   teamStyle         String
   teamName          String
@@ -122,6 +124,7 @@ model Session {
 
 model User {
   id              String            @id @default(cuid())
+  winStreak Int @default(0) 
   name            String?
   email           String?           @unique
   emailVerified   DateTime?

@@ -14,7 +14,12 @@ export const CommonHeldItems = ({ pokemonName }: Props) => {
             {heldItems && heldItems?.total > 0 && (
                 <div className="w-full">
                     <h3>Common Held Items</h3>
-                    <CommonDataCard data={heldItems.heldItems} total={heldItems.total}/>
+                    <div className="grid gap-1">
+                        <CommonDataCard
+                            data={heldItems.heldItems}
+                            total={heldItems.total}
+                        />
+                    </div>
                 </div>
             )}
         </>

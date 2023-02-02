@@ -18,8 +18,8 @@ export const FavoritedButton = ({ favorited, handleFavorite }: Props) => {
             <div
                 className={`h-10 w-10 rounded-full ${
                     favorited
-                        ? "bg-lime-400 hover:bg-lime-400/50"
-                        : "bg-slate-500 hover:bg-slate-500/50"
+                        ? "bg-favorited"
+                        : "bg-dark-3 hover:bg-favorited/50"
                 }`}
             />
         </button>
