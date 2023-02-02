@@ -36,7 +36,7 @@ const PokemonCard = ({
     return (
         <>
             <div className="p-3">
-                <div className="aspect-square rounded-full bg-dark">
+                <div className="aspect-square rounded-full bg-dark-3">
                     {pokemonImage && (
                         <img src={pokemonImage} className="w-full" />
                     )}

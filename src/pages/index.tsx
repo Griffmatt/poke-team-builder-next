@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 
             <div className="grid gap-3">
                 <h2>What to do?</h2>
-                <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                     <Link
                         href={"/build/pokemon"}
                         className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
