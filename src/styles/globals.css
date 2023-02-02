@@ -21,7 +21,7 @@ h2 {
 }
 
 h3 {
-    @apply text-lg font-semibold;
+    @apply text-base font-semibold;
 }
 
 h4 {
@@ -29,7 +29,7 @@ h4 {
 }
 
 p {
-    @apply text-sm;
+    @apply text-sm text-gray;
 }
 
 input {
@@ -41,7 +41,7 @@ select {
 }
 
 button {
-    @apply text-light dark:bg-dark-3 dark:hover:bg-dark-3/50;
+    @apply text-light dark:bg-dark-2 dark:hover:bg-dark-3;
 }
 
 button[type="button"] {
@@ -61,7 +61,7 @@ button[type="button"] {
 }
 
 .pokemon-card {
-    @apply relative aspect-[4/5] w-full rounded-2xl border-4 border-gray-400 dark:bg-dark-2;
+    @apply relative aspect-[4/5] w-full rounded-2xl border-4 border-gray dark:bg-dark-2;
 }
 a.pokemon-card {
     @apply dark:hover:bg-dark-3;
@@ -71,4 +71,23 @@ a.pokemon-card {
     display: none;
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+.hp {
+    @apply bg-hp;
+}
+.att {
+    @apply bg-att;
+}
+.def {
+    @apply bg-def;
+}
+.spa {
+    @apply bg-spa;
+}
+.spd {
+    @apply bg-spd;
+}
+.spe {
+    @apply bg-spe;
 }

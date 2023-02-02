@@ -3,15 +3,11 @@ import { api } from "utils/api"
 import Link from "next/link"
 import { PokemonCard } from "components/pokemonCard"
 import { signIn, useSession } from "next-auth/react"
-import { CommonTeammates } from "components/commonTeammates"
+import { formatPercentage } from "utils/formatPercentage"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
-    const { format: formatPercentage } = Intl.NumberFormat("en-US", {
-        style: "percent",
-        minimumFractionDigits: 2,
-    })
     return (
         <main>
             <div className="grid gap-3">
@@ -36,16 +32,6 @@ const Home: NextPage = () => {
                                 </Link>
                             )
                         })}
-                </div>
-                <div className="grid gap-3">
-                    <h2>Common Teammates</h2>
-                    {topPokemonData?.pokemon.map((pokemon) => {
-                        return (
-                            <div className="grid gap-2" key={pokemon.name}>
-                                <CommonTeammates pokemonName={pokemon.name} />
-                            </div>
-                        )
-                    })}
                 </div>
             </div>
 
