@@ -36,7 +36,10 @@ export const favoriteRouter = createTRPCRouter({
         .input(z.object({ userId: z.string(), pokemonId: z.string() }))
         .mutation(({ ctx, input }) => {
             return ctx.prisma.favoritePokemon.create({
-                data: { pokemonId: input.pokemonId, userId: input.userId },
+                data: {
+                    pokemonId: input.pokemonId,
+                    userId: input.userId,
+                },
             })
         }),
     unfavoritePokemon: protectedProcedure
@@ -78,7 +81,7 @@ export const favoriteRouter = createTRPCRouter({
                 },
             })
 
-            const teams = teamsArr.map(team => {
+            const teams = teamsArr.map((team) => {
                 return team.team
             })
 

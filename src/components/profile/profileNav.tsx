@@ -1,16 +1,12 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import pokemonImage from "assets/pokemon.jpg"
+import { user } from "types/trpc"
 
 interface Props {
     selected: "pokemon" | "teams" | "settings" | "favorites"
     userId: string
-    user?: {
-        image: string | null
-        id: string
-        name: string | null
-        userName: string | null
-    } | null
+    user?: user
 }
 
 const ProfileNav = ({ selected, userId, user }: Props) => {

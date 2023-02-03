@@ -10,13 +10,10 @@ import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {
     teams: teams
+    favoriteTeams: string[]
 }
 
-export const TeamRows = ({ teams }: TeamRows) => {
-    const { data: session } = useSession()
-    const { data: favoriteTeams } = api.favorite.checkUserFavoriteTeams.useQuery({
-        userId: session?.user?.id as string,
-    })
+export const TeamRows = ({ teams, favoriteTeams }: TeamRows) => {
     return (
         <>
             {teams?.map((team) => {
@@ -49,8 +46,8 @@ interface TeamRow {
 
 export const TeamRow = ({ team, withStats }: TeamRow) => {
     const { data: session } = useSession()
-    const { data: favoritePokemon } =
-        api.favorite.checkUserFavoritePokemon.useQuery({
+    const { data: user } =
+        api.users.getUser.useQuery({
             userId: session?.user?.id as string,
         })
     return (
@@ -62,7 +59,7 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
             }`}
         >
             {team?.pokemon.map((pokemon) => {
-                const favorite = favoritePokemon?.includes(pokemon.id) ?? false
+                const favorite = user?.favoritePokemon?.includes(pokemon.id) ?? false
                 return (
                     <div className="pokemon-card" key={pokemon.id}>
                         {withStats ? (

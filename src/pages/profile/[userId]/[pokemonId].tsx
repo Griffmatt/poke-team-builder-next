@@ -20,7 +20,7 @@ const SinglePokemon: NextPage = () => {
     const { data: user } = api.users.getUser.useQuery({
         userId: userId as string,
     })
-    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+    const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
         userId: session?.user?.id as string,
     })
 

@@ -20,6 +20,11 @@ const ProfileTeams: NextPage = () => {
         userId: userId as string,
     })
 
+    const { data: favoriteTeams } =
+        api.favorite.checkUserFavoriteTeams.useQuery({
+            userId: userId as string,
+        })
+
     return (
         <main>
             <ProfileNav
@@ -27,13 +32,15 @@ const ProfileTeams: NextPage = () => {
                 userId={userId as string}
                 user={user}
             />
-            <div className="grid gap-3">
-                {teams && teams.length > 0 ? (
-                    <TeamRows teams={teams} />
-                ) : (
-                    <TeamsEmpty userId={user?.id} userName={user?.name} />
-                )}
-            </div>
+            {teams && favoriteTeams && (
+                <div className="grid gap-3">
+                    {teams.length > 0 ? (
+                        <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
+                    ) : (
+                        <TeamsEmpty userId={user?.id} userName={user?.name} />
+                    )}
+                </div>
+            )}
         </main>
     )
 }

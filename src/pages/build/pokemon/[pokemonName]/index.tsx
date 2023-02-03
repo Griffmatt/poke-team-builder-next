@@ -31,7 +31,7 @@ const SinglePokemon: NextPage = () => {
             <h1>PokeDex Entry</h1>
             {pokemon && (
                 <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="w-full xl:row-span-2">
+                    <div className="w-full h-fit xl:row-span-2">
                         <PokemonCard pokemonName={pokemon.name} />
                     </div>
                     <div className="lg:col-span-2">

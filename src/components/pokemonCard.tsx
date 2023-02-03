@@ -35,23 +35,25 @@ const PokemonCard = ({
 
     return (
         <>
-            <div className="p-3">
+            <div className="flex h-full flex-col justify-around p-3">
                 <div className="aspect-square rounded-full bg-dark-3">
                     {pokemonImage && (
                         <img src={pokemonImage} className="w-full" />
                     )}
                 </div>
-                <h4 className="text-center">
-                    {formatString(pokemon?.name ?? "null")}
-                </h4>
-                {percentage ? (
-                    <h4 className="text-center">{percentage}</h4>
-                ) : (
-                    <div className="flex justify-center gap-2">
-                        <h4>{firstType}</h4>
-                        <h4>{secondType}</h4>
-                    </div>
-                )}
+                <div>
+                    <h4 className="text-center">
+                        {formatString(pokemon?.name ?? "null")}
+                    </h4>
+                    {percentage ? (
+                        <h4 className="text-center">{percentage}</h4>
+                    ) : (
+                        <div className="flex justify-center gap-2">
+                            <h4>{firstType}</h4>
+                            <h4>{secondType}</h4>
+                        </div>
+                    )}
+                </div>
             </div>
             {favorite && <FavoritedButton favorited={favorite} />}
         </>

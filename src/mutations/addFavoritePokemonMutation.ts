@@ -9,7 +9,7 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
     const addFavorite = api.favorite.favoritePokemon.useMutation({
         onMutate: async () => {
             const userFavorites =
-                apiContext.favorite.getUserFavoritePokemon.getData({
+                apiContext.favorite.checkUserFavoritePokemon.getData({
                     userId: session?.user!.id as string,
                 })
 
@@ -18,7 +18,7 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             })
 
             if (userFavorites) {
-                apiContext.favorite.getUserFavoritePokemon.setData(
+                apiContext.favorite.checkUserFavoritePokemon.setData(
                     { userId: session?.user!.id as string },
                     [...userFavorites, createdPokemon!.id]
                 )
@@ -51,7 +51,7 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             return { userFavorites, usersPokemon }
         },
         onError: (error, variables, context) => {
-            apiContext.favorite.getUserFavoritePokemon.setData(
+            apiContext.favorite.checkUserFavoritePokemon.setData(
                 { userId: session?.user!.id as string },
                 context?.userFavorites
             )
@@ -63,7 +63,7 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             )
         },
         onSettled: () => {
-            apiContext.favorite.getUserFavoritePokemon.invalidate()
+            apiContext.favorite.checkUserFavoritePokemon.invalidate()
             apiContext.pokemon.getUsersPokemon.invalidate()
         },
     })

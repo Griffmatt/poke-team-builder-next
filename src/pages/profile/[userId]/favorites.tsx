@@ -33,7 +33,7 @@ const favorites = () => {
                 <h2>pokemon</h2>
                 <div className="pokemon-card-grid">
                     {pokemons?.map((pokemon) => {
-                        const { name, id } = pokemon.createdPokemon
+                        const { name, id } = pokemon?.createdPokemon
                         return (
                             <Link
                                 href={`/profile/${user?.id}/${id}`}
@@ -48,7 +48,7 @@ const favorites = () => {
                     })}
                 </div>
                 <h2>Teams</h2>
-                <div>{teams && <TeamRows teams={teams} />}</div>
+                <div>{teams && <TeamRows teams={teams} favoriteTeams={user?.favoriteTeams ?? []}/>}</div>
             </div>
         </main>
     )

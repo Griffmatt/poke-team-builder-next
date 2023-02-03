@@ -9,7 +9,7 @@ const removeFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
     const removeFavorite = api.favorite.unfavoritePokemon.useMutation({
         onMutate: async () => {
             const userFavorites =
-                apiContext.favorite.getUserFavoritePokemon.getData({
+                apiContext.favorite.checkUserFavoritePokemon.getData({
                     userId: session?.user?.id as string,
                 })
 
@@ -34,7 +34,7 @@ const removeFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             }
 
             if (userFavorites) {
-                apiContext.favorite.getUserFavoritePokemon.setData(
+                apiContext.favorite.checkUserFavoritePokemon.setData(
                     { userId: session?.user!.id as string },
                     userFavorites.filter((fav) => fav !== createdPokemon?.id)
                 )
@@ -43,7 +43,7 @@ const removeFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             return { userFavorites, usersPokemon }
         },
         onError: (error, variables, context) => {
-            apiContext.favorite.getUserFavoritePokemon.setData(
+            apiContext.favorite.checkUserFavoritePokemon.setData(
                 { userId: session?.user!.id as string },
                 context?.userFavorites
             )
@@ -55,7 +55,7 @@ const removeFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
             )
         },
         onSettled: () => {
-            apiContext.favorite.getUserFavoritePokemon.invalidate()
+            apiContext.favorite.checkUserFavoritePokemon.invalidate()
             apiContext.pokemon.getUsersPokemon.invalidate()
         },
     })

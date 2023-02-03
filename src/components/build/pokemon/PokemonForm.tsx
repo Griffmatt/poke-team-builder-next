@@ -159,7 +159,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
-            <div className="w-full lg:row-span-2">
+            <div className="w-full h-fit lg:row-span-2">
                 <PokemonCard
                     pokemonName={pokemon.name}
                     createdPokemon={createdPokemon}

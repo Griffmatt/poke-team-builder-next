@@ -21,7 +21,7 @@ model CreatedPokemon {
   evs       PokemonEvs[]
   ivs       PokemonIvs[]
   teams     PokemonOnTeam[]
-  favorited favoritePokemon[]
+  favorited FavoritePokemon[]
   user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -70,12 +70,12 @@ model Team {
   teamStyle         String
   teamName          String
   createdAt         DateTime        @default(now())
-  favorited         favoriteTeams[]
+  favorited         FavoriteTeams[]
   pokemon           PokemonOnTeam[]
   user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model favoritePokemon {
+model FavoritePokemon {
   pokemonId      String
   userId         String
   favoritedAt    DateTime       @default(now())
@@ -85,7 +85,7 @@ model favoritePokemon {
   @@unique([pokemonId, userId])
 }
 
-model favoriteTeams {
+model FavoriteTeams {
   teamId      String
   userId      String
   favoritedAt DateTime @default(now())
@@ -93,6 +93,15 @@ model favoriteTeams {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([teamId, userId])
+}
+
+model Following {
+  followerId String
+  followingId String
+  followerUser           User           @relation(fields: [followerId], references: [id], onDelete: Cascade, name:"follower")
+  followingUser           User           @relation(fields: [followingId], references: [id], onDelete: Cascade, name: "following")
+
+  @@unique([followerId, followingId])
 }
 
 // Necessary for Next auth
@@ -125,6 +134,7 @@ model Session {
 model User {
   id              String            @id @default(cuid())
   winStreak       Int               @default(0)
+  isAdmin Boolean @default(false)
   name            String?
   email           String?           @unique
   emailVerified   DateTime?
@@ -134,8 +144,10 @@ model User {
   sessions        Session[]
   pokemon         CreatedPokemon[]
   teams           Team[]
-  favoriteTeams   favoriteTeams[]
-  favoritePokemon favoritePokemon[]
+  favoriteTeams   FavoriteTeams[]
+  favoritePokemon FavoritePokemon[]
+  following Following[] @relation(name: "following")
+  followers Following[] @relation(name: "follower")
 }
 
 model VerificationToken {
