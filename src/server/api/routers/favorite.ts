@@ -1,9 +1,11 @@
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 import { z } from "zod"
+import { pokemonInclude, teamsInclude } from "server/utils/includeConfigs"
+import { formatTeams } from "server/utils/formatTeams"
 
 export const favoriteRouter = createTRPCRouter({
-    getUserFavoritePokemon: publicProcedure
+    checkUserFavoritePokemon: publicProcedure
         .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {
             const favorites = await ctx.prisma.favoritePokemon.findMany({
@@ -15,6 +17,20 @@ export const favoriteRouter = createTRPCRouter({
                 return favorite.pokemonId
             })
             return formatFavorites
+        }),
+    getUserFavoritePokemon: publicProcedure
+        .input(z.object({ userId: z.string() }))
+        .query(({ ctx, input }) => {
+            return ctx.prisma.favoritePokemon.findMany({
+                where: {
+                    userId: input.userId,
+                },
+                include: {
+                    createdPokemon: {
+                        ...pokemonInclude,
+                    },
+                },
+            })
         }),
     favoritePokemon: protectedProcedure
         .input(z.object({ userId: z.string(), pokemonId: z.string() }))
@@ -35,7 +51,7 @@ export const favoriteRouter = createTRPCRouter({
                 },
             })
         }),
-    getUserFavoriteTeams: publicProcedure
+    checkUserFavoriteTeams: publicProcedure
         .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {
             const favorites = await ctx.prisma.favoriteTeams.findMany({
@@ -47,6 +63,26 @@ export const favoriteRouter = createTRPCRouter({
                 return favorite.teamId
             })
             return formatFavorites
+        }),
+    getUserFavoriteTeams: publicProcedure
+        .input(z.object({ userId: z.string() }))
+        .query(async ({ ctx, input }) => {
+            const teamsArr = await ctx.prisma.favoriteTeams.findMany({
+                where: {
+                    userId: input.userId,
+                },
+                include: {
+                    team: {
+                        ...teamsInclude,
+                    },
+                },
+            })
+
+            const teams = teamsArr.map(team => {
+                return team.team
+            })
+
+            return formatTeams(teams)
         }),
     favoriteTeam: protectedProcedure
         .input(z.object({ userId: z.string(), teamId: z.string() }))

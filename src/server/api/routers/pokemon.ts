@@ -23,6 +23,14 @@ export const pokemonRouter = createTRPCRouter({
                 ...pokemonInclude,
             })
         }),
+    getPokemonBuilds: publicProcedure
+        .input(z.object({ pokemonName: z.string() }))
+        .query(({ ctx, input }) => {
+            return ctx.prisma.createdPokemon.findMany({
+                where: { name: input.pokemonName },
+                ...pokemonInclude,
+            })
+        }),
     getUsersPokemon: publicProcedure
         .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {

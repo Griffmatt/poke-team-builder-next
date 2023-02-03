@@ -24,7 +24,7 @@ const Team: NextPage = () => {
         teamId: teamId as string,
     })
 
-    const { data: favoriteTeams } = api.favorite.getUserFavoriteTeams.useQuery({
+    const { data: favoriteTeams } = api.favorite.checkUserFavoriteTeams.useQuery({
         userId: session?.user?.id as string,
     })
 
@@ -35,12 +35,12 @@ const Team: NextPage = () => {
 
     const favoriteTeam = api.favorite.favoriteTeam.useMutation({
         onSettled: () => {
-            apiContext.favorite.getUserFavoriteTeams.invalidate()
+            apiContext.favorite.checkUserFavoriteTeams.invalidate()
         },
     })
     const unfavoriteTeam = api.favorite.unfavoriteTeam.useMutation({
         onSettled: () => {
-            apiContext.favorite.getUserFavoriteTeams.invalidate()
+            apiContext.favorite.checkUserFavoriteTeams.invalidate()
         },
     })
 
@@ -82,7 +82,7 @@ const Team: NextPage = () => {
     let winPercentage
 
     if (team) {
-        winPercentage = (team.wins / (team.battles === 0 ? 1 : team.battles))
+        winPercentage = team.wins / (team.battles === 0 ? 1 : team.battles)
     }
 
     return (
@@ -101,7 +101,8 @@ const Team: NextPage = () => {
                         {team && (
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
                                 <h4 className="align-middle">
-                                    Win Percentage: {formatPercentage(winPercentage ?? 0)}
+                                    Win Percentage:{" "}
+                                    {formatPercentage(winPercentage ?? 0)}
                                 </h4>
                             </div>
                         )}

@@ -6,11 +6,11 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 export const teamsRouter = createTRPCRouter({
     getTeams: publicProcedure.query(async ({ ctx }) => {
-        const results = await ctx.prisma.team.findMany({
+        const teams = await ctx.prisma.team.findMany({
             ...teamsInclude,
         })
 
-        const formatResults = formatTeams(results)
+        const formatResults = formatTeams(teams)
 
         return formatResults
     }),
@@ -39,17 +39,17 @@ export const teamsRouter = createTRPCRouter({
             })
         )
         .query(async ({ ctx, input }) => {
-            const results = await ctx.prisma.team.findUnique({
+            const teams = await ctx.prisma.team.findUnique({
                 where: {
                     id: input.teamId,
                 },
                 ...teamsInclude,
             })
-            if (results === null) return null
+            if (teams === null) return null
 
-            const formatResults = formatTeams([results])
+            const formattedTeams = formatTeams([teams])
 
-            return formatResults[0]
+            return formattedTeams[0]
         }),
     buildTeam: protectedProcedure
         .input(buildTeamInput)
@@ -74,25 +74,27 @@ export const teamsRouter = createTRPCRouter({
                 },
             })
         }),
-    addBattle: protectedProcedure.input(z.object({
-        teamId: z.string(),
-        won: z.boolean()
-    })).mutation(({ ctx, input}) => {
-        const increment = input.won ? 1 : 0
-        return ctx.prisma.team.update({
-            where: {
-                id: input.teamId
-            },
-            data: {
-                wins: {
-                    increment: increment
+    addBattle: protectedProcedure
+        .input(
+            z.object({
+                teamId: z.string(),
+                won: z.boolean(),
+            })
+        )
+        .mutation(({ ctx, input }) => {
+            const increment = input.won ? 1 : 0
+            return ctx.prisma.team.update({
+                where: {
+                    id: input.teamId,
                 },
-                battles: {
-                    increment: 1
-                }
-            }
-        })
-    })
-
-    
+                data: {
+                    wins: {
+                        increment: increment,
+                    },
+                    battles: {
+                        increment: 1,
+                    },
+                },
+            })
+        }),
 })

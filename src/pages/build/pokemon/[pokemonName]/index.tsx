@@ -82,22 +82,28 @@ const SinglePokemon: NextPage = () => {
                         </div>
                         <CommonMoves pokemonName={pokemon.name} />
                     </div>
-                    {session?.user?.id && (
-                        <div className="grid gap-3 md:col-span-2 md:grid-cols-2 lg:col-start-2">
-                            <Link
-                                href={`/build/pokemon/${pokemon?.name}/create`}
-                                className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
-                            >
-                                See Builds
-                            </Link>
+                    <div
+                        className={`grid gap-3 ${
+                            session?.user?.id
+                                ? "lg:col-start-2 md:col-span-2 md:grid-cols-2"
+                                : "md:col-start-2 lg:col-start-3"
+                        }`}
+                    >
+                        <Link
+                            href={`/build/pokemon/${pokemon?.name}/builds`}
+                            className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                        >
+                            See Builds
+                        </Link>
+                        {session?.user?.id && (
                             <Link
                                 href={`/build/pokemon/${pokemon?.name}/create`}
                                 className="w-full rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                             >
                                 Build Pokemon
                             </Link>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             )}
         </main>

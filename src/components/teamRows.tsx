@@ -14,7 +14,7 @@ interface TeamRows {
 
 export const TeamRows = ({ teams }: TeamRows) => {
     const { data: session } = useSession()
-    const { data: favoriteTeams } = api.favorite.getUserFavoriteTeams.useQuery({
+    const { data: favoriteTeams } = api.favorite.checkUserFavoriteTeams.useQuery({
         userId: session?.user?.id as string,
     })
     return (
@@ -50,7 +50,7 @@ interface TeamRow {
 export const TeamRow = ({ team, withStats }: TeamRow) => {
     const { data: session } = useSession()
     const { data: favoritePokemon } =
-        api.favorite.getUserFavoritePokemon.useQuery({
+        api.favorite.checkUserFavoritePokemon.useQuery({
             userId: session?.user?.id as string,
         })
     return (
