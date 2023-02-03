@@ -11,7 +11,7 @@ interface Props {
     pokemonTeams?: string[]
 }
 
-export default function DeleteModal({
+export const DeleteModal = ({
     userId,
     name,
     showModal,
@@ -19,7 +19,7 @@ export default function DeleteModal({
     teamId,
     pokemonId,
     pokemonTeams,
-}: Props) {
+}: Props) => {
     const deleteTeam = deleteTeamMutation(userId, teamId as string)
     const deletePokemon = deletePokemonMutation(
         userId,

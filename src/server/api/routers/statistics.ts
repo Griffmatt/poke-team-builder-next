@@ -31,6 +31,6 @@ export const statisticsRouter = createTRPCRouter({
 
         const teamsFormatted = formatTeams(teams)
 
-        return teamsFormatted.slice(0, 12)
+        return teamsFormatted.slice(0, 5)
     }),
 })

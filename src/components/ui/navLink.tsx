@@ -8,7 +8,7 @@ interface Props {
     exact?: boolean
 }
 
-const NavLink = ({ href, children, className, exact }: Props) => {
+export const NavLink = ({ href, children, className, exact }: Props) => {
     const { pathname } = useRouter()
     let isActive = false
     if (exact) {
@@ -31,5 +31,3 @@ const NavLink = ({ href, children, className, exact }: Props) => {
         </Link>
     )
 }
-
-export { NavLink }

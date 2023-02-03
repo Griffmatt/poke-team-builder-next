@@ -7,12 +7,12 @@ interface Props {
     battleStatus: "Lost" | "Won"
 }
 
-export default function BattleModal({
+export const BattleModal = ({
     showModal,
     setShowModal,
     teamId,
     battleStatus,
-}: Props) {
+}: Props) => {
     const apiContext = api.useContext()
     const battleMutation = api.teams.addBattle.useMutation({
         onMutate: () => {

@@ -8,8 +8,8 @@ const Boxes: NextPage = () => {
         <main>
             <h1>Boxes</h1>
             <BoxesNav selected="popular" />
-            <PopularTeams />
             <PopularPokemon />
+            <PopularTeams />
         </main>
     )
 }

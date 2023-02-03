@@ -4,7 +4,7 @@ interface Props {
     selected: "popular" | "search"
 }
 
-const BoxesNav = ({ selected }: Props) => {
+export const BoxesNav = ({ selected }: Props) => {
     return (
         <div className="flex justify-center gap-2">
             <Link href={"/boxes"}>
@@ -20,5 +20,3 @@ const BoxesNav = ({ selected }: Props) => {
         </div>
     )
 }
-
-export { BoxesNav }

@@ -3,12 +3,12 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { api } from "utils/api"
 import Link from "next/link"
-import DeleteModal from "components/modals/deleteModal"
+import { DeleteModal } from "components/modals/deleteModal"
 import { useState } from "react"
 import { TeamRow } from "components/teamRows"
 import { BackButton } from "components/ui/backButton"
 import { FavoritedButton } from "components/ui/favoritedButton"
-import BattleModal from "components/modals/battleModal"
+import { BattleModal } from "components/modals/battleModal"
 import { formatPercentage } from "utils/formatPercentage"
 
 const Team: NextPage = () => {
@@ -24,9 +24,10 @@ const Team: NextPage = () => {
         teamId: teamId as string,
     })
 
-    const { data: favoriteTeams } = api.favorite.checkUserFavoriteTeams.useQuery({
-        userId: session?.user?.id as string,
-    })
+    const { data: favoriteTeams } =
+        api.favorite.checkUserFavoriteTeams.useQuery({
+            userId: session?.user?.id as string,
+        })
 
     const teamFavorited = favoriteTeams?.includes(teamId as string)
 

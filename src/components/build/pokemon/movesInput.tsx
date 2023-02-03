@@ -7,7 +7,7 @@ interface Props {
     setMove: React.Dispatch<React.SetStateAction<string>>
 }
 
-const MovesInput = ({ order, moves, move, setMove }: Props) => {
+export const MovesInput = ({ order, moves, move, setMove }: Props) => {
     return (
         <label className="grid">
             {order} Move
@@ -37,5 +37,3 @@ const MovesInput = ({ order, moves, move, setMove }: Props) => {
         </label>
     )
 }
-
-export { MovesInput }

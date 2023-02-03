@@ -7,7 +7,7 @@ interface Props {
     pokemonName: string
 }
 
-const CommonTeammates = ({ pokemonName }: Props) => {
+export const CommonTeammates = ({ pokemonName }: Props) => {
     const { data: teammates } = api.mostCommon.teamMates.useQuery({
         pokemonName,
     })
@@ -16,7 +16,7 @@ const CommonTeammates = ({ pokemonName }: Props) => {
             {teammates && teammates?.total > 0 && (
                 <div>
                     <h3>Common Teammates</h3>
-                    <div className="pokemon-card-grid">
+                    <div className="grid grid-cols-2 md:grid-cols-6">
                         {teammates?.pokemon.slice(0, 6).map((pokemon) => {
                             const percentage = formatPercentage(
                                 pokemon.amount / teammates.total
@@ -24,7 +24,7 @@ const CommonTeammates = ({ pokemonName }: Props) => {
                             return (
                                 <Link
                                     href={`/build/pokemon/${pokemon.name}`}
-                                    className="pokemon-card"
+                                    className="w-full"
                                     key={pokemon.name}
                                 >
                                     <PokemonCard
@@ -41,4 +41,3 @@ const CommonTeammates = ({ pokemonName }: Props) => {
     )
 }
 
-export { CommonTeammates }

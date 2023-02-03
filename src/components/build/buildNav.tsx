@@ -5,7 +5,7 @@ interface Props {
     selected: "pokemon" | "team"
 }
 
-const BuildNav = ({ selected }: Props) => {
+export const BuildNav = ({ selected }: Props) => {
     const { data: session } = useSession()
     return (
         <div className="flex justify-center gap-2">
@@ -25,4 +25,3 @@ const BuildNav = ({ selected }: Props) => {
     )
 }
 
-export { BuildNav }

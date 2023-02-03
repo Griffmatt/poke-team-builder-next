@@ -9,7 +9,7 @@ interface Props {
     user?: user
 }
 
-const ProfileNav = ({ selected, userId, user }: Props) => {
+export const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
     return (
         <>
@@ -64,4 +64,3 @@ const ProfileNav = ({ selected, userId, user }: Props) => {
     )
 }
 
-export { ProfileNav }

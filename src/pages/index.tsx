@@ -1,28 +1,28 @@
 import { type NextPage } from "next"
 import { api } from "utils/api"
 import Link from "next/link"
-import { PokemonCard } from "components/pokemonCard"
 import { signIn, useSession } from "next-auth/react"
 import { formatPercentage } from "utils/formatPercentage"
+import { PokemonCardLite } from "components/pokemonCardLite"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
     const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
     return (
         <main>
+            <h1>Statistics</h1>
             <div className="grid gap-3">
-                <h1>Statistics</h1>
-                <h2>Most Used Pokemon</h2>
-                <div className="pokemon-card-grid aspect-[12/5]">
+                <h2>Trending Pokemon</h2>
+                <div className="grid aspect-[28] grid-cols-2 md:aspect-[14] md:grid-cols-4 lg:aspect-[7] lg:grid-cols-8">
                     {topPokemonData &&
-                        topPokemonData.pokemon.slice(0, 12).map((pokemon) => {
+                        topPokemonData.pokemon.slice(0, 8).map((pokemon) => {
                             return (
                                 <Link
                                     key={pokemon.name}
                                     href={`/build/pokemon/${pokemon.name}`}
-                                    className="pokemon-card"
+                                    className="aspect-[7/10] w-full"
                                 >
-                                    <PokemonCard
+                                    <PokemonCardLite
                                         pokemonName={pokemon.name}
                                         percentage={formatPercentage(
                                             pokemon.amount /
@@ -33,6 +33,9 @@ const Home: NextPage = () => {
                             )
                         })}
                 </div>
+            </div>
+            <div className="grid gap-3">
+                <h2>Team of the Day</h2>
             </div>
 
             <div className="grid gap-3">

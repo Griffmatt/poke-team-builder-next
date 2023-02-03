@@ -1,7 +1,7 @@
 import { NavLink } from "./ui/navLink"
 import { signIn, useSession } from "next-auth/react"
 
-const NavBar = () => {
+export const NavBar = () => {
     const { data: session } = useSession()
 
     return (
@@ -27,5 +27,3 @@ const NavBar = () => {
         </div>
     )
 }
-
-export { NavBar }

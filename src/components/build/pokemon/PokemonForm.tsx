@@ -21,7 +21,7 @@ interface Props {
     createdPokemon?: CreatedPokemon
 }
 
-const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
+export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
     const SHINY_ODDS = 100
     const [ability, setAbility] = useState(
@@ -159,7 +159,7 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
-            <div className="w-full h-fit lg:row-span-2">
+            <div className="h-fit w-full lg:row-span-2">
                 <PokemonCard
                     pokemonName={pokemon.name}
                     createdPokemon={createdPokemon}
@@ -351,5 +351,3 @@ const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         </form>
     )
 }
-
-export { PokemonForm }

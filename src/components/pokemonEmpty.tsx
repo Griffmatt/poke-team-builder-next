@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-const PokemonEmpty = ({ query }: { query: string }) => {
+export const PokemonEmpty = ({ query }: { query: string }) => {
     if (query) {
         return (
             <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
@@ -20,4 +20,3 @@ const PokemonEmpty = ({ query }: { query: string }) => {
     )
 }
 
-export { PokemonEmpty }

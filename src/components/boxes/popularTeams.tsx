@@ -3,7 +3,7 @@ import React from "react"
 import { api } from "utils/api"
 import { TeamRows } from "../teamRows"
 
-const PopularTeams = () => {
+export const PopularTeams = () => {
     const { data: session } = useSession()
     const { data: popularTeams } = api.statistics.getPopularTeams.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoriteTeams.useQuery({
@@ -17,5 +17,3 @@ const PopularTeams = () => {
         </div>
     )
 }
-
-export { PopularTeams }

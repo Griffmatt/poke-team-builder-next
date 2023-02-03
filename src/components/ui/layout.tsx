@@ -6,7 +6,7 @@ interface Props {
     children: JSX.Element
 }
 
-const Layout = ({ children }: Props) => {
+export const Layout = ({ children }: Props) => {
     const { status } = useSession()
     if (status === "loading") return null
     return (
@@ -24,5 +24,3 @@ const Layout = ({ children }: Props) => {
         </div>
     )
 }
-
-export { Layout }

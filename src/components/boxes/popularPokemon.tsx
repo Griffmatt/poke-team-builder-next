@@ -3,10 +3,10 @@ import Link from "next/link"
 import { api } from "utils/api"
 import { PokemonCard } from "../pokemonCard"
 
-const PopularPokemon = () => {
+export const PopularPokemon = () => {
     const { data: session } = useSession()
     const { data: popularPokemon } = api.statistics.getPopularPokemon.useQuery()
-    const { data: favorites } = api.favorite.getUserFavoritePokemon.useQuery({
+    const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
         userId: session?.user?.id as string,
     })
     return (
@@ -33,5 +33,3 @@ const PopularPokemon = () => {
         </div>
     )
 }
-
-export { PopularPokemon }
