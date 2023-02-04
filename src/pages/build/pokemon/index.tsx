@@ -6,6 +6,7 @@ import { PokemonCard } from "components/pokemonCard"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { type Pokemon } from "pokenode-ts"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
@@ -63,6 +64,7 @@ interface SearchProps {
 
 const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
     const showPokemon = pokemons.slice(0, limit)
+    const [animationParent] = useAutoAnimate()
     return (
         <>
             {showPokemon && showPokemon.length === 0 ? (
@@ -74,7 +76,7 @@ const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
                     <h3>{query}</h3>
                 </div>
             ) : (
-                <div className="pokemon-card-grid">
+                <div className="pokemon-card-grid" ref={animationParent}>
                     {showPokemon.map((pokemon) => {
                         return (
                             <Link
