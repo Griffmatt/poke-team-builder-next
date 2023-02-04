@@ -1,4 +1,5 @@
 import { inferProcedureOutput } from "@trpc/server"
+import { formatTeams } from "server/utils/formatTeams"
 import { AppRouter } from "../server/api/root"
 
 type CreatedPokemon = inferProcedureOutput<
@@ -11,4 +12,6 @@ type team = inferProcedureOutput<AppRouter["teams"]["getTeam"]>
 
 type user = inferProcedureOutput<AppRouter["users"]["getUser"]>
 
-export type { CreatedPokemon, teams, team, user }
+type formattedTeam = ReturnType<typeof formatTeams>
+
+export type { CreatedPokemon, teams, team, user, formattedTeam }

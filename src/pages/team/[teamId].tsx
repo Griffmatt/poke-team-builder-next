@@ -10,6 +10,8 @@ import { BackButton } from "components/ui/backButton"
 import { FavoritedButton } from "components/ui/favoritedButton"
 import { BattleModal } from "components/modals/battleModal"
 import { formatPercentage } from "utils/formatPercentage"
+import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
+import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -31,19 +33,10 @@ const Team: NextPage = () => {
 
     const teamFavorited = favoriteTeams?.includes(teamId as string)
 
-    const apiContext = api.useContext()
     const copyTeam = api.teams.buildTeam.useMutation()
 
-    const favoriteTeam = api.favorite.favoriteTeam.useMutation({
-        onSettled: () => {
-            apiContext.favorite.checkUserFavoriteTeams.invalidate()
-        },
-    })
-    const unfavoriteTeam = api.favorite.unfavoriteTeam.useMutation({
-        onSettled: () => {
-            apiContext.favorite.checkUserFavoriteTeams.invalidate()
-        },
-    })
+    const addFavoriteTeam = addFavoriteTeamMutation(teamId as string, session?.user?.id as string, team)
+    const removeFavoriteTeam = removeFavoriteTeamMutation(teamId as string, session?.user?.id as string)
 
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map((pokemon) => {
@@ -60,11 +53,11 @@ const Team: NextPage = () => {
 
     const handleFavorite = () => {
         teamFavorited
-            ? unfavoriteTeam.mutate({
+            ? removeFavoriteTeam.mutate({
                   teamId: teamId as string,
                   userId: session?.user?.id as string,
               })
-            : favoriteTeam.mutate({
+            : addFavoriteTeam.mutate({
                   teamId: teamId as string,
                   userId: session?.user?.id as string,
               })

@@ -1,11 +1,14 @@
 import { userPokemonArr, userTeamArr } from "server/utils/includeConfigs"
+import { formatTeams } from "server/utils/formatTeams"
+import { formattedTeam } from "types/trpc"
 
-type Arr = userPokemonArr | userTeamArr
+type Arr = userPokemonArr | userTeamArr | formattedTeam
 
-type ArrType<T> =
-  T extends userPokemonArr ? userPokemonArr :
-  T extends userTeamArr ? userTeamArr :
-  never;
+type ArrType<T> = T extends userPokemonArr
+    ? userPokemonArr
+    : T extends userTeamArr
+    ? userTeamArr
+    : ReturnType<typeof formatTeams>
 
 const sortByFavorited = <T extends Arr>(arr: T): ArrType<T> => {
     const sorted = arr.sort((a, b) => {
@@ -22,7 +25,6 @@ const sortByFavorited = <T extends Arr>(arr: T): ArrType<T> => {
     })
 
     return sorted as ArrType<T>
-
 }
 
 export { sortByFavorited }

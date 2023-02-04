@@ -11,6 +11,7 @@ export const formatTeams = (teamArr: teams) => {
             wins: team.wins,
             battles: team.battles,
             createdAt: team.createdAt,
+            favorited: team.favorited,
             pokemon: team.pokemon.map(({ createdPokemon }) => {
                 return {
                     id: createdPokemon.id,
