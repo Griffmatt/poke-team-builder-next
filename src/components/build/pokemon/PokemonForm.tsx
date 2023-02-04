@@ -91,6 +91,25 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         event.preventDefault()
         const user = session?.user
         if (!user) return null
+        const movesFormat = [
+            {
+                move: moves[0],
+                moveOrder: 1,
+            },
+            {
+                move: moves[1],
+                moveOrder: 2,
+            },
+            {
+                move: moves[2],
+                moveOrder: 3,
+            },
+            {
+                move: moves[3],
+                moveOrder: 4,
+            },
+        ]
+
         if (createdPokemon) {
             const updatePokemonData = {
                 id: createdPokemon.id,
@@ -98,24 +117,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 nature: nature,
                 heldItem: heldItem,
                 teraType: teraType,
-                moves: [
-                    {
-                        move: moves[0],
-                        moveOrder: 1,
-                    },
-                    {
-                        move: moves[1],
-                        moveOrder: 2,
-                    },
-                    {
-                        move: moves[2],
-                        moveOrder: 3,
-                    },
-                    {
-                        move: moves[3],
-                        moveOrder: 4,
-                    },
-                ],
+                moves: movesFormat,
                 evs: evs,
 
                 ivs: ivs,
@@ -132,24 +134,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             heldItem: heldItem,
             shiny: shiny,
             teraType: teraType,
-            moves: [
-                {
-                    move: moves[0],
-                    moveOrder: 1,
-                },
-                {
-                    move: moves[1],
-                    moveOrder: 2,
-                },
-                {
-                    move: moves[2],
-                    moveOrder: 3,
-                },
-                {
-                    move: moves[3],
-                    moveOrder: 4,
-                },
-            ],
+            moves: movesFormat,
             evs: evs,
             ivs: ivs,
         }
