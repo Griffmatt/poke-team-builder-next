@@ -8,6 +8,7 @@ import Link from "next/link"
 import { PokemonCard } from "components/pokemonCard"
 import { ProfileNav } from "components/profile/profileNav"
 import { PokemonEmpty } from "components/pokemonEmpty"
+import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 const ProfilePokemon: NextPage = () => {
     const router = useRouter()
@@ -21,11 +22,7 @@ const ProfilePokemon: NextPage = () => {
         userId: userId as string,
     })
 
-    let timer: NodeJS.Timeout | undefined
-    const debounceQuery = (queryValue: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => setQuery(queryValue), 1000)
-    }
+    const { debounceQuery } = useDebounceQuery(setQuery)
 
     const filterPokemon = pokemons?.filter((pokemon) =>
         query === "shiny" ? pokemon.shiny : pokemon.name.includes(query)
@@ -41,9 +38,7 @@ const ProfilePokemon: NextPage = () => {
             <input
                 placeholder="Search for a pokemon..."
                 type="text"
-                onChange={(event) =>
-                    debounceQuery(event.target.value.toLowerCase())
-                }
+                onChange={(event) => debounceQuery(event.target.value)}
                 className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
             />
             {filterPokemon?.length === 0 ? (

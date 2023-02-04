@@ -4,17 +4,13 @@ import { useState } from "react"
 import { BuildNav } from "components/build/buildNav"
 import { PokemonCard } from "components/pokemonCard"
 import { api } from "utils/api"
+import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
+    const { debounceQuery } = useDebounceQuery(setQuery)
     const POKEMON_LIMIT = 42
-
-    let timer: NodeJS.Timeout | undefined
-    const debounceQuery = (queryValue: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => setQuery(queryValue), 1000)
-    }
 
     const limitPokemon =
         pokemons?.results
@@ -29,9 +25,7 @@ const Pokemon: NextPage = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    onChange={(event) =>
-                        debounceQuery(event.target.value.toLowerCase())
-                    }
+                    onChange={(event) => debounceQuery(event.target.value)}
                     className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                 />
             </div>

@@ -29,4 +29,22 @@ export const usersRouter = createTRPCRouter({
                 },
             })
         }),
+
+    getUserWithQuery: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(({ ctx, input }) => {
+        return ctx.prisma.user.findMany({
+            where: {
+                name: {
+                    startsWith: input.query
+                }    
+            },
+            select: {
+                name: true,
+                image: true,
+                userName: true,
+                id: true,
+            },
+        })
+    }),
 })

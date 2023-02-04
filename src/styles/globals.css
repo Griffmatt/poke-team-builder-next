@@ -85,3 +85,13 @@ a.pokemon-card {
 .spe {
     @apply bg-spe;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

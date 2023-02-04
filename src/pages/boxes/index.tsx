@@ -7,7 +7,7 @@ const Boxes: NextPage = () => {
     return (
         <main>
             <h1>Boxes</h1>
-            <BoxesNav selected="popular" />
+            <BoxesNav selected="pokemon" />
             <PopularPokemon />
             <PopularTeams />
         </main>

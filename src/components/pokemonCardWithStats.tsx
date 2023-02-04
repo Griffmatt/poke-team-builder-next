@@ -45,7 +45,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
         ? pokemon?.sprites.front_shiny
         : pokemon?.sprites.front_default
     return (
-        <div className="flex aspect-[4/5] flex-col justify-between p-4 text-center">
+        <div className="flex aspect-[7/10] flex-col justify-between p-4 text-center">
             <h2>{formatString(createdPokemon!.name)}</h2>
             <div className="h-fit justify-between lg:flex">
                 <div className="relative my-auto aspect-square w-full">
