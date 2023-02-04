@@ -1,22 +1,32 @@
 import { type NextPage } from "next"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BuildNav } from "components/build/buildNav"
 import { PokemonCard } from "components/pokemonCard"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
+import { useInfiniteScroll } from "hooks/useInfiniteScroll"
+import { type Pokemon } from "pokenode-ts"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
     const { debounceQuery } = useDebounceQuery(setQuery)
-    const POKEMON_LIMIT = 42
+    const [pokemonLimit, setPokemonLimit] = useState(10)
 
-    const limitPokemon =
-        pokemons?.results
-            .filter((pokemon) => pokemon.name.includes(query))
-            .slice(0, POKEMON_LIMIT) ??
-        pokemons?.results.slice(0, POKEMON_LIMIT)
+    useEffect(() => {
+        if (screen.width >= 1024) {
+            setPokemonLimit(30)
+            return
+        }
+        if (screen.width >= 768) {
+            setPokemonLimit(15)
+        }
+    }, [])
+
+    const filterPokemon = pokemons?.results.filter((pokemon) =>
+        pokemon.name.includes(query)
+    )
 
     return (
         <main>
@@ -30,7 +40,31 @@ const Pokemon: NextPage = () => {
                 />
             </div>
             <BuildNav selected="pokemon" />
-            {limitPokemon?.length === 0 ? (
+            {filterPokemon && (
+                <PokemonSearch
+                    pokemons={filterPokemon as unknown as Pokemon[]}
+                    query={query}
+                    limit={pokemonLimit}
+                />
+            )}
+        </main>
+    )
+}
+
+export default Pokemon
+
+interface SearchProps {
+    pokemons: Pokemon[]
+    query: string
+    limit: number
+}
+
+const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
+    const pokemonLimited = useInfiniteScroll(pokemons, limit)
+    const showPokemon = query ? pokemons : pokemonLimited
+    return (
+        <>
+            {showPokemon.length === 0 ? (
                 <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl text-center dark:bg-dark-2">
                     <h2>
                         There were no results
@@ -40,7 +74,7 @@ const Pokemon: NextPage = () => {
                 </div>
             ) : (
                 <div className="pokemon-card-grid">
-                    {limitPokemon?.map((pokemon) => {
+                    {showPokemon.map((pokemon) => {
                         return (
                             <Link
                                 key={pokemon.name}
@@ -53,8 +87,6 @@ const Pokemon: NextPage = () => {
                     })}
                 </div>
             )}
-        </main>
+        </>
     )
 }
-
-export default Pokemon

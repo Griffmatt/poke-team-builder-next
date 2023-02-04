@@ -14,4 +14,5 @@ type user = inferProcedureOutput<AppRouter["users"]["getUser"]>
 
 type formattedTeam = ReturnType<typeof formatTeams>
 
+
 export type { CreatedPokemon, teams, team, user, formattedTeam }

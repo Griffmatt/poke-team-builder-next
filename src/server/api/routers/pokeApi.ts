@@ -18,9 +18,6 @@ export const pokeApiRouter = createTRPCRouter({
         .query(({ input }) => {
             return api.getPokemonByName(input.name)
         }),
-    getNatures: publicProcedure.query(() => {
-        return api.listNatures()
-    }),
     getHeldItems: publicProcedure.query(() => {
         return itemApi.listItems()
     }),
