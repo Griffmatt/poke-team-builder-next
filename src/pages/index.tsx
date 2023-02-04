@@ -4,6 +4,8 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { formatPercentage } from "utils/formatPercentage"
 import { PokemonCard } from "components/pokemonCard"
+import { PopularPokemon } from "components/boxes/popularPokemon"
+import { PopularTeams } from "components/boxes/popularTeams"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
@@ -35,10 +37,6 @@ const Home: NextPage = () => {
                 </div>
             </div>
             <div className="grid gap-3">
-                <h2>Team of the Day</h2>
-            </div>
-
-            <div className="grid gap-3">
                 <h2>What to do?</h2>
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                     <Link
@@ -69,6 +67,8 @@ const Home: NextPage = () => {
                         <h2>View Profile</h2>
                     </Link>
                 </div>
+                <PopularPokemon />
+                <PopularTeams />
             </div>
         </main>
     )

@@ -74,6 +74,17 @@ const pokemonInclude = Prisma.validator<Prisma.CreatedPokemonArgs>()({
     },
 })
 
+const CreatedPokemon = Prisma.validator<Prisma.CreatedPokemonArgs>()({
+    ...pokemonInclude,
+})
+
+const CreatedTeam = Prisma.validator<Prisma.TeamArgs>()({
+    ...teamsInclude
+})
+
+type userPokemonArr = Prisma.CreatedPokemonGetPayload<typeof CreatedPokemon>[]
+type userTeamArr = Prisma.TeamGetPayload<typeof CreatedTeam>[]
+
 type teams = Prisma.TeamGetPayload<typeof teamsInclude>[]
 
-export { type teams, teamsInclude, pokemonInclude }
+export { type teams, teamsInclude, pokemonInclude, type userPokemonArr, type userTeamArr }

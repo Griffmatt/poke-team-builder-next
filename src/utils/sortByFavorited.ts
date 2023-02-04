@@ -1,48 +1,14 @@
-import { Prisma } from "@prisma/client"
+import { userPokemonArr, userTeamArr } from "server/utils/includeConfigs"
 
-const CreatedPokemon = Prisma.validator<Prisma.CreatedPokemonArgs>()({
-    include: {
-        moves: {
-            select: {
-                move: true,
-                moveOrder: true,
-            },
-            orderBy: {
-                moveOrder: "asc",
-            },
-        },
-        evs: {
-            select: {
-                stat: true,
-                value: true,
-            },
-            orderBy: {
-                stat: "desc",
-            },
-        },
-        ivs: {
-            select: {
-                stat: true,
-                value: true,
-            },
-            orderBy: {
-                stat: "desc",
-            },
-        },
-        teams: true,
-        favorited: {
-            select: {
-                userId: true,
-                favoritedAt: true,
-            },
-        },
-    },
-})
+type Arr = userPokemonArr | userTeamArr
 
-type userPokemonArr = Prisma.CreatedPokemonGetPayload<typeof CreatedPokemon>[]
+type ArrType<T> =
+  T extends userPokemonArr ? userPokemonArr :
+  T extends userTeamArr ? userTeamArr :
+  never;
 
-const sortByFavorited = (pokemonArr: userPokemonArr) => {
-    return pokemonArr.sort((a, b) => {
+const sortByFavorited = <T extends Arr>(arr: T): ArrType<T> => {
+    const sorted = arr.sort((a, b) => {
         const y = b.favorited[0]?.favoritedAt
             ? Number(b.favorited[0]?.favoritedAt)
             : 1
@@ -54,6 +20,9 @@ const sortByFavorited = (pokemonArr: userPokemonArr) => {
         }
         return y - x
     })
+
+    return sorted as ArrType<T>
+
 }
 
 export { sortByFavorited }

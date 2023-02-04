@@ -1,6 +1,7 @@
+import { sortByFavorited } from "utils/sortByFavorited"
 import { z } from "zod"
 import { formatTeams } from "../../utils/formatTeams"
-import { teamsInclude } from "../../utils/includeConfigs"
+import { teamsInclude, userTeamArr } from "../../utils/includeConfigs"
 import { buildTeamInput } from "../../utils/inputs"
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
@@ -21,16 +22,18 @@ export const teamsRouter = createTRPCRouter({
             })
         )
         .query(async ({ ctx, input }) => {
-            const results = await ctx.prisma.team.findMany({
+            const teams = await ctx.prisma.team.findMany({
                 where: {
                     userId: input.userId,
                 },
                 ...teamsInclude,
             })
 
-            const formatResults = formatTeams(results)
+            const sortByFavorite = sortByFavorited<userTeamArr>(teams)
 
-            return formatResults
+            const formattedTeams = formatTeams(sortByFavorite)
+
+            return formattedTeams
         }),
     getTeam: publicProcedure
         .input(

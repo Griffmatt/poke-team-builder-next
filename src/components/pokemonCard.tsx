@@ -4,7 +4,6 @@ import { api } from "utils/api"
 import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 
-import { LoadingSpinner } from "./ui/loadingSpinner"
 import { LoadingCard } from "./ui/loadingCard"
 
 interface Props {

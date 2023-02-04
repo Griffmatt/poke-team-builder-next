@@ -22,6 +22,13 @@ const favorites = () => {
         userId: userId as string,
     })
 
+    const { data: favoriteTeams } =
+        api.favorite.checkUserFavoriteTeams.useQuery({
+            userId: userId as string,
+        })
+
+        console.log(favoriteTeams)
+
     return (
         <main>
             <ProfileNav
@@ -36,6 +43,7 @@ const favorites = () => {
                         const { name, id } = pokemon?.createdPokemon
                         return (
                             <Link
+                            key={id}
                                 href={`/profile/${user?.id}/${id}`}
                                 className="pokemon-card"
                             >
@@ -48,7 +56,14 @@ const favorites = () => {
                     })}
                 </div>
                 <h2>Teams</h2>
-                <div>{teams && <TeamRows teams={teams} favoriteTeams={user?.favoriteTeams ?? []}/>}</div>
+                <div>
+                    {teams && (
+                        <TeamRows
+                            teams={teams}
+                            favoriteTeams={favoriteTeams ?? []}
+                        />
+                    )}
+                </div>
             </div>
         </main>
     )
