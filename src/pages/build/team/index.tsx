@@ -57,26 +57,26 @@ const BuildTeam: NextPage = () => {
                         }
                     />
                     <div className="flex gap-2">
-                        <h3
+                        <button
                             className={`${
                                 teamStyle === "Double"
                                     ? "font-extrabold text-light"
                                     : "text-gray"
-                            } text-xl`}
+                            } btn-transparent text-xl`}
                             onClick={() => setTeamStyle("Double")}
                         >
                             Double
-                        </h3>
-                        <h3
+                        </button>
+                        <button
                             className={`${
                                 teamStyle === "Single"
                                     ? "font-extrabold text-light"
                                     : "text-gray"
-                            } text-xl`}
+                            } btn-transparent text-xl`}
                             onClick={() => setTeamStyle("Single")}
                         >
                             Single
-                        </h3>
+                        </button>
                     </div>
                 </div>
 
