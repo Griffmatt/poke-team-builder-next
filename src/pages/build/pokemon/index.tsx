@@ -1,20 +1,22 @@
 import { type NextPage } from "next"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { BuildNav } from "components/build/buildNav"
 import { PokemonCard } from "components/pokemonCard"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
-import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import { type Pokemon } from "pokenode-ts"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
     const { debounceQuery } = useDebounceQuery(setQuery)
-    const [pokemonLimit, setPokemonLimit] = useState(10)
+    const pokemonLimit = 30
 
-    useEffect(() => {
+   /* 
+   used to check for screen size when using infinite scrolling
+   const [pokemonLimit, setPokemonLimit] = useState(30)
+   useEffect(() => {
         if (screen.width >= 1024) {
             setPokemonLimit(30)
             return
@@ -22,7 +24,7 @@ const Pokemon: NextPage = () => {
         if (screen.width >= 768) {
             setPokemonLimit(15)
         }
-    }, [])
+    }, [])*/
 
     const filterPokemon = pokemons?.results.filter((pokemon) =>
         pokemon.name.includes(query)
@@ -60,8 +62,7 @@ interface SearchProps {
 }
 
 const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
-    const pokemonLimited = useInfiniteScroll(pokemons, limit)
-    const showPokemon = query ? pokemons : pokemonLimited
+    const showPokemon = pokemons 
     return (
         <>
             {showPokemon.length === 0 ? (
