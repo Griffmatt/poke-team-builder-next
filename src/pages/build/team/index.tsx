@@ -32,7 +32,7 @@ const BuildTeam: NextPage = () => {
         (pokemon) =>
             !pokemonOnTeam.some(
                 (pokemonFilter) => pokemon.id === pokemonFilter?.id
-            )
+            ) && pokemon.name.includes(query)
     )
 
     return (
