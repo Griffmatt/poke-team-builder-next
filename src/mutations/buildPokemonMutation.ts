@@ -9,10 +9,7 @@ interface UpdateValues {
     heldItem: string
     shiny: boolean
     teraType: string
-    firstMove: string
-    secondMove: string
-    thirdMove: string
-    fourthMove: string
+    moves: string[]
     evs: { stat: string; value: number }[]
     ivs: { stat: string; value: number }[]
 }
@@ -26,10 +23,7 @@ export const buildPokemonMutation = (
         heldItem,
         shiny,
         teraType,
-        firstMove,
-        secondMove,
-        thirdMove,
-        fourthMove,
+        moves,
         evs,
         ivs,
     }: UpdateValues
@@ -56,10 +50,10 @@ export const buildPokemonMutation = (
                 createdAt: new Date(),
                 favorited: [],
                 moves: [
-                    { move: firstMove, moveOrder: 1 },
-                    { move: secondMove, moveOrder: 2 },
-                    { move: thirdMove, moveOrder: 3 },
-                    { move: fourthMove, moveOrder: 4 },
+                    { move: moves[0], moveOrder: 1 },
+                    { move: moves[2], moveOrder: 2 },
+                    { move: moves[2], moveOrder: 3 },
+                    { move: moves[3], moveOrder: 4 },
                 ],
                 evs: evs,
                 ivs: ivs,

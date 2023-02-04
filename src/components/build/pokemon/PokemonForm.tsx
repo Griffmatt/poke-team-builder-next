@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react"
-import { FormEvent, useState } from "react"
+import { FormEvent, useReducer } from "react"
 
 import { MovesInput } from "./movesInput"
 
@@ -14,6 +14,7 @@ import { updatePokemonMutation } from "mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "mutations/buildPokemonMutation"
 import { Pokemon } from "pokenode-ts"
 import { CreatedPokemon } from "types/trpc"
+import React from "react"
 
 interface Props {
     pokemon: Pokemon
@@ -21,37 +22,44 @@ interface Props {
     createdPokemon?: CreatedPokemon
 }
 
+interface PokemonValues {
+    ability: string
+    nature: string
+    heldItem: string
+    shiny: boolean
+    teraType: string
+    moves: string[]
+}
+
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
     const SHINY_ODDS = 100
-    const [ability, setAbility] = useState(
-        createdPokemon?.ability ?? pokemon.abilities[0].ability.name
-    )
-    const [nature, setNature] = useState(createdPokemon?.nature ?? natures[0])
-    const [heldItem, setHeldItem] = useState(
-        createdPokemon?.heldItem ?? heldItems[0].name
-    )
-    const [teraType, setTeraType] = useState(
-        createdPokemon?.teraType ?? pokemon.types[0].type.name
-    )
+    const [pokemonData, setPokemonData] = useReducer(
+        (initial: PokemonValues, data: Partial<PokemonValues>) => {
+            return { ...initial, ...data }
+        },
+        {
+            ability:
+                createdPokemon?.ability ?? pokemon.abilities[0].ability.name,
+            nature: createdPokemon?.nature ?? natures[0],
+            heldItem: createdPokemon?.heldItem ?? heldItems[0].name,
+            teraType: createdPokemon?.teraType ?? pokemon.types[0].type.name,
+            moves: [
+                createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name,
 
-    const [firstMove, setFirstMove] = useState(
-        createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name
+                createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name,
+
+                createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name,
+
+                createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name,
+            ],
+
+            shiny: createdPokemon?.shiny
+                ? createdPokemon.shiny
+                : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+        }
     )
-    const [secondMove, setSecondMove] = useState(
-        createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name
-    )
-    const [thirdMove, setThirdMove] = useState(
-        createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name
-    )
-    const [fourthMove, setFourthMove] = useState(
-        createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name
-    )
-    const [shiny] = useState(
-        createdPokemon?.shiny
-            ? createdPokemon.shiny
-            : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7
-    )
+    const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
 
     const {
         evsArr: evs,
@@ -67,37 +75,22 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         handleIvChange,
     } = useHandleIvChange(createdPokemon?.ivs)
 
-    const pokemonValues = {
-        ability,
-        nature,
-        heldItem,
-        shiny,
-        teraType,
-        firstMove,
-        secondMove,
-        thirdMove,
-        fourthMove,
-        evs,
-        ivs,
-    }
-
     const buildPokemon = buildPokemonMutation(
         session?.user!.id as string,
         pokemon,
-        pokemonValues
+        { ...pokemonData, ivs, evs }
     )
 
     const updatePokemon = updatePokemonMutation(
         session?.user!.id as string,
         createdPokemon as CreatedPokemon,
-        pokemonValues
+        { ...pokemonData, ivs, evs }
     )
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const user = session?.user
         if (!user) return null
-
         if (createdPokemon) {
             const updatePokemonData = {
                 id: createdPokemon.id,
@@ -107,19 +100,19 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 teraType: teraType,
                 moves: [
                     {
-                        move: firstMove,
+                        move: moves[0],
                         moveOrder: 1,
                     },
                     {
-                        move: secondMove,
+                        move: moves[1],
                         moveOrder: 2,
                     },
                     {
-                        move: thirdMove,
+                        move: moves[2],
                         moveOrder: 3,
                     },
                     {
-                        move: fourthMove,
+                        move: moves[3],
                         moveOrder: 4,
                     },
                 ],
@@ -140,10 +133,22 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             shiny: shiny,
             teraType: teraType,
             moves: [
-                { move: firstMove, moveOrder: 1 },
-                { move: secondMove, moveOrder: 2 },
-                { move: thirdMove, moveOrder: 3 },
-                { move: fourthMove, moveOrder: 4 },
+                {
+                    move: moves[0],
+                    moveOrder: 1,
+                },
+                {
+                    move: moves[1],
+                    moveOrder: 2,
+                },
+                {
+                    move: moves[2],
+                    moveOrder: 3,
+                },
+                {
+                    move: moves[3],
+                    moveOrder: 4,
+                },
             ],
             evs: evs,
             ivs: ivs,
@@ -171,7 +176,9 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     <label className="grid">
                         Ability
                         <select
-                            onChange={(event) => setAbility(event.target.value)}
+                            onChange={(event) =>
+                                setPokemonData({ ability: event.target.value })
+                            }
                             value={formatString(ability)}
                         >
                             {pokemon.abilities.map((ability) => {
@@ -187,7 +194,9 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                         Nature
                         <select
                             className="text-dark"
-                            onChange={(event) => setNature(event.target.value)}
+                            onChange={(event) =>
+                                setPokemonData({ nature: event.target.value })
+                            }
                             value={formatString(nature)}
                         >
                             {natures.map((nature: string) => {
@@ -199,7 +208,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                         Held Item
                         <select
                             onChange={(event) =>
-                                setHeldItem(event.target.value)
+                                setPokemonData({ heldItem: event.target.value })
                             }
                             value={formatString(heldItem)}
                         >
@@ -226,7 +235,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                         Tera Type
                         <select
                             onChange={(event) =>
-                                setTeraType(event.target.value)
+                                setPokemonData({ teraType: event.target.value })
                             }
                             value={formatString(teraType)}
                         >
@@ -242,30 +251,19 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 </div>
                 <div>
                     <h2>Moves</h2>
-                    <MovesInput
-                        order={"First"}
-                        moves={pokemon.moves}
-                        move={firstMove}
-                        setMove={setFirstMove}
-                    />
-                    <MovesInput
-                        order={"Second"}
-                        moves={pokemon.moves}
-                        move={secondMove}
-                        setMove={setSecondMove}
-                    />
-                    <MovesInput
-                        order={"Third"}
-                        moves={pokemon.moves}
-                        move={thirdMove}
-                        setMove={setThirdMove}
-                    />
-                    <MovesInput
-                        order={"Fourth"}
-                        moves={pokemon.moves}
-                        move={fourthMove}
-                        setMove={setFourthMove}
-                    />
+                    {pokemonData.moves.map((move, index) => {
+                        return (
+                            <React.Fragment key={move + index}>
+                                <MovesInput
+                                    order={index}
+                                    moves={pokemon.moves}
+                                    move={move}
+                                    setPokemonData={setPokemonData}
+                                    currentMoves={pokemonData.moves}
+                                />
+                            </React.Fragment>
+                        )
+                    })}
                 </div>
             </div>
             <div className="grid gap-4 md:col-span-2 md:grid-cols-2">
