@@ -1,9 +1,6 @@
-import { CommonAbilities } from "components/commonData/commonAbilities"
-import { CommonHeldItems } from "components/commonData/commonHeldItems"
+import { CommonData } from "components/commonData/commonData"
 import { CommonMoves } from "components/commonData/commonMoves"
-import { CommonNatures } from "components/commonData/commonNatures"
 import { CommonTeammates } from "components/commonData/commonTeammates"
-import { CommonTeraTypes } from "components/commonData/commonTeraTypes"
 import { PokemonCard } from "components/pokemonCard"
 import { BackButton } from "components/ui/backButton"
 import { type NextPage } from "next"
@@ -23,6 +20,10 @@ const SinglePokemon: NextPage = () => {
         name: pokemonName as string,
     })
 
+    const { data: pokemonBuilds } = api.pokemon.getPokemonBuilds.useQuery({
+        pokemonName: pokemonName as string,
+    })
+
     let totalStats = 0
 
     return (
@@ -31,7 +32,7 @@ const SinglePokemon: NextPage = () => {
             <h1>PokeDex Entry</h1>
             {pokemon && (
                 <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="w-full h-fit xl:row-span-2">
+                    <div className="h-fit w-full xl:row-span-2">
                         <PokemonCard pokemonName={pokemon.name} />
                     </div>
                     <div className="lg:col-span-2">
@@ -69,23 +70,37 @@ const SinglePokemon: NextPage = () => {
                             <h3>Total Stats: {totalStats}</h3>
                         </div>
                     </div>
-                    <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
-                        <h2>Data</h2>
-                        <CommonTeammates pokemonName={pokemon.name} />
-                        <div className="grid gap-2 md:grid-cols-2">
-                            <CommonNatures pokemonName={pokemon.name} />
-                            <CommonAbilities pokemonName={pokemon.name} />
+                    {pokemonBuilds && (
+                        <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
+                            <h2>Data</h2>
+                            <CommonTeammates pokemonName={pokemonName as string} />
+                            <div className="grid gap-2 md:grid-cols-2">
+                                <CommonData
+                                    pokemonBuilds={pokemonBuilds}
+                                    dataType="nature"
+                                />
+                                <CommonData
+                                    pokemonBuilds={pokemonBuilds}
+                                    dataType="ability"
+                                />
+                            </div>
+                            <div className="grid gap-2 md:grid-cols-2">
+                                <CommonData
+                                    pokemonBuilds={pokemonBuilds}
+                                    dataType="teraType"
+                                />
+                                <CommonData
+                                    pokemonBuilds={pokemonBuilds}
+                                    dataType="heldItem"
+                                />
+                            </div>
+                            <CommonMoves pokemonName={pokemon.name} />
                         </div>
-                        <div className="grid gap-2 md:grid-cols-2">
-                            <CommonTeraTypes pokemonName={pokemon.name} />
-                            <CommonHeldItems pokemonName={pokemon.name} />
-                        </div>
-                        <CommonMoves pokemonName={pokemon.name} />
-                    </div>
+                    )}
                     <div
                         className={`grid gap-3 ${
                             session?.user?.id
-                                ? "lg:col-start-2 md:col-span-2 md:grid-cols-2"
+                                ? "md:col-span-2 md:grid-cols-2 lg:col-start-2"
                                 : "md:col-start-2 lg:col-start-3"
                         }`}
                     >

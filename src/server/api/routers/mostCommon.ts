@@ -47,67 +47,6 @@ export const mostCommonRouter = createTRPCRouter({
 
             return { pokemon, total, pokemonName: input.pokemonName }
         }),
-    heldItems: publicProcedure
-        .input(z.object({ pokemonName: z.string() }))
-        .query(async ({ ctx, input }) => {
-            const pokemonData = await ctx.prisma.createdPokemon.findMany({
-                where: {
-                    name: input.pokemonName,
-                },
-            })
-
-            const heldItemsArr = pokemonData.map((pokemon) => pokemon.heldItem)
-
-            const { string: heldItems, total } = countStringArr(heldItemsArr)
-
-            return { heldItems, total }
-        }),
-    nature: publicProcedure
-        .input(z.object({ pokemonName: z.string() }))
-        .query(async ({ ctx, input }) => {
-            const pokemonData = await ctx.prisma.createdPokemon.findMany({
-                where: {
-                    name: input.pokemonName,
-                },
-            })
-
-            const natureArr = pokemonData.map((pokemon) => pokemon.nature)
-
-            const { string: natures, total } = countStringArr(natureArr)
-
-            return { natures, total }
-        }),
-    ability: publicProcedure
-        .input(z.object({ pokemonName: z.string() }))
-        .query(async ({ ctx, input }) => {
-            const pokemonData = await ctx.prisma.createdPokemon.findMany({
-                where: {
-                    name: input.pokemonName,
-                },
-            })
-
-            const abilityArr = pokemonData.map((pokemon) => pokemon.ability)
-
-            const { string: abilities, total } = countStringArr(abilityArr)
-
-            return { abilities, total }
-        }),
-    teraType: publicProcedure
-        .input(z.object({ pokemonName: z.string() }))
-        .query(async ({ ctx, input }) => {
-            const pokemonData = await ctx.prisma.createdPokemon.findMany({
-                where: {
-                    name: input.pokemonName,
-                },
-            })
-
-            const teraTypeArr = pokemonData.map((pokemon) => pokemon.teraType)
-
-            const { string: teraTypes, total } = countStringArr(teraTypeArr)
-
-            return { teraTypes, total }
-        }),
-
     moves: publicProcedure
         .input(z.object({ pokemonName: z.string() }))
         .query(async ({ ctx, input }) => {

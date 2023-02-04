@@ -1,5 +1,5 @@
 import { api } from "utils/api"
-import { CommonDataCard } from "./commonDataCards"
+import { CommonDataCard } from "./commonDataCard"
 
 interface Props {
     pokemonName: string
