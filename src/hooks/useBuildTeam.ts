@@ -7,7 +7,7 @@ export function useBuildTeam(userId: string) {
     const router = useRouter()
     const [pokemonOnTeam, setPokemonOnTeam] = useState<CreatedPokemon[]>([])
     const [teamName, setTeamName] = useState("Team Name")
-    const [teamStyle] = useState("Double")
+    const [teamStyle, setTeamStyle] = useState<"Double" | "Single">("Double")
 
     const apiContext = api.useContext()
 
@@ -45,6 +45,9 @@ export function useBuildTeam(userId: string) {
                         originalTrainerId: null,
                         teamStyle: teamStyle,
                         teamName: teamName,
+                        wins: 0,
+                        battles: 0,
+                        favorited: [],
                         createdAt: new Date(),
                         pokemon: formatPokemon,
                     },
@@ -118,6 +121,8 @@ export function useBuildTeam(userId: string) {
         pokemonOnTeam,
         setPokemonOnTeam,
         teamName,
+        teamStyle,
+        setTeamStyle,
         handleNameChange,
     }
 }

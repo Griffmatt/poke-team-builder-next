@@ -23,6 +23,8 @@ const BuildTeam: NextPage = () => {
         teamName,
         handleNameChange,
         buildTeam,
+        teamStyle,
+        setTeamStyle,
         pokemonOnTeam,
     } = useBuildTeam(session?.user?.id as string)
 
@@ -46,11 +48,38 @@ const BuildTeam: NextPage = () => {
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
-                <input
-                    className="md:w-72"
-                    value={teamName}
-                    onChange={(event) => handleNameChange(event.target.value)}
-                />
+                <div className="flex flex-col gap-2 md:flex-row">
+                    <input
+                        className="md:w-72"
+                        value={teamName}
+                        onChange={(event) =>
+                            handleNameChange(event.target.value)
+                        }
+                    />
+                    <div className="flex gap-2">
+                        <h3
+                            className={`${
+                                teamStyle === "Double"
+                                    ? "font-extrabold text-light"
+                                    : "text-gray"
+                            } text-xl`}
+                            onClick={() => setTeamStyle("Double")}
+                        >
+                            Double
+                        </h3>
+                        <h3
+                            className={`${
+                                teamStyle === "Single"
+                                    ? "font-extrabold text-light"
+                                    : "text-gray"
+                            } text-xl`}
+                            onClick={() => setTeamStyle("Single")}
+                        >
+                            Single
+                        </h3>
+                    </div>
+                </div>
+
                 <div className="pokemon-card-grid">
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
