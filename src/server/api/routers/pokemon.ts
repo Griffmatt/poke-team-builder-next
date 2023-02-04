@@ -131,4 +131,13 @@ export const pokemonRouter = createTRPCRouter({
                 }),
             ])
         }),
+    recentPokemon: publicProcedure.query(({ ctx }) => {
+        return ctx.prisma.createdPokemon.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
+            take: 12,
+            ...pokemonInclude,
+        })
+    }),
 })

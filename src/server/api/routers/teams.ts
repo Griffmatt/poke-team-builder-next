@@ -100,4 +100,15 @@ export const teamsRouter = createTRPCRouter({
                 },
             })
         }),
+    recentTeams: publicProcedure.query(async ({ ctx }) => {
+        const teams = await ctx.prisma.team.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
+            take: 5,
+            ...teamsInclude,
+        })
+
+        return formatTeams(teams)
+    }),
 })

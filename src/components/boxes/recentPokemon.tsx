@@ -1,19 +1,19 @@
+import { PokemonCard } from "components/pokemonCard"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { api } from "utils/api"
-import { PokemonCard } from "../pokemonCard"
 
-export const PopularPokemon = () => {
+export const RecentPokemon = () => {
     const { data: session } = useSession()
-    const { data: popularPokemon } = api.statistics.getPopularPokemon.useQuery()
+    const { data: recentPokemon } = api.pokemon.recentPokemon.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
         userId: session?.user?.id as string,
     })
     return (
         <div className="grid gap-3">
-            <h2>Popular Pokemon</h2>
+            <h2>Recent Pokemon</h2>
             <div className="pokemon-card-grid">
-                {popularPokemon?.map((pokemon) => {
+                {recentPokemon?.map((pokemon) => {
                     const favorite = favorites?.includes(pokemon.id)
                     return (
                         <Link

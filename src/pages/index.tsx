@@ -4,8 +4,8 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { formatPercentage } from "utils/formatPercentage"
 import { PokemonCard } from "components/pokemonCard"
-import { PopularPokemon } from "components/boxes/popularPokemon"
-import { PopularTeams } from "components/boxes/popularTeams"
+import { PopularPokemon } from "components/popularPokemon"
+import { PopularTeams } from "components/popularTeams"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
