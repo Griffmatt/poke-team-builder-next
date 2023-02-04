@@ -13,7 +13,7 @@ const Pokemon: NextPage = () => {
     const { debounceQuery } = useDebounceQuery(setQuery)
     const pokemonLimit = 30
 
-   /* 
+    /* 
    used to check for screen size when using infinite scrolling
    const [pokemonLimit, setPokemonLimit] = useState(30)
    useEffect(() => {
@@ -62,10 +62,10 @@ interface SearchProps {
 }
 
 const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
-    const showPokemon = pokemons 
+    const showPokemon = pokemons.slice(0, limit)
     return (
         <>
-            {showPokemon.length === 0 ? (
+            {showPokemon && showPokemon.length === 0 ? (
                 <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl text-center dark:bg-dark-2">
                     <h2>
                         There were no results

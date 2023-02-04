@@ -28,7 +28,7 @@ const Boxes: NextPage = () => {
                             >
                                 <img
                                     src={user.image ?? ""}
-                                    className="rounded-full"
+                                    className="h-20 w-auto rounded-full"
                                 />
                                 <h3 className="text-center">{user.name}</h3>
                             </Link>
@@ -36,9 +36,15 @@ const Boxes: NextPage = () => {
                     })}
                 </div>
                 <div className="grid gap-3">
-                    <div>
-                    <h2>Search</h2>
-                    <input placeholder="Search for trainers..." onChange={(event) => debounceQuery(event.target.value)}/>
+                    <div className="flex flex-col justify-between gap-2 md:flex-row">
+                        <h2>Search</h2>
+                        <input
+                            placeholder="Search for trainers..."
+                            onChange={(event) =>
+                                debounceQuery(event.target.value)
+                            }
+                            className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                        />
                     </div>
                     {queryUsers?.map((user) => {
                         return (
