@@ -67,12 +67,6 @@ a.pokemon-card {
     @apply dark:hover:bg-dark-3;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
 .hp {
     @apply bg-hp;
 }

@@ -16,7 +16,7 @@ export const CommonTeammates = ({ pokemonName }: Props) => {
             {teammates && teammates?.total > 0 && (
                 <div>
                     <h3>Common Teammates</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-6">
+                    <div className="pokemon-card-grid">
                         {teammates?.pokemon.slice(0, 6).map((pokemon) => {
                             const percentage = formatPercentage(
                                 pokemon.amount / teammates.total
@@ -24,7 +24,7 @@ export const CommonTeammates = ({ pokemonName }: Props) => {
                             return (
                                 <Link
                                     href={`/build/pokemon/${pokemon.name}`}
-                                    className="w-full"
+                                    className="pokemon-card"
                                     key={pokemon.name}
                                 >
                                     <PokemonCard

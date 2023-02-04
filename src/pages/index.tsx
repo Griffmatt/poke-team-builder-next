@@ -3,7 +3,7 @@ import { api } from "utils/api"
 import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { formatPercentage } from "utils/formatPercentage"
-import { PokemonCardLite } from "components/pokemonCardLite"
+import { PokemonCard } from "components/pokemonCard"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
@@ -13,21 +13,21 @@ const Home: NextPage = () => {
             <h1>Statistics</h1>
             <div className="grid gap-3">
                 <h2>Trending Pokemon</h2>
-                <div className="grid aspect-[28] grid-cols-2 md:aspect-[14] md:grid-cols-4 lg:aspect-[7] lg:grid-cols-8">
+                <div className="pokemon-card-grid">
                     {topPokemonData &&
-                        topPokemonData.pokemon.slice(0, 8).map((pokemon) => {
+                        topPokemonData.pokemon.slice(0, 12).map((pokemon) => {
+                            const percentage = formatPercentage(
+                                pokemon.amount / topPokemonData.total
+                            )
                             return (
                                 <Link
                                     key={pokemon.name}
                                     href={`/build/pokemon/${pokemon.name}`}
-                                    className="aspect-[7/10] w-full"
+                                    className="pokemon-card"
                                 >
-                                    <PokemonCardLite
+                                    <PokemonCard
                                         pokemonName={pokemon.name}
-                                        percentage={formatPercentage(
-                                            pokemon.amount /
-                                                topPokemonData.total
-                                        )}
+                                        percentage={percentage}
                                     />
                                 </Link>
                             )

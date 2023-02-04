@@ -5,6 +5,7 @@ import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 
 import { LoadingSpinner } from "./ui/loadingSpinner"
+import { LoadingCard } from "./ui/loadingCard"
 
 interface Props {
     pokemonName: string
@@ -15,7 +16,7 @@ interface Props {
 
 // Don't wrap with class so that there is skeleton of card when loading data
 
-const PokemonCard = ({
+export const PokemonCard = ({
     pokemonName,
     createdPokemon,
     percentage,
@@ -25,7 +26,7 @@ const PokemonCard = ({
         name: pokemonName,
     })
 
-    if (isLoading) return <LoadingSpinner />
+    if (isLoading) return <LoadingCard/>
     const firstType = pokemon?.types[0].type.name
     const secondType = pokemon?.types[1]?.type.name
     const pokemonImage =
@@ -59,5 +60,3 @@ const PokemonCard = ({
         </>
     )
 }
-
-export { PokemonCard }
