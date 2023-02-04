@@ -8,6 +8,8 @@ import { useBuildTeam } from "hooks/useBuildTeam"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
     const { data: pokemons } = api.pokemon.getUsersPokemon.useQuery({
@@ -34,6 +36,8 @@ const BuildTeam: NextPage = () => {
                 (pokemonFilter) => pokemon.id === pokemonFilter?.id
             ) && pokemon.name.includes(query)
     )
+
+    const [animationParent] = useAutoAnimate()
 
     return (
         <main>
@@ -80,7 +84,7 @@ const BuildTeam: NextPage = () => {
                     </div>
                 </div>
 
-                <div className="pokemon-card-grid">
+                <div className="pokemon-card-grid" ref={animationParent}>
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
                         <div className="aspect-[4/5] w-full" />
@@ -110,7 +114,7 @@ const BuildTeam: NextPage = () => {
             {filteredPokemon?.length === 0 ? (
                 <PokemonEmpty query={query} />
             ) : (
-                <div className="pokemon-card-grid">
+                <div className="pokemon-card-grid" ref={animationParent}>
                     {filteredPokemon?.map((pokemon) => {
                         const favorited =
                             pokemon.favorited[0]?.userId === pokemon.userId
