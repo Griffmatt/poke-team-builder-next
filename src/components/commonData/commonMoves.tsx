@@ -1,14 +1,15 @@
-import { api } from "utils/api"
 import { CommonDataCard } from "./commonDataCard"
 
 interface Props {
-    pokemonName: string
+    moves: {
+        moves: {
+            name: string
+            amount: number
+        }[]
+        total: number
+    }
 }
-export const CommonMoves = ({ pokemonName }: Props) => {
-    const { data: moves } = api.mostCommon.moves.useQuery({
-        pokemonName: pokemonName,
-    })
-
+export const CommonMoves = ({ moves }: Props) => {
     return (
         <>
             {moves && moves?.total > 0 && (
