@@ -49,6 +49,7 @@ const favorites = () => {
                             >
                                 <PokemonCard
                                     pokemonName={name}
+                                    createdPokemon={pokemon.createdPokemon}
                                     favorite={true}
                                 />
                             </Link>
