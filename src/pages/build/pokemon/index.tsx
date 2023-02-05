@@ -1,31 +1,28 @@
 import { type NextPage } from "next"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BuildNav } from "components/build/buildNav"
 import { PokemonCard } from "components/pokemonCard"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { type Pokemon } from "pokenode-ts"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
     const debouncedValue = useDebounceQuery(query)
-    const pokemonLimit = 30
+    const [pokemonLimit, setPokemonLimit] = useState(30)
 
-    /* 
-   used to check for screen size when using infinite scrolling
-   const [pokemonLimit, setPokemonLimit] = useState(30)
+    
+   //used to check for screen size when using infinite scrolling
+   
    useEffect(() => {
-        if (screen.width >= 1024) {
-            setPokemonLimit(30)
-            return
-        }
-        if (screen.width >= 768) {
+        if (screen.width >= 768 && screen.width < 1024) {
             setPokemonLimit(15)
         }
-    }, [])*/
+    }, [])
 
     const filterPokemon = pokemons?.results.filter((pokemon) =>
         pokemon.name.includes(debouncedValue)
@@ -47,7 +44,7 @@ const Pokemon: NextPage = () => {
                 <PokemonSearch
                     pokemons={filterPokemon as unknown as Pokemon[]}
                     query={query}
-                    limit={pokemonLimit}
+                    initialLimit={pokemonLimit}
                 />
             )}
         </main>
@@ -59,11 +56,13 @@ export default Pokemon
 interface SearchProps {
     pokemons: Pokemon[]
     query: string
-    limit: number
+    initialLimit: number
 }
 
-const PokemonSearch = ({ pokemons, query, limit }: SearchProps) => {
-    const showPokemon = pokemons.slice(0, limit)
+const PokemonSearch = ({ pokemons, query, initialLimit }: SearchProps) => {
+    const loadLimit = 12
+    const pokemonScrolled = useInfiniteScroll(pokemons, initialLimit, loadLimit)
+    const showPokemon = query ? pokemons.slice(0, initialLimit) : pokemonScrolled
     const [animationParent] = useAutoAnimate()
     return (
         <>
