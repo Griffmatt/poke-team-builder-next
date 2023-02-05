@@ -41,28 +41,28 @@ const Home: NextPage = () => {
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                     <Link
                         href={"/build/pokemon"}
-                        className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                        className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
                         <h2>Build Pokemon</h2>
                     </Link>
                     {session?.user ? (
                         <Link
                             href={"/build/team"}
-                            className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                         >
                             <h2>Build Team</h2>
                         </Link>
                     ) : (
                         <div
                             onClick={() => signIn()}
-                            className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                         >
                             <h2>Sign In</h2>
                         </div>
                     )}
                     <Link
                         href={`/profile/${session?.user?.id}`}
-                        className="grid aspect-[4/2] place-items-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                        className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                     >
                         <h2>View Profile</h2>
                     </Link>

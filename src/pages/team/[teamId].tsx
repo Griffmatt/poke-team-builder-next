@@ -12,155 +12,59 @@ import { BattleModal } from "components/modals/battleModal"
 import { formatPercentage } from "utils/formatPercentage"
 import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
+import { team } from "types/trpc"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const { teamId } = router.query
 
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [showBattleModal, setShowBattleModal] = useState(false)
-    const [battleStatus, setBattleStatus] = useState<"Won" | "Lost">("Lost")
-
     const { data: team } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
 
-    const { data: favoriteTeams } =
-        api.favorite.checkUserFavoriteTeams.useQuery({
-            userId: session?.user?.id as string,
-        })
-
-    const teamFavorited = favoriteTeams?.includes(teamId as string)
-
-    const copyTeam = api.teams.buildTeam.useMutation()
-
-    const addFavoriteTeam = addFavoriteTeamMutation(teamId as string, session?.user?.id as string, team)
-    const removeFavoriteTeam = removeFavoriteTeamMutation(teamId as string, session?.user?.id as string)
-
-    const handleCopy = () => {
-        const pokemonIds = team?.pokemon.map((pokemon) => {
-            return { pokemonId: pokemon.id }
-        })
-        copyTeam.mutate({
-            userId: session?.user!.id as string,
-            teamName: team!.teamName,
-            teamStyle: team!.teamStyle,
-            originalTrainerId: team?.userId,
-            pokemon: pokemonIds ?? [],
-        })
-    }
-
-    const handleFavorite = () => {
-        teamFavorited
-            ? removeFavoriteTeam.mutate({
-                  teamId: teamId as string,
-                  userId: session?.user?.id as string,
-              })
-            : addFavoriteTeam.mutate({
-                  teamId: teamId as string,
-                  userId: session?.user?.id as string,
-              })
-    }
-
-    const handleWin = () => {
-        setShowBattleModal(true)
-        setBattleStatus("Won")
-    }
-
-    const handleLose = () => {
-        setShowBattleModal(true)
-        setBattleStatus("Lost")
-    }
-
-    let winPercentage
-
-    if (team) {
-        winPercentage = team.wins / (team.battles === 0 ? 1 : team.battles)
-    }
-
     return (
-        <main>
-            <BackButton />
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1>{team?.teamName}</h1>
-                    <div className="flex gap-2">
-                        <h2>{team?.teamStyle}</h2>
-                        <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                            <h4 className="align-middle">
-                                Total Wins: {team?.wins}
-                            </h4>
-                        </div>
-                        {team && (
-                            <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                                <h4 className="align-middle">
-                                    Win Percentage:{" "}
-                                    {formatPercentage(winPercentage ?? 0)}
-                                </h4>
+        <>
+            {team && (
+                <main>
+                    <BackButton />
+                    <div className="flex items-center justify-between">
+                        <div className="grid gap-2">
+                            <h1>{team.teamName}</h1>
+                            <div className="flex gap-2">
+                                <h2>{team.teamStyle}</h2>
+                                <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                                    <h4 className="align-middle">
+                                        Total Wins: {team.wins}
+                                    </h4>
+                                </div>
+                                <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                                    <h4 className="align-middle">
+                                        Win Percentage:{" "}
+                                        {formatPercentage(
+                                            team.wins /
+                                                (team.battles === 0
+                                                    ? 1
+                                                    : team.battles)
+                                        )}
+                                    </h4>
+                                </div>
                             </div>
+                            {team.originalTrainerId && (
+                                <OriginalTrainer id={team.originalTrainerId} />
+                            )}
+                        </div>
+                        {session?.user && (
+                            <ActionButtons
+                                userId={session.user.id}
+                                team={team}
+                            />
                         )}
                     </div>
-                    {team?.originalTrainerId && (
-                        <OriginalTrainer id={team.originalTrainerId} />
-                    )}
-                </div>
-                <div className="flex gap-3">
-                    {session?.user?.id === team?.userId ? (
-                        <>
-                            <button
-                                className="btn-red h-fit rounded-2xl px-4 py-2"
-                                onClick={() => setShowDeleteModal(true)}
-                            >
-                                Delete
-                            </button>
-                            <button
-                                className="h-fit rounded-2xl px-4 py-2"
-                                onClick={handleLose}
-                            >
-                                Lost
-                            </button>
-                            <button
-                                className="h-fit rounded-2xl px-4 py-2"
-                                onClick={handleWin}
-                            >
-                                Won
-                            </button>
-                        </>
-                    ) : (
-                        <button
-                            className="h-fit rounded-2xl px-4 py-2"
-                            onClick={handleCopy}
-                        >
-                            Copy Team
-                        </button>
-                    )}
-                    <FavoritedButton
-                        favorited={teamFavorited ?? false}
-                        handleFavorite={handleFavorite}
-                        absolute={false}
-                    />
-                </div>
-            </div>
-            {team && (
-                <>
                     <TeamRow team={team} withStats={true} />
-                    <DeleteModal
-                        userId={team?.userId}
-                        name={team?.teamName}
-                        showModal={showDeleteModal}
-                        setShowModal={setShowDeleteModal}
-                        teamId={team?.id}
-                    />
-                    <BattleModal
-                        showModal={showBattleModal}
-                        setShowModal={setShowBattleModal}
-                        teamId={team?.id}
-                        battleStatus={battleStatus}
-                    />
-                </>
+                </main>
             )}
-        </main>
+        </>
     )
 }
 
@@ -180,6 +84,115 @@ const OriginalTrainer = ({ id }: { id: string }) => {
                     <h2>Original Trainer: {user?.name}</h2>
                 </Link>
             )}
+        </>
+    )
+}
+
+interface ButtonProps {
+    userId: string
+    team: team
+}
+
+const ActionButtons = ({ userId, team }: ButtonProps) => {
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showBattleModal, setShowBattleModal] = useState(false)
+    const [battleStatus, setBattleStatus] = useState<"Won" | "Lost">("Lost")
+
+    const { data: favoriteTeams } =
+        api.favorite.checkUserFavoriteTeams.useQuery({
+            userId: userId,
+        })
+    const teamFavorited = favoriteTeams?.includes(team!.id)
+
+    const copyTeam = api.teams.buildTeam.useMutation()
+
+    const addFavoriteTeam = addFavoriteTeamMutation(team!.id, userId, team)
+    const removeFavoriteTeam = removeFavoriteTeamMutation(team!.id, userId)
+    const handleCopy = () => {
+        const pokemonIds = team?.pokemon.map((pokemon) => {
+            return { pokemonId: pokemon.id }
+        })
+        copyTeam.mutate({
+            userId: userId,
+            teamName: team!.teamName,
+            teamStyle: team!.teamStyle,
+            originalTrainerId: team?.userId,
+            pokemon: pokemonIds ?? [],
+        })
+    }
+
+    const handleFavorite = () => {
+        teamFavorited
+            ? removeFavoriteTeam.mutate({
+                  teamId: team!.id,
+                  userId: userId,
+              })
+            : addFavoriteTeam.mutate({
+                  teamId: team!.id,
+                  userId: userId,
+              })
+    }
+
+    const handleWin = () => {
+        setShowBattleModal(true)
+        setBattleStatus("Won")
+    }
+
+    const handleLose = () => {
+        setShowBattleModal(true)
+        setBattleStatus("Lost")
+    }
+    return (
+        <>
+            <div className="flex gap-3">
+                {userId === team!.id ? (
+                    <>
+                        <button
+                            className="btn-red h-fit rounded-2xl px-4 py-2"
+                            onClick={() => setShowDeleteModal(true)}
+                        >
+                            Delete
+                        </button>
+                        <button
+                            className="h-fit rounded-2xl px-4 py-2"
+                            onClick={handleLose}
+                        >
+                            Lost
+                        </button>
+                        <button
+                            className="h-fit rounded-2xl px-4 py-2"
+                            onClick={handleWin}
+                        >
+                            Won
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        className="h-fit rounded-2xl px-4 py-2"
+                        onClick={handleCopy}
+                    >
+                        Copy Team
+                    </button>
+                )}
+                <FavoritedButton
+                    favorited={teamFavorited ?? false}
+                    handleFavorite={handleFavorite}
+                    absolute={false}
+                />
+            </div>
+            <DeleteModal
+                userId={userId}
+                name={team!.teamName}
+                showModal={showDeleteModal}
+                setShowModal={setShowDeleteModal}
+                teamId={team!.id}
+            />
+            <BattleModal
+                showModal={showBattleModal}
+                setShowModal={setShowBattleModal}
+                teamId={team!.id}
+                battleStatus={battleStatus}
+            />
         </>
     )
 }

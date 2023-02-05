@@ -6,7 +6,7 @@ import { CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
 import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
-import { LoadingSpinner } from "./ui/loadingSpinner"
+import { LoadingCard } from "./ui/loadingCard"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -39,7 +39,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
               })
     }
 
-    if (isLoading) return <LoadingSpinner />
+    if (isLoading) return <LoadingCard />
 
     const pokemonImage = createdPokemon?.shiny
         ? pokemon?.sprites.front_shiny

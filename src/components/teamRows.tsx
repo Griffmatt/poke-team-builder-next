@@ -48,13 +48,13 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
     const { data: session } = useSession()
     const { data: favoritePokemon } =
         api.favorite.checkUserFavoritePokemon.useQuery({
-            userId: session?.user?.id as string,
+            userId: session?.user?.id ?? null,
         })
     return (
         <div
             className={`${
                 withStats
-                    ? "grid place-items-center gap-2 md:grid-cols-3"
+                    ? "grid gap-2 md:grid-cols-3"
                     : "pokemon-card-grid"
             }`}
         >
