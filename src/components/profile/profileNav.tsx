@@ -14,13 +14,15 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
     return (
         <>
             <div className="h-16 w-full rounded bg-dark-2 md:h-24 lg:h-40">
-                <img
-                    src={pokemonImage.src}
-                    className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
-                />
+                {user && (
+                    <img
+                        src={pokemonImage.src}
+                        className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
+                    />
+                )}
             </div>
-            <div className="h-44 grid grid-rows-2 px-1 text-center">
-                <div className="grid h-fit w-fit gap-1 row-span-2">
+            <div className="grid h-44 grid-rows-2 px-1 text-center">
+                <div className="row-span-2 grid h-fit w-fit gap-1">
                     <div className="aspect-square w-24 md:w-32">
                         {user && (
                             <img

@@ -7,6 +7,7 @@ import { api } from "utils/api"
 import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 import { LoadingCard } from "./ui/loadingCard"
+import { useDebounceFavorite } from "hooks/useDebounceFavorite"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -17,6 +18,8 @@ interface Props {
 
 export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     const { data: session } = useSession()
+    const [favorited, setFavorited] = useState<boolean | null>(null)
+
     const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
     const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
@@ -25,19 +28,27 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
-    const handleFavorite = async () => {
+    const handleFavorite = () => {
         if (!session?.user) return null
-        if(addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading) return null
-        favorite
-            ? removeFavoritePokemon.mutate({
+        if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)
+            return null
+        if (favorite === favorited) return
+        favorited
+            ? addFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
                   userId: session.user!.id,
               })
-            : addFavoritePokemon.mutate({
+            : removeFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,
                   userId: session.user!.id,
               })
     }
+
+    const favoritePokemon = useDebounceFavorite(
+        favorited,
+        favorite,
+        handleFavorite
+    )
 
     if (isLoading) return <LoadingCard />
 
@@ -56,8 +67,8 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                         />
                     )}
                     <FavoritedButton
-                        favorited={favorite}
-                        handleFavorite={handleFavorite}
+                        favorited={favoritePokemon}
+                        handleFavorite={() => setFavorited(!favoritePokemon)}
                     />
                     {topPoke && (
                         <div className="absolute top-0 left-0 h-10 w-10 rounded-full">

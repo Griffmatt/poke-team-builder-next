@@ -13,6 +13,7 @@ import { formatPercentage } from "utils/formatPercentage"
 import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
 import { team } from "types/trpc"
+import { useDebounceFavorite } from "hooks/useDebounceFavorite"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -23,7 +24,11 @@ const Team: NextPage = () => {
         teamId: teamId as string,
     })
 
-    console.log(team)
+    const { data: favoriteTeams } =
+        api.favorite.checkUserFavoriteTeams.useQuery({
+            userId: session?.user?.id as string,
+        })
+    const teamFavorited = favoriteTeams?.includes(team?.id ?? '')
 
     return (
         <>
@@ -56,10 +61,11 @@ const Team: NextPage = () => {
                                 <OriginalTrainer id={team.originalTrainerId} />
                             )}
                         </div>
-                        {session?.user && (
+                        {session?.user && teamFavorited !== undefined && (
                             <ActionButtons
                                 userId={session.user.id}
                                 team={team}
+                                favorite={teamFavorited}
                             />
                         )}
                     </div>
@@ -93,18 +99,14 @@ const OriginalTrainer = ({ id }: { id: string }) => {
 interface ButtonProps {
     userId: string
     team: team
+    favorite: boolean
 }
 
-const ActionButtons = ({ userId, team }: ButtonProps) => {
+const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showBattleModal, setShowBattleModal] = useState(false)
+    const [favorited, setFavorited] = useState<boolean | null>(null)
     const [battleStatus, setBattleStatus] = useState<"Won" | "Lost">("Lost")
-
-    const { data: favoriteTeams } =
-        api.favorite.checkUserFavoriteTeams.useQuery({
-            userId: userId,
-        })
-    const teamFavorited = favoriteTeams?.includes(team!.id)
 
     const copyTeam = api.teams.buildTeam.useMutation()
 
@@ -127,16 +129,23 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
     const handleFavorite = () => {
         if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
             return null
-        teamFavorited
-            ? removeFavoriteTeam.mutate({
+        if (favorite === favorited) return
+        favorited
+            ? addFavoriteTeam.mutate({
                   teamId: team!.id,
                   userId: userId,
               })
-            : addFavoriteTeam.mutate({
+            : removeFavoriteTeam.mutate({
                   teamId: team!.id,
                   userId: userId,
               })
     }
+
+    const favoritedTeam = useDebounceFavorite(
+        favorited,
+        favorite,
+        handleFavorite
+    )
 
     const handleWin = () => {
         setShowBattleModal(true)
@@ -180,8 +189,8 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
                     </button>
                 )}
                 <FavoritedButton
-                    favorited={teamFavorited ?? false}
-                    handleFavorite={handleFavorite}
+                    favorited={favoritedTeam}
+                    handleFavorite={() => setFavorited(!favoritedTeam)}
                     absolute={false}
                 />
             </div>
