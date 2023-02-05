@@ -25,9 +25,9 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
-
-    const handleFavorite = () => {
+    const handleFavorite = async () => {
         if (!session?.user) return null
+        if(addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading) return null
         favorite
             ? removeFavoritePokemon.mutate({
                   pokemonId: createdPokemon!.id,

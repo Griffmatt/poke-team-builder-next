@@ -5,7 +5,7 @@ export const useDebounceQuery = (query: string, time = 1000) => {
     let timer: NodeJS.Timeout | undefined
 
     useEffect(() => {
-        timer = setTimeout(() => setDebouncedValue(query), time)
+        timer = setTimeout(() => setDebouncedValue(query.toLowerCase()), time)
 
         return () => clearTimeout(timer)
     }, [query])

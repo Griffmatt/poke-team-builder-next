@@ -108,6 +108,7 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
 
     const addFavoriteTeam = addFavoriteTeamMutation(team!.id, userId, team)
     const removeFavoriteTeam = removeFavoriteTeamMutation(team!.id, userId)
+    
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map((pokemon) => {
             return { pokemonId: pokemon.id }
@@ -122,6 +123,8 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
     }
 
     const handleFavorite = () => {
+        if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
+            return null
         teamFavorited
             ? removeFavoriteTeam.mutate({
                   teamId: team!.id,
@@ -145,7 +148,7 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
     return (
         <>
             <div className="flex gap-3">
-                {userId === team!.id ? (
+                {userId === team!.userId ? (
                     <>
                         <button
                             className="btn-red h-fit rounded-2xl px-4 py-2"
