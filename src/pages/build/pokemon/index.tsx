@@ -43,7 +43,7 @@ const Pokemon: NextPage = () => {
             {filterPokemon && (
                 <PokemonSearch
                     pokemons={filterPokemon as unknown as Pokemon[]}
-                    query={query}
+                    query={debouncedValue}
                     initialLimit={pokemonLimit}
                 />
             )}

@@ -13,22 +13,24 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
     return (
         <>
-            <div className="h-40 w-full rounded bg-dark-2">
+            <div className="h-16 w-full rounded bg-dark-2 md:h-24 lg:h-40">
                 <img
                     src={pokemonImage.src}
-                    className="h-60 w-full rounded object-cover"
+                    className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
                 />
             </div>
-            <div className="flex h-44 w-fit flex-col justify-around px-1 text-center">
-                <div className="aspect-square w-32">
-                    {user && (
-                        <img
-                            src={user.image ?? ""}
-                            className="rounded-full border-8 border-dark"
-                        />
-                    )}
+            <div className="h-44 grid grid-rows-2 px-1 text-center">
+                <div className="grid h-fit w-fit gap-1 row-span-2">
+                    <div className="aspect-square w-24 md:w-32">
+                        {user && (
+                            <img
+                                src={user.image ?? ""}
+                                className="rounded-full border-8 border-dark"
+                            />
+                        )}
+                    </div>
+                    <h2>{user?.name}</h2>
                 </div>
-                <h2>{user?.name}</h2>
             </div>
             <div className="flex justify-center gap-3">
                 <Link href={`/profile/${userId}`}>
@@ -63,4 +65,3 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
         </>
     )
 }
-

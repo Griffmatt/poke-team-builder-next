@@ -16,7 +16,6 @@ export const useInfiniteScroll = <T>(
             pastLimit.current,
             pokemonLimit
         )
-        console.log(pastLimit.current)
         if (page >= itemsArr.length) {
             setHasMore(false)
         }
