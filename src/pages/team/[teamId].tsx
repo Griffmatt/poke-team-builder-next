@@ -23,6 +23,8 @@ const Team: NextPage = () => {
         teamId: teamId as string,
     })
 
+    console.log(team)
+
     return (
         <>
             {team && (
@@ -108,7 +110,7 @@ const ActionButtons = ({ userId, team }: ButtonProps) => {
 
     const addFavoriteTeam = addFavoriteTeamMutation(team!.id, userId, team)
     const removeFavoriteTeam = removeFavoriteTeamMutation(team!.id, userId)
-    
+
     const handleCopy = () => {
         const pokemonIds = team?.pokemon.map((pokemon) => {
             return { pokemonId: pokemon.id }
