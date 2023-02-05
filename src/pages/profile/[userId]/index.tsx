@@ -22,10 +22,10 @@ const ProfilePokemon: NextPage = () => {
         userId: userId as string,
     })
 
-    const { debounceQuery } = useDebounceQuery(setQuery)
+    const debouncedValue = useDebounceQuery(query)
 
     const filterPokemon = pokemons?.filter((pokemon) =>
-        query === "shiny" ? pokemon.shiny : pokemon.name.includes(query)
+        query === "shiny" ? pokemon.shiny : pokemon.name.includes(debouncedValue)
     )
 
     return (
@@ -38,7 +38,7 @@ const ProfilePokemon: NextPage = () => {
             <input
                 placeholder="Search for a pokemon..."
                 type="text"
-                onChange={(event) => debounceQuery(event.target.value)}
+                onChange={(event) => setQuery(event.target.value)}
                 className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
             />
             {filterPokemon?.length === 0 ? (

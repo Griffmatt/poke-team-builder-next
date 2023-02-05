@@ -7,10 +7,10 @@ import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 const Boxes: NextPage = () => {
     const [query, setQuery] = useState("")
-    const { debounceQuery } = useDebounceQuery(setQuery)
+    const debouncedValue = useDebounceQuery(query)
     const { data: suggestedUsers } = api.users.getSuggestedUsers.useQuery()
     const { data: queryUsers } = api.users.getUserWithQuery.useQuery({
-        query: query,
+        query: debouncedValue,
     })
     return (
         <main>
@@ -41,7 +41,7 @@ const Boxes: NextPage = () => {
                         <input
                             placeholder="Search for trainers..."
                             onChange={(event) =>
-                                debounceQuery(event.target.value)
+                                setQuery(event.target.value)
                             }
                             className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                         />

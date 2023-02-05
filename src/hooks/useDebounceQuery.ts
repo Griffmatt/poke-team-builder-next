@@ -1,14 +1,14 @@
-import { type Dispatch, type SetStateAction } from "react"
+import { useEffect, useState } from "react"
 
-export const useDebounceQuery = (
-    setQuery: Dispatch<SetStateAction<string>>,
-    time = 1000
-) => {
+export const useDebounceQuery = (query: string, time = 1000) => {
+    const [debouncedValue, setDebouncedValue] = useState("")
     let timer: NodeJS.Timeout | undefined
-    const debounceQuery = (query: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => setQuery(query), time)
-    }
 
-    return { debounceQuery }
+    useEffect(() => {
+        timer = setTimeout(() => setDebouncedValue(query), time)
+
+        return () => clearTimeout(timer)
+    }, [query])
+
+    return debouncedValue
 }

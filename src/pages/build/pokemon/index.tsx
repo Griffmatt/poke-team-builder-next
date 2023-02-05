@@ -11,7 +11,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 const Pokemon: NextPage = () => {
     const { data: pokemons } = api.pokeApi.getPokemon.useQuery({ limit: 898 })
     const [query, setQuery] = useState("")
-    const { debounceQuery } = useDebounceQuery(setQuery)
+    const debouncedValue = useDebounceQuery(query)
     const pokemonLimit = 30
 
     /* 
@@ -28,7 +28,7 @@ const Pokemon: NextPage = () => {
     }, [])*/
 
     const filterPokemon = pokemons?.results.filter((pokemon) =>
-        pokemon.name.includes(query)
+        pokemon.name.includes(debouncedValue)
     )
 
     return (
@@ -38,7 +38,7 @@ const Pokemon: NextPage = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    onChange={(event) => debounceQuery(event.target.value)}
+                    onChange={(event) => setQuery(event.target.value)}
                     className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                 />
             </div>

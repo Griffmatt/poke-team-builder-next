@@ -17,7 +17,7 @@ const BuildTeam: NextPage = () => {
     })
     const [query, setQuery] = useState("")
 
-    const { debounceQuery } = useDebounceQuery(setQuery)
+    const debouncedValue = useDebounceQuery(query)
 
     const {
         addPokemonToTeam,
@@ -34,7 +34,7 @@ const BuildTeam: NextPage = () => {
         (pokemon) =>
             !pokemonOnTeam.some(
                 (pokemonFilter) => pokemon.id === pokemonFilter?.id
-            ) && pokemon.name.includes(query)
+            ) && pokemon.name.includes(debouncedValue)
     )
 
     const [animationParent] = useAutoAnimate()
@@ -46,7 +46,7 @@ const BuildTeam: NextPage = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    onChange={(event) => debounceQuery(event.target.value)}
+                    onChange={(event) => setQuery(event.target.value)}
                     className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                 />
             </div>
