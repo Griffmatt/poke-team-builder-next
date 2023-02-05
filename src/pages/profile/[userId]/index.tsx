@@ -25,7 +25,9 @@ const ProfilePokemon: NextPage = () => {
     const debouncedValue = useDebounceQuery(query)
 
     const filterPokemon = pokemons?.filter((pokemon) =>
-        query === "shiny" ? pokemon.shiny : pokemon.name.includes(debouncedValue)
+        query === "shiny"
+            ? pokemon.shiny
+            : pokemon.name.includes(debouncedValue)
     )
 
     return (
@@ -42,7 +44,14 @@ const ProfilePokemon: NextPage = () => {
                 className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
             />
             {filterPokemon?.length === 0 ? (
-                <PokemonEmpty query={query} />
+                <>
+                    {pokemons && (
+                        <PokemonEmpty
+                            query={query}
+                            hasPokemon={pokemons?.length > 0}
+                        />
+                    )}
+                </>
             ) : (
                 <div className="pokemon-card-grid">
                     {filterPokemon?.map((pokemon) => {

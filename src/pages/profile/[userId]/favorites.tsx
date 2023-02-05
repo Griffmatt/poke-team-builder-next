@@ -27,8 +27,6 @@ const favorites = () => {
             userId: userId as string,
         })
 
-        console.log(favoriteTeams)
-
     return (
         <main>
             <ProfileNav
@@ -43,7 +41,7 @@ const favorites = () => {
                         const { name, id } = pokemon?.createdPokemon
                         return (
                             <Link
-                            key={id}
+                                key={id}
                                 href={`/profile/${user?.id}/${id}`}
                                 className="pokemon-card"
                             >

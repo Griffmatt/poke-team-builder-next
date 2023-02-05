@@ -112,7 +112,14 @@ const BuildTeam: NextPage = () => {
                 </button>
             </div>
             {filteredPokemon?.length === 0 ? (
-                <PokemonEmpty query={query} />
+                <>
+                {pokemons && (
+                    <PokemonEmpty
+                        query={query}
+                        hasPokemon={pokemons?.length > 0}
+                    />
+                )}
+            </>
             ) : (
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {filteredPokemon?.map((pokemon) => {

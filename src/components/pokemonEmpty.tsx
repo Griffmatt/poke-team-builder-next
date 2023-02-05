@@ -1,6 +1,11 @@
 import Link from "next/link"
 
-export const PokemonEmpty = ({ query }: { query: string }) => {
+interface Props {
+    query: string
+    hasPokemon: boolean
+}
+
+export const PokemonEmpty = ({ query, hasPokemon }: Props) => {
     if (query) {
         return (
             <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
@@ -10,13 +15,23 @@ export const PokemonEmpty = ({ query }: { query: string }) => {
         )
     }
 
+    if (hasPokemon) {
+        return (
+            <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+                <h2>You have no pokemon left!</h2>
+                <Link href="/build/pokemon">
+                    Click here to view pokemon to build
+                </Link>
+            </div>
+        )
+    }
+
     return (
         <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
             <h2>You haven't created any pokemon yet!</h2>
             <Link href="/build/pokemon">
-                Click here to view pokemon to create
+                Click here to view pokemon to build
             </Link>
         </div>
     )
 }
-
