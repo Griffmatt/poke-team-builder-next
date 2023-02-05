@@ -1,17 +1,17 @@
 import { Pokemon } from "pokenode-ts"
 import { useEffect, useState } from "react"
 
-export const useInfiniteScroll = (pokemon: Pokemon[], limit: number) => {
+export const useInfiniteScroll = (pokemon: Pokemon[], initialLimit: number, limit: number) => {
     const [items, setItems] = useState<Pokemon[]>([])
     const [hasMore, setHasMore] = useState(true)
-    const [page, setPage] = useState(1)
-    const pokemonLimit = limit * page
+    const [page, setPage] = useState(0)
+    const pokemonLimit = initialLimit + (limit * page)
 
     useEffect(() => {
-        fetchData(page)
+        setData(page)
     }, [page])
 
-    const fetchData = (page: number) => {
+    const setData = (page: number) => {
         const newItems = pokemon.slice(pokemonLimit - limit, pokemonLimit)
         if (page >= pokemon.length) {
             setHasMore(false)
