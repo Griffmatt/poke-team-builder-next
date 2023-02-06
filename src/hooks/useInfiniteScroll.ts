@@ -1,19 +1,26 @@
 import { useEffect, useRef, useState } from "react"
 
-export const useInfiniteScroll = <T>(itemsArr: T[] | null, initialLimit = 30, limit = 12) => {
+export const useInfiniteScroll = <T>(
+    itemsArr: T[] | null,
+    initialLimit = 30,
+    limit = 12
+) => {
     const [items, setItems] = useState<T[] | null>(null)
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(1)
     const pastLimit = useRef(initialLimit)
-    const pokemonLimit = initialLimit + limit * page
+    const [pokemonLimit, setPokemonLimit] = useState(initialLimit)
 
     const setData = (page: number) => {
         if (!itemsArr || items === null) return
-        const newItems = itemsArr.slice(pastLimit.current, pokemonLimit)
+        const newItems = itemsArr.slice(
+            pastLimit.current,
+            pokemonLimit + limit * page
+        )
         if (page >= itemsArr.length) {
             setHasMore(false)
         }
-        pastLimit.current = pokemonLimit
+        pastLimit.current = pokemonLimit + limit * page
         setItems([...items, ...newItems])
         setPage(page + 1)
     }
@@ -29,7 +36,15 @@ export const useInfiniteScroll = <T>(itemsArr: T[] | null, initialLimit = 30, li
     }
 
     useEffect(() => {
-        setItems(itemsArr?.slice(0, initialLimit) ?? null)
+        if (screen.width < 1024) {
+            setItems(itemsArr?.slice(0, 15) ?? null)
+            setPokemonLimit(15)
+            pastLimit.current = 15
+        }
+    }, [screen.width])
+
+    useEffect(() => {
+        setItems(itemsArr?.slice(0, pokemonLimit) ?? null)
     }, [itemsArr])
 
     useEffect(() => {

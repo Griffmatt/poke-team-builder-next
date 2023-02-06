@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 interface Props {
     favorited: boolean
@@ -20,7 +20,7 @@ export const FavoritedButton = ({
         : "rounded-full"
 
     const [favorite, setFavorite] = useState(favorited)
-    const initialLoad = useRef(true)
+    const [initialLoad, setInitialLoad] = useState(true)
     const handleFavorite = favorite ? addFavorite : removeFavorite
 
     useEffect(() => {
@@ -32,9 +32,9 @@ export const FavoritedButton = ({
     }, [favorite])
 
     useEffect(() => {
-        initialLoad.current = false
+        setInitialLoad(false)
         return () => {
-            if (timer && !initialLoad.current) {
+            if (timer && !initialLoad) {
                 const handleFavorite = favorite ? removeFavorite : addFavorite
                 clearTimeout(timer)
                 if (!handleFavorite || favorited !== favorite) return
