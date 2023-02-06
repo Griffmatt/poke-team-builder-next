@@ -1,20 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 
-export const useInfiniteScroll = <T>(
-    itemsArr: T[] | null,
-    initialLimit: number,
-    limit = 12
-) => {
-    const [items, setItems] = useState<T[]>(
-        itemsArr?.slice(0, initialLimit) ?? []
-    )
+export const useInfiniteScroll = <T>(itemsArr: T[] | null, initialLimit = 30, limit = 12) => {
+    const [items, setItems] = useState<T[] | null>(null)
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(1)
     const pastLimit = useRef(initialLimit)
     const pokemonLimit = initialLimit + limit * page
 
     const setData = (page: number) => {
-        if (!itemsArr) return
+        if (!itemsArr || items === null) return
         const newItems = itemsArr.slice(pastLimit.current, pokemonLimit)
         if (page >= itemsArr.length) {
             setHasMore(false)
@@ -35,7 +29,7 @@ export const useInfiniteScroll = <T>(
     }
 
     useEffect(() => {
-        setItems(itemsArr?.slice(0, initialLimit) ?? [])
+        setItems(itemsArr?.slice(0, initialLimit) ?? null)
     }, [itemsArr])
 
     useEffect(() => {
