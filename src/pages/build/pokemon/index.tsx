@@ -15,10 +15,9 @@ const Pokemon: NextPage = () => {
     const debouncedValue = useDebounceQuery(query)
     const [pokemonLimit, setPokemonLimit] = useState(30)
 
-    
-   //used to check for screen size when using infinite scrolling
-   
-   useEffect(() => {
+    //used to check for screen size when using infinite scrolling
+
+    useEffect(() => {
         if (screen.width >= 768 && screen.width < 1024) {
             setPokemonLimit(15)
         }
@@ -62,7 +61,9 @@ interface SearchProps {
 const PokemonSearch = ({ pokemons, query, initialLimit }: SearchProps) => {
     const loadLimit = 12
     const pokemonScrolled = useInfiniteScroll(pokemons, initialLimit, loadLimit)
-    const showPokemon = query ? pokemons.slice(0, initialLimit) : pokemonScrolled
+    const showPokemon = query
+        ? pokemons.slice(0, initialLimit)
+        : pokemonScrolled
     const [animationParent] = useAutoAnimate()
     return (
         <>

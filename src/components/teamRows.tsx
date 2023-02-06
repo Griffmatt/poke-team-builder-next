@@ -53,9 +53,7 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
     return (
         <div
             className={`${
-                withStats
-                    ? "grid gap-2 md:grid-cols-3"
-                    : "pokemon-card-grid"
+                withStats ? "grid gap-2 md:grid-cols-3" : "pokemon-card-grid"
             }`}
         >
             {team?.pokemon.map((pokemon) => {

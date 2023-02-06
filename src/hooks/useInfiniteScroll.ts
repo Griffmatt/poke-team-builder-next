@@ -12,10 +12,7 @@ export const useInfiniteScroll = <T>(
     const pokemonLimit = initialLimit + limit * page
 
     const setData = (page: number) => {
-        const newItems = itemsArr.slice(
-            pastLimit.current,
-            pokemonLimit
-        )
+        const newItems = itemsArr.slice(pastLimit.current, pokemonLimit)
         if (page >= itemsArr.length) {
             setHasMore(false)
         }

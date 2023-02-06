@@ -7,7 +7,7 @@ export const PopularTeams = () => {
     const { data: session } = useSession()
     const { data: popularTeams } = api.statistics.getPopularTeams.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoriteTeams.useQuery({
-        userId: session?.user?.id as string,
+        userId: session?.user?.id ?? null,
     })
 
     return (

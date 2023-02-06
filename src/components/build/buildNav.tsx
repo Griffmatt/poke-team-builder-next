@@ -24,4 +24,3 @@ export const BuildNav = ({ selected }: Props) => {
         </div>
     )
 }
-

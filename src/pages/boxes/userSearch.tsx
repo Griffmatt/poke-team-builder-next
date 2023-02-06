@@ -40,9 +40,7 @@ const Boxes: NextPage = () => {
                         <h2>Search</h2>
                         <input
                             placeholder="Search for trainers..."
-                            onChange={(event) =>
-                                setQuery(event.target.value)
-                            }
+                            onChange={(event) => setQuery(event.target.value)}
                             className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                         />
                     </div>

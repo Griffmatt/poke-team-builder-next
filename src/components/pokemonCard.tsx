@@ -25,7 +25,7 @@ export const PokemonCard = ({
         name: pokemonName,
     })
 
-    if (isLoading) return <LoadingCard/>
+    if (isLoading) return <LoadingCard />
     const firstType = pokemon?.types[0].type.name
     const secondType = pokemon?.types[1]?.type.name
     const pokemonImage =

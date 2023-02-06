@@ -7,7 +7,7 @@ export const PopularPokemon = () => {
     const { data: session } = useSession()
     const { data: popularPokemon } = api.statistics.getPopularPokemon.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string,
+        userId: session?.user?.id ?? null,
     })
     return (
         <div className="grid gap-3">

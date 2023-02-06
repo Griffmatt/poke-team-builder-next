@@ -8,7 +8,7 @@ import { useBuildTeam } from "hooks/useBuildTeam"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -113,13 +113,13 @@ const BuildTeam: NextPage = () => {
             </div>
             {filteredPokemon?.length === 0 ? (
                 <>
-                {pokemons && (
-                    <PokemonEmpty
-                        query={query}
-                        hasPokemon={pokemons?.length > 0}
-                    />
-                )}
-            </>
+                    {pokemons && (
+                        <PokemonEmpty
+                            query={query}
+                            hasPokemon={pokemons?.length > 0}
+                        />
+                    )}
+                </>
             ) : (
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {filteredPokemon?.map((pokemon) => {

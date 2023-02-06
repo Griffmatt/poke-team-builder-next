@@ -2,8 +2,8 @@ import { useState } from "react"
 
 interface Props {
     favorited: boolean
-    addFavorite?: (() => void)
-    removeFavorite?: (() => void)
+    addFavorite?: () => void
+    removeFavorite?: () => void
     absolute?: boolean
 }
 
@@ -23,10 +23,10 @@ export const FavoritedButton = ({
     const handleFavorite = favorite ? removeFavorite : addFavorite
 
     const debounce = () => {
-        if(!handleFavorite) return null
+        if (!handleFavorite) return null
         clearTimeout(timer)
         setFavorite(!favorite)
-        if(favorited !== favorite) return null
+        if (favorited !== favorite) return null
         timer = setTimeout(handleFavorite, 1000)
     }
 
