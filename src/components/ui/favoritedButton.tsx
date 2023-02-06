@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface Props {
     favorited: boolean
@@ -20,20 +20,36 @@ export const FavoritedButton = ({
         : "rounded-full"
 
     const [favorite, setFavorite] = useState(favorited)
-    const handleFavorite = favorite ? removeFavorite : addFavorite
+    const initialLoad = useRef(true)
+    const handleFavorite = favorite ? addFavorite : removeFavorite
 
-    const debounce = () => {
-        if (!handleFavorite) return null
+    useEffect(() => {
+        const handleFavorite = favorite ? addFavorite : removeFavorite
+        if (!handleFavorite) return
         clearTimeout(timer)
-        setFavorite(!favorite)
-        if (favorited !== favorite) return null
-        timer = setTimeout(handleFavorite, 1000)
-    }
+        if (favorited === favorite) return
+        timer = setTimeout(handleFavorite, 5000)
+    }, [favorite])
+
+    useEffect(() => {
+        initialLoad.current = false
+        return () => {
+            if (timer && !initialLoad.current) {
+                const handleFavorite = favorite ? removeFavorite : addFavorite
+                clearTimeout(timer)
+                if (!handleFavorite || favorited !== favorite) return
+                handleFavorite()
+            }
+        }
+    }, [])
 
     return (
         <>
             {handleFavorite ? (
-                <button className={wrapperClass} onClick={debounce}>
+                <button
+                    className={wrapperClass}
+                    onClick={() => setFavorite(!favorite)}
+                >
                     <div
                         className={`h-10 w-10 rounded-full ${
                             favorite

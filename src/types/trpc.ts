@@ -6,11 +6,11 @@ type CreatedPokemon = NonNullable<
     inferProcedureOutput<AppRouter["pokemon"]["getSinglePokemon"]>
 >
 
-type teams = NonNullable<inferProcedureOutput<AppRouter["teams"]["getTeams"]>>
+type teams = inferProcedureOutput<AppRouter["teams"]["getTeams"]>
 
-type team = NonNullable<inferProcedureOutput<AppRouter["teams"]["getTeam"]>>
+type team = inferProcedureOutput<AppRouter["teams"]["getTeam"]>
 
-type user = NonNullable<inferProcedureOutput<AppRouter["users"]["getUser"]>>
+type user = inferProcedureOutput<AppRouter["users"]["getUser"]>
 
 type formattedTeam = ReturnType<typeof formatTeams>
 
