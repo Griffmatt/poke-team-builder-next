@@ -39,7 +39,7 @@ const SinglePokemon: NextPage = () => {
         <main>
             <BackButton />
             <h1>PokeDex Entry</h1>
-            {pokemon && (
+            {pokemon && pokemonBuilds && (
                 <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
                         <PokemonCard pokemonName={pokemon.name} />
@@ -79,7 +79,7 @@ const SinglePokemon: NextPage = () => {
                             <h3>Total Stats: {totalStats}</h3>
                         </div>
                     </div>
-                    {pokemonBuilds && pokemonBuilds.length > 0 && (
+                    {pokemonBuilds.length > 0 && (
                         <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
                             <h2>Data</h2>
                             {teammates && teammates?.total > 0 && (
@@ -139,21 +139,23 @@ const SinglePokemon: NextPage = () => {
                     )}
                     <div
                         className={`grid gap-3 ${
-                            session?.user?.id
+                            session?.user?.id && pokemonBuilds.length > 0
                                 ? "md:col-span-2 md:grid-cols-2 lg:col-start-2"
                                 : "md:col-start-2 lg:col-start-3"
                         }`}
                     >
-                        <Link
-                            href={`/build/pokemon/${pokemon?.name}/builds`}
-                            className="grid w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
-                        >
-                            <h4>See Builds</h4>
-                        </Link>
+                        {pokemonBuilds.length > 0 && (
+                            <Link
+                                href={`/build/pokemon/${pokemon?.name}/builds`}
+                                className="grid h-fit w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                            >
+                                <h4>See Builds</h4>
+                            </Link>
+                        )}
                         {session?.user?.id && (
                             <Link
                                 href={`/build/pokemon/${pokemon?.name}/create`}
-                                className="grid w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                                className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                             >
                                 <h4>Build Pokemon</h4>
                             </Link>

@@ -29,20 +29,22 @@ const ProfileSettings: NextPage = () => {
     return (
         <main>
             {user && (
-                <ProfileNav
-                    selected="settings"
-                    userId={userId as string}
-                    user={user}
-                />
+                <>
+                    <ProfileNav
+                        selected="settings"
+                        userId={userId as string}
+                        user={user}
+                    />
+                    <div className="grid gap-3 bg-dark-2">
+                        <button
+                            className="rounded-2xl px-4 py-2"
+                            onClick={handleSignOut}
+                        >
+                            Log Out
+                        </button>
+                    </div>
+                </>
             )}
-            <div className="grid gap-3 bg-dark-2">
-                <button
-                    className="rounded-2xl px-4 py-2"
-                    onClick={handleSignOut}
-                >
-                    Log Out
-                </button>
-            </div>
         </main>
     )
 }

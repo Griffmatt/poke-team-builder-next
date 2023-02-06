@@ -7,7 +7,7 @@ export const RecentTeams = () => {
     const { data: session } = useSession()
     const { data: recentTeams } = api.teams.recentTeams.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoriteTeams.useQuery({
-        userId: session?.user?.id as string,
+        userId: session?.user?.id ?? null,
     })
 
     return (

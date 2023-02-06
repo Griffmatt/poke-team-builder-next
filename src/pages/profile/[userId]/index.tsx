@@ -36,47 +36,53 @@ const ProfilePokemon: NextPage = () => {
     return (
         <main>
             {user && (
-                <ProfileNav
-                    selected="pokemon"
-                    userId={userId as string}
-                    user={user}
-                />
-            )}
-            <input
-                placeholder="Search for a pokemon..."
-                type="text"
-                onChange={(event) => setQuery(event.target.value)}
-                className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
-            />
-            {filterPokemon?.length === 0 ? (
                 <>
-                    {pokemons && (
-                        <PokemonEmpty
-                            query={query}
-                            hasPokemon={pokemons?.length > 0}
-                        />
+                    <ProfileNav
+                        selected="pokemon"
+                        userId={userId as string}
+                        user={user}
+                    />
+                    <input
+                        placeholder="Search for a pokemon..."
+                        type="text"
+                        onChange={(event) => setQuery(event.target.value)}
+                        className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                    />
+                    {filterPokemon?.length === 0 ? (
+                        <>
+                            {pokemons && (
+                                <PokemonEmpty
+                                    query={query}
+                                    hasPokemon={pokemons?.length > 0}
+                                />
+                            )}
+                        </>
+                    ) : (
+                        <div
+                            className="pokemon-card-grid"
+                            ref={animationParent}
+                        >
+                            {filterPokemon?.map((pokemon) => {
+                                const favorited =
+                                    pokemon.favorited[0]?.userId ===
+                                    pokemon.userId
+                                return (
+                                    <Link
+                                        key={pokemon.id}
+                                        className="pokemon-card"
+                                        href={`/profile/${user?.id}/${pokemon.id}/`}
+                                    >
+                                        <PokemonCard
+                                            pokemonName={pokemon.name}
+                                            createdPokemon={pokemon}
+                                            favorite={favorited}
+                                        />
+                                    </Link>
+                                )
+                            })}
+                        </div>
                     )}
                 </>
-            ) : (
-                <div className="pokemon-card-grid" ref={animationParent}>
-                    {filterPokemon?.map((pokemon) => {
-                        const favorited =
-                            pokemon.favorited[0]?.userId === pokemon.userId
-                        return (
-                            <Link
-                                key={pokemon.id}
-                                className="pokemon-card"
-                                href={`/profile/${user?.id}/${pokemon.id}/`}
-                            >
-                                <PokemonCard
-                                    pokemonName={pokemon.name}
-                                    createdPokemon={pokemon}
-                                    favorite={favorited}
-                                />
-                            </Link>
-                        )
-                    })}
-                </div>
             )}
         </main>
     )
