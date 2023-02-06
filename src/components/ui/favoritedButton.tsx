@@ -28,7 +28,7 @@ export const FavoritedButton = ({
         if (!handleFavorite) return
         clearTimeout(timer)
         if (favorited === favorite) return
-        timer = setTimeout(handleFavorite, 5000)
+        timer = setTimeout(handleFavorite, 2000)
     }, [favorite])
 
     useEffect(() => {
