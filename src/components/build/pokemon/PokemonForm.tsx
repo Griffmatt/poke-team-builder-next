@@ -8,7 +8,7 @@ import useHandleIvChange from "hooks/useHandleIvChange"
 import formatString from "utils/formatString"
 import { natures } from "assets/natures"
 
-import { PokemonCard } from "components/pokemonCard"
+import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"
 
 import { updatePokemonMutation } from "mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "mutations/buildPokemonMutation"

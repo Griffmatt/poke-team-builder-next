@@ -1,4 +1,4 @@
-import { PokemonCard } from "components/pokemonCard"
+import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"
 import { ProfileNav } from "components/profile/profileNav"
 import { TeamRows } from "components/teamRows"
 import Link from "next/link"

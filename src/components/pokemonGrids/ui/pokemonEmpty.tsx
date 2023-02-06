@@ -1,8 +1,8 @@
 import Link from "next/link"
 
 interface Props {
-    query: string
-    hasPokemon: boolean
+    query?: string
+    hasPokemon?: boolean
 }
 
 export const PokemonEmpty = ({ query, hasPokemon }: Props) => {

@@ -1,10 +1,10 @@
-import { CreatedPokemon } from "../types/trpc"
+import { CreatedPokemon } from "../../../types/trpc"
 
 import { api } from "utils/api"
 import formatString from "utils/formatString"
-import { FavoritedButton } from "./ui/favoritedButton"
+import { FavoritedButton } from "../../ui/favoritedButton"
 
-import { LoadingCard } from "./ui/loadingCard"
+import { LoadingCard } from "../../ui/loadingCard"
 
 interface Props {
     pokemonName: string

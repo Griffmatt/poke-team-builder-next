@@ -1,4 +1,4 @@
-import { PokemonCardWithStats } from "components/pokemonCardWithStats"
+import { PokemonCardWithStats } from "components/pokemonGrids/cards/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import React from "react"

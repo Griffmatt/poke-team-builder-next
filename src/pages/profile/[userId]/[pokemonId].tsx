@@ -2,7 +2,7 @@ import { type NextPage } from "next"
 import { useRouter } from "next/router"
 
 import { api } from "utils/api"
-import { PokemonCardWithStats } from "components/pokemonCardWithStats"
+import { PokemonCardWithStats } from "components/pokemonGrids/cards/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"

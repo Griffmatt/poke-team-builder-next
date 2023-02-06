@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { api } from "utils/api"
 import { formatPercentage } from "utils/formatPercentage"
-import { PokemonCard } from "../pokemonCard"
+import { PokemonCard } from "../pokemonGrids/cards/pokemonCard"
 
 interface Props {
     pokemonName: string

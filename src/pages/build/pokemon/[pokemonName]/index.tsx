@@ -1,6 +1,6 @@
 import { CommonData } from "components/commonData/commonData"
 import { CommonMoves } from "components/commonData/commonMoves"
-import { PokemonCard } from "components/pokemonCard"
+import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"
 import { BackButton } from "components/ui/backButton"
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"

@@ -4,8 +4,8 @@ import React from "react"
 import { teams } from "../types/trpc"
 import { team } from "../types/trpc"
 import { api } from "../utils/api"
-import { PokemonCard } from "./pokemonCard"
-import { PokemonCardWithStats } from "./pokemonCardWithStats"
+import { PokemonCard } from "./pokemonGrids/cards/pokemonCard"
+import { PokemonCardWithStats } from "./pokemonGrids/cards/pokemonCardWithStats"
 import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {

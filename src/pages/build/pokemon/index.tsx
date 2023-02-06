@@ -4,7 +4,7 @@ import { BuildNav } from "components/build/buildNav"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { type Pokemon } from "pokenode-ts"
-import { PokemonGrid } from "components/pokemonGrid"
+import { PokemonGrid } from "components/pokemonGrids/pokemonGrid"
 
 const Pokemon: NextPage = () => {
     const { data: pokemonData } = api.pokeApi.getPokemon.useQuery({
@@ -26,7 +26,7 @@ const Pokemon: NextPage = () => {
                 />
             </div>
             <BuildNav selected="pokemon" />
-            <PokemonGrid pokemons={pokemons?? null} query={debouncedValue} />
+            <PokemonGrid pokemons={pokemons ?? null} query={debouncedValue} />
         </main>
     )
 }

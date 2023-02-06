@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { api } from "utils/api"
-import { PokemonCard } from "./pokemonCard"
+import { PokemonCard } from "./pokemonGrids/cards/pokemonCard"
 
 export const PopularPokemon = () => {
     const { data: session } = useSession()
