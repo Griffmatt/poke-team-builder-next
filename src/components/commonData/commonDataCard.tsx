@@ -1,5 +1,5 @@
 import { formatPercentage } from "utils/formatPercentage"
-import formatString from "utils/formatString"
+import {formatString} from "utils/formatString"
 
 interface Props {
     data: { name: string; amount: number }[]

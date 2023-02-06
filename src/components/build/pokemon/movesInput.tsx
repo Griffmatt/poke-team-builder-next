@@ -1,5 +1,5 @@
-import { type ChangeEvent } from "react"
-import firstLetterUpperCase from "utils/formatString"
+import { useEffect, useState, type ChangeEvent } from "react"
+import {formatString} from "utils/formatString"
 
 interface PokemonValues {
     ability: string
@@ -24,6 +24,7 @@ export const MovesInput = ({
     setPokemonData,
     currentMoves,
 }: Props) => {
+    const [filterTakenMoves, setFilterTakenMoves] = useState(moves)
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
         currentMoves[order] = event.target.value
         setPokemonData({ moves: currentMoves })
@@ -38,15 +39,25 @@ export const MovesInput = ({
 
     const moveOrder = formatOrder(order)
 
+    useEffect(() => {
+        console.log(currentMoves)
+        const filterMoves = moves.filter(
+            (moveData) =>
+                formatString(move) === formatString(moveData.move.name) ||
+                !currentMoves.includes(formatString(moveData.move.name))
+        )
+        setFilterTakenMoves(filterMoves)
+    }, [...currentMoves])
+
     return (
         <label className="grid">
             {moveOrder} Move
             <select
                 className="text-dark"
-                value={firstLetterUpperCase(move)}
+                value={formatString(move)}
                 onChange={(event) => handleChange(event)}
             >
-                {moves
+                {filterTakenMoves
                     .sort((a, b) => {
                         if (a.move.name < b.move.name) {
                             return -1
@@ -56,10 +67,10 @@ export const MovesInput = ({
                         }
                         return 0
                     })
-                    .map((moveOption: { move: { name: string } }) => {
+                    .map(({ move }: { move: { name: string } }) => {
                         return (
-                            <option key={moveOption.move.name}>
-                                {firstLetterUpperCase(moveOption.move.name)}
+                            <option key={move.name}>
+                                {formatString(move.name)}
                             </option>
                         )
                     })}

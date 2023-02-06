@@ -4,7 +4,7 @@ import { addFavoritePokemonMutation } from "mutations/addFavoritePokemonMutation
 import { removeFavoritePokemonMutation } from "mutations/removeFavoritePokemonMutation"
 import { CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
-import formatString from "utils/formatString"
+import { formatString } from "utils/formatString"
 import { FavoritedButton } from "../../ui/favoritedButton"
 import { LoadingCard } from "../../ui/loadingCard"
 
@@ -92,7 +92,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                     </div>
                     <div>
                         <h2>Ability</h2>
-                        <p>{formatString(createdPokemon!.ability)}</p>
+                        <p>{createdPokemon!.ability}</p>
                     </div>
                     <div>
                         <h2>Nature</h2>

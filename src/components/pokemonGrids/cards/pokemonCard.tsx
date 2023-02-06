@@ -1,7 +1,7 @@
 import { CreatedPokemon } from "../../../types/trpc"
 
 import { api } from "utils/api"
-import formatString from "utils/formatString"
+import { formatString } from "utils/formatString"
 import { FavoritedButton } from "../../ui/favoritedButton"
 
 import { LoadingCard } from "../../ui/loadingCard"

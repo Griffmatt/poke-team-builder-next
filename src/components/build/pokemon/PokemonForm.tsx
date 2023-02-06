@@ -5,7 +5,7 @@ import { MovesInput } from "./movesInput"
 
 import useHandleEvChange from "hooks/useHandleEvChange"
 import useHandleIvChange from "hooks/useHandleIvChange"
-import formatString from "utils/formatString"
+import { formatString } from "utils/formatString"
 import { natures } from "assets/natures"
 
 import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"

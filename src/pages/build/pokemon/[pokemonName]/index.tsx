@@ -8,7 +8,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { api } from "utils/api"
 import { formatStat } from "utils/formatStat"
-import formatString from "utils/formatString"
+import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 
 const SinglePokemon: NextPage = () => {
