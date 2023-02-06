@@ -37,9 +37,9 @@ export const useInfiniteScroll = <T>(
 
     useEffect(() => {
         if (screen.width < 1024) {
-            setItems(itemsArr?.slice(0, 15) ?? null)
-            setPokemonLimit(15)
-            pastLimit.current = 15
+            setItems(itemsArr?.slice(0, 18) ?? null)
+            setPokemonLimit(18)
+            pastLimit.current = 18
         }
     }, [screen.width])
 
