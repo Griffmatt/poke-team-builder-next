@@ -7,7 +7,6 @@ import { api } from "utils/api"
 import formatString from "utils/formatString"
 import { FavoritedButton } from "./ui/favoritedButton"
 import { LoadingCard } from "./ui/loadingCard"
-import { useDebounceFavorite } from "hooks/useDebounceFavorite"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -18,7 +17,6 @@ interface Props {
 
 export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     const { data: session } = useSession()
-    const [favorited, setFavorited] = useState<boolean | null>(null)
 
     const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
@@ -29,13 +27,22 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
 
-    const favoritePokemon = useDebounceFavorite(
-        favorited,
-        favorite,
-        addFavoritePokemon,
-        removeFavoritePokemon,
-        { pokemonId: createdPokemon!.id, userId: session?.user?.id as string}
-    )
+    const ids = {
+        pokemonId: createdPokemon!.id,
+        userId: session?.user?.id as string,
+    }
+    const removeFavorite = () => {
+        if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)
+            return null
+        removeFavoritePokemon.mutate(ids)
+    }
+
+    const addFavorite = () => {
+        if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)
+            return null
+
+        addFavoritePokemon.mutate(ids)
+    }
 
     if (isLoading) return <LoadingCard />
 
@@ -53,10 +60,13 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                             className="aspect-square w-full"
                         />
                     )}
-                    <FavoritedButton
-                        favorited={favoritePokemon}
-                        handleFavorite={() => setFavorited(!favoritePokemon)}
-                    />
+                    {session?.user?.id && (
+                        <FavoritedButton
+                            favorited={favorite}
+                            addFavorite={addFavorite}
+                            removeFavorite={removeFavorite}
+                        />
+                    )}
                     {topPoke && (
                         <div className="absolute top-0 left-0 h-10 w-10 rounded-full">
                             Top Poke
