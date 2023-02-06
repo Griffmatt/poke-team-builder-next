@@ -2,39 +2,22 @@ import { type NextPage } from "next"
 import { api } from "utils/api"
 import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
-import { formatPercentage } from "utils/formatPercentage"
-import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"
 import { PopularPokemon } from "components/popularPokemon"
 import { PopularTeams } from "components/popularTeams"
+import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 
 const Home: NextPage = () => {
     const { data: session } = useSession()
-    const { data: topPokemonData } = api.statistics.getTopPokemon.useQuery()
+    const { data: pokemonData } = api.statistics.getTopPokemon.useQuery()
     return (
         <main>
             <h1>Statistics</h1>
             <div className="grid gap-3">
                 <h2>Trending Pokemon</h2>
-                <div className="pokemon-card-grid">
-                    {topPokemonData &&
-                        topPokemonData.pokemon.slice(0, 12).map((pokemon) => {
-                            const percentage = formatPercentage(
-                                pokemon.amount / topPokemonData.total
-                            )
-                            return (
-                                <Link
-                                    key={pokemon.name}
-                                    href={`/build/pokemon/${pokemon.name}`}
-                                    className="pokemon-card"
-                                >
-                                    <PokemonCard
-                                        pokemonName={pokemon.name}
-                                        percentage={percentage}
-                                    />
-                                </Link>
-                            )
-                        })}
-                </div>
+                <PokemonDataGrid
+                    pokemonData={pokemonData ?? null}
+                    amount={12}
+                />
             </div>
             <div className="grid gap-3">
                 <h2>What to do?</h2>

@@ -8,10 +8,17 @@ import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
 
 interface Props {
     pokemons: CreatedPokemon[] | null
-    query: string
+    amount?: number
+    currentUserFavorites?: string[]
+    query?: string
 }
 
-export const CreatedPokemonGrid = ({ pokemons, query }: Props) => {
+export const CreatedPokemonGrid = ({
+    pokemons,
+    amount,
+    currentUserFavorites,
+    query,
+}: Props) => {
     const [animationParent] = useAutoAnimate()
 
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
@@ -27,8 +34,9 @@ export const CreatedPokemonGrid = ({ pokemons, query }: Props) => {
             ) : (
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {pokemons?.map((pokemon) => {
-                        const favorited =
-                            pokemon.favorited[0]?.userId === pokemon.userId
+                        const favorited = currentUserFavorites
+                            ? currentUserFavorites.includes(pokemon.id)
+                            : pokemon.favorited[0]?.userId === pokemon.userId
                         return (
                             <Link
                                 key={pokemon.id}

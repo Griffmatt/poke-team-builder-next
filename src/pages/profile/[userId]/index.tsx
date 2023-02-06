@@ -43,7 +43,10 @@ const ProfilePokemon: NextPage = () => {
                         onChange={(event) => setQuery(event.target.value)}
                         className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                     />
-                    <CreatedPokemonGrid pokemons={filterPokemon ?? null} query={debouncedValue}/>
+                    <CreatedPokemonGrid
+                        pokemons={filterPokemon ?? null}
+                        query={debouncedValue}
+                    />
                 </>
             )}
         </main>

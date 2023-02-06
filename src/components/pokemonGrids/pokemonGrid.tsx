@@ -15,7 +15,7 @@ export const PokemonGrid = ({ pokemons, query }: Props) => {
     const [animationParent] = useAutoAnimate()
 
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
-    const showPokemon = query
+    let showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
         : pokemonScrolled
     if (showPokemon == null || pokemons == null) return <SkeletonPokemonGrid />
@@ -23,7 +23,7 @@ export const PokemonGrid = ({ pokemons, query }: Props) => {
     return (
         <>
             {query && showPokemon.length === 0 ? (
-                <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0}/>
+                <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {showPokemon.map((pokemon) => {
@@ -42,4 +42,3 @@ export const PokemonGrid = ({ pokemons, query }: Props) => {
         </>
     )
 }
-

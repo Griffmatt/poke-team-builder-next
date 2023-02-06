@@ -19,7 +19,7 @@ export const statisticsRouter = createTRPCRouter({
             return b.favorited.length - a.favorited.length
         })
 
-        return pokemon.slice(0, 12)
+        return pokemon.slice(0, 30)
     }),
     getPopularTeams: publicProcedure.query(async ({ ctx }) => {
         const teams = await ctx.prisma.team.findMany({

@@ -136,7 +136,7 @@ export const pokemonRouter = createTRPCRouter({
             orderBy: {
                 createdAt: "desc",
             },
-            take: 12,
+            take: 30,
             ...pokemonInclude,
         })
     }),

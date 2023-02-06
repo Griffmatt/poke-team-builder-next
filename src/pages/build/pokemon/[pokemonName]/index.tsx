@@ -9,8 +9,7 @@ import { useRouter } from "next/router"
 import { api } from "utils/api"
 import { formatStat } from "utils/formatStat"
 import formatString from "utils/formatString"
-
-import { formatPercentage } from "utils/formatPercentage"
+import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -85,33 +84,10 @@ const SinglePokemon: NextPage = () => {
                             {teammates && teammates?.total > 0 && (
                                 <div>
                                     <h3>Common Teammates</h3>
-                                    <div className="pokemon-card-grid">
-                                        {teammates?.pokemon
-                                            .slice(0, 6)
-                                            .map((pokemon) => {
-                                                const percentage =
-                                                    formatPercentage(
-                                                        pokemon.amount /
-                                                            teammates.total
-                                                    )
-                                                return (
-                                                    <Link
-                                                        href={`/build/pokemon/${pokemon.name}`}
-                                                        className="pokemon-card"
-                                                        key={pokemon.name}
-                                                    >
-                                                        <PokemonCard
-                                                            pokemonName={
-                                                                pokemon.name
-                                                            }
-                                                            percentage={
-                                                                percentage
-                                                            }
-                                                        />
-                                                    </Link>
-                                                )
-                                            })}
-                                    </div>
+                                    <PokemonDataGrid
+                                        pokemonData={teammates ?? null}
+                                        amount={6}
+                                    />
                                 </div>
                             )}
                             <div className="grid gap-2 md:grid-cols-2">
