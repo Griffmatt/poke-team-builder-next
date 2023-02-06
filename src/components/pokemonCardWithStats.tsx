@@ -28,26 +28,13 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
     const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
-    const handleFavorite = () => {
-        if (!session?.user) return null
-        if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)
-            return null
-        if (favorite === favorited) return
-        favorited
-            ? addFavoritePokemon.mutate({
-                  pokemonId: createdPokemon!.id,
-                  userId: session.user!.id,
-              })
-            : removeFavoritePokemon.mutate({
-                  pokemonId: createdPokemon!.id,
-                  userId: session.user!.id,
-              })
-    }
 
     const favoritePokemon = useDebounceFavorite(
         favorited,
         favorite,
-        handleFavorite
+        addFavoritePokemon,
+        removeFavoritePokemon,
+        { pokemonId: createdPokemon!.id, userId: session?.user?.id as string}
     )
 
     if (isLoading) return <LoadingCard />

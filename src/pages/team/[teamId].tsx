@@ -28,7 +28,7 @@ const Team: NextPage = () => {
         api.favorite.checkUserFavoriteTeams.useQuery({
             userId: session?.user?.id as string,
         })
-    const teamFavorited = favoriteTeams?.includes(team?.id ?? '')
+    const teamFavorited = favoriteTeams?.includes(team?.id ?? "")
 
     return (
         <>
@@ -126,25 +126,15 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
         })
     }
 
-    const handleFavorite = () => {
-        if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
-            return null
-        if (favorite === favorited) return
-        favorited
-            ? addFavoriteTeam.mutate({
-                  teamId: team!.id,
-                  userId: userId,
-              })
-            : removeFavoriteTeam.mutate({
-                  teamId: team!.id,
-                  userId: userId,
-              })
-    }
-
     const favoritedTeam = useDebounceFavorite(
         favorited,
         favorite,
-        handleFavorite
+        addFavoriteTeam,
+        removeFavoriteTeam,
+        {
+            teamId: team!.id,
+            userId: userId,
+        }
     )
 
     const handleWin = () => {

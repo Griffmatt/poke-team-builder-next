@@ -26,22 +26,32 @@ const ProfileTeams: NextPage = () => {
         })
 
     return (
-        <main>
-            <ProfileNav
-                selected="teams"
-                userId={userId as string}
-                user={user}
-            />
-            {teams && favoriteTeams && (
-                <div className="grid gap-3">
-                    {teams.length > 0 ? (
-                        <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
-                    ) : (
-                        <TeamsEmpty userId={user?.id} userName={user?.name} />
+        <>
+            {user && (
+                <main>
+                    <ProfileNav
+                        selected="teams"
+                        userId={userId as string}
+                        user={user}
+                    />
+                    {teams && favoriteTeams && (
+                        <div className="grid gap-3">
+                            {teams.length > 0 ? (
+                                <TeamRows
+                                    teams={teams}
+                                    favoriteTeams={favoriteTeams}
+                                />
+                            ) : (
+                                <TeamsEmpty
+                                    userId={user?.id}
+                                    userName={user?.name}
+                                />
+                            )}
+                        </div>
                     )}
-                </div>
+                </main>
             )}
-        </main>
+        </>
     )
 }
 

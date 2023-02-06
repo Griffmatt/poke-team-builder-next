@@ -6,6 +6,7 @@ import { CreatedPokemon } from "types/trpc"
 const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
     const apiContext = api.useContext()
     const { data: session } = useSession()
+
     const addFavoritePokemon = api.favorite.favoritePokemon.useMutation({
         onMutate: async () => {
             const userFavorites =
