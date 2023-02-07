@@ -35,15 +35,15 @@ const Team: NextPage = () => {
                 <BackButton />
                 <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                     <div className="grid w-full gap-2">
-                        <div className="h-8 w-32 bg-dark-2 animate-pulse" />
+                        <div className="h-8 w-32 animate-pulse bg-dark-2" />
                         <div className="flex flex-col gap-2 md:flex-row">
-                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
-                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
-                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
+                            <div className="h-8 w-32 animate-pulse bg-dark-2" />
+                            <div className="h-8 w-32 animate-pulse bg-dark-2" />
+                            <div className="h-8 w-32 animate-pulse bg-dark-2" />
                         </div>
                     </div>
                 </div>
-                <SkeletonPokemonGrid amount={6} withStats={true}/>
+                <SkeletonPokemonGrid amount={6} withStats={true} />
             </main>
         )
     }
@@ -169,7 +169,7 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     }
     return (
         <>
-            <div className="flex w-full justify-between gap-3  md:w-fit">
+            <div className="flex w-full justify-between gap-3 md:w-fit">
                 {userId === team!.userId ? (
                     <>
                         <button
@@ -206,19 +206,21 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
                     absolute={false}
                 />
             </div>
-            <DeleteModal
-                userId={userId}
-                name={team!.teamName}
-                showModal={showDeleteModal}
-                setShowModal={setShowDeleteModal}
-                teamId={team!.id}
-            />
-            <BattleModal
-                showModal={showBattleModal}
-                setShowModal={setShowBattleModal}
-                teamId={team!.id}
-                battleStatus={battleStatus}
-            />
+            {showDeleteModal && (
+                <DeleteModal
+                    userId={userId}
+                    name={team!.teamName}
+                    setShowModal={setShowDeleteModal}
+                    teamId={team!.id}
+                />
+            )}
+            {showBattleModal && (
+                <BattleModal
+                    setShowModal={setShowBattleModal}
+                    teamId={team!.id}
+                    battleStatus={battleStatus}
+                />
+            )}
         </>
     )
 }

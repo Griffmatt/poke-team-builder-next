@@ -4,7 +4,6 @@ import { deleteTeamMutation } from "mutations/deleteTeamMutation"
 interface Props {
     userId: string
     name: string
-    showModal: boolean
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     teamId?: string
     pokemonId?: string
@@ -14,7 +13,6 @@ interface Props {
 export const DeleteModal = ({
     userId,
     name,
-    showModal,
     setShowModal,
     teamId,
     pokemonId,
@@ -42,9 +40,7 @@ export const DeleteModal = ({
 
     return (
         <div
-            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-light/5 ${
-                showModal ? "grid grid-rows-3" : "hidden"
-            }`}
+            className="fixed top-0 left-0  z-50 flex h-screen w-screen items-center justify-center bg-light/5"
             onClick={() => setShowModal(false)}
         >
             <div

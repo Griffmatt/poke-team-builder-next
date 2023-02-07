@@ -20,36 +20,23 @@ export const FavoritedButton = ({
         : "rounded-full"
 
     const [favorite, setFavorite] = useState(favorited)
-    const [initialLoad, setInitialLoad] = useState(true)
     const handleFavorite = favorite ? addFavorite : removeFavorite
 
     useEffect(() => {
-        const handleFavorite = favorite ? addFavorite : removeFavorite
         if (!handleFavorite) return
         clearTimeout(timer)
         if (favorited === favorite) return
-        timer = setTimeout(handleFavorite, 2000)
+        timer = setTimeout(handleFavorite, 1000)
     }, [favorite])
 
-    useEffect(() => {
-        setInitialLoad(false)
-        return () => {
-            if (timer && !initialLoad) {
-                const handleFavorite = favorite ? removeFavorite : addFavorite
-                clearTimeout(timer)
-                if (!handleFavorite || favorited !== favorite) return
-                handleFavorite()
-            }
-        }
-    }, [])
+    const handleClick = () => {
+        setFavorite(!favorite)
+    }
 
     return (
         <>
             {handleFavorite ? (
-                <button
-                    className={wrapperClass}
-                    onClick={() => setFavorite(!favorite)}
-                >
+                <button className={wrapperClass} onClick={handleClick}>
                     <div
                         className={`h-10 w-10 rounded-full ${
                             favorite

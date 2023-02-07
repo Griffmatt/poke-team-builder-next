@@ -2,17 +2,11 @@ import { api } from "utils/api"
 
 interface Props {
     teamId: string
-    showModal: boolean
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     battleStatus: "Lost" | "Won"
 }
 
-export const BattleModal = ({
-    showModal,
-    setShowModal,
-    teamId,
-    battleStatus,
-}: Props) => {
+export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     const apiContext = api.useContext()
     const won = battleStatus === "Won" ? 1 : 0
     const battleMutation = api.teams.addBattle.useMutation({
@@ -56,9 +50,7 @@ export const BattleModal = ({
 
     return (
         <div
-            className={`fixed top-0 left-0  z-50 h-screen w-screen place-items-center bg-light/5 ${
-                showModal ? "grid grid-rows-3" : "hidden"
-            }`}
+            className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-light/5"
             onClick={() => setShowModal(false)}
         >
             <div

@@ -73,7 +73,6 @@ const SinglePokemon: NextPage = () => {
                         <DeleteModal
                             userId={userId as string}
                             name={pokemon.name}
-                            showModal={showModal}
                             setShowModal={setShowModal}
                             pokemonId={pokemonId as string}
                             pokemonTeams={pokemonTeams}
