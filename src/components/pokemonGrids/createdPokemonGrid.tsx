@@ -9,14 +9,14 @@ interface Props {
     pokemons: CreatedPokemon[] | null
     currentUserFavorites?: string[]
     query?: string
-    withStats?: boolean
-    team?: boolean
+    amount?: number
 }
 
 export const CreatedPokemonGrid = ({
     pokemons,
     currentUserFavorites,
     query,
+    amount = 30
 }: Props) => {
     const [animationParent] = useAutoAnimate()
 
@@ -24,7 +24,7 @@ export const CreatedPokemonGrid = ({
     const showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
         : pokemonScrolled
-    if (showPokemon == null || pokemons == null) return <SkeletonPokemonGrid />
+    if (showPokemon == null || pokemons == null) return <SkeletonPokemonGrid amount={amount}/>
 
     return (
         <>
