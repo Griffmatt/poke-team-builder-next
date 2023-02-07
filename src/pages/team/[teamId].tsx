@@ -13,6 +13,7 @@ import { formatPercentage } from "utils/formatPercentage"
 import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
 import { team } from "types/trpc"
+import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -27,51 +28,67 @@ const Team: NextPage = () => {
         api.favorite.checkUserFavoriteTeams.useQuery({
             userId: session?.user?.id as string,
         })
-    const teamFavorited = favoriteTeams?.includes(team?.id ?? "")
 
-    return (
-        <>
-            {team && (
-                <main>
-                    <BackButton />
-                    <div className="flex items-center justify-between">
-                        <div className="grid gap-2">
-                            <h1>{team.teamName}</h1>
-                            <div className="flex gap-2">
-                                <h2>{team.teamStyle}</h2>
-                                <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                                    <h4 className="align-middle">
-                                        Total Wins: {team.wins}
-                                    </h4>
-                                </div>
-                                <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                                    <h4 className="align-middle">
-                                        Win Percentage:{" "}
-                                        {formatPercentage(
-                                            team.wins /
-                                                (team.battles === 0
-                                                    ? 1
-                                                    : team.battles)
-                                        )}
-                                    </h4>
-                                </div>
-                            </div>
-                            {team.originalTrainerId && (
-                                <OriginalTrainer id={team.originalTrainerId} />
-                            )}
+    if (team == null) {
+        return (
+            <main>
+                <BackButton />
+                <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+                    <div className="grid w-full gap-2">
+                        <div className="h-8 w-32 bg-dark-2 animate-pulse" />
+                        <div className="flex flex-col gap-2 md:flex-row">
+                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
+                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
+                            <div className="h-8 w-32 bg-dark-2 animate-pulse" />
                         </div>
-                        {session?.user && teamFavorited !== undefined && (
-                            <ActionButtons
-                                userId={session.user.id}
-                                team={team}
-                                favorite={teamFavorited}
-                            />
-                        )}
                     </div>
-                    <TeamRow team={team} withStats={true} />
-                </main>
-            )}
-        </>
+                </div>
+                <SkeletonPokemonGrid amount={6} withStats={true}/>
+            </main>
+        )
+    }
+    const teamFavorited = favoriteTeams?.includes(team?.id ?? "")
+    return (
+        <main>
+            <BackButton />
+            <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+                <div className="grid w-full gap-2">
+                    <h1 className="w-fit">{team.teamName}</h1>
+                    <div className="flex flex-col gap-2 md:flex-row">
+                        <h2>{team.teamStyle}</h2>
+                        <div className="flex gap-2">
+                            <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                                <h4 className="align-middle">
+                                    Wins: {team.wins}
+                                </h4>
+                            </div>
+                            <div className="rounded-2xl bg-dark-2 px-4 py-1">
+                                <h4 className="align-middle">
+                                    Percentage:{" "}
+                                    {formatPercentage(
+                                        team.wins /
+                                            (team.battles === 0
+                                                ? 1
+                                                : team.battles)
+                                    )}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    {team.originalTrainerId && (
+                        <OriginalTrainer id={team.originalTrainerId} />
+                    )}
+                </div>
+                {session?.user && teamFavorited !== undefined && (
+                    <ActionButtons
+                        userId={session.user.id}
+                        team={team}
+                        favorite={teamFavorited}
+                    />
+                )}
+            </div>
+            <TeamRow team={team} withStats={true} />
+        </main>
     )
 }
 
@@ -152,7 +169,7 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     }
     return (
         <>
-            <div className="flex gap-3">
+            <div className="flex w-full justify-between gap-3  md:w-fit">
                 {userId === team!.userId ? (
                     <>
                         <button
