@@ -9,6 +9,7 @@ import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -111,15 +112,11 @@ const BuildTeam: NextPage = () => {
                     Build Team
                 </button>
             </div>
-            {filteredPokemon?.length === 0 ? (
-                <>
-                    {pokemons && (
-                        <PokemonEmpty
-                            query={query}
-                            hasPokemon={pokemons?.length > 0}
-                        />
-                    )}
-                </>
+            {filteredPokemon?.length === 0 && pokemons && (
+                <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
+            )}
+            {pokemons == null ? (
+                <SkeletonPokemonGrid />
             ) : (
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {filteredPokemon?.map((pokemon) => {

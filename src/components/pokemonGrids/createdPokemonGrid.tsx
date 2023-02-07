@@ -5,17 +5,14 @@ import { CreatedPokemon } from "types/trpc"
 import { PokemonCard } from "./cards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
 import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
-
 interface Props {
     pokemons: CreatedPokemon[] | null
-    amount?: number
     currentUserFavorites?: string[]
     query?: string
 }
 
 export const CreatedPokemonGrid = ({
     pokemons,
-    amount,
     currentUserFavorites,
     query,
 }: Props) => {
@@ -37,6 +34,7 @@ export const CreatedPokemonGrid = ({
                         const favorited = currentUserFavorites
                             ? currentUserFavorites.includes(pokemon.id)
                             : pokemon.favorited[0]?.userId === pokemon.userId
+
                         return (
                             <Link
                                 key={pokemon.id}
@@ -52,7 +50,7 @@ export const CreatedPokemonGrid = ({
                         )
                     })}
                 </div>
-            )}{" "}
+            )}
         </>
     )
 }
