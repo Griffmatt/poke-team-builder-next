@@ -30,25 +30,21 @@ const ProfilePokemon: NextPage = () => {
 
     return (
         <main>
-            {user && (
-                <>
-                    <ProfileNav
-                        selected="pokemon"
-                        userId={userId as string}
-                        user={user}
-                    />
-                    <input
-                        placeholder="Search for a pokemon..."
-                        type="text"
-                        onChange={(event) => setQuery(event.target.value)}
-                        className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
-                    />
-                    <CreatedPokemonGrid
-                        pokemons={filterPokemon ?? null}
-                        query={debouncedValue}
-                    />
-                </>
-            )}
+            <ProfileNav
+                selected="pokemon"
+                userId={userId as string}
+                user={user}
+            />
+            <input
+                placeholder="Search for a pokemon..."
+                type="text"
+                onChange={(event) => setQuery(event.target.value)}
+                className="ml-auto rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+            />
+            <CreatedPokemonGrid
+                pokemons={filterPokemon ?? null}
+                query={debouncedValue}
+            />
         </main>
     )
 }

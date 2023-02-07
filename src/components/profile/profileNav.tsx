@@ -13,27 +13,22 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
     return (
         <>
-            <div className="h-16 w-full rounded bg-dark-2 md:h-24 lg:h-40">
-                {user && (
-                    <img
-                        src={pokemonImage.src}
-                        className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
-                    />
-                )}
-            </div>
-            <div className="grid h-44 grid-rows-2 px-1 text-center">
-                <div className="row-span-2 grid h-fit w-fit gap-1">
-                    <div className="aspect-square w-24 md:w-32">
-                        {user && (
-                            <img
-                                src={user.image ?? ""}
-                                className="rounded-full border-8 border-dark"
-                            />
-                        )}
+            {user == null ? (
+                <>
+                    <div className="h-16 w-full animate-pulse rounded bg-dark-2 md:h-24 lg:h-40" />
+
+                    <div className="grid h-44 grid-rows-2 px-1 text-center">
+                        <div className="row-span-2 grid h-fit w-fit gap-1">
+                            <div className="aspect-square w-24 md:w-32">
+                                <div className="h-full w-full animate-pulse rounded-full border-8 border-dark bg-dark-2" />
+                            </div>
+                            <div className="h-8 w-28 animate-pulse bg-dark-2" />
+                        </div>
                     </div>
-                    <h2>{user?.name}</h2>
-                </div>
-            </div>
+                </>
+            ) : (
+                <UserHeader user={user} />
+            )}
             <div className="flex justify-center gap-3">
                 <Link href={`/profile/${userId}`}>
                     <h3 className={selected === "pokemon" ? "border-b-2" : ""}>
@@ -63,6 +58,30 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                         </h3>
                     </Link>
                 )}
+            </div>
+        </>
+    )
+}
+
+const UserHeader = ({ user }: { user: user }) => {
+    return (
+        <>
+            <div className="h-16 w-full rounded bg-dark-2 md:h-24 lg:h-40">
+                <img
+                    src={pokemonImage.src}
+                    className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
+                />
+            </div>
+            <div className="grid h-44 grid-rows-2 px-1 text-center">
+                <div className="row-span-2 grid h-fit w-fit gap-1">
+                    <div className="aspect-square w-24 md:w-32">
+                        <img
+                            src={user?.image ?? ""}
+                            className="rounded-full border-8 border-dark"
+                        />
+                    </div>
+                    <h2>{user?.name}</h2>
+                </div>
             </div>
         </>
     )

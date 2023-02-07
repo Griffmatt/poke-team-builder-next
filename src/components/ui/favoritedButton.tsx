@@ -26,7 +26,7 @@ export const FavoritedButton = ({
         if (!handleFavorite) return
         clearTimeout(timer)
         if (favorited === favorite) return
-        timer = setTimeout(handleFavorite, 1000)
+        timer = setTimeout(handleFavorite, 500)
     }, [favorite])
 
     const handleClick = () => {

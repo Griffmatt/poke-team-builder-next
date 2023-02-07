@@ -21,8 +21,8 @@ export const favoriteRouter = createTRPCRouter({
         }),
     getUserFavoritePokemon: publicProcedure
         .input(z.object({ userId: z.string() }))
-        .query(({ ctx, input }) => {
-            return ctx.prisma.favoritePokemon.findMany({
+        .query(async ({ ctx, input }) => {
+            const pokemonData = await ctx.prisma.favoritePokemon.findMany({
                 where: {
                     userId: input.userId,
                 },
@@ -32,6 +32,11 @@ export const favoriteRouter = createTRPCRouter({
                     },
                 },
             })
+
+            const formatData = pokemonData.map((pokemon) => {
+                return { ...pokemon.createdPokemon }
+            })
+            return formatData
         }),
     favoritePokemon: protectedProcedure
         .input(z.object({ userId: z.string(), pokemonId: z.string() }))
