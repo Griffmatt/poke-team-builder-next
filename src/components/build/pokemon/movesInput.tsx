@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent } from "react"
-import {formatString} from "utils/formatString"
+import { formatString } from "utils/formatString"
 
 interface PokemonValues {
     ability: string

@@ -97,7 +97,7 @@ const OriginalTrainer = ({ id }: { id: string }) => {
 
 interface ButtonProps {
     userId: string
-    team: team
+    team: NonNullable<team>
     favorite: boolean
 }
 

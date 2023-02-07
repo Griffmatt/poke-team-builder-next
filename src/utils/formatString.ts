@@ -6,4 +6,3 @@ export const formatString = (string: string) => {
 
     return combineString
 }
-
