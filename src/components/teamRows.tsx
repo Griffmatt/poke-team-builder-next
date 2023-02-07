@@ -6,14 +6,32 @@ import { team } from "../types/trpc"
 import { api } from "../utils/api"
 import { PokemonCard } from "./pokemonGrids/cards/pokemonCard"
 import { PokemonCardWithStats } from "./pokemonGrids/cards/pokemonCardWithStats"
+import { SkeletonPokemonGrid } from "./pokemonGrids/ui/skeletonPokemonGrid"
 import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {
-    teams: teams
-    favoriteTeams: string[]
+    teams: teams | null
+    favoriteTeams?: string[] | null
+    isLoading?: boolean
 }
 
-export const TeamRows = ({ teams, favoriteTeams }: TeamRows) => {
+export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
+    if (isLoading) {
+        const fillerArr = new Array(5)
+        fillerArr.fill("x", 0, 5)
+        return (
+            <>
+                {fillerArr.map((x, index) => (
+                    <>
+                        <div className="h-8 w-32 bg-dark-2" />
+
+                        <SkeletonPokemonGrid amount={6} />
+                    </>
+                ))}
+            </>
+        )
+    }
+
     return (
         <>
             {teams?.map((team) => {
@@ -50,6 +68,7 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
         api.favorite.checkUserFavoritePokemon.useQuery({
             userId: session?.user?.id ?? null,
         })
+
     return (
         <div
             className={`${

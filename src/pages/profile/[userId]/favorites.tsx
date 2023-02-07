@@ -9,10 +9,6 @@ const favorites = () => {
     const router = useRouter()
     const { userId } = router.query
 
-    const { data: teams } = api.favorite.getUserFavoriteTeams.useQuery({
-        userId: userId as string,
-    })
-
     const { data: pokemons } = api.favorite.getUserFavoritePokemon.useQuery({
         userId: userId as string,
     })
@@ -21,10 +17,15 @@ const favorites = () => {
         userId: userId as string,
     })
 
-    const { data: favoriteTeams } =
+    const { data: teams, isLoading: teamsLoading } =
+        api.teams.recentTeams.useQuery()
+
+    const { data: favoriteTeams, isLoading: favoritesLoading } =
         api.favorite.checkUserFavoriteTeams.useQuery({
             userId: userId as string,
         })
+
+    const isLoading = teamsLoading || favoritesLoading
 
     return (
         <main>
@@ -38,12 +39,11 @@ const favorites = () => {
                 <CreatedPokemonGrid pokemons={pokemons ?? null} />
                 <h2>Teams</h2>
                 <div>
-                    {teams && (
-                        <TeamRows
-                            teams={teams}
-                            favoriteTeams={favoriteTeams ?? []}
-                        />
-                    )}
+                    <TeamRows
+                        teams={teams ?? null}
+                        favoriteTeams={favoriteTeams ?? []}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         </main>

@@ -81,15 +81,13 @@ const SinglePokemon: NextPage = () => {
                     {pokemonBuilds.length > 0 && (
                         <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
                             <h2>Data</h2>
-                            {teammates && teammates?.total > 0 && (
-                                <div>
-                                    <h3>Common Teammates</h3>
-                                    <PokemonDataGrid
-                                        pokemonData={teammates ?? null}
-                                        amount={6}
-                                    />
-                                </div>
-                            )}
+                            <div>
+                                <h3>Common Teammates</h3>
+                                <PokemonDataGrid
+                                    pokemonData={teammates ?? null}
+                                    amount={6}
+                                />
+                            </div>
                             <div className="grid gap-2 md:grid-cols-2">
                                 <CommonData
                                     pokemonBuilds={pokemonBuilds}

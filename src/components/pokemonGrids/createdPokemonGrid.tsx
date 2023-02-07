@@ -9,6 +9,8 @@ interface Props {
     pokemons: CreatedPokemon[] | null
     currentUserFavorites?: string[]
     query?: string
+    withStats?: boolean
+    team?: boolean
 }
 
 export const CreatedPokemonGrid = ({

@@ -16,14 +16,15 @@ const ProfileTeams: NextPage = () => {
         userId: userId as string,
     })
 
-    const { data: teams } = api.teams.getUserTeams.useQuery({
-        userId: userId as string,
-    })
+    const { data: teams, isLoading: teamsLoading } =
+        api.teams.recentTeams.useQuery()
 
-    const { data: favoriteTeams } =
+    const { data: favoriteTeams, isLoading: favoritesLoading } =
         api.favorite.checkUserFavoriteTeams.useQuery({
             userId: userId as string,
         })
+
+    const isLoading = teamsLoading || favoritesLoading
 
     return (
         <main>
@@ -32,15 +33,17 @@ const ProfileTeams: NextPage = () => {
                 userId={userId as string}
                 user={user}
             />
-            {teams && favoriteTeams && (
-                <div className="grid gap-3">
-                    {teams.length > 0 ? (
-                        <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
-                    ) : (
-                        <TeamsEmpty userId={user?.id} userName={user?.name} />
-                    )}
-                </div>
-            )}
+            <div className="grid gap-3">
+                {teams?.length === 0 && !isLoading ? (
+                    <TeamsEmpty userId={user?.id} userName={user?.name} />
+                ) : (
+                    <TeamRows
+                        teams={teams ?? null}
+                        favoriteTeams={favoriteTeams ?? null}
+                        isLoading={isLoading}
+                    />
+                )}
+            </div>
         </main>
     )
 }
