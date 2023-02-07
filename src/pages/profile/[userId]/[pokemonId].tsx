@@ -33,7 +33,7 @@ const SinglePokemon: NextPage = () => {
         return (
             <main>
                 <BackButton />
-                <h1 className="h-8 w-32 bg-dark-2 animate-pulse"/>
+                <h1 className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                     <div className="pokemon-card">
                         <LoadingCard />
@@ -56,30 +56,31 @@ const SinglePokemon: NextPage = () => {
                         favorite={favorites?.includes(pokemon.id) ?? false}
                     />
                 </div>
-                <div className="flex justify-between">
-                    {session?.user?.id &&
-                    session?.user?.id === user?.id ? (
-                        <>
-                            <button
-                                className="btn-red w-fit rounded-2xl py-2 px-4"
-                                onClick={() => setShowModal(true)}
-                            >
-                                Delete
-                            </button>
-                            <Link
-                                href={`/build/pokemon/${pokemon.name}/${pokemon.id}/update`}
-                            >
-                                <button className="w-fit rounded-2xl py-2 px-4">
-                                    Update
+                {session?.user !== undefined && (
+                    <div className="flex justify-between">
+                        {session?.user?.id === user?.id ? (
+                            <>
+                                <button
+                                    className="btn-red w-fit rounded-2xl py-2 px-4"
+                                    onClick={() => setShowModal(true)}
+                                >
+                                    Delete
                                 </button>
-                            </Link>
-                        </>
-                    ) : (
-                        <button className="ml-auto w-fit rounded-2xl py-2 px-4">
-                            Copy
-                        </button>
-                    )}
-                </div>
+                                <Link
+                                    href={`/build/pokemon/${pokemon.name}/${pokemon.id}/update`}
+                                >
+                                    <button className="w-fit rounded-2xl py-2 px-4">
+                                        Update
+                                    </button>
+                                </Link>
+                            </>
+                        ) : (
+                            <button className="ml-auto w-fit rounded-2xl py-2 px-4">
+                                Copy
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
             {showModal && (
                 <DeleteModal

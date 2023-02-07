@@ -1,4 +1,3 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import Link from "next/link"
 import { Pokemon } from "pokenode-ts"
@@ -12,7 +11,6 @@ interface Props {
 }
 
 export const PokemonGrid = ({ pokemons, query }: Props) => {
-    const [animationParent] = useAutoAnimate()
 
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
     let showPokemon = query
@@ -25,7 +23,7 @@ export const PokemonGrid = ({ pokemons, query }: Props) => {
             {query && showPokemon.length === 0 ? (
                 <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
-                <div className="pokemon-card-grid" ref={animationParent}>
+                <div className="pokemon-card-grid">
                     {showPokemon.map((pokemon) => {
                         return (
                             <Link
