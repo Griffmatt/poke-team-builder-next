@@ -119,7 +119,6 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 teraType: teraType,
                 moves: movesFormat,
                 evs: evs,
-
                 ivs: ivs,
             }
             updatePokemon.mutate(updatePokemonData)
