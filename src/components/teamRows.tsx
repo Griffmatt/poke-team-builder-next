@@ -20,11 +20,11 @@ export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
         const fillerArr = Array.from({length: 5}, () => 0)
         return (
             <>
-                {fillerArr.map(() => (
-                    <>
+                {fillerArr.map((_, index) => (
+                    <div key={index}>
                         <div className="h-6 w-32 bg-dark-2 animate-pulse" />
                         <SkeletonPokemonGrid amount={6} />
-                    </>
+                    </div>
                 ))}
             </>
         )
