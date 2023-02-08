@@ -17,7 +17,9 @@ const ProfileTeams: NextPage = () => {
     })
 
     const { data: teams, isLoading: teamsLoading } =
-        api.teams.recentTeams.useQuery()
+        api.teams.getUserTeams.useQuery({
+            userId: userId as string
+        })
 
     const { data: favoriteTeams, isLoading: favoritesLoading } =
         api.favorite.checkUserFavoriteTeams.useQuery({

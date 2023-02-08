@@ -1,74 +1,42 @@
-import { useRouter } from "next/router"
 import { useState } from "react"
-import { api } from "utils/api"
 import { CreatedPokemon } from "types/trpc"
+import { buildTeamMutation } from "mutations/buildTeamMutation"
 
 export function useBuildTeam(userId: string) {
-    const router = useRouter()
     const [pokemonOnTeam, setPokemonOnTeam] = useState<CreatedPokemon[]>([])
     const [teamName, setTeamName] = useState("Team Name")
     const [teamStyle, setTeamStyle] = useState<"Double" | "Single">("Double")
 
-    const apiContext = api.useContext()
+    const formatPokemon = pokemonOnTeam.map((pokemon) => {
+        return {
+            id: pokemon!.id,
+            userId: pokemon!.userId,
+            name: pokemon!.name,
+            ability: pokemon!.ability,
+            nature: pokemon!.nature,
+            heldItem: pokemon!.heldItem,
+            shiny: pokemon!.shiny,
+            teraType: pokemon!.teraType,
+            createdAt: pokemon!.createdAt,
+            moves: pokemon!.moves,
+            ivs: pokemon!.ivs,
+            evs: pokemon!.evs,
+            teams: pokemon!.teams,
+            favorited: pokemon!.favorited,
+        }
+    })
 
-    const buildTeamMutation = api.teams.buildTeam.useMutation({
-        onMutate: async () => {
-            const pastTeams = apiContext.teams.getUserTeams.getData({
-                userId: userId,
-            })
-
-            const formatPokemon = pokemonOnTeam.map((pokemon) => {
-                return {
-                    id: pokemon!.id,
-                    userId: pokemon!.userId,
-                    name: pokemon!.name,
-                    ability: pokemon!.ability,
-                    nature: pokemon!.nature,
-                    heldItem: pokemon!.heldItem,
-                    shiny: pokemon!.shiny,
-                    teraType: pokemon!.teraType,
-                    createdAt: pokemon!.createdAt,
-                    moves: pokemon!.moves,
-                    ivs: pokemon!.ivs,
-                    evs: pokemon!.evs,
-                    teams: pokemon!.teams,
-                    favorited: pokemon!.favorited,
-                }
-            })
-
-            if (pastTeams) {
-                apiContext.teams.getUserTeams.setData({ userId: userId }, [
-                    ...pastTeams,
-                    {
-                        id: "idPlaceHolder",
-                        userId: userId,
-                        originalTrainerId: null,
-                        teamStyle: teamStyle,
-                        teamName: teamName,
-                        wins: 0,
-                        battles: 0,
-                        favorited: [],
-                        createdAt: new Date(),
-                        pokemon: formatPokemon,
-                    },
-                ])
-            }
-            return { pastTeams }
-        },
-        onSuccess: () => {
-            router.push(`/profile/${userId}/teams`)
-        },
-        onError: (error, variables, context) => {
-            if (context?.pastTeams) {
-                apiContext.teams.getUserTeams.setData(
-                    { userId: userId },
-                    context.pastTeams
-                )
-            }
-        },
-        onSettled: () => {
-            apiContext.teams.getUserTeams.invalidate({ userId: userId })
-        },
+    const addTeam = buildTeamMutation(userId, {
+        id: "idPlaceHolder",
+        userId: userId,
+        originalTrainerId: null,
+        teamStyle: teamStyle,
+        teamName: teamName,
+        wins: 0,
+        battles: 0,
+        favorited: [],
+        createdAt: new Date(),
+        pokemon: formatPokemon,
     })
 
     const addPokemonToTeam = (pokemon: CreatedPokemon) => {
@@ -98,7 +66,7 @@ export function useBuildTeam(userId: string) {
         const pokemonIds = pokemonOnTeam.map((pokemon) => {
             return { pokemonId: pokemon?.id as string }
         })
-        buildTeamMutation.mutate({
+        addTeam.mutate({
             userId: userId,
             teamName: teamName,
             teamStyle: teamStyle,

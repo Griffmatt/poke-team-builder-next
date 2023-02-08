@@ -6,7 +6,7 @@ import { TeamRows } from "./teamRows"
 export const PopularTeams = () => {
     const { data: session } = useSession()
     const { data: popularTeams, isLoading: teamsLoading } =
-        api.teams.recentTeams.useQuery()
+        api.statistics.getPopularTeams.useQuery()
     const { data: favorites, isLoading: favoritesLoading } =
         api.favorite.checkUserFavoriteTeams.useQuery({
             userId: session?.user?.id ?? null,
