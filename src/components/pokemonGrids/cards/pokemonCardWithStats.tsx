@@ -29,7 +29,6 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     const ids = {
         pokemonId: createdPokemon!.id,
-        userId: session?.user?.id as string,
     }
     const removeFavorite = () => {
         if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)

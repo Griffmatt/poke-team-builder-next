@@ -141,21 +141,21 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
         })
     }
 
-    const ids = {
-        teamId: team.id,
-        userId: userId,
-    }
     const removeFavorite = () => {
         if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
             return null
-        removeFavoriteTeam.mutate(ids)
+        removeFavoriteTeam.mutate({
+            teamId: team.id,
+        })
     }
 
     const addFavorite = () => {
         if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
             return null
 
-        addFavoriteTeam.mutate(ids)
+        addFavoriteTeam.mutate({
+            teamId: team.id,
+        })
     }
 
     const handleWin = () => {

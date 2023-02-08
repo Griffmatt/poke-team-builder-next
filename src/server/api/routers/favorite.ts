@@ -39,13 +39,15 @@ export const favoriteRouter = createTRPCRouter({
             return formatData
         }),
     favoritePokemon: protectedProcedure
-        .input(z.object({ userId: z.string(), pokemonId: z.string() }))
+        .input(z.object({ pokemonId: z.string() }))
         .mutation(({ ctx, input }) => {
+
+            const userId = ctx.session.user.id
             try {
                 return ctx.prisma.favoritePokemon.create({
                     data: {
                         pokemonId: input.pokemonId,
-                        userId: input.userId,
+                        userId: userId,
                     },
                 })
             } catch (error) {
@@ -53,14 +55,15 @@ export const favoriteRouter = createTRPCRouter({
             }
         }),
     unfavoritePokemon: protectedProcedure
-        .input(z.object({ userId: z.string(), pokemonId: z.string() }))
+        .input(z.object({ pokemonId: z.string() }))
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
             try {
                 return ctx.prisma.favoritePokemon.delete({
                     where: {
                         pokemonId_userId: {
                             pokemonId: input.pokemonId,
-                            userId: input.userId,
+                            userId: userId,
                         },
                     },
                 })
@@ -103,25 +106,27 @@ export const favoriteRouter = createTRPCRouter({
             return formatTeams(teams)
         }),
     favoriteTeam: protectedProcedure
-        .input(z.object({ userId: z.string(), teamId: z.string() }))
+        .input(z.object({ teamId: z.string() }))
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
             try {
                 return ctx.prisma.favoriteTeams.create({
-                    data: { teamId: input.teamId, userId: input.userId },
+                    data: { teamId: input.teamId, userId: userId },
                 })
             } catch (error) {
                 return error
             }
         }),
     unfavoriteTeam: protectedProcedure
-        .input(z.object({ userId: z.string(), teamId: z.string() }))
+        .input(z.object({ teamId: z.string() }))
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
             try {
                 return ctx.prisma.favoriteTeams.delete({
                     where: {
                         teamId_userId: {
                             teamId: input.teamId,
-                            userId: input.userId,
+                            userId: userId,
                         },
                     },
                 })

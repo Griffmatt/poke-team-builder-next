@@ -47,9 +47,12 @@ export const pokemonRouter = createTRPCRouter({
     buildPokemon: protectedProcedure
         .input(buildPokemonInput)
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
+            if (userId !== input.userId) return null
             return ctx.prisma.createdPokemon.create({
                 data: {
                     ...input,
+                    userId,
                     moves: { createMany: { data: input.moves } },
                     evs: { createMany: { data: input.evs } },
                     ivs: { createMany: { data: input.ivs } },
@@ -65,6 +68,8 @@ export const pokemonRouter = createTRPCRouter({
                 nature: input.nature,
                 heldItem: input.heldItem,
             }
+            const userId = ctx.session.user.id
+            if (userId !== input.userId) return null
 
             const results = await Promise.all([
                 ctx.prisma.createdPokemon.update({
@@ -113,9 +118,13 @@ export const pokemonRouter = createTRPCRouter({
             z.object({
                 pokemonId: z.string(),
                 pokemonTeams: z.array(z.string()),
+                userId: z.string(),
             })
         )
         .mutation(async ({ ctx, input }) => {
+            const userId = ctx.session.user.id
+            if (userId !== input.userId) return null
+
             return await Promise.all([
                 ctx.prisma.createdPokemon.delete({
                     where: {

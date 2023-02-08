@@ -57,9 +57,11 @@ export const teamsRouter = createTRPCRouter({
     buildTeam: protectedProcedure
         .input(buildTeamInput)
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
             return ctx.prisma.team.create({
                 data: {
                     ...input,
+                    userId,
                     pokemon: { createMany: { data: input.pokemon } },
                 },
             })
@@ -68,9 +70,12 @@ export const teamsRouter = createTRPCRouter({
         .input(
             z.object({
                 id: z.string(),
+                userId: z.string(),
             })
         )
         .mutation(({ ctx, input }) => {
+            const userId = ctx.session.user.id
+            if (userId !== input.userId) return null
             return ctx.prisma.team.delete({
                 where: {
                     id: input.id,

@@ -31,6 +31,7 @@ const buildPokemonInput = z.object({
 })
 
 const updatePokemonInput = z.object({
+    userId: z.string(),
     id: z.string(),
     ability: z.string(),
     nature: z.string(),
