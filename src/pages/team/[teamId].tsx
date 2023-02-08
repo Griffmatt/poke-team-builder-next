@@ -133,7 +133,6 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
             return { pokemonId: pokemon.id }
         })
         copyTeam.mutate({
-            userId: userId,
             teamName: team.teamName,
             teamStyle: team.teamStyle,
             originalTrainerId: team.userId,

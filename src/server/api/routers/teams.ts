@@ -75,10 +75,12 @@ export const teamsRouter = createTRPCRouter({
         )
         .mutation(({ ctx, input }) => {
             const userId = ctx.session.user.id
-            if (userId !== input.userId) return null
             return ctx.prisma.team.delete({
                 where: {
-                    id: input.id,
+                    userId_id: {
+                        userId,
+                        id: input.id,
+                    },
                 },
             })
         }),

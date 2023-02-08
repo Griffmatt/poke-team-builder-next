@@ -3,7 +3,6 @@ import { z } from "zod"
 const stats = ["HP", "Att", "Def", "SpD", "SpA", "Spe"] as [string, ...string[]]
 
 const buildPokemonInput = z.object({
-    userId: z.string(),
     name: z.string(),
     ability: z.string(),
     nature: z.string(),
@@ -58,7 +57,6 @@ const updatePokemonInput = z.object({
 })
 
 const buildTeamInput = z.object({
-    userId: z.string(),
     teamStyle: z.string(),
     teamName: z.string().min(1).max(16),
     originalTrainerId: z.string().nullish(),

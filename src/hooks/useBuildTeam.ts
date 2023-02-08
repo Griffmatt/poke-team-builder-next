@@ -67,7 +67,6 @@ export function useBuildTeam(userId: string) {
             return { pokemonId: pokemon?.id as string }
         })
         addTeam.mutate({
-            userId: userId,
             teamName: teamName,
             teamStyle: teamStyle,
             originalTrainerId: null,

@@ -48,7 +48,6 @@ export const pokemonRouter = createTRPCRouter({
         .input(buildPokemonInput)
         .mutation(({ ctx, input }) => {
             const userId = ctx.session.user.id
-            if (userId !== input.userId) return null
             return ctx.prisma.createdPokemon.create({
                 data: {
                     ...input,
@@ -69,11 +68,13 @@ export const pokemonRouter = createTRPCRouter({
                 heldItem: input.heldItem,
             }
             const userId = ctx.session.user.id
-            if (userId !== input.userId) return null
 
             const results = await Promise.all([
                 ctx.prisma.createdPokemon.update({
-                    where: { id: pokemonId },
+                    where: {userId_id: {
+                        userId,
+                        id: input.id,
+                    }},
                     data: pokemonData,
                 }),
                 ...input.moves.map((move) => {
@@ -123,18 +124,22 @@ export const pokemonRouter = createTRPCRouter({
         )
         .mutation(async ({ ctx, input }) => {
             const userId = ctx.session.user.id
-            if (userId !== input.userId) return null
-
             return await Promise.all([
                 ctx.prisma.createdPokemon.delete({
                     where: {
-                        id: input.pokemonId,
+                        userId_id: {
+                            userId,
+                            id: input.pokemonId,
+                        },
                     },
                 }),
                 ...input.pokemonTeams.map((teamId) => {
                     return ctx.prisma.team.delete({
                         where: {
-                            id: teamId,
+                            userId_id: {
+                                userId,
+                                id: teamId,
+                            },
                         },
                     })
                 }),

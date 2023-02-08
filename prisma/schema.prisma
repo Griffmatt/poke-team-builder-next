@@ -23,6 +23,7 @@ model CreatedPokemon {
   teams     PokemonOnTeam[]
   favorited FavoritePokemon[]
   user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, id])
 }
 
 model PokemonMoves {
@@ -73,6 +74,8 @@ model Team {
   favorited         FavoriteTeams[]
   pokemon           PokemonOnTeam[]
   user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+   @@unique([userId, id])
 }
 
 model FavoritePokemon {
