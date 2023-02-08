@@ -55,16 +55,16 @@ interface SuggestedProps {
 
 const SuggestedUsers = ({ users }: SuggestedProps) => {
     if (users == null) {
-        const fillerArr = Array.from({ length: 10 }, () => 0)
+        const fillerArr = Array.from({ length: 20 }, () => 0)
         return (
             <div className="grid gap-3">
-                <h2 className="w-32 animate-pulse bg-dark-2" />
+                <h2>Suggested</h2>
                 <div className="no-scrollbar flex gap-2 overflow-x-scroll">
                     {fillerArr.map((_, index) => {
                         return (
                             <div className="grid w-fit gap-2" key={index}>
-                                <div className="h-20 w-auto animate-pulse rounded-full bg-dark-2" />
-                                <h3 className="w-32 animate-pulse bg-dark-2 text-center" />
+                                <div className="h-20 w-20 animate-pulse rounded-full bg-dark-2" />
+                                <h3 className="h-6 w-20 animate-pulse bg-dark-2 text-center" />
                             </div>
                         )
                     })}
@@ -72,7 +72,6 @@ const SuggestedUsers = ({ users }: SuggestedProps) => {
             </div>
         )
     }
-
     return (
         <div className="grid gap-3">
             <h2>Suggested</h2>
