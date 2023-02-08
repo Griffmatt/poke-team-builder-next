@@ -88,7 +88,7 @@ const BuildTeam: NextPage = () => {
                 <div className="pokemon-card-grid" ref={animationParent}>
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
-                        <div className="aspect-[4/5] w-full" />
+                        <div className="aspect-[7/10 ] w-full" />
                     ) : (
                         pokemonOnTeam?.map((pokemon) => {
                             return (
