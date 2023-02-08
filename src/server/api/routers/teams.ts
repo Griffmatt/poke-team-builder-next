@@ -70,7 +70,6 @@ export const teamsRouter = createTRPCRouter({
         .input(
             z.object({
                 id: z.string(),
-                userId: z.string(),
             })
         )
         .mutation(({ ctx, input }) => {

@@ -119,7 +119,6 @@ export const pokemonRouter = createTRPCRouter({
             z.object({
                 pokemonId: z.string(),
                 pokemonTeams: z.array(z.string()),
-                userId: z.string(),
             })
         )
         .mutation(async ({ ctx, input }) => {
