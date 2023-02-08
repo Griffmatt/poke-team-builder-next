@@ -35,16 +35,16 @@ const favorites = () => {
                 user={user}
             />
             <div className="grid gap-3">
-                <h2>pokemon</h2>
+                <h2>Pokemon</h2>
                 <CreatedPokemonGrid pokemons={pokemons ?? null} />
+            </div>
+            <div className="grid gap-3">
                 <h2>Teams</h2>
-                <div>
-                    <TeamRows
-                        teams={teams ?? null}
-                        favoriteTeams={favoriteTeams ?? []}
-                        isLoading={isLoading}
-                    />
-                </div>
+                <TeamRows
+                    teams={teams ?? null}
+                    favoriteTeams={favoriteTeams ?? []}
+                    isLoading={isLoading}
+                />
             </div>
         </main>
     )

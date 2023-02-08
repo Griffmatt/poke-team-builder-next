@@ -17,13 +17,11 @@ export const PopularTeams = () => {
     return (
         <div className="grid gap-3">
             <h2>Popular Teams</h2>
-            {popularTeams && favorites && (
-                <TeamRows
-                    teams={popularTeams ?? null}
-                    favoriteTeams={favorites ?? null}
-                    isLoading={isLoading}
-                />
-            )}
+            <TeamRows
+                teams={popularTeams ?? null}
+                favoriteTeams={favorites ?? null}
+                isLoading={isLoading}
+            />
         </div>
     )
 }

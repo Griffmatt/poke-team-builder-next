@@ -173,19 +173,19 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
                 {userId === team!.userId ? (
                     <>
                         <button
-                            className="btn-red h-fit rounded-2xl px-4 py-2"
+                            className="btn-red h-fit w-full rounded-2xl px-4 py-2"
                             onClick={() => setShowDeleteModal(true)}
                         >
                             Delete
                         </button>
                         <button
-                            className="h-fit rounded-2xl px-4 py-2"
+                            className="h-fit w-full rounded-2xl px-4 py-2"
                             onClick={handleLose}
                         >
                             Lost
                         </button>
                         <button
-                            className="h-fit rounded-2xl px-4 py-2"
+                            className="h-fit w-full rounded-2xl px-4 py-2"
                             onClick={handleWin}
                         >
                             Won
@@ -193,7 +193,7 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
                     </>
                 ) : (
                     <button
-                        className="h-fit rounded-2xl px-4 py-2"
+                        className="h-fit w-full rounded-2xl px-4 py-2"
                         onClick={handleCopy}
                     >
                         Copy Team

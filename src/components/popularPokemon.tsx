@@ -8,12 +8,13 @@ export const PopularPokemon = () => {
     const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
         userId: session?.user?.id ?? null,
     })
+    const amount = 12
     return (
         <div className="grid gap-3">
             <h2>Popular Pokemon</h2>
             <CreatedPokemonGrid
-                pokemons={pokemons ?? null}
-                amount={12}
+                pokemons={pokemons?.slice(0, amount) ?? null}
+                amount={amount}
                 currentUserFavorites={favorites}
             />
         </div>

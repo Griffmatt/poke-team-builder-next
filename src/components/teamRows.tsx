@@ -24,7 +24,6 @@ export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
                 {fillerArr.map((x, index) => (
                     <>
                         <div className="h-8 w-32 bg-dark-2" />
-
                         <SkeletonPokemonGrid amount={6} />
                     </>
                 ))}
@@ -37,8 +36,8 @@ export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
             {teams?.map((team) => {
                 const favorited = favoriteTeams?.includes(team.id)
                 return (
-                    <React.Fragment key={team.id}>
-                        <div className="flex justify-between">
+                    <div className="grid gap-3" key={team.id}>
+                        <div className="flex items-center justify-between">
                             <h3>{team.teamName}</h3>
                             {favorited && (
                                 <FavoritedButton
@@ -50,7 +49,7 @@ export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
                         <Link href={`/team/${team.id}`}>
                             <TeamRow team={team} withStats={false} />
                         </Link>
-                    </React.Fragment>
+                    </div>
                 )
             })}
         </>
