@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface Props {
     favorited: boolean
@@ -20,18 +20,31 @@ export const FavoritedButton = ({
         : "rounded-full"
 
     const [favorite, setFavorite] = useState(favorited)
-    const handleFavorite = favorite ? addFavorite : removeFavorite
-
-    useEffect(() => {
-        if (!handleFavorite) return
-        clearTimeout(timer)
-        if (favorited === favorite) return
-        timer = setTimeout(handleFavorite, 500)
-    }, [favorite])
+    const handleFavorite = favorite ? removeFavorite : addFavorite
 
     const handleClick = () => {
         setFavorite(!favorite)
+        if (handleFavorite == null) return
+        clearTimeout(timer)
+        if (favorite !== favorited) return
+        timer = setTimeout(() => {
+            handleFavorite()
+            timer = undefined
+        }, 500)
     }
+
+    /*
+    working on trying to make function call on unMount
+    works but has UI bugs
+    useEffect(() => {
+        timer = undefined
+        return () => {
+            if (timer && handleFavorite) {
+                clearTimeout(timer)
+                handleFavorite()
+            }
+        }
+    }, [])*/
 
     return (
         <>

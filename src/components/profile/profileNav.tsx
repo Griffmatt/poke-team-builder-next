@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import pokemonImage from "assets/pokemon.jpg"
 import { user } from "types/trpc"
 
 interface Props {
@@ -14,18 +13,14 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
     return (
         <>
             {user == null ? (
-                <>
-                    <div className="h-16 w-full animate-pulse rounded bg-dark-2 md:h-24 lg:h-40" />
-
-                    <div className="grid h-44 grid-rows-2 px-1 text-center">
-                        <div className="row-span-2 grid h-fit w-fit gap-1">
-                            <div className="aspect-square w-24 md:w-32">
-                                <div className="h-full w-full animate-pulse rounded-full border-8 border-dark bg-dark-2" />
-                            </div>
-                            <div className="h-8 w-28 animate-pulse bg-dark-2" />
+                <div className="grid h-44 grid-rows-2 px-1 text-center">
+                    <div className="row-span-2 flex h-fit w-fit flex-col items-center gap-1">
+                        <div className="aspect-square w-24 md:w-32">
+                            <div className="h-full w-full animate-pulse rounded-full border-8 border-dark-3 bg-dark-2" />
                         </div>
+                        <div className="h-6 w-24 animate-pulse bg-dark-2" />
                     </div>
-                </>
+                </div>
             ) : (
                 <UserHeader user={user} />
             )}
@@ -65,24 +60,16 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
 
 const UserHeader = ({ user }: { user: user }) => {
     return (
-        <>
-            <div className="h-16 w-full rounded bg-dark-2 md:h-24 lg:h-40">
-                <img
-                    src={pokemonImage.src}
-                    className="h-32 w-full rounded object-cover md:h-44 lg:h-60"
-                />
-            </div>
-            <div className="grid h-44 grid-rows-2 px-1 text-center">
-                <div className="row-span-2 grid h-fit w-fit gap-1">
-                    <div className="aspect-square w-24 md:w-32">
-                        <img
-                            src={user?.image ?? ""}
-                            className="rounded-full border-8 border-dark"
-                        />
-                    </div>
-                    <h2>{user?.name}</h2>
+        <div className="grid h-44 grid-rows-2 px-1 text-center">
+            <div className="row-span-2 grid h-fit w-fit gap-1">
+                <div className="aspect-square w-24 md:w-32">
+                    <img
+                        src={user?.image ?? ""}
+                        className="rounded-full border-4 border-dark-3"
+                    />
                 </div>
+                <h2>{user?.name}</h2>
             </div>
-        </>
+        </div>
     )
 }

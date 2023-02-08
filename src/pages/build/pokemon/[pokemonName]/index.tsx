@@ -10,6 +10,7 @@ import { api } from "utils/api"
 import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
+import { LoadingCard } from "components/ui/loadingCard"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -33,6 +34,35 @@ const SinglePokemon: NextPage = () => {
     })
 
     let totalStats = 0
+
+    if (pokemon == null || pokemonBuilds == null) {
+        const fillerArr = Array.from({ length: 6 }, () => 0)
+        return (
+            <main>
+                <BackButton />
+                <h1>PokeDex Entry</h1>
+                <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="h-fit w-full xl:row-span-2">
+                        <LoadingCard />
+                    </div>
+                    <div className="lg:col-span-2 grid gap-1">
+                        <div className="h-6 w-32 animate-pulse bg-dark-2" />
+                        <div>
+                            {fillerArr.map((_, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className="h-6" />
+                                        <div className="h-6 animate-pulse rounded-full bg-dark-2" />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="h-6 w-32 animate-pulse bg-dark-2" />
+                    </div>
+                </div>
+            </main>
+        )
+    }
 
     return (
         <main>
@@ -75,8 +105,8 @@ const SinglePokemon: NextPage = () => {
                                     </div>
                                 )
                             })}
-                            <h3>Total Stats: {totalStats}</h3>
                         </div>
+                        <h3>Total Stats: {totalStats}</h3>
                     </div>
                     {pokemonBuilds.length > 0 && (
                         <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
