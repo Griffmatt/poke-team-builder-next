@@ -17,12 +17,12 @@ interface TeamRows {
 
 export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
     if (isLoading) {
-        const fillerArr = Array.from({length: 5}, () => 0)
+        const fillerArr = Array.from({ length: 5 }, () => 0)
         return (
             <>
                 {fillerArr.map((_, index) => (
-                    <div key={index}>
-                        <div className="h-6 w-32 bg-dark-2 animate-pulse" />
+                    <div key={index} className="grid gap-3">
+                        <div className="h-6 w-32 animate-pulse bg-dark-2" />
                         <SkeletonPokemonGrid amount={6} />
                     </div>
                 ))}

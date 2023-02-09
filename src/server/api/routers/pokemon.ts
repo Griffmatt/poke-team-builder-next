@@ -71,10 +71,12 @@ export const pokemonRouter = createTRPCRouter({
 
             const results = await Promise.all([
                 ctx.prisma.createdPokemon.update({
-                    where: {userId_id: {
-                        userId,
-                        id: input.id,
-                    }},
+                    where: {
+                        userId_id: {
+                            userId,
+                            id: input.id,
+                        },
+                    },
                     data: pokemonData,
                 }),
                 ...input.moves.map((move) => {

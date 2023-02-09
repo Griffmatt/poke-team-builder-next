@@ -41,7 +41,6 @@ export const favoriteRouter = createTRPCRouter({
     favoritePokemon: protectedProcedure
         .input(z.object({ pokemonId: z.string() }))
         .mutation(({ ctx, input }) => {
-
             const userId = ctx.session.user.id
             try {
                 return ctx.prisma.favoritePokemon.create({

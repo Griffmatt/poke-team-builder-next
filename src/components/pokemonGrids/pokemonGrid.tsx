@@ -11,7 +11,6 @@ interface Props {
 }
 
 export const PokemonGrid = ({ pokemons, query }: Props) => {
-
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
     let showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))

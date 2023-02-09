@@ -1,7 +1,7 @@
 import { LoadingCard } from "components/ui/loadingCard"
 
 export const SkeletonPokemonGrid = ({ amount = 30, withStats = false }) => {
-    const fillerArr = Array.from({length: amount}, () => 0)
+    const fillerArr = Array.from({ length: amount }, () => 0)
     const className = withStats
         ? "grid gap-2 md:grid-cols-3"
         : "pokemon-card-grid"

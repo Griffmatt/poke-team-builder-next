@@ -1,4 +1,5 @@
 import "styles/globals.css"
+import "styles/colors.css"
 
 import { type AppType } from "next/app"
 import { type Session } from "next-auth"

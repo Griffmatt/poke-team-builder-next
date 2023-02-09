@@ -1,0 +1,128 @@
+.hp {
+    @apply bg-hp;
+}
+.att {
+    @apply bg-att;
+}
+.def {
+    @apply bg-def;
+}
+.spa {
+    @apply bg-spa;
+}
+.spd {
+    @apply bg-spd;
+}
+.spe {
+    @apply bg-spe;
+}
+
+.normal {
+    @apply border-normal;
+}
+.fire {
+    @apply border-fire;
+}
+.water {
+    @apply border-water;
+}
+.electric {
+    @apply border-electric;
+}
+.grass {
+    @apply border-grass;
+}
+.ice {
+    @apply border-ice;
+}
+.fighting {
+    @apply border-fighting;
+}
+.poison {
+    @apply border-poison;
+}
+.ground {
+    @apply border-ground;
+}
+.flying {
+    @apply border-flying;
+}
+.psychic {
+    @apply border-psychic;
+}
+.bug {
+    @apply border-bug;
+}
+.rock {
+    @apply border-rock;
+}
+.ghost {
+    @apply border-ghost;
+}
+.dragon {
+    @apply border-dragon;
+}
+.dark {
+    @apply border-darkType;
+}
+.steel {
+    @apply border-steel;
+}
+.fairy {
+    @apply border-fairy;
+}
+
+.normalSecondary {
+    @apply border-r-normal border-b-normal;
+}
+.fireSecondary {
+    @apply border-r-fire border-b-fire;
+}
+.waterSecondary {
+    @apply border-r-water border-b-water;
+}
+.electricSecondary {
+    @apply border-r-electric border-b-electric;
+}
+.grassSecondary {
+    @apply border-r-grass border-b-grass;
+}
+.iceSecondary {
+    @apply border-r-ice border-b-ice;
+}
+.fightingSecondary {
+    @apply border-r-fighting border-b-fighting;
+}
+.poisonSecondary {
+    @apply border-r-poison border-b-poison;
+}
+.groundSecondary {
+    @apply border-r-ground border-b-ground;
+}
+.flyingSecondary {
+    @apply border-r-flying border-b-flying;
+}
+.psychicSecondary {
+    @apply border-r-psychic border-b-psychic;
+}
+.bugSecondary {
+    @apply border-r-bug border-b-bug;
+}
+.rockSecondary {
+    @apply border-r-rock border-b-rock;
+}
+.ghostSecondary {
+    @apply border-r-ghost border-b-ghost;
+}
+.dragonSecondary {
+    @apply border-r-dragon border-b-dragon;
+}
+.darkSecondary {
+    @apply border-r-darkType border-b-darkType;
+}
+.steelSecondary {
+    @apply border-r-steel border-b-steel;
+}
+.fairySecondary {
+    @apply border-r-fairy border-b-fairy;
+}
