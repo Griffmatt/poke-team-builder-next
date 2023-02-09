@@ -12,7 +12,9 @@ import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonG
 const ProfilePokemon: NextPage = () => {
     const router = useRouter()
     const { userId } = router.query
+
     const [query, setQuery] = useState("")
+    const debouncedValue = useDebounceQuery(query)
 
     const {
         data: pokemons,
@@ -50,8 +52,6 @@ const ProfilePokemon: NextPage = () => {
 
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
-
-    const debouncedValue = useDebounceQuery(query)
 
     const filterPokemon = pokemons?.filter((pokemon) =>
         query === "shiny"

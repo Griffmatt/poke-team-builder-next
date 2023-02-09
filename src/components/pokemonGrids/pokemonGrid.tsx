@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Pokemon } from "pokenode-ts"
 import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
-import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
 
 interface Props {
     pokemons: Pokemon[]

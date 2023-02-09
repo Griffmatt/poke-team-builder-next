@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CreatedPokemon } from "types/trpc"
 import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
-import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
+
 interface Props {
     pokemons: CreatedPokemon[]
     currentUserFavorites?: string[]
@@ -21,6 +21,7 @@ export const CreatedPokemonGrid = ({
     const showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
         : pokemonScrolled
+
 
     return (
         <>

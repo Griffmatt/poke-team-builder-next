@@ -17,11 +17,17 @@ interface TeamRows {
     userName?: string | null
 }
 
-export const TeamRows = ({ teams, favoriteTeams, query, userId, userName }: TeamRows) => {
+export const TeamRows = ({
+    teams,
+    favoriteTeams,
+    query,
+    userId,
+    userName,
+}: TeamRows) => {
     return (
         <>
             {teams.length === 0 ? (
-                <TeamsEmpty query={query} userId={userId} userName={userName}/>
+                <TeamsEmpty query={query} userId={userId} userName={userName} />
             ) : (
                 teams.map((team) => {
                     const favorited = favoriteTeams?.includes(team.id)
@@ -55,9 +61,12 @@ interface TeamRow {
 export const TeamRow = ({ team, withStats }: TeamRow) => {
     const { data: session } = useSession()
     const { data: favoritePokemon } =
-        api.favorite.checkUserFavoritePokemon.useQuery({
-            userId: session?.user?.id ?? null,
-        })
+        api.favorite.checkUserFavoritePokemon.useQuery(
+            {
+                userId: session?.user?.id as string,
+            },
+            { enabled: !!session?.user?.id }
+        )
 
     return (
         <div

@@ -10,16 +10,28 @@ const UpdatePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName, pokemonId } = router.query
 
-    const { data: pokemon } = api.pokeApi.getPokemonByName.useQuery({
+    const {
+        data: pokemon,
+        isLoading,
+        error,
+    } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName as string,
     })
-    const { data: heldItems } = api.pokeApi.getHeldItems.useQuery()
+    const {
+        data: heldItems,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.pokeApi.getHeldItems.useQuery()
 
-    const { data: createdPokemon } = api.pokemon.getSinglePokemon.useQuery({
+    const {
+        data: createdPokemon,
+        isLoading: isLoading3,
+        error: error3,
+    } = api.pokemon.getSinglePokemon.useQuery({
         pokemonId: pokemonId as string,
     })
 
-    if (pokemon == null || heldItems == null || createdPokemon == null) {
+    if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
@@ -48,6 +60,10 @@ const UpdatePokemon: NextPage = () => {
             </main>
         )
     }
+
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+    if (error3) return <div>Error: {error3.message}</div>
 
     return (
         <main>

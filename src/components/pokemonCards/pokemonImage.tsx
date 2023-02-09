@@ -9,8 +9,8 @@ interface Props {
 
 export const PokemonImage = ({ pokemon, shiny }: Props) => {
     const pokemonImage = shiny
-        ? pokemon?.sprites.front_shiny
-        : pokemon?.sprites.front_default
+        ? pokemon.sprites.front_shiny
+        : pokemon.sprites.front_default
 
     const pokemonTypes = pokemon.types.map((type, index) => {
         if (index === 1) {

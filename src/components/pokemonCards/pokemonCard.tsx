@@ -21,17 +21,20 @@ export const PokemonCard = ({
     percentage,
     favorite,
 }: Props) => {
-    const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
+    const { data: pokemon, isLoading, error } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName,
     })
 
     if (isLoading) return <LoadingCard />
-    const firstType = pokemon?.types[0].type.name
-    const secondType = pokemon?.types[1]?.type.name
+
+    if (error) return <div>Error: {error.message}</div>
+
+    const firstType = pokemon.types[0].type.name
+    const secondType = pokemon.types[1]?.type.name
     const pokemonImage =
-        createdPokemon && createdPokemon?.shiny
-            ? pokemon?.sprites.front_shiny
-            : pokemon?.sprites.front_default
+        createdPokemon && createdPokemon.shiny
+            ? pokemon.sprites.front_shiny
+            : pokemon.sprites.front_default
 
     return (
         <>

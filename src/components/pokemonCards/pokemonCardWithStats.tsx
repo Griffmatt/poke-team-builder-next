@@ -20,8 +20,12 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
-    const { data: pokemon, isLoading } = api.pokeApi.getPokemonByName.useQuery({
-        name: createdPokemon!.name,
+    const {
+        data: pokemon,
+        isLoading,
+        error,
+    } = api.pokeApi.getPokemonByName.useQuery({
+        name: createdPokemon.name,
     })
 
     const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
@@ -45,9 +49,11 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     if (isLoading) return <LoadingCard />
 
-    const pokemonImage = createdPokemon?.shiny
-        ? pokemon?.sprites.front_shiny
-        : pokemon?.sprites.front_default
+    if (error) return <div>Error: {error.message}</div>
+
+    const pokemonImage = createdPokemon.shiny
+        ? pokemon.sprites.front_shiny
+        : pokemon.sprites.front_default
     return (
         <div className="flex aspect-[7/10] flex-col justify-between p-4 text-center">
             <h2>{formatString(createdPokemon!.name)}</h2>
