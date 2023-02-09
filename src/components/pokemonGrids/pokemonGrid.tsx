@@ -1,21 +1,20 @@
 import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import Link from "next/link"
 import { Pokemon } from "pokenode-ts"
-import { PokemonCard } from "./cards/pokemonCard"
+import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
 import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
 
 interface Props {
-    pokemons: Pokemon[] | null
+    pokemons: Pokemon[]
     query?: string
 }
 
 export const PokemonGrid = ({ pokemons, query }: Props) => {
-    const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
+    const pokemonScrolled = useInfiniteScroll(pokemons)
     let showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
         : pokemonScrolled
-    if (showPokemon == null || pokemons == null) return <SkeletonPokemonGrid />
 
     return (
         <>

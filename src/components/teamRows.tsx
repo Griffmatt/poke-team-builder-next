@@ -4,53 +4,45 @@ import React from "react"
 import { teams } from "../types/trpc"
 import { team } from "../types/trpc"
 import { api } from "../utils/api"
-import { PokemonCard } from "./pokemonGrids/cards/pokemonCard"
-import { PokemonCardWithStats } from "./pokemonGrids/cards/pokemonCardWithStats"
+import { PokemonCard } from "./pokemonCards/pokemonCard"
+import { PokemonCardWithStats } from "./pokemonCards/pokemonCardWithStats"
 import { SkeletonPokemonGrid } from "./pokemonGrids/ui/skeletonPokemonGrid"
 import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {
-    teams: teams | null
-    favoriteTeams?: string[] | null
-    isLoading?: boolean
+    teams: teams
+    favoriteTeams?: string[]
+    query?: string
+    userId?: string
+    userName?: string | null
 }
 
-export const TeamRows = ({ teams, favoriteTeams, isLoading }: TeamRows) => {
-    if (isLoading) {
-        const fillerArr = Array.from({ length: 5 }, () => 0)
-        return (
-            <>
-                {fillerArr.map((_, index) => (
-                    <div key={index} className="grid gap-3">
-                        <div className="h-6 w-32 animate-pulse bg-dark-2" />
-                        <SkeletonPokemonGrid amount={6} />
-                    </div>
-                ))}
-            </>
-        )
-    }
-
+export const TeamRows = ({ teams, favoriteTeams, query, userId, userName }: TeamRows) => {
     return (
         <>
-            {teams?.map((team) => {
-                const favorited = favoriteTeams?.includes(team.id)
-                return (
-                    <div className="grid gap-3" key={team.id}>
-                        <div className="flex items-center justify-between">
-                            <h3>{team.teamName}</h3>
-                            {favorited && (
-                                <FavoritedButton
-                                    favorited={favorited}
-                                    absolute={false}
-                                />
-                            )}
+            {teams.length === 0 ? (
+                <TeamsEmpty query={query} userId={userId} userName={userName}/>
+            ) : (
+                teams.map((team) => {
+                    const favorited = favoriteTeams?.includes(team.id)
+                    return (
+                        <div className="grid gap-3" key={team.id}>
+                            <div className="flex items-center justify-between">
+                                <h3>{team.teamName}</h3>
+                                {favorited && (
+                                    <FavoritedButton
+                                        favorited={favorited}
+                                        absolute={false}
+                                    />
+                                )}
+                            </div>
+                            <Link href={`/team/${team.id}`}>
+                                <TeamRow team={team} withStats={false} />
+                            </Link>
                         </div>
-                        <Link href={`/team/${team.id}`}>
-                            <TeamRow team={team} withStats={false} />
-                        </Link>
-                    </div>
-                )
-            })}
+                    )
+                })
+            )}
         </>
     )
 }
@@ -91,6 +83,68 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
                     </div>
                 )
             })}
+        </div>
+    )
+}
+
+export const SkeletonTeamRows = () => {
+    const fillerArr = Array.from({ length: 5 }, () => 0)
+    return (
+        <>
+            {fillerArr.map((_, index) => (
+                <React.Fragment key={index}>
+                    <SkeletonTeamRow />
+                </React.Fragment>
+            ))}
+        </>
+    )
+}
+
+export const SkeletonTeamRow = () => {
+    return (
+        <div className="grid gap-3">
+            <div className="h-6 w-32 animate-pulse bg-dark-2" />
+            <SkeletonPokemonGrid amount={6} />
+        </div>
+    )
+}
+
+const TeamsEmpty = ({
+    query,
+    userId,
+    userName = "They",
+}: {
+    query?: string
+    userId?: string
+    userName?: string | null
+}) => {
+    const { data: session } = useSession()
+    const className =
+        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center dark:bg-dark-2"
+    if (query) {
+        return (
+            <div className={className}>
+                <h2>There were no results for your query</h2>
+                <h3>{query}</h3>
+            </div>
+        )
+    }
+
+    if (userId === session?.user?.id) {
+        return (
+            <div className={className}>
+                <h2>You haven't created any Teams yet!</h2>
+                <Link href="/build/teams">
+                    \jsx-eslint\eslint-plugin-react\tree\master\docs\rules\no-unescaped-entities.md
+                    Click here to view pokemon to create
+                </Link>
+            </div>
+        )
+    }
+
+    return (
+        <div className={className}>
+            <h2>{userName} hasn't created any Teams yet!</h2>
         </div>
     )
 }

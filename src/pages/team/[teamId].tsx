@@ -20,16 +20,26 @@ const Team: NextPage = () => {
     const router = useRouter()
     const { teamId } = router.query
 
-    const { data: team } = api.teams.getTeam.useQuery({
+    const {
+        data: team,
+        isLoading,
+        error,
+    } = api.teams.getTeam.useQuery({
         teamId: teamId as string,
     })
 
-    const { data: favoriteTeams } =
-        api.favorite.checkUserFavoriteTeams.useQuery({
+    const {
+        data: favoriteTeams,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.favorite.checkUserFavoriteTeams.useQuery(
+        {
             userId: session?.user?.id as string,
-        })
+        },
+        { enabled: !!session?.user?.id }
+    )
 
-    if (team == null) {
+    if (isLoading || isLoading2) {
         return (
             <main>
                 <BackButton />
@@ -47,7 +57,18 @@ const Team: NextPage = () => {
             </main>
         )
     }
+
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+
+    if (team === null) return <div>Team not found!</div>
+
     const teamFavorited = favoriteTeams?.includes(team?.id ?? "")
+
+    const percentage = team
+        ? formatPercentage(team.wins / (team.battles === 0 ? 1 : team.battles))
+        : "0%"
+
     return (
         <main>
             <BackButton />
@@ -55,7 +76,7 @@ const Team: NextPage = () => {
                 <div className="grid w-full gap-2">
                     <h1 className="w-fit">{team.teamName}</h1>
                     <div className="flex flex-col gap-2 md:flex-row">
-                        <h2>{team.teamStyle}</h2>
+                        <h2>{team?.teamStyle}</h2>
                         <div className="flex gap-2">
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
                                 <h4 className="align-middle">
@@ -64,13 +85,7 @@ const Team: NextPage = () => {
                             </div>
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
                                 <h4 className="align-middle">
-                                    Percentage:{" "}
-                                    {formatPercentage(
-                                        team.wins /
-                                            (team.battles === 0
-                                                ? 1
-                                                : team.battles)
-                                    )}
+                                    Percentage: {percentage}
                                 </h4>
                             </div>
                         </div>

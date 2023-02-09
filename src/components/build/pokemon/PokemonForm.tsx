@@ -13,7 +13,7 @@ import { buildPokemonMutation } from "mutations/buildPokemonMutation"
 import { Pokemon } from "pokenode-ts"
 import { CreatedPokemon } from "types/trpc"
 import React from "react"
-import { PokemonImage } from "components/pokemonGrids/cards/pokemonImage"
+import { PokemonImage } from "components/pokemonCards/pokemonImage"
 
 interface Props {
     pokemon: Pokemon

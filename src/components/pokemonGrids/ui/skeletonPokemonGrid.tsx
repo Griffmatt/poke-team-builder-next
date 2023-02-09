@@ -1,4 +1,4 @@
-import { LoadingCard } from "components/ui/loadingCard"
+import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
 
 export const SkeletonPokemonGrid = ({ amount = 30, withStats = false }) => {
     const fillerArr = Array.from({ length: amount }, () => 0)

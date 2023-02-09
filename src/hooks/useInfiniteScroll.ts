@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 
 export const useInfiniteScroll = <T>(
-    itemsArr: T[] | null,
+    itemsArr: T[],
     initialLimit = 30,
     limit = 12
 ) => {
-    const [items, setItems] = useState<T[] | null>(null)
+    const [items, setItems] = useState<T[]>(itemsArr?.slice(0, initialLimit))
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(1)
     const pastLimit = useRef(initialLimit)
@@ -42,10 +42,6 @@ export const useInfiniteScroll = <T>(
             pastLimit.current = 18
         }
     }, [screen.width])
-
-    useEffect(() => {
-        setItems(itemsArr?.slice(0, pokemonLimit) ?? null)
-    }, [itemsArr])
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll)

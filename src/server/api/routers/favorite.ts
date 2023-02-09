@@ -6,9 +6,8 @@ import { formatTeams } from "server/utils/formatTeams"
 
 export const favoriteRouter = createTRPCRouter({
     checkUserFavoritePokemon: publicProcedure
-        .input(z.object({ userId: z.string().nullish() }))
+        .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {
-            if (input.userId === null) return []
             const favorites = await ctx.prisma.favoritePokemon.findMany({
                 where: {
                     userId: input.userId,
@@ -71,9 +70,8 @@ export const favoriteRouter = createTRPCRouter({
             }
         }),
     checkUserFavoriteTeams: publicProcedure
-        .input(z.object({ userId: z.string().nullish() }))
+        .input(z.object({ userId: z.string() }))
         .query(async ({ ctx, input }) => {
-            if (input.userId === null) return []
             const favorites = await ctx.prisma.favoriteTeams.findMany({
                 where: {
                     userId: input.userId,

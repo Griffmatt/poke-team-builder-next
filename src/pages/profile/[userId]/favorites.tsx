@@ -1,6 +1,7 @@
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
+import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { ProfileNav } from "components/profile/profileNav"
-import { TeamRows } from "components/teamRows"
+import { SkeletonTeamRows, TeamRows } from "components/teamRows"
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import React from "react"
@@ -10,23 +11,60 @@ const Favorites: NextPage = () => {
     const router = useRouter()
     const { userId } = router.query
 
-    const { data: pokemons } = api.favorite.getUserFavoritePokemon.useQuery({
+    const {
+        data: pokemons,
+        isLoading,
+        error,
+    } = api.favorite.getUserFavoritePokemon.useQuery({
         userId: userId as string,
     })
 
-    const { data: user } = api.users.getUser.useQuery({
+    const {
+        data: user,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.users.getUser.useQuery({
         userId: userId as string,
     })
 
-    const { data: teams, isLoading: teamsLoading } =
-        api.teams.recentTeams.useQuery()
+    const {
+        data: teams,
+        isLoading: isLoading3,
+        error: error3,
+    } = api.teams.recentTeams.useQuery()
 
-    const { data: favoriteTeams, isLoading: favoritesLoading } =
-        api.favorite.checkUserFavoriteTeams.useQuery({
-            userId: userId as string,
-        })
+    const {
+        data: favoriteTeams,
+        isLoading: isLoading4,
+        error: error4,
+    } = api.favorite.checkUserFavoriteTeams.useQuery({
+        userId: userId as string,
+    })
 
-    const isLoading = teamsLoading || favoritesLoading
+    if (isLoading || isLoading2 || isLoading3 || isLoading4) {
+        return (
+            <main>
+                <ProfileNav
+                    selected="favorites"
+                    userId={userId as string}
+                    user={user}
+                />
+                <div className="grid gap-3">
+                    <h2>Pokemon</h2>
+                    <SkeletonPokemonGrid />
+                </div>
+                <div className="grid gap-3">
+                    <h2>Teams</h2>
+                    <SkeletonTeamRows />
+                </div>
+            </main>
+        )
+    }
+
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+    if (error3) return <div>Error: {error3.message}</div>
+    if (error4) return <div>Error: {error4.message}</div>
 
     return (
         <main>
@@ -37,15 +75,11 @@ const Favorites: NextPage = () => {
             />
             <div className="grid gap-3">
                 <h2>Pokemon</h2>
-                <CreatedPokemonGrid pokemons={pokemons ?? null} />
+                <CreatedPokemonGrid pokemons={pokemons} />
             </div>
             <div className="grid gap-3">
                 <h2>Teams</h2>
-                <TeamRows
-                    teams={teams ?? null}
-                    favoriteTeams={favoriteTeams ?? []}
-                    isLoading={isLoading}
-                />
+                <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
             </div>
         </main>
     )
