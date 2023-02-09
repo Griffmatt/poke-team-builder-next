@@ -14,33 +14,15 @@
     "parserOptions": {
         "project": "./tsconfig.json"
     },
-    "plugins": ["react", "@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "eslint-plugin-prettier"],
     "extends": [
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended",
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:prettier/recommended",
-        "airbnb"
+        "prettier"
     ],
     "rules": {
         "@typescript-eslint/consistent-type-imports": "warn",
-        "prettier/prettier": [
-            "error",
-            {
-                "endOfLine": "auto",
-                "trailingComma": "es5",
-                "tabWidth": 4,
-                "semi": false,
-                "singleQuote": false
-            }
-        ]
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
+        "prettier/prettier": ["error"],
+        "react/no-unescaped-entities": 0
     }
 }

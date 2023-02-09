@@ -1,11 +1,12 @@
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { ProfileNav } from "components/profile/profileNav"
 import { TeamRows } from "components/teamRows"
+import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import React from "react"
 import { api } from "utils/api"
 
-const favorites = () => {
+const Favorites: NextPage = () => {
     const router = useRouter()
     const { userId } = router.query
 
@@ -50,4 +51,4 @@ const favorites = () => {
     )
 }
 
-export default favorites
+export default Favorites

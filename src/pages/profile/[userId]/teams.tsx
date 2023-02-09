@@ -77,7 +77,7 @@ const TeamsEmpty = ({
         return (
             <div className={className}>
                 <h2>You haven't created any Teams yet!</h2>
-                <Link href="/build/teams">
+                <Link href="/build/teams">\jsx-eslint\eslint-plugin-react\tree\master\docs\rules\no-unescaped-entities.md
                     Click here to view pokemon to create
                 </Link>
             </div>

@@ -16,14 +16,18 @@ const ProfileSettings: NextPage = () => {
     })
 
     useEffect(() => {
-        if (session?.user?.id !== userId) {
-            router.replace("/")
+        const castOffUser = async () => {
+            await router.replace("/")
         }
-    }, [])
+
+        if (session?.user?.id !== userId) {
+            void castOffUser()
+        }
+    }, [router, session?.user?.id, userId])
 
     const handleSignOut = async () => {
         await signOut()
-        router.replace("/")
+        await router.replace("/")
     }
 
     return (
@@ -36,7 +40,7 @@ const ProfileSettings: NextPage = () => {
             <div className="grid gap-3 bg-dark-2">
                 <button
                     className="rounded-2xl px-4 py-2"
-                    onClick={handleSignOut}
+                    onClick={void handleSignOut}
                 >
                     Log Out
                 </button>
