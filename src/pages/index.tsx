@@ -13,18 +13,8 @@ const Home: NextPage = () => {
         isLoading,
         error,
     } = api.statistics.getTopPokemon.useQuery()
-    const {
-        data: popularPokemon,
-        isLoading: isLoading2,
-        error: error2,
-    } = api.statistics.getPopularPokemon.useQuery()
-    const {
-        data: popularTeams,
-        isLoading: isLoading3,
-        error: error3,
-    } = api.statistics.getPopularTeams.useQuery()
 
-    if (isLoading || isLoading2 || isLoading3) {
+    if (isLoading) {
         return (
             <main>
                 <h1>Statistics</h1>
@@ -34,22 +24,14 @@ const Home: NextPage = () => {
                 </div>
                 <div className="grid gap-3">
                     <HomepageButtons />
-                    <div className="grid gap-3">
-                        <h2>Popular Pokemon</h2>
-                        <SkeletonPokemonGrid amount={12} />
-                    </div>
-                    <div className="grid gap-3">
-                        <h2>Popular Teams</h2>
-                        <SkeletonTeamRows />
-                    </div>
+                    <PopularPokemon />
+                    <PopularTeams />
                 </div>
             </main>
         )
     }
 
     if (error) return <div>Error: {error.message}</div>
-    if (error2) return <div>Error: {error2.message}</div>
-    if (error3) return <div>Error: {error3.message}</div>
 
     return (
         <main>
@@ -60,17 +42,8 @@ const Home: NextPage = () => {
             </div>
             <div className="grid gap-3">
                 <HomepageButtons />
-                <div className="grid gap-3">
-                    <h2>Popular Pokemon</h2>
-                    <CreatedPokemonGrid
-                        pokemons={popularPokemon?.slice(0, 12)}
-                        amount={12}
-                    />
-                </div>
-                <div className="grid gap-3">
-                    <h2>Popular Teams</h2>
-                    <TeamRows teams={popularTeams} />
-                </div>
+                <PopularPokemon />
+                <PopularTeams />
             </div>
         </main>
     )
@@ -123,5 +96,86 @@ const HomepageButtons = () => {
                 )}
             </div>
         </>
+    )
+}
+
+const PopularPokemon = () => {
+    const { data: session } = useSession()
+
+    const {
+        data: popularPokemon,
+        isLoading,
+        error,
+    } = api.statistics.getPopularPokemon.useQuery()
+
+    const {
+        data: favorites,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.favorite.checkUserFavoritePokemon.useQuery(
+        {
+            userId: session?.user?.id as string,
+        },
+        { enabled: !!session?.user?.id }
+    )
+
+    if (isLoading || isLoading2) {
+        return (
+            <div className="grid gap-3">
+                <h2>Popular Pokemon</h2>
+                <SkeletonPokemonGrid amount={12} />
+            </div>
+        )
+    }
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+
+    return (
+        <div className="grid gap-3">
+            <h2>Popular Pokemon</h2>
+            <CreatedPokemonGrid
+                pokemons={popularPokemon?.slice(0, 12)}
+                currentUserFavorites={favorites}
+            />
+        </div>
+    )
+}
+
+const PopularTeams = () => {
+    const { data: session } = useSession()
+
+    const {
+        data: popularTeams,
+        isLoading,
+        error,
+    } = api.statistics.getPopularTeams.useQuery()
+
+    const {
+        data: favorites,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.favorite.checkUserFavoriteTeams.useQuery(
+        {
+            userId: session?.user?.id as string,
+        },
+        { enabled: !!session?.user?.id }
+    )
+
+    if (isLoading || isLoading2) {
+        return (
+            <div className="grid gap-3">
+                <h2>Popular Teams</h2>
+                <SkeletonTeamRows />
+            </div>
+        )
+    }
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+
+    return (
+        <div className="grid gap-3">
+            <h2>Popular Teams</h2>
+            <TeamRows teams={popularTeams} favoriteTeams={favorites} />
+        </div>
     )
 }

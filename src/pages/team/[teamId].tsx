@@ -102,7 +102,7 @@ const Team: NextPage = () => {
                     />
                 )}
             </div>
-            <TeamRow team={team} withStats={true} />
+            <TeamRow team={team} withStats={true} favorite={false}/>
         </main>
     )
 }

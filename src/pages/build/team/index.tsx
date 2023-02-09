@@ -133,14 +133,13 @@ const BuildTeam: NextPage = () => {
                         pokemon.favorited[0]?.userId === pokemon.userId
                     return (
                         <button
-                            className="pokemon-card"
+                            className={`pokemon-card ${favorited && "favorite"}`}
                             onClick={() => addPokemonToTeam(pokemon)}
                             key={pokemon.id}
                         >
                             <PokemonCard
                                 pokemonName={pokemon.name}
                                 createdPokemon={pokemon}
-                                favorite={favorited}
                             />
                         </button>
                     )

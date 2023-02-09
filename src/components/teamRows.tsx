@@ -7,7 +7,6 @@ import { api } from "../utils/api"
 import { PokemonCard } from "./pokemonCards/pokemonCard"
 import { PokemonCardWithStats } from "./pokemonCards/pokemonCardWithStats"
 import { SkeletonPokemonGrid } from "./pokemonGrids/ui/skeletonPokemonGrid"
-import { FavoritedButton } from "./ui/favoritedButton"
 
 interface TeamRows {
     teams: teams
@@ -33,17 +32,13 @@ export const TeamRows = ({
                     const favorited = favoriteTeams?.includes(team.id)
                     return (
                         <div className="grid gap-3" key={team.id}>
-                            <div className="flex items-center justify-between">
-                                <h3>{team.teamName}</h3>
-                                {favorited && (
-                                    <FavoritedButton
-                                        favorited={favorited}
-                                        absolute={false}
-                                    />
-                                )}
-                            </div>
+                            <h3>{team.teamName}</h3>
                             <Link href={`/team/${team.id}`}>
-                                <TeamRow team={team} withStats={false} />
+                                <TeamRow
+                                    team={team}
+                                    withStats={false}
+                                    favorite={favorited ?? false}
+                                />
                             </Link>
                         </div>
                     )
@@ -56,9 +51,10 @@ export const TeamRows = ({
 interface TeamRow {
     team: team
     withStats: boolean
+    favorite: boolean
 }
 
-export const TeamRow = ({ team, withStats }: TeamRow) => {
+export const TeamRow = ({ team, withStats, favorite }: TeamRow) => {
     const { data: session } = useSession()
     const { data: favoritePokemon } =
         api.favorite.checkUserFavoritePokemon.useQuery(
@@ -75,13 +71,16 @@ export const TeamRow = ({ team, withStats }: TeamRow) => {
             }`}
         >
             {team?.pokemon.map((pokemon) => {
-                const favorite = favoritePokemon?.includes(pokemon.id) ?? false
+                const favorited = favoritePokemon?.includes(pokemon.id) ?? false
                 return (
-                    <div className="pokemon-card" key={pokemon.id}>
+                    <div
+                        className={`pokemon-card ${favorite && "favorite"}`}
+                        key={pokemon.id}
+                    >
                         {withStats ? (
                             <PokemonCardWithStats
                                 createdPokemon={pokemon}
-                                favorite={favorite}
+                                favorite={favorited}
                             />
                         ) : (
                             <PokemonCard

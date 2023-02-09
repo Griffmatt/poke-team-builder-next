@@ -8,14 +8,12 @@ interface Props {
     pokemons: CreatedPokemon[]
     currentUserFavorites?: string[]
     query?: string
-    amount?: number
 }
 
 export const CreatedPokemonGrid = ({
     pokemons,
     currentUserFavorites,
     query,
-    amount = 30,
 }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
     const showPokemon = query
@@ -37,13 +35,12 @@ export const CreatedPokemonGrid = ({
                         return (
                             <Link
                                 key={pokemon.id}
-                                className="pokemon-card"
+                                className={`pokemon-card ${favorited && "favorite"}`}
                                 href={`/profile/${pokemon.userId}/${pokemon.id}/`}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
-                                    favorite={favorited}
                                 />
                             </Link>
                         )
