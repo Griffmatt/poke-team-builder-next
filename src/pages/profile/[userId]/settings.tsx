@@ -16,10 +16,14 @@ const ProfileSettings: NextPage = () => {
     })
 
     useEffect(() => {
-        if (session?.user?.id !== userId) {
+        const castOffUser = async () => {
             router.replace("/")
         }
-    }, [])
+
+        if (session?.user?.id !== userId) {
+            void castOffUser()
+        }
+    }, [router, session?.user?.id, userId])
 
     const handleSignOut = async () => {
         await signOut()

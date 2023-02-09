@@ -2,34 +2,33 @@ import { type NextPage } from "next"
 import { useRouter } from "next/router"
 
 import { api } from "utils/api"
-import { PokemonCardWithStats } from "components/pokemonGrids/cards/pokemonCardWithStats"
+import { PokemonCardWithStats } from "components/pokemonCards/pokemonCardWithStats"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 import { DeleteModal } from "components/modals/deleteModal"
 import { BackButton } from "components/ui/backButton"
-import { LoadingCard } from "components/ui/loadingCard"
+import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
     const router = useRouter()
     const { userId, pokemonId } = router.query
 
-    const { data: pokemon } = api.pokemon.getSinglePokemon.useQuery({
+    const [showModal, setShowModal] = useState(false)
+
+    const { data: pokemon, isLoading, error } = api.pokemon.getSinglePokemon.useQuery({
         pokemonId: pokemonId as string,
     })
-    const { data: user } = api.users.getUser.useQuery({
+    const { data: user, isLoading: isLoading2, error: error2 } = api.users.getUser.useQuery({
         userId: userId as string,
     })
-    const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
+    const { data: favorites, isLoading: isLoading3, error: error3 } = api.favorite.checkUserFavoritePokemon.useQuery({
         userId: session?.user?.id as string,
     })
 
-    const [showModal, setShowModal] = useState(false)
 
-    const pokemonTeams = pokemon?.teams.map((team) => team.teamId)
-
-    if (pokemon == null || user == null) {
+    if (isLoading || isLoading2 || isLoading3) {
         return (
             <main>
                 <BackButton />
@@ -42,6 +41,14 @@ const SinglePokemon: NextPage = () => {
             </main>
         )
     }
+
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+    if (error3) return <div>Error: {error3.message}</div>
+
+    if(pokemon === null) return <div>Pokemon not found!</div>
+
+    const pokemonTeams = pokemon?.teams.map((team) => team.teamId)
 
     return (
         <main>

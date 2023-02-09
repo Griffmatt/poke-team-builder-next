@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { formatPercentage } from "utils/formatPercentage"
-import { PokemonCard } from "./cards/pokemonCard"
-import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
+import { PokemonCard } from "../pokemonCards/pokemonCard"
 
 interface PokemonData {
     pokemon: {
@@ -11,12 +10,11 @@ interface PokemonData {
     total: number
 }
 interface Props {
-    pokemonData: PokemonData | null
+    pokemonData: PokemonData
     amount: number
 }
 
 export const PokemonDataGrid = ({ pokemonData, amount }: Props) => {
-    if (pokemonData == null) return <SkeletonPokemonGrid amount={amount} />
     return (
         <div className="pokemon-card-grid">
             {pokemonData.pokemon.slice(0, amount).map((pokemon) => {

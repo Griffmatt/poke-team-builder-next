@@ -9,12 +9,20 @@ const CreatePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName } = router.query
 
-    const { data: pokemon } = api.pokeApi.getPokemonByName.useQuery({
+    const {
+        data: pokemon,
+        isLoading,
+        error,
+    } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName as string,
     })
-    const { data: heldItems } = api.pokeApi.getHeldItems.useQuery()
+    const {
+        data: heldItems,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.pokeApi.getHeldItems.useQuery()
 
-    if (pokemon == null || heldItems == null) {
+    if (isLoading || isLoading2) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
@@ -44,13 +52,14 @@ const CreatePokemon: NextPage = () => {
         )
     }
 
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+
     return (
         <main>
             <BackButton />
             <h1>Building {formatString(pokemon.name)}</h1>
-            {pokemon && heldItems && (
-                <PokemonForm pokemon={pokemon} heldItems={heldItems.results} />
-            )}
+            <PokemonForm pokemon={pokemon} heldItems={heldItems.results} />
         </main>
     )
 }

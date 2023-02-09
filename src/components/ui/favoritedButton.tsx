@@ -2,8 +2,8 @@ import { useState } from "react"
 
 interface Props {
     favorited: boolean
-    addFavorite?: () => void
-    removeFavorite?: () => void
+    addFavorite: () => void
+    removeFavorite: () => void
     absolute?: boolean
 }
 
@@ -47,28 +47,14 @@ export const FavoritedButton = ({
     }, [])*/
 
     return (
-        <>
-            {handleFavorite ? (
-                <button className={wrapperClass} onClick={handleClick}>
-                    <div
-                        className={`h-10 w-10 rounded-full ${
-                            favorite
-                                ? "bg-favorited"
-                                : "bg-dark-3 hover:bg-favorited/50"
-                        }`}
-                    />
-                </button>
-            ) : (
-                <div className={wrapperClass}>
-                    <div
-                        className={`h-10 w-10 rounded-full ${
-                            favorite
-                                ? "bg-favorited"
-                                : "bg-dark-3 hover:bg-favorited/50"
-                        }`}
-                    />
-                </div>
-            )}
-        </>
+        <button className={wrapperClass} onClick={handleClick}>
+            <div
+                className={`h-10 w-10 rounded-full ${
+                    favorite
+                        ? "bg-favorited"
+                        : "bg-dark-3 hover:bg-favorited/50"
+                }`}
+            />
+        </button>
     )
 }

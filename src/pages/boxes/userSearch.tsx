@@ -9,10 +9,50 @@ import { user } from "types/trpc"
 const Boxes: NextPage = () => {
     const [query, setQuery] = useState("")
     const debouncedValue = useDebounceQuery(query)
-    const { data: suggestedUsers } = api.users.getSuggestedUsers.useQuery()
+    const {
+        data: suggestedUsers,
+        isLoading,
+        error,
+    } = api.users.getSuggestedUsers.useQuery()
     const { data: queryUsers } = api.users.getUserWithQuery.useQuery({
         query: debouncedValue,
     })
+
+    if (isLoading) {
+        const fillerArr = Array.from({ length: 20 }, () => 0)
+        return (
+            <main>
+                <h1>Boxes</h1>
+                <BoxesNav selected="trainers" />
+                <div className="grid gap-3">
+                    <h2>Suggested</h2>
+                    <div className="no-scrollbar flex gap-2 overflow-x-scroll">
+                        {fillerArr.map((_, index) => {
+                            return (
+                                <div className="grid w-fit gap-2" key={index}>
+                                    <div className="h-20 w-20 animate-pulse rounded-full bg-dark-2" />
+                                    <h3 className="h-6 w-20 animate-pulse bg-dark-2 text-center" />
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className="grid gap-3">
+                    <div className="flex flex-col justify-between gap-2 md:flex-row">
+                        <h2>Search</h2>
+                        <input
+                            placeholder="Search for trainers..."
+                            onChange={(event) => setQuery(event.target.value)}
+                            className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                        />
+                    </div>
+                </div>
+            </main>
+        )
+    }
+
+    if (error) return <div>Error: {error.message}</div>
+
     return (
         <main>
             <h1>Boxes</h1>
@@ -50,28 +90,10 @@ const Boxes: NextPage = () => {
 export default Boxes
 
 interface SuggestedProps {
-    users?: user[]
+    users: user[] | []
 }
 
 const SuggestedUsers = ({ users }: SuggestedProps) => {
-    if (users == null) {
-        const fillerArr = Array.from({ length: 20 }, () => 0)
-        return (
-            <div className="grid gap-3">
-                <h2>Suggested</h2>
-                <div className="no-scrollbar flex gap-2 overflow-x-scroll">
-                    {fillerArr.map((_, index) => {
-                        return (
-                            <div className="grid w-fit gap-2" key={index}>
-                                <div className="h-20 w-20 animate-pulse rounded-full bg-dark-2" />
-                                <h3 className="h-6 w-20 animate-pulse bg-dark-2 text-center" />
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-        )
-    }
     return (
         <div className="grid gap-3">
             <h2>Suggested</h2>

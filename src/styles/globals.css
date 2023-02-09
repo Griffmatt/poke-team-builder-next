@@ -67,6 +67,10 @@ a.pokemon-card {
     @apply dark:hover:bg-dark-3;
 }
 
+.favorite{
+    @apply border-gold
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }

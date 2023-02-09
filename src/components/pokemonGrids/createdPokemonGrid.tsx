@@ -1,28 +1,25 @@
 import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import Link from "next/link"
 import { CreatedPokemon } from "types/trpc"
-import { PokemonCard } from "./cards/pokemonCard"
+import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
-import { SkeletonPokemonGrid } from "./ui/skeletonPokemonGrid"
+
 interface Props {
-    pokemons: CreatedPokemon[] | null
+    pokemons: CreatedPokemon[]
     currentUserFavorites?: string[]
     query?: string
-    amount?: number
 }
 
 export const CreatedPokemonGrid = ({
     pokemons,
     currentUserFavorites,
     query,
-    amount = 30,
 }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
     const showPokemon = query
         ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
         : pokemonScrolled
-    if (showPokemon == null || pokemons == null)
-        return <SkeletonPokemonGrid amount={amount} />
+
 
     return (
         <>
@@ -38,13 +35,12 @@ export const CreatedPokemonGrid = ({
                         return (
                             <Link
                                 key={pokemon.id}
-                                className="pokemon-card"
+                                className={`pokemon-card ${favorited && "favorite"}`}
                                 href={`/profile/${pokemon.userId}/${pokemon.id}/`}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
-                                    favorite={favorited}
                                 />
                             </Link>
                         )

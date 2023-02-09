@@ -9,22 +9,22 @@ import { api } from "utils/api"
 import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
-import { PokemonImage } from "components/pokemonGrids/cards/pokemonImage"
+import { PokemonImage } from "components/pokemonCards/pokemonImage"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName } = router.query
     const { data: session } = useSession()
 
-    const { data: pokemon } = api.pokeApi.getPokemonByName.useQuery({
+    const { data: pokemon, isLoading, error } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName as string,
     })
 
-    const { data: pokemonBuilds } = api.pokemon.getPokemonBuilds.useQuery({
+    const { data: pokemonBuilds, isLoading: isLoading2, error: error2 } = api.pokemon.getPokemonBuilds.useQuery({
         pokemonName: pokemonName as string,
     })
 
-    const { data: teammates } = api.mostCommon.teamMates.useQuery({
+    const { data: teammates, isLoading: isLoading3, error: error3 } = api.mostCommon.teamMates.useQuery({
         pokemonName: pokemonName as string,
     })
 
@@ -34,7 +34,7 @@ const SinglePokemon: NextPage = () => {
 
     let totalStats = 0
 
-    if (pokemon == null || pokemonBuilds == null) {
+    if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
@@ -63,6 +63,10 @@ const SinglePokemon: NextPage = () => {
             </main>
         )
     }
+
+    if(error) return <div>Error: {error.message}</div>
+    if(error2) return <div>Error: {error2.message}</div>
+    if(error3) return <div>Error: {error3.message}</div>
 
     return (
         <main>
@@ -113,7 +117,7 @@ const SinglePokemon: NextPage = () => {
                         <div>
                             <h3>Common Teammates</h3>
                             <PokemonDataGrid
-                                pokemonData={teammates ?? null}
+                                pokemonData={teammates}
                                 amount={6}
                             />
                         </div>
