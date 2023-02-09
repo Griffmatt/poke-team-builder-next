@@ -70,7 +70,6 @@ const Boxes: NextPage = () => {
                 <h2>Recent Pokemon</h2>
                 <CreatedPokemonGrid
                     pokemons={pokemons?.slice(0, 12)}
-                    amount={12}
                     currentUserFavorites={favoritePokemon}
                 />
             </div>
