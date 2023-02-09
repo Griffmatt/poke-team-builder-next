@@ -8,13 +8,12 @@ import useHandleIvChange from "hooks/useHandleIvChange"
 import { formatString } from "utils/formatString"
 import { natures } from "assets/natures"
 
-import { PokemonCard } from "components/pokemonGrids/cards/pokemonCard"
-
 import { updatePokemonMutation } from "mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "mutations/buildPokemonMutation"
 import { Pokemon } from "pokenode-ts"
 import { CreatedPokemon } from "types/trpc"
 import React from "react"
+import { PokemonImage } from "components/pokemonGrids/cards/pokemonImage"
 
 interface Props {
     pokemon: Pokemon
@@ -149,9 +148,9 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             onSubmit={(event) => handleSubmit(event)}
         >
             <div className="h-fit w-full lg:row-span-2">
-                <PokemonCard
-                    pokemonName={pokemon.name}
-                    createdPokemon={createdPokemon}
+                <PokemonImage
+                    pokemon={pokemon}
+                    shiny={createdPokemon?.shiny ?? false}
                 />
             </div>
             <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">

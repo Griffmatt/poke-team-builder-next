@@ -67,25 +67,6 @@ a.pokemon-card {
     @apply dark:hover:bg-dark-3;
 }
 
-.hp {
-    @apply bg-hp;
-}
-.att {
-    @apply bg-att;
-}
-.def {
-    @apply bg-def;
-}
-.spa {
-    @apply bg-spa;
-}
-.spd {
-    @apply bg-spd;
-}
-.spe {
-    @apply bg-spe;
-}
-
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }

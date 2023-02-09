@@ -7,7 +7,7 @@ interface Props {
     amount?: number
 }
 
-export const RecentPokemon = ({title, amount = 12}:Props) => {
+export const RecentPokemon = ({ title, amount = 12 }: Props) => {
     const { data: session } = useSession()
     const { data: pokemons } = api.pokemon.recentPokemon.useQuery()
     const { data: favorites } = api.favorite.checkUserFavoritePokemon.useQuery({
