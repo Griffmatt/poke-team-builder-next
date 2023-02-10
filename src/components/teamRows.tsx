@@ -120,7 +120,7 @@ export const SkeletonTeamRow = () => {
 const TeamsEmpty = ({
     query,
     userId,
-    userName = "They",
+    userName,
 }: {
     query?: string
     userId?: string
@@ -141,10 +141,9 @@ const TeamsEmpty = ({
     if (userId === session?.user?.id) {
         return (
             <div className={className}>
-                <h2>You haven't created any Teams yet!</h2>
-                <Link href="/build/teams">
-                    \jsx-eslint\eslint-plugin-react\tree\master\docs\rules\no-unescaped-entities.md
-                    Click here to view pokemon to create
+                <h2>You haven't built any Teams yet!</h2>
+                <Link href="/build/team">
+                    Click here to view build team
                 </Link>
             </div>
         )
@@ -152,7 +151,10 @@ const TeamsEmpty = ({
 
     return (
         <div className={className}>
-            <h2>{userName} hasn't created any Teams yet!</h2>
+            <h2>
+                {userName ?? "They"} ${userName ? "hasn't" : "haven't"} created
+                any Teams yet!
+            </h2>
         </div>
     )
 }

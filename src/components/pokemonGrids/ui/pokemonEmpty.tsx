@@ -28,7 +28,7 @@ export const PokemonEmpty = ({ query, hasPokemon }: Props) => {
 
     return (
         <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
-            <h2>You haven't created any pokemon yet!</h2>
+            <h2>You haven't built any pokemon yet!</h2>
             <Link href="/build/pokemon">
                 Click here to view pokemon to build
             </Link>
