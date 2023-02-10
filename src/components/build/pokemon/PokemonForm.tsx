@@ -267,6 +267,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                     <input
                                         className="w-full"
                                         value={stat.value}
+                                        inputMode="numeric"
                                         onChange={(event) =>
                                             handleEvChange(
                                                 Number(event.target.value),
@@ -302,6 +303,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                     </button>
                                     <input
                                         className="w-full"
+                                        inputMode="numeric"
                                         value={stat.value}
                                         onChange={(event) =>
                                             handleIvChange(
