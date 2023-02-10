@@ -48,8 +48,8 @@ const Team: NextPage = () => {
                         <div className="h-8 w-32 animate-pulse bg-dark-2" />
                         <div className="flex flex-col gap-2 md:flex-row">
                             <div className="h-8 w-16 animate-pulse bg-dark-2" />
-                            <div className="h-8 w-32 animate-pulse bg-dark-2" />
-                            <div className="h-8 w-32 animate-pulse bg-dark-2" />
+                            <div className="h-8 w-20 animate-pulse bg-dark-2" />
+                            <div className="h-8 w-40 animate-pulse bg-dark-2" />
                         </div>
                     </div>
                 </div>
