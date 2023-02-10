@@ -8,6 +8,7 @@ import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonG
 
 const Boxes: NextPage = () => {
     const { data: session } = useSession()
+    const pokemonGridAmount = 12
     const {
         data: pokemons,
         isLoading,
@@ -51,7 +52,7 @@ const Boxes: NextPage = () => {
                 <BoxesNav selected="pokemon" />
                 <div className="grid gap-3">
                     <h2>Recent Pokemon</h2>
-                    <SkeletonPokemonGrid />
+                    <SkeletonPokemonGrid amount={pokemonGridAmount}/>
                 </div>
                 <div className="grid gap-3">
                     <h2>Recent Teams</h2>
@@ -73,7 +74,7 @@ const Boxes: NextPage = () => {
             <div className="grid gap-3">
                 <h2>Recent Pokemon</h2>
                 <CreatedPokemonGrid
-                    pokemons={pokemons?.slice(0, 12)}
+                    pokemons={pokemons?.slice(0, pokemonGridAmount)}
                     currentUserFavorites={favoritePokemon}
                 />
             </div>

@@ -101,6 +101,7 @@ const HomepageButtons = () => {
 
 const PopularPokemon = () => {
     const { data: session } = useSession()
+    const pokemonGridAmount = 12
 
     const {
         data: popularPokemon,
@@ -112,7 +113,7 @@ const PopularPokemon = () => {
         data: favorites,
         isLoading: isLoading2,
         error: error2,
-        isFetching
+        isFetching,
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,
@@ -124,7 +125,7 @@ const PopularPokemon = () => {
         return (
             <div className="grid gap-3">
                 <h2>Popular Pokemon</h2>
-                <SkeletonPokemonGrid amount={12} />
+                <SkeletonPokemonGrid amount={pokemonGridAmount} />
             </div>
         )
     }
@@ -135,7 +136,7 @@ const PopularPokemon = () => {
         <div className="grid gap-3">
             <h2>Popular Pokemon</h2>
             <CreatedPokemonGrid
-                pokemons={popularPokemon?.slice(0, 12)}
+                pokemons={popularPokemon?.slice(0, pokemonGridAmount)}
                 currentUserFavorites={favorites}
             />
         </div>
@@ -155,7 +156,7 @@ const PopularTeams = () => {
         data: favorites,
         isLoading: isLoading2,
         error: error2,
-        isFetching
+        isFetching,
     } = api.favorite.checkUserFavoriteTeams.useQuery(
         {
             userId: session?.user?.id as string,
