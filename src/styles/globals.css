@@ -37,7 +37,7 @@ input {
 }
 
 select {
-    @apply rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
+    @apply h-8 rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
 }
 
 button {
@@ -67,8 +67,8 @@ a.pokemon-card {
     @apply dark:hover:bg-dark-3;
 }
 
-.favorite{
-    @apply border-gold
+.favorite {
+    @apply border-gold;
 }
 
 .no-scrollbar::-webkit-scrollbar {

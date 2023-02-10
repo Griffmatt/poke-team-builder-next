@@ -1,4 +1,5 @@
 import { useEffect, useState, type ChangeEvent } from "react"
+import { formatOrder } from "utils/formatOrder"
 import { formatString } from "utils/formatString"
 
 interface PokemonValues {
@@ -30,17 +31,9 @@ export const MovesInput = ({
         setPokemonData({ moves: currentMoves })
     }
 
-    const formatOrder = (number: number) => {
-        if (number === 0) return "First"
-        if (number === 1) return "Second"
-        if (number === 2) return "Third"
-        return "Fourth"
-    }
-
     const moveOrder = formatOrder(order)
 
     useEffect(() => {
-        console.log(currentMoves)
         const filterMoves = moves.filter(
             (moveData) =>
                 formatString(move) === formatString(moveData.move.name) ||
