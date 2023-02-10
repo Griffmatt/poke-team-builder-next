@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { api } from "utils/api"
 
 interface Props {
@@ -8,9 +9,13 @@ interface Props {
 
 export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     const apiContext = api.useContext()
+
+    const [clicked, setClicked] = useState(false)
+
     const won = battleStatus === "Won" ? 1 : 0
     const battleMutation = api.teams.addBattle.useMutation({
         onMutate: () => {
+            console.log(clicked)
             const teamData = apiContext.teams.getTeam.getData()
             if (teamData) {
                 apiContext.teams.getTeam.setData(
@@ -41,7 +46,11 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     })
 
     const handleUpdate = () => {
+        if(clicked){
+            return
+        }
         const battleWon = battleStatus === "Won"
+        setClicked(true)
         battleMutation.mutate({
             teamId: teamId,
             won: battleWon,
