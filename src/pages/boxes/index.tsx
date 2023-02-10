@@ -25,7 +25,7 @@ const Boxes: NextPage = () => {
         data: favoritePokemon,
         isLoading: isLoading3,
         error: error3,
-        isFetching: isFetching3
+        isFetching: isFetching3,
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,
@@ -37,7 +37,7 @@ const Boxes: NextPage = () => {
         data: favoriteTeams,
         isLoading: isLoading4,
         error: error4,
-        isFetching: isFetching4
+        isFetching: isFetching4,
     } = api.favorite.checkUserFavoriteTeams.useQuery(
         {
             userId: session?.user?.id as string,
@@ -45,14 +45,19 @@ const Boxes: NextPage = () => {
         { enabled: !!session?.user?.id }
     )
 
-    if (isLoading || isLoading2 || (isLoading3 && isFetching3) || (isLoading4 && isFetching4)) {
+    if (
+        isLoading ||
+        isLoading2 ||
+        (isLoading3 && isFetching3) ||
+        (isLoading4 && isFetching4)
+    ) {
         return (
             <main>
                 <h1>Boxes</h1>
                 <BoxesNav selected="pokemon" />
                 <div className="grid gap-3">
                     <h2>Recent Pokemon</h2>
-                    <SkeletonPokemonGrid amount={pokemonGridAmount}/>
+                    <SkeletonPokemonGrid amount={pokemonGridAmount} />
                 </div>
                 <div className="grid gap-3">
                     <h2>Recent Teams</h2>
@@ -78,10 +83,12 @@ const Boxes: NextPage = () => {
                     currentUserFavorites={favoritePokemon}
                 />
             </div>
-            <div className="grid gap-3">
-                <h2>Recent Teams</h2>
-                <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
-            </div>
+            {teams.length > 0 && (
+                <div className="grid gap-3">
+                    <h2>Recent Teams</h2>
+                    <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
+                </div>
+            )}
         </main>
     )
 }
