@@ -167,7 +167,7 @@ const BuildTeamSkeleton = () => {
                 <div className="flex flex-col gap-2 md:flex-row">
                     <input className="md:w-72" value={"Team Name"} />
                     <div className="flex gap-2">
-                        <button className="btn-transparent text-xl font-extrabold text-light">
+                        <button className="btn-transparent text-xl font-extrabold text-primary">
                             Double
                         </button>
                         <button className="btn-transparent text-xl text-gray">
