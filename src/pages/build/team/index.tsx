@@ -77,7 +77,7 @@ const BuildTeam: NextPage = () => {
                         <button
                             className={`${
                                 teamStyle === "Double"
-                                    ? "font-extrabold text-light"
+                                    ? "font-extrabold text-primary"
                                     : "text-gray"
                             } btn-transparent text-xl`}
                             onClick={() => setTeamStyle("Double")}
@@ -87,7 +87,7 @@ const BuildTeam: NextPage = () => {
                         <button
                             className={`${
                                 teamStyle === "Single"
-                                    ? "font-extrabold text-light"
+                                    ? "font-extrabold text-primary"
                                     : "text-gray"
                             } btn-transparent text-xl`}
                             onClick={() => setTeamStyle("Single")}

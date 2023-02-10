@@ -61,7 +61,7 @@ button[type="button"] {
 }
 
 .pokemon-card {
-    @apply relative aspect-[7/10] w-full rounded-2xl border-4 border-gray-2 dark:bg-dark-2;
+    @apply relative aspect-[7/10] w-full rounded-2xl border-4 border-silver dark:bg-dark-2;
 }
 a.pokemon-card {
     @apply dark:hover:bg-dark-3;
