@@ -17,18 +17,35 @@ const SinglePokemon: NextPage = () => {
 
     const [showModal, setShowModal] = useState(false)
 
-    const { data: pokemon, isLoading, error } = api.pokemon.getSinglePokemon.useQuery({
+    const {
+        data: pokemon,
+        isLoading,
+        error,
+    } = api.pokemon.getSinglePokemon.useQuery({
         pokemonId: pokemonId as string,
     })
-    const { data: user, isLoading: isLoading2, error: error2 } = api.users.getUser.useQuery({
+    const {
+        data: user,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.users.getUser.useQuery({
         userId: userId as string,
     })
-    const { data: favorites, isLoading: isLoading3, error: error3 } = api.favorite.checkUserFavoritePokemon.useQuery({
-        userId: session?.user?.id as string,
-    })
+    const {
+        data: favorites,
+        isLoading: isLoading3,
+        error: error3,
+        isFetching
+    } = api.favorite.checkUserFavoritePokemon.useQuery(
+        {
+            userId: session?.user?.id as string,
+        },
+        {
+            enabled: !!session?.user?.id,
+        }
+    )
 
-
-    if (isLoading || isLoading2 || isLoading3) {
+    if (isLoading || isLoading2 || (isLoading3 && isFetching)) {
         return (
             <main>
                 <BackButton />
@@ -46,7 +63,7 @@ const SinglePokemon: NextPage = () => {
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
 
-    if(pokemon === null) return <div>Pokemon not found!</div>
+    if (pokemon === null) return <div>Pokemon not found!</div>
 
     const pokemonTeams = pokemon?.teams.map((team) => team.teamId)
 

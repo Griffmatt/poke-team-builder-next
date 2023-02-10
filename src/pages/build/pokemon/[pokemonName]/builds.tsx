@@ -20,6 +20,7 @@ const PokemonBuilds = () => {
         data: favorites,
         isLoading: isLoading2,
         error: error2,
+        isFetching
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,
@@ -27,7 +28,7 @@ const PokemonBuilds = () => {
         { enabled: !!session?.user?.id }
     )
 
-    if (isLoading || isLoading2) {
+    if (isLoading || (isLoading2 && isFetching)) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
@@ -56,7 +57,7 @@ const PokemonBuilds = () => {
             <div className="grid gap-3">
                 <div className="grid place-items-center gap-2 md:grid-cols-3">
                     {pokemonData.map((pokemon) => {
-                        const favorite = favorites.includes(pokemon.id) ?? false
+                        const favorite = favorites?.includes(pokemon.id) ?? false
                         return (
                             <div className="pokemon-card">
                                 <PokemonCardWithStats

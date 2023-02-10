@@ -112,6 +112,7 @@ const PopularPokemon = () => {
         data: favorites,
         isLoading: isLoading2,
         error: error2,
+        isFetching
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,
@@ -119,7 +120,7 @@ const PopularPokemon = () => {
         { enabled: !!session?.user?.id }
     )
 
-    if (isLoading || isLoading2) {
+    if (isLoading || (isLoading2 && isFetching)) {
         return (
             <div className="grid gap-3">
                 <h2>Popular Pokemon</h2>
@@ -154,6 +155,7 @@ const PopularTeams = () => {
         data: favorites,
         isLoading: isLoading2,
         error: error2,
+        isFetching
     } = api.favorite.checkUserFavoriteTeams.useQuery(
         {
             userId: session?.user?.id as string,
@@ -161,7 +163,7 @@ const PopularTeams = () => {
         { enabled: !!session?.user?.id }
     )
 
-    if (isLoading || isLoading2) {
+    if (isLoading || (isLoading2 && isFetching)) {
         return (
             <div className="grid gap-3">
                 <h2>Popular Teams</h2>

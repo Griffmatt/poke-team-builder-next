@@ -13,26 +13,30 @@ const Boxes: NextPage = () => {
         isLoading,
         error,
     } = api.pokemon.recentPokemon.useQuery()
+
     const {
-        data: favoritePokemon,
+        data: teams,
         isLoading: isLoading2,
         error: error2,
+    } = api.teams.recentTeams.useQuery()
+
+    const {
+        data: favoritePokemon,
+        isLoading: isLoading3,
+        error: error3,
+        isFetching: isFetching3
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,
         },
         { enabled: !!session?.user?.id }
     )
-    const {
-        data: teams,
-        isLoading: isLoading3,
-        error: error3,
-    } = api.teams.recentTeams.useQuery()
 
     const {
         data: favoriteTeams,
         isLoading: isLoading4,
         error: error4,
+        isFetching: isFetching4
     } = api.favorite.checkUserFavoriteTeams.useQuery(
         {
             userId: session?.user?.id as string,
@@ -40,7 +44,7 @@ const Boxes: NextPage = () => {
         { enabled: !!session?.user?.id }
     )
 
-    if (isLoading || isLoading2 || isLoading3 || isLoading4) {
+    if (isLoading || isLoading2 || (isLoading3 && isFetching3) || (isLoading4 && isFetching4)) {
         return (
             <main>
                 <h1>Boxes</h1>
