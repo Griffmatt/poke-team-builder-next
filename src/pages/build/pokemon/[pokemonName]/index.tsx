@@ -16,15 +16,27 @@ const SinglePokemon: NextPage = () => {
     const { pokemonName } = router.query
     const { data: session } = useSession()
 
-    const { data: pokemon, isLoading, error } = api.pokeApi.getPokemonByName.useQuery({
+    const {
+        data: pokemon,
+        isLoading,
+        error,
+    } = api.pokeApi.getPokemonByName.useQuery({
         name: pokemonName as string,
     })
 
-    const { data: pokemonBuilds, isLoading: isLoading2, error: error2 } = api.pokemon.getPokemonBuilds.useQuery({
+    const {
+        data: pokemonBuilds,
+        isLoading: isLoading2,
+        error: error2,
+    } = api.pokemon.getPokemonBuilds.useQuery({
         pokemonName: pokemonName as string,
     })
 
-    const { data: teammates, isLoading: isLoading3, error: error3 } = api.mostCommon.teamMates.useQuery({
+    const {
+        data: teammates,
+        isLoading: isLoading3,
+        error: error3,
+    } = api.mostCommon.teamMates.useQuery({
         pokemonName: pokemonName as string,
     })
 
@@ -47,7 +59,7 @@ const SinglePokemon: NextPage = () => {
                         </div>
                     </div>
                     <div className="lg:col-span-2">
-                        <div className="h-6 w-32 animate-pulse bg-dark-2" />
+                        <h2>Stats</h2>
                         <div>
                             {fillerArr.map((_, index) => {
                                 return (
@@ -64,9 +76,9 @@ const SinglePokemon: NextPage = () => {
         )
     }
 
-    if(error) return <div>Error: {error.message}</div>
-    if(error2) return <div>Error: {error2.message}</div>
-    if(error3) return <div>Error: {error3.message}</div>
+    if (error) return <div>Error: {error.message}</div>
+    if (error2) return <div>Error: {error2.message}</div>
+    if (error3) return <div>Error: {error3.message}</div>
 
     return (
         <main>
@@ -161,7 +173,7 @@ const SinglePokemon: NextPage = () => {
                     )}
                     {session?.user?.id && (
                         <Link
-                            href={`/build/pokemon/${pokemon?.name}/create`}
+                            href={`/build/pokemon/${pokemon?.name}/build`}
                             className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                         >
                             <h4>Build Pokemon</h4>

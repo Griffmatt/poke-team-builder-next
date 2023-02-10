@@ -236,7 +236,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     <h2>Moves</h2>
                     {pokemonData.moves.map((move, index) => {
                         return (
-                            <React.Fragment key={move + index}>
+                            <React.Fragment key={move}>
                                 <MovesInput
                                     order={index}
                                     moves={pokemon.moves}
@@ -329,7 +329,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 className="w-full rounded-xl p-4 md:col-start-2 lg:col-start-3"
                 type="submit"
             >
-                {createdPokemon ? "Update Pokemon" : "Create Pokemon"}
+                {createdPokemon ? "Update Pokemon" : "Build Pokemon"}
             </button>
         </form>
     )
