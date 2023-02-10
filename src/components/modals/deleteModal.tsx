@@ -61,6 +61,7 @@ export const DeleteModal = ({
                     <button
                         className="btn-red w-fit rounded-2xl py-2 px-4"
                         onClick={handleDelete}
+                        disabled={deletePokemon.isLoading}
                     >
                         Confirm
                     </button>

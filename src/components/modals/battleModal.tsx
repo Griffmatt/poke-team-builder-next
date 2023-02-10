@@ -43,9 +43,6 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     })
 
     const handleUpdate = () => {
-        if(battleMutation.isLoading){
-            return
-        }
         const battleWon = battleStatus === "Won"
         battleMutation.mutate({
             teamId: teamId,
@@ -77,6 +74,7 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
                     <button
                         className="btn-red w-fit rounded-2xl py-2 px-4"
                         onClick={handleUpdate}
+                        disabled={battleMutation.isLoading}
                     >
                         Confirm
                     </button>
