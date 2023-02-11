@@ -93,24 +93,24 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                     </div>
                     <div>
                         <h2>Tera Type</h2>
-                        <p>{formatString(createdPokemon!.teraType)}</p>
+                        <p>{formatString(createdPokemon.teraType)}</p>
                     </div>
                     <div>
                         <h2>Ability</h2>
-                        <p>{createdPokemon!.ability}</p>
+                        <p>{formatString(createdPokemon.ability)}</p>
                     </div>
                     <div>
                         <h2>Nature</h2>
-                        <p>{formatString(createdPokemon!.nature)}</p>
+                        <p>{formatString(createdPokemon.nature)}</p>
                     </div>
                     <div>
                         <h2>Held Item</h2>
-                        <p>{formatString(createdPokemon!.heldItem)}</p>
+                        <p>{formatString(createdPokemon.heldItem)}</p>
                     </div>
                     <div className="mx-auto w-fit">
                         <h2>Moves</h2>
                         <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
-                            {createdPokemon?.moves.map((move) => {
+                            {createdPokemon.moves.map((move) => {
                                 return (
                                     <p key={move.move}>
                                         {formatString(move.move)}
@@ -125,7 +125,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 <div>
                     <h2>EVs</h2>
                     <div className="grid grid-cols-3">
-                        {createdPokemon?.evs.map((ev) => {
+                        {createdPokemon.evs.map((ev) => {
                             return (
                                 <div key={`${ev.stat}EV`}>
                                     <h3>{ev.stat}</h3>
@@ -138,7 +138,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 <div>
                     <h2>IVs</h2>
                     <div className="grid grid-cols-3">
-                        {createdPokemon?.ivs.map((iv) => {
+                        {createdPokemon.ivs.map((iv) => {
                             return (
                                 <div key={`${iv.stat}IV`}>
                                     <h3>{iv.stat}</h3>

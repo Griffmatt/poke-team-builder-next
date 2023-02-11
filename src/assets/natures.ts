@@ -1,4 +1,4 @@
-export const natures = [
+export const NATURES = [
     "Adamant",
     "Bashful",
     "Bold",

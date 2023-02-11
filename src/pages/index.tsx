@@ -147,7 +147,7 @@ const PopularTeams = () => {
     const { data: session } = useSession()
 
     const {
-        data: popularTeams,
+        data: teams,
         isLoading,
         error,
     } = api.statistics.getPopularTeams.useQuery()
@@ -176,9 +176,13 @@ const PopularTeams = () => {
     if (error2) return <div>Error: {error2.message}</div>
 
     return (
-        <div className="grid gap-3">
-            <h2>Popular Teams</h2>
-            <TeamRows teams={popularTeams} favoriteTeams={favorites} />
-        </div>
+        <>
+            {teams.length > 0 && (
+                <div className="grid gap-3">
+                    <h2>Popular Teams</h2>
+                    <TeamRows teams={teams} favoriteTeams={favorites} />
+                </div>
+            )}
+        </>
     )
 }
