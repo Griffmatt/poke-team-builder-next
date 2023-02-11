@@ -6,7 +6,7 @@ import { MovesInput } from "./movesInput"
 import useHandleEvChange from "hooks/useHandleEvChange"
 import useHandleIvChange from "hooks/useHandleIvChange"
 import { formatString } from "utils/formatString"
-import { natures } from "assets/natures"
+import { NATURES } from "assets/natures"
 
 import { updatePokemonMutation } from "mutations/updatePokemonMutation"
 import { buildPokemonMutation } from "mutations/buildPokemonMutation"
@@ -14,6 +14,7 @@ import { Pokemon } from "pokenode-ts"
 import { CreatedPokemon } from "types/trpc"
 import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
+import { TERA_TYPES } from "assets/teraTypes"
 
 interface Props {
     pokemon: Pokemon
@@ -40,7 +41,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         {
             ability:
                 createdPokemon?.ability ?? pokemon.abilities[0].ability.name,
-            nature: createdPokemon?.nature ?? natures[0],
+            nature: createdPokemon?.nature ?? NATURES[0],
             heldItem: createdPokemon?.heldItem ?? heldItems[0].name,
             teraType: createdPokemon?.teraType ?? pokemon.types[0].type.name,
             moves: [
@@ -182,7 +183,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                             }
                             value={formatString(nature)}
                         >
-                            {natures.map((nature: string) => {
+                            {NATURES.map((nature: string) => {
                                 return <option key={nature}>{nature}</option>
                             })}
                         </select>
@@ -222,10 +223,10 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                             }
                             value={formatString(teraType)}
                         >
-                            {pokemon.types.map(({ type }) => {
+                            {TERA_TYPES.map((type) => {
                                 return (
-                                    <option key={type.name}>
-                                        {formatString(type.name)}
+                                    <option key={type}>
+                                        {formatString(type)}
                                     </option>
                                 )
                             })}
