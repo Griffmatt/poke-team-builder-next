@@ -22,14 +22,8 @@ export const pokeApiRouter = createTRPCRouter({
     getHeldItems: publicProcedure.query(async () => {
         const itemsData = await itemApi.getItemCategoryByName("held-items")
         const berryData = await berryApi.listBerries()
-        const items = itemsData.items.map((item) => {
-            return { name: item.name }
-        })
-        const berries = berryData.results.map((berry) => {
-            return {
-                name: `${berry.name} berry`,
-            }
-        })
+        const items = itemsData.items.map((item) => item.name)
+        const berries = berryData.results.map((berry) => `${berry.name} berry`)
         return [...items, ...berries]
     }),
 })
