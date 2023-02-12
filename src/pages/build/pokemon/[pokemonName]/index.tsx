@@ -9,15 +9,12 @@ import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
-import { useState } from "react"
 import { CommonData } from "components/commonData/commonData"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName } = router.query
     const { data: session } = useSession()
-
-    const [moves, setMoves] = useState<string[]>([])
 
     const {
         data: pokemon,
@@ -83,113 +80,107 @@ const SinglePokemon: NextPage = () => {
 
     let totalStats = 0
     return (
-            <main>
-                <BackButton />
-                <h1>{formatString(pokemon.name)}</h1>
-                <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="h-fit w-full xl:row-span-2">
-                        <PokemonImage pokemon={pokemon} />
-                    </div>
-                    <div className="lg:col-span-2">
-                        <h2>Stats</h2>
-                        <div>
-                            {pokemon.stats.map((stat) => {
-                                const maxNumber = 150
-                                const limitNumber = Math.min(
-                                    stat.base_stat,
-                                    maxNumber
-                                )
-
-                                const percentage = Math.trunc(
-                                    (limitNumber / maxNumber) * 100
-                                )
-                                totalStats += stat.base_stat
-                                const bgColor = formatStat(stat.stat.name)
-                                return (
-                                    <div key={stat.stat.name}>
-                                        <h3>
-                                            {formatString(stat.stat.name)}:{" "}
-                                            {stat.base_stat}
-                                        </h3>
-                                        <div className="h-6 rounded-full bg-dark-2">
-                                            <div
-                                                style={{
-                                                    width: `${percentage}%`,
-                                                }}
-                                                className={`${bgColor} h-6 rounded-full`}
-                                            />
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <h3>Total Stats: {totalStats}</h3>
-                    </div>
-                    {pokemonBuilds.length > 0 && (
-                        <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
-                            <h2>Data</h2>
-                            <div>
-                                <h3>Common Teammates</h3>
-                                <PokemonDataGrid
-                                    pokemonData={teammates}
-                                    amount={6}
-                                />
-                            </div>
-                            <div className="grid gap-2 md:grid-cols-2">
-                                <CommonData
-                                    pokemonBuilds={pokemonBuilds}
-                                    dataType="nature"
-                                />
-                                <CommonData
-                                    pokemonBuilds={pokemonBuilds}
-                                    dataType="ability"
-                                />
-                            </div>
-                            <div className="grid gap-2 md:grid-cols-2">
-                                <CommonData
-                                    pokemonBuilds={pokemonBuilds}
-                                    dataType="teraType"
-                                />
-                                <CommonData
-                                    pokemonBuilds={pokemonBuilds}
-                                    dataType="heldItem"
-                                />
-                            </div>
-                            {movesData && (
-                                <CommonMoves
-                                    movesData={movesData}
-                                    selected={moves}
-                                    setSelected={setMoves}
-                                />
-                            )}
-                        </div>
-                    )}
-                    <div
-                        className={`grid gap-3 ${
-                            session?.user?.id && pokemonBuilds.length > 0
-                                ? "md:col-span-2 md:grid-cols-2 lg:col-start-2"
-                                : "md:col-start-2 lg:col-start-3"
-                        }`}
-                    >
-                        {pokemonBuilds.length > 0 && (
-                            <Link
-                                href={`/build/pokemon/${pokemon?.name}/builds`}
-                                className="grid h-fit w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
-                            >
-                                <h4>See Builds</h4>
-                            </Link>
-                        )}
-                        {session?.user?.id && (
-                            <Link
-                                href={`/build/pokemon/${pokemon?.name}/build`}
-                                className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
-                            >
-                                <h4>Build Pokemon</h4>
-                            </Link>
-                        )}
-                    </div>
+        <main>
+            <BackButton />
+            <h1>{formatString(pokemon.name)}</h1>
+            <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+                <div className="h-fit w-full xl:row-span-2">
+                    <PokemonImage pokemon={pokemon} />
                 </div>
-            </main>
+                <div className="lg:col-span-2">
+                    <h2>Stats</h2>
+                    <div>
+                        {pokemon.stats.map((stat) => {
+                            const maxNumber = 150
+                            const limitNumber = Math.min(
+                                stat.base_stat,
+                                maxNumber
+                            )
+
+                            const percentage = Math.trunc(
+                                (limitNumber / maxNumber) * 100
+                            )
+                            totalStats += stat.base_stat
+                            const bgColor = formatStat(stat.stat.name)
+                            return (
+                                <div key={stat.stat.name}>
+                                    <h3>
+                                        {formatString(stat.stat.name)}:{" "}
+                                        {stat.base_stat}
+                                    </h3>
+                                    <div className="h-6 rounded-full bg-dark-2">
+                                        <div
+                                            style={{
+                                                width: `${percentage}%`,
+                                            }}
+                                            className={`${bgColor} h-6 rounded-full`}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <h3>Total Stats: {totalStats}</h3>
+                </div>
+                {pokemonBuilds.length > 0 && (
+                    <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
+                        <h2>Data</h2>
+                        <div>
+                            <h3>Common Teammates</h3>
+                            <PokemonDataGrid
+                                pokemonData={teammates}
+                                amount={6}
+                            />
+                        </div>
+                        <div className="grid gap-2 md:grid-cols-2">
+                            <CommonData
+                                pokemonBuilds={pokemonBuilds}
+                                dataType="nature"
+                            />
+                            <CommonData
+                                pokemonBuilds={pokemonBuilds}
+                                dataType="ability"
+                            />
+                        </div>
+                        <div className="grid gap-2 md:grid-cols-2">
+                            <CommonData
+                                pokemonBuilds={pokemonBuilds}
+                                dataType="teraType"
+                            />
+                            <CommonData
+                                pokemonBuilds={pokemonBuilds}
+                                dataType="heldItem"
+                            />
+                        </div>
+                        {movesData && <CommonMoves movesData={movesData} />}
+                    </div>
+                )}
+                <div
+                    className={`grid gap-3 ${
+                        session?.user?.id && pokemonBuilds.length > 0
+                            ? "md:col-span-2 md:grid-cols-2 lg:col-start-2"
+                            : "md:col-start-2 lg:col-start-3"
+                    }`}
+                >
+                    {pokemonBuilds.length > 0 && (
+                        <Link
+                            href={`/build/pokemon/${pokemon?.name}/builds`}
+                            className="grid h-fit w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                        >
+                            <h4>See Builds</h4>
+                        </Link>
+                    )}
+                    {session?.user?.id && (
+                        <Link
+                            href={`/build/pokemon/${pokemon?.name}/build`}
+                            className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                        >
+                            <h4>Build Pokemon</h4>
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </main>
     )
 }
 

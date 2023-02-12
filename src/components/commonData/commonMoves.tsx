@@ -1,6 +1,7 @@
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
-import { useEffect, type Dispatch, type SetStateAction } from "react"
+import { useEffect } from "react"
+import { useSelectedContext } from "context/selectedContext"
 
 interface Props {
     movesData: {
@@ -10,28 +11,18 @@ interface Props {
         }[]
         total: number
     }
-    selected: string[]
-    setSelected: Dispatch<SetStateAction<string[]>>
 }
-export const CommonMoves = ({ movesData, selected, setSelected }: Props) => {
+export const CommonMoves = ({ movesData }: Props) => {
     const moves = movesData.moves
     const total = movesData.total
 
+    const { selectedPokemonData, handleMovesChange, setInitialMoves } = useSelectedContext()
+
     useEffect(() => {
-        const selectedMoves = moves.slice(0, 4).map((move) => move.name)
-        setSelected(selectedMoves)
+        const initialMoves = moves.slice(0, 4).map((move) => move.name)
+        console.log(initialMoves)
+       setInitialMoves(initialMoves)
     }, [])
-
-    const handleClick = (moveName: string) => {
-        if (selected.includes(moveName)) {
-            const filterName = selected.filter((move) => move !== moveName)
-            setSelected(filterName)
-            return
-        }
-        if (selected.length >= 4) return
-
-        setSelected([...selected, moveName])
-    }
 
     return (
         <>
@@ -43,7 +34,7 @@ export const CommonMoves = ({ movesData, selected, setSelected }: Props) => {
                             const percentage = formatPercentage(
                                 move.amount / total
                             )
-                            const moveSelected = selected.includes(move.name)
+                            const moveSelected = selectedPokemonData.moves.includes(move.name)
                             return (
                                 <div
                                     className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${
@@ -51,7 +42,7 @@ export const CommonMoves = ({ movesData, selected, setSelected }: Props) => {
                                         "border-2 border-primary"
                                     }`}
                                     key={move.name}
-                                    onClick={() => handleClick(move.name)}
+                                    onClick={() => handleMovesChange(move.name)}
                                 >
                                     <h4>{formatString(move.name)}</h4>
                                     <h5>{percentage}</h5>

@@ -35,8 +35,11 @@ interface PokemonValues {
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
     const { selectedPokemonData } = useSelectedContext()
-    console.log(selectedPokemonData)
     const SHINY_ODDS = 100
+    const unusedMoves = pokemon.moves.filter(
+        (move) => !selectedPokemonData.moves.includes(move.move.name)
+    )
+    const selectedMovesLength = selectedPokemonData.moves.length
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
             return { ...initial, ...data }
@@ -60,13 +63,21 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 selectedPokemonData.teraType ??
                 pokemon.types[0].type.name,
             moves: [
-                createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name,
+                createdPokemon?.moves[0].move ??
+                    selectedPokemonData.moves[0] ??
+                    unusedMoves[0].move.name,
 
-                createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name,
+                createdPokemon?.moves[1].move ??
+                    selectedPokemonData.moves[1] ??
+                    unusedMoves[1 - selectedMovesLength].move.name,
 
-                createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name,
+                createdPokemon?.moves[2].move ??
+                    selectedPokemonData.moves[2] ??
+                    unusedMoves[2 - selectedMovesLength].move.name,
 
-                createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name,
+                createdPokemon?.moves[3].move ??
+                    selectedPokemonData.moves[3] ??
+                    unusedMoves[3 - selectedMovesLength].move.name,
             ],
 
             shiny: createdPokemon?.shiny
