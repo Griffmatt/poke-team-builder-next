@@ -14,9 +14,7 @@ export const pokemonRouter = createTRPCRouter({
         })
     }),
     getSinglePokemon: publicProcedure
-        .input(
-            z.object({ pokemonId: z.string() })
-        )
+        .input(z.object({ pokemonId: z.string() }))
         .query(({ ctx, input }) => {
             return ctx.prisma.createdPokemon.findUnique({
                 where: { id: input.pokemonId },

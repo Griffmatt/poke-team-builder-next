@@ -9,7 +9,6 @@ interface Props {
 export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     const apiContext = api.useContext()
 
-
     const won = battleStatus === "Won" ? 1 : 0
     const battleMutation = api.teams.addBattle.useMutation({
         onMutate: () => {

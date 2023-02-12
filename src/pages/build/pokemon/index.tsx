@@ -36,7 +36,7 @@ const Pokemon: NextPage = () => {
         )
     }
 
-    if(error) return <div>Error: {error.message}</div>
+    if (error) return <div>Error: {error.message}</div>
 
     const pokemons = pokemonData?.results as unknown as Pokemon[]
 

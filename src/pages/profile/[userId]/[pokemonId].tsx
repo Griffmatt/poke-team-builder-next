@@ -35,7 +35,7 @@ const SinglePokemon: NextPage = () => {
         data: favorites,
         isLoading: isLoading3,
         error: error3,
-        isFetching
+        isFetching,
     } = api.favorite.checkUserFavoritePokemon.useQuery(
         {
             userId: session?.user?.id as string,

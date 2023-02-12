@@ -42,9 +42,7 @@ export const PokemonCard = ({
                 {pokemonImage && <img src={pokemonImage} className="w-full" />}
             </div>
             <div>
-                <h4 className="text-center">
-                    {formatString(pokemon.name)}
-                </h4>
+                <h4 className="text-center">{formatString(pokemon.name)}</h4>
                 {percentage ? (
                     <h4 className="text-center">{percentage}</h4>
                 ) : (
