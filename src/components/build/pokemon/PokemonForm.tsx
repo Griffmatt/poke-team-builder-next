@@ -33,6 +33,7 @@ interface PokemonValues {
 
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
+    console.log(heldItems)
     const SHINY_ODDS = 100
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
@@ -42,7 +43,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             ability:
                 createdPokemon?.ability ?? pokemon.abilities[0].ability.name,
             nature: createdPokemon?.nature ?? NATURES[0],
-            heldItem: createdPokemon?.heldItem ?? heldItems[0].name,
+            heldItem: createdPokemon?.heldItem ?? "",
             teraType: createdPokemon?.teraType ?? pokemon.types[0].type.name,
             moves: [
                 createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name,
@@ -142,6 +143,8 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
         return null
     }
+
+    console.log(heldItems)
 
     return (
         <form

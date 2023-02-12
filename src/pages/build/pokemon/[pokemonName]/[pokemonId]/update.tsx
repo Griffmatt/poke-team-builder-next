@@ -47,7 +47,7 @@ const UpdatePokemon: NextPage = () => {
             {pokemon && heldItems && createdPokemon && (
                 <PokemonForm
                     pokemon={pokemon}
-                    heldItems={heldItems.results}
+                    heldItems={heldItems}
                     createdPokemon={createdPokemon}
                 />
             )}
