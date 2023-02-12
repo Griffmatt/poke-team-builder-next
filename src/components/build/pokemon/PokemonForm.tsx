@@ -15,10 +15,11 @@ import { CreatedPokemon } from "types/trpc"
 import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"
+import { useSelectedContext } from "context/selectedContext"
 
 interface Props {
     pokemon: Pokemon
-    heldItems: { name: string }[]
+    heldItems: string[]
     createdPokemon?: CreatedPokemon
 }
 
@@ -33,31 +34,11 @@ interface PokemonValues {
 
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
-    const SHINY_ODDS = 100
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
             return { ...initial, ...data }
         },
-        {
-            ability:
-                createdPokemon?.ability ?? pokemon.abilities[0].ability.name,
-            nature: createdPokemon?.nature ?? NATURES[0],
-            heldItem: createdPokemon?.heldItem ?? heldItems[0].name,
-            teraType: createdPokemon?.teraType ?? pokemon.types[0].type.name,
-            moves: [
-                createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name,
-
-                createdPokemon?.moves[1].move ?? pokemon.moves[1].move.name,
-
-                createdPokemon?.moves[2].move ?? pokemon.moves[2].move.name,
-
-                createdPokemon?.moves[3].move ?? pokemon.moves[3].move.name,
-            ],
-
-            shiny: createdPokemon?.shiny
-                ? createdPokemon.shiny
-                : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
-        }
+        formatInitialData(pokemon, heldItems, createdPokemon)
     )
     const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
 
@@ -196,23 +177,13 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                             }
                             value={formatString(heldItem)}
                         >
-                            {heldItems
-                                .sort((a, b) => {
-                                    if (a.name < b.name) {
-                                        return -1
-                                    }
-                                    if (a.name > b.name) {
-                                        return 1
-                                    }
-                                    return 0
-                                })
-                                .map((heldItem) => {
-                                    return (
-                                        <option key={heldItem.name}>
-                                            {formatString(heldItem.name)}
-                                        </option>
-                                    )
-                                })}
+                            {heldItems.sort().map((heldItem) => {
+                                return (
+                                    <option key={heldItem}>
+                                        {formatString(heldItem)}
+                                    </option>
+                                )
+                            })}
                         </select>
                     </label>
                     <label className="grid">
@@ -334,4 +305,55 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             </button>
         </form>
     )
+}
+
+const formatInitialData = (
+    pokemon: Pokemon,
+    heldItems: string[],
+    createdPokemon?: CreatedPokemon
+) => {
+    const { selectedPokemonData } = useSelectedContext()
+    const SHINY_ODDS = 100
+    const unusedMoves = pokemon.moves.filter(
+        (move) => !selectedPokemonData.moves.includes(move.move.name)
+    )
+    const selectedMovesLength = selectedPokemonData.moves.length
+    return {
+        ability:
+            createdPokemon?.ability ??
+            selectedPokemonData.ability ??
+            pokemon.abilities[0].ability.name,
+        nature:
+            createdPokemon?.nature ?? selectedPokemonData.nature ?? NATURES[0],
+
+        heldItem:
+            createdPokemon?.heldItem ??
+            selectedPokemonData.heldItem ??
+            heldItems[0],
+        teraType:
+            createdPokemon?.teraType ??
+            selectedPokemonData.teraType ??
+            pokemon.types[0].type.name,
+        moves: [
+            createdPokemon?.moves[0].move ??
+                selectedPokemonData.moves[0] ??
+                unusedMoves[0].move.name,
+
+            createdPokemon?.moves[1].move ??
+                selectedPokemonData.moves[1] ??
+                unusedMoves[1 - selectedMovesLength].move.name,
+
+            createdPokemon?.moves[2].move ??
+                selectedPokemonData.moves[2] ??
+                unusedMoves[2 - selectedMovesLength].move.name,
+
+            createdPokemon?.moves[3].move ??
+                selectedPokemonData.moves[3] ??
+                unusedMoves[3 - selectedMovesLength].move.name,
+        ],
+
+        shiny: createdPokemon?.shiny
+            ? createdPokemon.shiny
+            : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+    }
 }

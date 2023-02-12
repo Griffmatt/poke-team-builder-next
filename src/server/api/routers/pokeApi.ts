@@ -2,10 +2,11 @@ import { createTRPCRouter, publicProcedure } from "../trpc"
 
 import { z } from "zod"
 
-import { PokemonClient, ItemClient } from "pokenode-ts"
+import { PokemonClient, ItemClient, BerryClient } from "pokenode-ts"
 
 const api = new PokemonClient()
 const itemApi = new ItemClient()
+const berryApi = new BerryClient()
 
 export const pokeApiRouter = createTRPCRouter({
     getPokemon: publicProcedure
@@ -18,7 +19,11 @@ export const pokeApiRouter = createTRPCRouter({
         .query(({ input }) => {
             return api.getPokemonByName(input.name)
         }),
-    getHeldItems: publicProcedure.query(() => {
-        return itemApi.listItems()
+    getHeldItems: publicProcedure.query(async () => {
+        const itemsData = await itemApi.getItemCategoryByName("held-items")
+        const berryData = await berryApi.listBerries()
+        const items = itemsData.items.map((item) => item.name)
+        const berries = berryData.results.map((berry) => `${berry.name} berry`)
+        return [...items, ...berries]
     }),
 })

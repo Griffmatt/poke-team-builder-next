@@ -1,7 +1,10 @@
-import { CommonDataCard } from "./commonDataCard"
+import { formatPercentage } from "utils/formatPercentage"
+import { formatString } from "utils/formatString"
+import { useEffect } from "react"
+import { useSelectedContext } from "context/selectedContext"
 
 interface Props {
-    moves: {
+    movesData: {
         moves: {
             name: string
             amount: number
@@ -9,17 +12,43 @@ interface Props {
         total: number
     }
 }
-export const CommonMoves = ({ moves }: Props) => {
+export const CommonMoves = ({ movesData }: Props) => {
+    const moves = movesData.moves
+    const total = movesData.total
+
+    const { selectedPokemonData, handleMovesChange, setInitialMoves } = useSelectedContext()
+
+    useEffect(() => {
+        const initialMoves = moves.slice(0, 4).map((move) => move.name)
+        console.log(initialMoves)
+       setInitialMoves(initialMoves)
+    }, [])
+
     return (
         <>
-            {moves && moves?.total > 0 && (
+            {moves && total > 0 && (
                 <div className="w-full">
                     <h3>Common Moves</h3>
                     <div className="grid grid-cols-1 gap-1 md:grid-cols-3">
-                        <CommonDataCard
-                            data={moves.moves}
-                            total={moves.total}
-                        />
+                        {moves.slice(0, 6).map((move) => {
+                            const percentage = formatPercentage(
+                                move.amount / total
+                            )
+                            const moveSelected = selectedPokemonData.moves.includes(move.name)
+                            return (
+                                <div
+                                    className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${
+                                        moveSelected &&
+                                        "border-2 border-primary"
+                                    }`}
+                                    key={move.name}
+                                    onClick={() => handleMovesChange(move.name)}
+                                >
+                                    <h4>{formatString(move.name)}</h4>
+                                    <h5>{percentage}</h5>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             )}

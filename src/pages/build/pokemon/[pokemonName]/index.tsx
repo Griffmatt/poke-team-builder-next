@@ -1,4 +1,3 @@
-import { CommonData } from "components/commonData/commonData"
 import { CommonMoves } from "components/commonData/commonMoves"
 import { BackButton } from "components/ui/backButton"
 import { type NextPage } from "next"
@@ -10,6 +9,7 @@ import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
+import { CommonData } from "components/commonData/commonData"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -40,11 +40,9 @@ const SinglePokemon: NextPage = () => {
         pokemonName: pokemonName as string,
     })
 
-    const { data: moves } = api.mostCommon.moves.useQuery({
+    const { data: movesData } = api.mostCommon.moves.useQuery({
         pokemonName: pokemonName as string,
     })
-
-    let totalStats = 0
 
     if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
@@ -80,6 +78,7 @@ const SinglePokemon: NextPage = () => {
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
 
+    let totalStats = 0
     return (
         <main>
             <BackButton />
@@ -153,7 +152,7 @@ const SinglePokemon: NextPage = () => {
                                 dataType="heldItem"
                             />
                         </div>
-                        {moves && <CommonMoves moves={moves} />}
+                        {movesData && <CommonMoves movesData={movesData} />}
                     </div>
                 )}
                 <div

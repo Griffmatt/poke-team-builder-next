@@ -14,6 +14,7 @@ interface TeamRows {
     query?: string
     userId?: string
     userName?: string | null
+    favoriteRows?: boolean
 }
 
 export const TeamRows = ({
@@ -22,11 +23,17 @@ export const TeamRows = ({
     query,
     userId,
     userName,
+    favoriteRows,
 }: TeamRows) => {
     return (
         <>
             {teams.length === 0 ? (
-                <TeamsEmpty query={query} userId={userId} userName={userName} />
+                <TeamsEmpty
+                    query={query}
+                    userId={userId}
+                    userName={userName}
+                    favoriteRows={favoriteRows}
+                />
             ) : (
                 teams.map((team) => {
                     const favorited = favoriteTeams?.includes(team.id)
@@ -121,10 +128,12 @@ const TeamsEmpty = ({
     query,
     userId,
     userName,
+    favoriteRows,
 }: {
     query?: string
     userId?: string
     userName?: string | null
+    favoriteRows?: boolean
 }) => {
     const { data: session } = useSession()
     const className =
@@ -140,21 +149,40 @@ const TeamsEmpty = ({
 
     if (userId === session?.user?.id) {
         return (
-            <div className={className}>
-                <h2>You haven't built any Teams yet!</h2>
-                <Link href="/build/team">
-                    Click here to view build team
-                </Link>
-            </div>
+            <>
+                {favoriteRows ? (
+                    <div className={className}>
+                        <h2>You haven't favorited any Teams yet!</h2>
+                    </div>
+                ) : (
+                    <div className={className}>
+                        <h2>You haven't built any Teams yet!</h2>
+                        <Link href="/build/team">
+                            Click here to view build team
+                        </Link>
+                    </div>
+                )}
+            </>
         )
     }
 
     return (
-        <div className={className}>
-            <h2>
-                {userName ?? "They"} ${userName ? "hasn't" : "haven't"} created
-                any Teams yet!
-            </h2>
-        </div>
+        <>
+            {favoriteRows ? (
+                <div className={className}>
+                    <h2>
+                        {userName ?? "They"} {userName ? "hasn't" : "haven't"}{" "}
+                        favorited any Teams yet!
+                    </h2>
+                </div>
+            ) : (
+                <div className={className}>
+                    <h2>
+                        {userName ?? "They"} {userName ? "hasn't" : "haven't"}{" "}
+                        created any Teams yet!
+                    </h2>
+                </div>
+            )}
+        </>
     )
 }
