@@ -10,11 +10,18 @@ import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
+import { useState } from "react"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName } = router.query
     const { data: session } = useSession()
+
+    const [ability, setAbility] = useState('')
+    const [nature, setNature] = useState('')
+    const [teraType, setTeraType] = useState('')
+    const [heldItem, setHeldItem] = useState('')
+
 
     const {
         data: pokemon,
@@ -44,7 +51,6 @@ const SinglePokemon: NextPage = () => {
         pokemonName: pokemonName as string,
     })
 
-    let totalStats = 0
 
     if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
@@ -80,6 +86,7 @@ const SinglePokemon: NextPage = () => {
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
 
+    let totalStats = 0
     return (
         <main>
             <BackButton />
@@ -137,20 +144,28 @@ const SinglePokemon: NextPage = () => {
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="nature"
+                                selected={nature}
+                                setSelected={setNature}
                             />
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="ability"
+                                selected={ability}
+                                setSelected={setAbility}
                             />
                         </div>
                         <div className="grid gap-2 md:grid-cols-2">
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="teraType"
+                                selected={teraType}
+                                setSelected={setTeraType}
                             />
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="heldItem"
+                                selected={heldItem}
+                                setSelected={setHeldItem}
                             />
                         </div>
                         {moves && <CommonMoves moves={moves} />}

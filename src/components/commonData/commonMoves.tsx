@@ -1,4 +1,5 @@
-import { CommonDataCard } from "./commonDataCard"
+import { formatPercentage } from "utils/formatPercentage"
+import { formatString } from "utils/formatString"
 
 interface Props {
     moves: {
@@ -16,10 +17,20 @@ export const CommonMoves = ({ moves }: Props) => {
                 <div className="w-full">
                     <h3>Common Moves</h3>
                     <div className="grid grid-cols-1 gap-1 md:grid-cols-3">
-                        <CommonDataCard
-                            data={moves.moves}
-                            total={moves.total}
-                        />
+                    {moves.moves.slice(0, 6).map((move) => {
+                            const percentage = formatPercentage(
+                                move.amount / moves.total
+                            )
+                            return (
+                                <div
+                                    className="flex justify-between rounded px-4 py-2 dark:bg-dark-2"
+                                    key={move.name}
+                                >
+                                    <h4>{formatString(move.name)}</h4>
+                                    <h5>{percentage}</h5>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             )}
