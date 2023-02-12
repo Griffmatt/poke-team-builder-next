@@ -16,12 +16,13 @@ export const CommonMoves = ({ movesData }: Props) => {
     const moves = movesData.moves
     const total = movesData.total
 
-    const { selectedPokemonData, handleMovesChange, setInitialMoves } = useSelectedContext()
+    const { selectedPokemonData, handleMovesChange, setInitialMoves } =
+        useSelectedContext()
 
     useEffect(() => {
         const initialMoves = moves.slice(0, 4).map((move) => move.name)
         console.log(initialMoves)
-       setInitialMoves(initialMoves)
+        setInitialMoves(initialMoves)
     }, [])
 
     return (
@@ -34,7 +35,8 @@ export const CommonMoves = ({ movesData }: Props) => {
                             const percentage = formatPercentage(
                                 move.amount / total
                             )
-                            const moveSelected = selectedPokemonData.moves.includes(move.name)
+                            const moveSelected =
+                                selectedPokemonData.moves.includes(move.name)
                             return (
                                 <div
                                     className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${

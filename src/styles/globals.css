@@ -37,7 +37,7 @@ input {
 }
 
 select {
-    @apply h-8 rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light
+    @apply h-8 rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
 }
 
 button {

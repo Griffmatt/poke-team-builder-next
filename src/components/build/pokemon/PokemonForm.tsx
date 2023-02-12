@@ -300,6 +300,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             <button
                 className="w-full rounded-xl p-4 md:col-start-2 lg:col-start-3"
                 type="submit"
+                disabled={buildPokemon.isLoading || updatePokemon.isLoading}
             >
                 {createdPokemon ? "Update Pokemon" : "Build Pokemon"}
             </button>
