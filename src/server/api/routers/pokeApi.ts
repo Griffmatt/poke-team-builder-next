@@ -10,9 +10,8 @@ const berryApi = new BerryClient()
 
 export const pokeApiRouter = createTRPCRouter({
     getPokemon: publicProcedure
-        .input(z.object({ limit: z.number() }))
-        .query(({ input }) => {
-            return api.listPokemons(0, input.limit)
+        .query(() => {
+            return api.listPokemons(0, 1008)
         }),
     getPokemonByName: publicProcedure
         .input(z.object({ name: z.string() }))

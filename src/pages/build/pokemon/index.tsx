@@ -12,9 +12,7 @@ const Pokemon: NextPage = () => {
         data: pokemonData,
         isLoading,
         error,
-    } = api.pokeApi.getPokemon.useQuery({
-        limit: 898,
-    })
+    } = api.pokeApi.getPokemon.useQuery()
     const [query, setQuery] = useState("")
     const debouncedValue = useDebounceQuery(query)
 
@@ -36,9 +34,11 @@ const Pokemon: NextPage = () => {
         )
     }
 
+    console.log(pokemonData)
+
     if (error) return <div>Error: {error.message}</div>
 
-    const pokemons = pokemonData?.results as unknown as Pokemon[]
+    const pokemons = pokemonData.results as unknown as Pokemon[]
 
     return (
         <main>
