@@ -75,6 +75,7 @@ const ProfilePokemon: NextPage = () => {
             <CreatedPokemonGrid
                 pokemons={filterPokemon}
                 query={debouncedValue}
+                userId={userId as string}
             />
         </main>
     )

@@ -75,11 +75,11 @@ const Favorites: NextPage = () => {
             />
             <div className="grid gap-3">
                 <h2>Pokemon</h2>
-                <CreatedPokemonGrid pokemons={pokemons} />
+                <CreatedPokemonGrid pokemons={pokemons} favoriteGrid={true} userId={userId as string}/>
             </div>
             <div className="grid gap-3">
                 <h2>Teams</h2>
-                <TeamRows teams={teams} favoriteTeams={favoriteTeams} />
+                <TeamRows teams={teams} favoriteTeams={favoriteTeams} favoriteRows={true} userId={userId as string}/>
             </div>
         </main>
     )
