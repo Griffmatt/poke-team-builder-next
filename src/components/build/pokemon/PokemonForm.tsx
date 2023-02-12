@@ -15,6 +15,7 @@ import { CreatedPokemon } from "types/trpc"
 import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"
+import { useSelectedContext } from "context/selectedContext"
 
 interface Props {
     pokemon: Pokemon
@@ -33,7 +34,8 @@ interface PokemonValues {
 
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
-    console.log(heldItems)
+    const { selectedPokemonData } = useSelectedContext()
+    console.log(selectedPokemonData)
     const SHINY_ODDS = 100
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
@@ -41,10 +43,22 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         },
         {
             ability:
-                createdPokemon?.ability ?? pokemon.abilities[0].ability.name,
-            nature: createdPokemon?.nature ?? NATURES[0],
-            heldItem: createdPokemon?.heldItem ?? "",
-            teraType: createdPokemon?.teraType ?? pokemon.types[0].type.name,
+                createdPokemon?.ability ??
+                selectedPokemonData.ability ??
+                pokemon.abilities[0].ability.name,
+            nature:
+                createdPokemon?.nature ??
+                selectedPokemonData.nature ??
+                NATURES[0],
+
+            heldItem:
+                createdPokemon?.heldItem ??
+                selectedPokemonData.heldItem ??
+                heldItems[0].name,
+            teraType:
+                createdPokemon?.teraType ??
+                selectedPokemonData.teraType ??
+                pokemon.types[0].type.name,
             moves: [
                 createdPokemon?.moves[0].move ?? pokemon.moves[0].move.name,
 
@@ -143,8 +157,6 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
         return null
     }
-
-    console.log(heldItems)
 
     return (
         <form

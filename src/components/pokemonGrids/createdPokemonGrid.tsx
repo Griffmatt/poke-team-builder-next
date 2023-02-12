@@ -23,7 +23,7 @@ export const CreatedPokemonGrid = ({
 
     return (
         <>
-            {query && showPokemon.length === 0 ? (
+            {showPokemon.length === 0 ? (
                 <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
                 <div className="pokemon-card-grid">

@@ -1,4 +1,5 @@
-import { useEffect, type Dispatch, type SetStateAction } from "react"
+import { useSelectedContext } from "context/selectedContext"
+import { useEffect } from "react"
 import { countStringArr } from "server/utils/countStringArr"
 import { CreatedPokemon } from "types/trpc"
 import { formatPercentage } from "utils/formatPercentage"
@@ -9,11 +10,9 @@ type dataTypes = "nature" | "heldItem" | "ability" | "teraType"
 interface Props {
     pokemonBuilds: CreatedPokemon[]
     dataType: dataTypes
-    selected: string
-    setSelected: Dispatch<SetStateAction<string>>
 }
 
-export const CommonData = ({ pokemonBuilds, dataType, selected, setSelected }: Props) => {
+export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
     const data = pokemonBuilds.map((pokemon) => pokemon?.[dataType])
     const { string, total } = countStringArr(data as string[])
     const formatDataType = (string: dataTypes) => {
@@ -21,11 +20,14 @@ export const CommonData = ({ pokemonBuilds, dataType, selected, setSelected }: P
         return formatString(string)
     }
 
+    const { selectedPokemonData, handleChange } = useSelectedContext()
+
     const type = formatDataType(dataType)
+    const selected = selectedPokemonData?.[dataType]
 
     useEffect(() => {
-        setSelected(string[0].name)
-    }, [string])
+        handleChange({ [dataType]: string[0].name })
+    }, [])
 
     return (
         <>
@@ -37,11 +39,21 @@ export const CommonData = ({ pokemonBuilds, dataType, selected, setSelected }: P
                             const percentage = formatPercentage(
                                 string.amount / total
                             )
-                            const stringSelected = string.name.toLowerCase() === selected.toLowerCase()
+                            const stringSelected =
+                                string.name.toLowerCase() ===
+                                selected?.toLowerCase()
                             return (
                                 <div
-                                    className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${stringSelected && "border-2 border-primary"}`}
+                                    className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${
+                                        stringSelected &&
+                                        "border-2 border-primary"
+                                    }`}
                                     key={string.name}
+                                    onClick={() =>
+                                        handleChange({
+                                            [dataType]: string.name,
+                                        })
+                                    }
                                 >
                                     <h4>{formatString(string.name)}</h4>
                                     <h5>{percentage}</h5>

@@ -9,6 +9,7 @@ import { api } from "utils/api"
 
 import { Layout } from "components/ui/layout"
 import { useScrollRestoration } from "hooks/useScrollRestoration"
+import { SelectedContextProvider } from "context/selectedContext"
 
 const MyApp: AppType<{ session: Session | null }> = ({
     Component,
@@ -18,7 +19,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
     return (
         <SessionProvider session={session}>
             <Layout>
-                <Component {...pageProps} />
+                <SelectedContextProvider>
+                    <Component {...pageProps} />
+                </SelectedContextProvider>
             </Layout>
         </SessionProvider>
     )
