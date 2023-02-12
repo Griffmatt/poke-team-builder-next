@@ -39,7 +39,21 @@ export const removeFavoriteTeamMutation = (teamId: string, userId: string) => {
                 )
             }
 
-            return { usersFavorites, usersTeams }
+            const userFavoritedTeams =
+                apiContext.favorite.getUserFavoriteTeams.getData({
+                    userId: userId,
+                })
+
+                if(userFavoritedTeams){
+                    const filterTeams = userFavoritedTeams.filter(team => team.id !== teamId)
+                    apiContext.favorite.getUserFavoriteTeams.setData({
+                        userId: userId,
+                    }, 
+                        filterTeams
+                    )
+                }
+
+            return { usersFavorites, usersTeams, userFavoritedTeams }
         },
         onError: (error, variables, context) => {
             apiContext.favorite.checkUserFavoriteTeams.setData(
@@ -55,10 +69,17 @@ export const removeFavoriteTeamMutation = (teamId: string, userId: string) => {
                 },
                 context?.usersTeams
             )
+
+            apiContext.favorite.getUserFavoriteTeams.setData({
+                userId: userId,
+            }, 
+                context?.userFavoritedTeams
+            )
         },
         onSettled: () => {
             apiContext.favorite.checkUserFavoriteTeams.invalidate()
             apiContext.teams.getUserTeams.invalidate()
+            apiContext.favorite.getUserFavoriteTeams.invalidate()
         },
     })
     return removeFavoriteTeam

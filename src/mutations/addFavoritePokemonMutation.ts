@@ -49,7 +49,21 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
                 )
             }
 
-            return { userFavorites, usersPokemon }
+            const usersFavoritedPokemon =
+                apiContext.favorite.getUserFavoritePokemon.getData({
+                    userId: session?.user!.id as string,
+                })
+
+            if (usersFavoritedPokemon) {
+                apiContext.favorite.getUserFavoritePokemon.setData(
+                    {
+                        userId: session?.user!.id as string,
+                    },
+                    [createdPokemon, ...usersFavoritedPokemon]
+                )
+            }
+
+            return { userFavorites, usersPokemon, usersFavoritedPokemon }
         },
         onError: (error, variables, context) => {
             apiContext.favorite.checkUserFavoritePokemon.setData(
@@ -62,10 +76,18 @@ const addFavoritePokemonMutation = (createdPokemon: CreatedPokemon) => {
                 },
                 context?.usersPokemon
             )
+
+            apiContext.favorite.getUserFavoritePokemon.setData(
+                {
+                    userId: session?.user?.id as string,
+                },
+                context?.usersFavoritedPokemon
+            )
         },
         onSettled: () => {
             apiContext.favorite.checkUserFavoritePokemon.invalidate()
             apiContext.pokemon.getUsersPokemon.invalidate()
+            apiContext.favorite.getUserFavoritePokemon.invalidate()
         },
     })
     return addFavoritePokemon
