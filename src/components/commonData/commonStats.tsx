@@ -9,7 +9,7 @@ export const CommonStats = ({ stats }: Props) => {
     return (
         <div className="w-full">
             <h3>Common Stats</h3>
-            <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 {stats.map((stats, index) => {
                     const selectedStats = false
                     return (
