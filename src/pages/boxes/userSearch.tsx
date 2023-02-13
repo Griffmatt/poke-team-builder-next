@@ -68,17 +68,23 @@ const Boxes: NextPage = () => {
                     />
                 </div>
                 {queryUsers?.map((user) => {
+                    const firstName = user?.name?.split(" ")[0] ?? ""
                     return (
                         <Link
                             href={`/profile/${user.id}`}
                             className="grid w-fit gap-2"
                             key={user.id}
                         >
-                            <img
-                                src={user?.image ?? ""}
-                                className="rounded-full"
-                            />
-                            <h3 className="text-center">{user.name}</h3>
+                            {user.image ? (
+                                <img
+                                    src={user.image}
+                                    className="rounded-full"
+                                    referrerPolicy="no-referrer"
+                                />
+                            ) : (
+                                <div className="rounded-full" />
+                            )}
+                            <h3 className="text-center">{firstName}</h3>
                         </Link>
                     )
                 })}
@@ -100,17 +106,23 @@ const SuggestedUsers = ({ users }: SuggestedProps) => {
             <div className="no-scrollbar flex gap-2 overflow-x-scroll">
                 {users.map((user) => {
                     if (user == null) return
+                    const firstName = user?.name?.split(" ")[0] ?? ""
                     return (
                         <Link
                             href={`/profile/${user.id}`}
                             className="grid w-fit gap-2"
                             key={user.id}
                         >
-                            <img
-                                src={user.image ?? ""}
-                                className="h-20 w-auto rounded-full"
-                            />
-                            <h3 className="text-center">{user.name}</h3>
+                            {user.image ? (
+                                <img
+                                    src={user.image}
+                                    className="h-20 w-auto rounded-full"
+                                    referrerPolicy="no-referrer"
+                                />
+                            ) : (
+                                <div className="h-20 w-auto rounded-full" />
+                            )}
+                            <h3 className="text-center">{firstName}</h3>
                         </Link>
                     )
                 })}

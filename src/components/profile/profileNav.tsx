@@ -59,16 +59,22 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
 }
 
 const UserHeader = ({ user }: { user: user }) => {
+    const firstName = user?.name?.split(" ")[0] ?? ""
     return (
         <div className="grid h-44 grid-rows-2 px-1 text-center">
             <div className="row-span-2 grid h-fit w-fit gap-1">
                 <div className="aspect-square w-24 md:w-32">
-                    <img
-                        src={user?.image ?? ""}
-                        className="rounded-full border-4 border-dark-3"
-                    />
+                    {user?.image ? (
+                        <img
+                            src={user.image}
+                            className="rounded-full border-4 border-dark-3"
+                            referrerPolicy="no-referrer"
+                        />
+                    ) : (
+                        <div className="rounded-full border-4 border-dark-3" />
+                    )}
                 </div>
-                <h2>{user?.name}</h2>
+                <h2>{firstName}</h2>
             </div>
         </div>
     )
