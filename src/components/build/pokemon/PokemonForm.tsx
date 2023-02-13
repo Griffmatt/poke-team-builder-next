@@ -179,7 +179,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                             }
                             value={formatString(heldItem)}
                         >
-                            {heldItems.sort().map((heldItem) => {
+                            {heldItems.map((heldItem) => {
                                 return (
                                     <option key={heldItem}>
                                         {formatString(heldItem)}
