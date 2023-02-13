@@ -27,7 +27,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
 
     useEffect(() => {
         handleChange({ [dataType]: string[0].name })
-    }, [])
+    }, [string[0].name])
 
     return (
         <>

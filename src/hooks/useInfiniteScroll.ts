@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 export const useInfiniteScroll = <T>(
     itemsArr: T[],
-    initialLimit = 30,
+    initialLimit = 24,
     limit = 12
 ) => {
     const [items, setItems] = useState<T[]>(itemsArr?.slice(0, initialLimit))
