@@ -12,7 +12,9 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     const won = battleStatus === "Won" ? 1 : 0
     const battleMutation = api.teams.addBattle.useMutation({
         onMutate: () => {
-            const teamData = apiContext.teams.getTeam.getData()
+            const teamData = apiContext.teams.getTeam.getData({
+                teamId: teamId,
+            })
             if (teamData) {
                 apiContext.teams.getTeam.setData(
                     {
