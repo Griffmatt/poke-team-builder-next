@@ -15,15 +15,14 @@ interface Props {
 export const CommonMoves = ({ movesData }: Props) => {
     const moves = movesData.moves
     const total = movesData.total
+    const initialMoves = moves.slice(0, 4).map((move) => move.name)
 
     const { selectedPokemonData, handleMovesChange, setInitialMoves } =
         useSelectedContext()
 
     useEffect(() => {
-        const initialMoves = moves.slice(0, 4).map((move) => move.name)
-        console.log(initialMoves)
         setInitialMoves(initialMoves)
-    }, [])
+    }, [...initialMoves])
 
     return (
         <>
@@ -38,17 +37,18 @@ export const CommonMoves = ({ movesData }: Props) => {
                             const moveSelected =
                                 selectedPokemonData.moves.includes(move.name)
                             return (
-                                <div
-                                    className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${
-                                        moveSelected &&
-                                        "border-2 border-primary"
+                                <button
+                                    className={`flex justify-between rounded border-2 px-4 py-2 dark:bg-dark-2 ${
+                                        moveSelected
+                                            ? "border-primary"
+                                            : "dark:border-dark-2"
                                     }`}
                                     key={move.name}
                                     onClick={() => handleMovesChange(move.name)}
                                 >
                                     <h4>{formatString(move.name)}</h4>
                                     <h5>{percentage}</h5>
-                                </div>
+                                </button>
                             )
                         })}
                     </div>

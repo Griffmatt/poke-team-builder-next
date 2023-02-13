@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useReducer } from "react"
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useReducer,
+    useState,
+} from "react"
 
 interface PokemonValues {
     ability: string | null
@@ -6,6 +12,10 @@ interface PokemonValues {
     heldItem: string | null
     teraType: string | null
     moves: string[]
+    stats: {
+        stat: string
+        value: number
+    }[]
 }
 
 interface Context {
@@ -13,6 +23,15 @@ interface Context {
     handleChange: (data: Partial<PokemonValues>) => void
     handleMovesChange: (moveName: string) => void
     setInitialMoves: (moves: string[]) => void
+    statsIndex: number
+    handleStatsChange: (
+        stats: {
+            stat: string
+            value: number
+        }[],
+        index: number
+    ) => void
+    resetData: () => void
 }
 
 interface Props {
@@ -26,6 +45,7 @@ export function useSelectedContext() {
 }
 
 export function SelectedContextProvider({ children }: Props) {
+    const [statsIndex, setStatsIndex] = useState(0)
     const [selectedPokemonData, setSelectedPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
             return { ...initial, ...data }
@@ -36,6 +56,7 @@ export function SelectedContextProvider({ children }: Props) {
             heldItem: null,
             teraType: null,
             moves: [],
+            stats: [],
         }
     )
 
@@ -62,6 +83,26 @@ export function SelectedContextProvider({ children }: Props) {
         setSelectedPokemonData({ moves: moves })
     }
 
+    const handleStatsChange = (
+        stats: { stat: string; value: number }[],
+        index: number
+    ) => {
+        setSelectedPokemonData({ stats: stats })
+        setStatsIndex(index)
+    }
+
+    const resetData = () => {
+        setSelectedPokemonData({
+            ability: null,
+            nature: null,
+            heldItem: null,
+            teraType: null,
+            moves: [],
+            stats: [],
+        })
+    }
+    
+
     return (
         <SelectedContext.Provider
             value={{
@@ -69,6 +110,9 @@ export function SelectedContextProvider({ children }: Props) {
                 handleChange,
                 handleMovesChange,
                 setInitialMoves,
+                statsIndex,
+                handleStatsChange,
+                resetData
             }}
         >
             {children}

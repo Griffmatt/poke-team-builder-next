@@ -27,7 +27,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
 
     useEffect(() => {
         handleChange({ [dataType]: string[0].name })
-    }, [])
+    }, [string[0].name])
 
     return (
         <>
@@ -43,10 +43,11 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                                 string.name.toLowerCase() ===
                                 selected?.toLowerCase()
                             return (
-                                <div
-                                    className={`flex justify-between rounded px-4 py-2 dark:bg-dark-2 ${
-                                        stringSelected &&
-                                        "border-2 border-primary"
+                                <button
+                                    className={`flex justify-between rounded border-2 px-4 py-2  dark:bg-dark-2 ${
+                                        stringSelected
+                                            ? "border-primary"
+                                            : "dark:border-dark-2"
                                     }`}
                                     key={string.name}
                                     onClick={() =>
@@ -57,7 +58,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                                 >
                                     <h4>{formatString(string.name)}</h4>
                                     <h5>{percentage}</h5>
-                                </div>
+                                </button>
                             )
                         })}
                     </div>
