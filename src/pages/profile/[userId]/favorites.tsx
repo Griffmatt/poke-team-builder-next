@@ -81,6 +81,7 @@ const Favorites: NextPage = () => {
                     pokemons={pokemons}
                     favoriteGrid={true}
                     userId={userId as string}
+                    profileGrid={true}
                 />
             </div>
             <div className="grid gap-3">
