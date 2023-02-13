@@ -1,7 +1,7 @@
 export const countStringArr = (stringArr: string[]) => {
     const stringMap = new Map<string, number>()
     let stringCounted = [] as { name: string; amount: number }[]
-    stringArr?.forEach((string) => {
+    stringArr.forEach((string) => {
         const stringValue = stringMap.get(string)
         stringMap.set(string, (stringValue ?? 0) + 1)
     })
@@ -19,6 +19,7 @@ export const countStringArr = (stringArr: string[]) => {
         }
         return b.amount - a.amount
     })
+
 
     return { string, total }
 }

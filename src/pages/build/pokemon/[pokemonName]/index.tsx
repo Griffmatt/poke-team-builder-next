@@ -10,6 +10,7 @@ import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { CommonData } from "components/commonData/commonData"
+import { CommonStats } from "components/commonData/commonStats"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -41,6 +42,10 @@ const SinglePokemon: NextPage = () => {
     })
 
     const { data: movesData } = api.mostCommon.moves.useQuery({
+        pokemonName: pokemonName as string,
+    })
+
+    const { data: stats } = api.mostCommon.stats.useQuery({
         pokemonName: pokemonName as string,
     })
 
@@ -153,6 +158,7 @@ const SinglePokemon: NextPage = () => {
                             />
                         </div>
                         {movesData && <CommonMoves movesData={movesData} />}
+                        {stats && <CommonStats stats={stats} />}
                     </div>
                 )}
                 <div
