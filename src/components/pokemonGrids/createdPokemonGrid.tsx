@@ -10,6 +10,7 @@ interface Props {
     query?: string
     favoriteGrid?: boolean
     userId?: string
+    profileGrid?: boolean
 }
 
 export const CreatedPokemonGrid = ({
@@ -18,6 +19,7 @@ export const CreatedPokemonGrid = ({
     query,
     favoriteGrid,
     userId,
+    profileGrid
 }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons ?? null)
     const showPokemon = query
@@ -36,9 +38,14 @@ export const CreatedPokemonGrid = ({
             ) : (
                 <div className="pokemon-card-grid">
                     {pokemons?.map((pokemon) => {
-                        const favorited = currentUserFavorites
-                            ? currentUserFavorites.includes(pokemon.id)
-                            : pokemon.favorited[0]?.userId === pokemon.userId
+                        const currentUserFavorited =
+                            currentUserFavorites?.includes(pokemon.id) ?? false
+
+                        const profileUserFavorited = profileGrid
+                            ? pokemon.favorited[0]?.userId === pokemon.userId
+                            : undefined
+                        const favorited =
+                            profileUserFavorited ?? currentUserFavorited
 
                         return (
                             <Link
