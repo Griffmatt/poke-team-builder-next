@@ -37,7 +37,7 @@ export const CommonMoves = ({ movesData }: Props) => {
                             const moveSelected =
                                 selectedPokemonData.moves.includes(move.name)
                             return (
-                                <div
+                                <button
                                     className={`flex justify-between rounded border-2 px-4 py-2 dark:bg-dark-2 ${
                                         moveSelected
                                             ? "border-primary"
@@ -48,7 +48,7 @@ export const CommonMoves = ({ movesData }: Props) => {
                                 >
                                     <h4>{formatString(move.name)}</h4>
                                     <h5>{percentage}</h5>
-                                </div>
+                                </button>
                             )
                         })}
                     </div>
