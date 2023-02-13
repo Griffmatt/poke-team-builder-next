@@ -1,4 +1,5 @@
 import { useSelectedContext } from "context/selectedContext"
+import { useEffect } from "react"
 
 interface Props {
     stats: {
@@ -9,6 +10,11 @@ interface Props {
 
 export const CommonStats = ({ stats }: Props) => {
     const { statsIndex, handleStatsChange } = useSelectedContext()
+
+    useEffect(() => {
+        handleStatsChange(stats[0], 0)
+    }, [])
+
     return (
         <div className="w-full">
             <h3>Common Stats</h3>
