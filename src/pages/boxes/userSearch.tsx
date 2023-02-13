@@ -5,6 +5,7 @@ import { BoxesNav } from "components/boxes/boxesNav"
 import { useState } from "react"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { user } from "types/trpc"
+import { firstNameOnly } from "utils/firstNameOnly"
 
 const Boxes: NextPage = () => {
     const [query, setQuery] = useState("")
@@ -67,27 +68,28 @@ const Boxes: NextPage = () => {
                         className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
                     />
                 </div>
-                {queryUsers?.map((user) => {
-                    const firstName = user?.name?.split(" ")[0] ?? ""
-                    return (
-                        <Link
-                            href={`/profile/${user.id}`}
-                            className="grid w-fit gap-2"
-                            key={user.id}
-                        >
-                            {user.image ? (
-                                <img
-                                    src={user.image}
-                                    className="rounded-full"
-                                    referrerPolicy="no-referrer"
-                                />
-                            ) : (
-                                <div className="rounded-full" />
-                            )}
-                            <h3 className="text-center">{firstName}</h3>
-                        </Link>
-                    )
-                })}
+                <div className="flex flex-wrap gap-3">
+                    {queryUsers?.map((user) => {
+                        return (
+                            <Link
+                                href={`/profile/${user.id}`}
+                                className="grid w-fit gap-2"
+                                key={user.id}
+                            >
+                                {user.image ? (
+                                    <img
+                                        src={user.image}
+                                        className="h-auto w-24 rounded-full"
+                                        referrerPolicy="no-referrer"
+                                    />
+                                ) : (
+                                    <div className="h-auto w-24 rounded-full" />
+                                )}
+                                <h3 className="text-center">{firstNameOnly(user?.name)}</h3>
+                            </Link>
+                        )
+                    })}
+                </div>
             </div>
         </main>
     )
@@ -106,7 +108,6 @@ const SuggestedUsers = ({ users }: SuggestedProps) => {
             <div className="no-scrollbar flex gap-2 overflow-x-scroll">
                 {users.map((user) => {
                     if (user == null) return
-                    const firstName = user?.name?.split(" ")[0] ?? ""
                     return (
                         <Link
                             href={`/profile/${user.id}`}
@@ -122,7 +123,7 @@ const SuggestedUsers = ({ users }: SuggestedProps) => {
                             ) : (
                                 <div className="h-20 w-auto rounded-full" />
                             )}
-                            <h3 className="text-center">{firstName}</h3>
+                            <h3 className="text-center">{firstNameOnly(user?.name)}</h3>
                         </Link>
                     )
                 })}

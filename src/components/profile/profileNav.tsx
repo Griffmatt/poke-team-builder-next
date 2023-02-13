@@ -67,7 +67,7 @@ const UserHeader = ({ user }: { user: user }) => {
                     {user?.image ? (
                         <img
                             src={user.image}
-                            className="rounded-full border-4 border-dark-3"
+                            className="rounded-full border-4 border-dark-3 w-full h-full"
                             referrerPolicy="no-referrer"
                         />
                     ) : (

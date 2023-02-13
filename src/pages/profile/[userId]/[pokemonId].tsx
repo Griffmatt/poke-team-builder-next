@@ -9,6 +9,7 @@ import { useState } from "react"
 import { DeleteModal } from "components/modals/deleteModal"
 import { BackButton } from "components/ui/backButton"
 import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
+import { firstNameOnly } from "utils/firstNameOnly"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
@@ -71,7 +72,7 @@ const SinglePokemon: NextPage = () => {
         <main>
             <BackButton />
             <h1>
-                {user?.name}'s {pokemon?.name}
+                {firstNameOnly(user?.name ?? "")}'s {pokemon?.name}
             </h1>
             <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                 <div className="pokemon-card">

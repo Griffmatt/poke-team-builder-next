@@ -14,6 +14,7 @@ import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
 import { team } from "types/trpc"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
+import { firstNameOnly } from "utils/firstNameOnly"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -120,7 +121,7 @@ const OriginalTrainer = ({ id }: { id: string }) => {
                     href={`/profile/${user?.id}`}
                     className="hover:border-b-2"
                 >
-                    <h2>Original Trainer: {user?.name}</h2>
+                    <h2>Original Trainer: {firstNameOnly(user?.name)}</h2>
                 </Link>
             )}
         </>
