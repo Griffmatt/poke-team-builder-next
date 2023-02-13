@@ -11,11 +11,14 @@ import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { CommonData } from "components/commonData/commonData"
 import { CommonStats } from "components/commonData/commonStats"
+import { useEffect } from "react"
+import { useSelectedContext } from "context/selectedContext"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
     const { pokemonName } = router.query
     const { data: session } = useSession()
+    const { resetData } = useSelectedContext()
 
     const {
         data: pokemon,
@@ -48,6 +51,15 @@ const SinglePokemon: NextPage = () => {
     const { data: stats } = api.mostCommon.stats.useQuery({
         pokemonName: pokemonName as string,
     })
+
+
+    useEffect(() => {
+        console.log("t")
+        if(pokemonBuilds?.length === 0){
+            console.log("x")
+            resetData()
+        }
+    }, [pokemonBuilds?.length])
 
     if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)

@@ -42,12 +42,14 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     )
     const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
 
+    const { selectedPokemonData } = useSelectedContext()
+
     const {
         evsArr: evs,
         decreaseEv,
         increaseEv,
         handleEvChange,
-    } = useHandleEvChange(createdPokemon?.evs)
+    } = useHandleEvChange(createdPokemon?.evs ?? selectedPokemonData.stats)
 
     const {
         ivsArr: ivs,

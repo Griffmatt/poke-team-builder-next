@@ -43,7 +43,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         {fillerArr4.map((_, index) => {
                             const moveOrder = formatOrder(index)
                             return (
-                                <label>
+                                <label key={index}>
                                     {moveOrder} Move
                                     <div
                                         key={index}
@@ -59,7 +59,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         <h2>Evs</h2>
                         {stats.map((stat, index) => {
                             return (
-                                <label key={index * 10}>
+                                <label key={index * 100}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
@@ -87,7 +87,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         <h2>Ivs</h2>
                         {stats.map((stat, index) => {
                             return (
-                                <label key={index * 100}>
+                                <label key={index * 1000}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
