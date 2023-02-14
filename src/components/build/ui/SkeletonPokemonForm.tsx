@@ -21,35 +21,35 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                 <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                     <div>
                         <h2>Pokemon Info</h2>
-                        <label className="grid">
-                            Ability
+                        <div className="grid">
+                            <h3>Ability</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
-                        </label>
-                        <label className="grid">
-                            Nature
+                        </div>
+                        <div className="grid">
+                            <h3>Nature</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
-                        </label>
-                        <label className="grid">
-                            Held Item
+                        </div>
+                        <div className="grid">
+                            <h3>Held item</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
-                        </label>
-                        <label className="grid">
-                            Tera Type
+                        </div>
+                        <div className="grid">
+                            <h3>Tera type</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
-                        </label>
+                        </div>
                     </div>
                     <div>
                         <h2>Moves</h2>
                         {fillerArr4.map((_, index) => {
                             const moveOrder = formatOrder(index)
                             return (
-                                <label key={index}>
-                                    {moveOrder} Move
+                                <div key={index}>
+                                    <h3>{moveOrder} move</h3>
                                     <div
                                         key={index}
                                         className="h-8 w-full animate-pulse bg-dark-2"
                                     />
-                                </label>
+                                </div>
                             )
                         })}
                     </div>
@@ -59,11 +59,11 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         <h2>Evs</h2>
                         {stats.map((stat, index) => {
                             return (
-                                <label key={index * 100}>
+                                <div key={index * 100}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
-                                            className="w-8 rounded-xl"
+                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             -
@@ -73,13 +73,13 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                                             className="h-8 w-full animate-pulse bg-dark-2"
                                         />
                                         <button
-                                            className="w-8 rounded-xl"
+                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             +
                                         </button>
                                     </div>
-                                </label>
+                                </div>
                             )
                         })}
                     </div>
@@ -87,24 +87,24 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         <h2>Ivs</h2>
                         {stats.map((stat, index) => {
                             return (
-                                <label key={index * 1000}>
+                                <div key={index * 1000}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
-                                            className="w-8 rounded-xl"
+                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             -
                                         </button>
                                         <div className="h-8 w-full animate-pulse bg-dark-2" />
                                         <button
-                                            className="w-8 rounded-xl"
+                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             +
                                         </button>
                                     </div>
-                                </label>
+                                </div>
                             )
                         })}
                     </div>

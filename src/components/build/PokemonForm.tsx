@@ -1,11 +1,10 @@
 import { useSession } from "next-auth/react"
-import { type FormEvent, useReducer } from "react"
+import { type FormEvent, useReducer, useState, useEffect } from "react"
 
-import { MovesInput } from "./movesInput"
+import { MovesInput } from "./formInputs/movesInput"
 
 import useHandleEvChange from "hooks/useHandleEvChange"
 import useHandleIvChange from "hooks/useHandleIvChange"
-import { formatString } from "utils/formatString"
 import { NATURES } from "assets/natures"
 
 import { useUpdatePokemonMutation } from "mutations/updatePokemonMutation"
@@ -16,6 +15,7 @@ import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"
 import { useSelectedContext } from "context/selectedContext"
+import { DataInput } from "./formInputs/dataInput"
 
 interface Props {
     pokemon: Pokemon
@@ -34,6 +34,7 @@ interface PokemonValues {
 
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { data: session } = useSession()
+    const [openInput, setOpenInput] = useState("")
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
             return { ...initial, ...data }
@@ -43,6 +44,12 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
 
     const { selectedPokemonData } = useSelectedContext()
+
+    useEffect(() => {
+        window.addEventListener("click", () => setOpenInput(""))
+
+        return () => window.removeEventListener("click", () => setOpenInput(""))
+    }, [])
 
     const {
         evsArr: evs,
@@ -130,6 +137,10 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         return null
     }
 
+    const abilities = pokemon.abilities.map(
+        (abilityData) => abilityData.ability.name
+    )
+
     return (
         <form
             className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3"
@@ -144,71 +155,42 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                 <div>
                     <h2>Pokemon Info</h2>
-                    <label className="grid">
-                        Ability
-                        <select
-                            onChange={(event) =>
-                                setPokemonData({ ability: event.target.value })
-                            }
-                            value={formatString(ability)}
-                        >
-                            {pokemon.abilities.map((ability) => {
-                                return (
-                                    <option key={ability.ability.name}>
-                                        {formatString(ability.ability.name)}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </label>
-                    <label className="grid">
-                        Nature
-                        <select
-                            className="text-dark"
-                            onChange={(event) =>
-                                setPokemonData({ nature: event.target.value })
-                            }
-                            value={formatString(nature)}
-                        >
-                            {NATURES.map((nature: string) => {
-                                return <option key={nature}>{nature}</option>
-                            })}
-                        </select>
-                    </label>
-                    <label className="grid">
-                        Held Item
-                        <select
-                            onChange={(event) =>
-                                setPokemonData({ heldItem: event.target.value })
-                            }
-                            value={formatString(heldItem)}
-                        >
-                            {heldItems.map((heldItem) => {
-                                return (
-                                    <option key={heldItem}>
-                                        {formatString(heldItem)}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </label>
-                    <label className="grid">
-                        Tera Type
-                        <select
-                            onChange={(event) =>
-                                setPokemonData({ teraType: event.target.value })
-                            }
-                            value={formatString(teraType)}
-                        >
-                            {TERA_TYPES.map((type) => {
-                                return (
-                                    <option key={type}>
-                                        {formatString(type)}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </label>
+                    <DataInput
+                        dataType="ability"
+                        data={ability}
+                        setData={setPokemonData}
+                        total={1}
+                        items={abilities}
+                        openInput={openInput}
+                        setOpenInput={setOpenInput}
+                    />
+                    <DataInput
+                        dataType="nature"
+                        data={nature}
+                        setData={setPokemonData}
+                        total={1}
+                        items={NATURES}
+                        openInput={openInput}
+                        setOpenInput={setOpenInput}
+                    />
+                    <DataInput
+                        dataType="held-item"
+                        data={heldItem}
+                        setData={setPokemonData}
+                        total={1}
+                        items={heldItems}
+                        openInput={openInput}
+                        setOpenInput={setOpenInput}
+                    />
+                    <DataInput
+                        dataType="tera-type"
+                        data={teraType}
+                        setData={setPokemonData}
+                        total={1}
+                        items={TERA_TYPES}
+                        openInput={openInput}
+                        setOpenInput={setOpenInput}
+                    />
                 </div>
                 <div>
                     <h2>Moves</h2>
@@ -219,8 +201,10 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                     order={index}
                                     moves={pokemon.moves}
                                     move={move}
-                                    setPokemonData={setPokemonData}
+                                    setData={setPokemonData}
                                     currentMoves={pokemonData.moves}
+                                    openInput={openInput}
+                                    setOpenInput={setOpenInput}
                                 />
                             </React.Fragment>
                         )
@@ -236,7 +220,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                 {stat.stat}
                                 <div className="flex w-full gap-2">
                                     <button
-                                        className="w-8 rounded-xl"
+                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => decreaseEv(stat.stat)}
                                         type="button"
                                     >
@@ -254,7 +238,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                         }
                                     />
                                     <button
-                                        className="w-8 rounded-xl"
+                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => increaseEv(stat.stat)}
                                         type="button"
                                     >
@@ -273,7 +257,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                 {stat.stat}
                                 <div className="flex w-full gap-2">
                                     <button
-                                        className="w-8 rounded-xl"
+                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => decreaseIv(stat.stat)}
                                         type="button"
                                     >
@@ -291,7 +275,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                         }
                                     />
                                     <button
-                                        className="w-8 rounded-xl"
+                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => increaseIv(stat.stat)}
                                         type="button"
                                     >
