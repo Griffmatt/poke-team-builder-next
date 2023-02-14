@@ -317,16 +317,30 @@ const formatInitialData = (
 ) => {
     const { selectedPokemonData } = useSelectedContext()
     const SHINY_ODDS = 100
-    const unusedMoves = pokemon.moves.filter(
-        (move) => !selectedPokemonData.moves.includes(move.move.name)
-    ).map(move => move.move.name).sort()
+    const pokemonAbilities = pokemon.abilities.map(
+        (ability) => ability.ability.name
+    )
+    const pokemonMoves = pokemon.moves.map((move) => move.move.name).sort()
+    const unusedMoves = pokemonMoves.filter(
+        (move) => !selectedPokemonData.moves.includes(move)
+    )
 
-    const selectedMovesLength = selectedPokemonData.moves.length
+    const movesLength = selectedPokemonData.moves.length
+
+    const selectedAbility = pokemonAbilities.includes(
+        selectedPokemonData.ability ?? ""
+    )
+        ? selectedPokemonData.ability
+        : pokemonAbilities[0]
+
+    const selectedMoves = selectedPokemonData.moves.map((move, index) => {
+        //prevent moves that the pokemon doesn't know from being entered
+        if (pokemonMoves.includes(move)) return move
+        return unusedMoves[index]
+    })
+
     return {
-        ability:
-            createdPokemon?.ability ??
-            selectedPokemonData.ability ??
-            pokemon.abilities[0].ability.name,
+        ability: createdPokemon?.ability ?? selectedAbility,
         nature:
             createdPokemon?.nature ?? selectedPokemonData.nature ?? NATURES[0],
 
@@ -339,21 +353,16 @@ const formatInitialData = (
             selectedPokemonData.teraType ??
             pokemon.types[0].type.name,
         moves: [
-            createdPokemon?.moves[0].move ??
-                selectedPokemonData.moves[0] ??
-                unusedMoves[0],
-
+            createdPokemon?.moves[0].move ?? selectedMoves[0] ?? unusedMoves[0],
             createdPokemon?.moves[1].move ??
-                selectedPokemonData.moves[1] ??
-                unusedMoves[1 - selectedMovesLength],
-
+                selectedMoves[1] ??
+                unusedMoves[1 - movesLength],
             createdPokemon?.moves[2].move ??
-                selectedPokemonData.moves[2] ??
-                unusedMoves[2 - selectedMovesLength],
-
+                selectedMoves[2] ??
+                unusedMoves[2 - movesLength],
             createdPokemon?.moves[3].move ??
-                selectedPokemonData.moves[3] ??
-                unusedMoves[3 - selectedMovesLength],
+                selectedMoves[3] ??
+                unusedMoves[3 - movesLength],
         ],
 
         shiny: createdPokemon?.shiny
