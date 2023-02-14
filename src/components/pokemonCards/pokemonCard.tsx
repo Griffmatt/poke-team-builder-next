@@ -47,6 +47,7 @@ export const PokemonCard = ({
                         alt={pokemon.name}
                         width="96"
                         height="96"
+                        priority
                     />
                 )}
             </div>
@@ -56,8 +57,18 @@ export const PokemonCard = ({
                     <h4 className="text-center">{percentage}</h4>
                 ) : (
                     <div className="flex justify-center gap-2">
-                        <h4>{firstType}</h4>
-                        <h4>{secondType}</h4>
+                        <h4
+                            className={`${firstType} w-20 rounded-2xl border-2 p-1 text-center`}
+                        >
+                            {formatString(firstType)}
+                        </h4>
+                        {secondType && (
+                            <h4
+                                className={`${secondType} w-20 rounded-2xl border-2 p-1 text-center`}
+                            >
+                                {formatString(secondType)}
+                            </h4>
+                        )}
                     </div>
                 )}
             </div>

@@ -1,5 +1,6 @@
 import { PokemonCardWithStats } from "components/pokemonCards/pokemonCardWithStats"
 import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
+import { BackButton } from "components/ui/backButton"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import React from "react"
@@ -32,6 +33,7 @@ const PokemonBuilds = () => {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
+                <BackButton />
                 {pokemonName && <h1>{pokemonName} Builds</h1>}
                 <div className="grid gap-3">
                     <div className="grid place-items-center gap-2 md:grid-cols-3">
@@ -53,6 +55,7 @@ const PokemonBuilds = () => {
 
     return (
         <main>
+            <BackButton />
             {pokemonName && <h1>{pokemonName} Builds</h1>}
             <div className="grid gap-3">
                 <div className="grid place-items-center gap-2 md:grid-cols-3">
