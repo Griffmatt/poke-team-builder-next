@@ -319,7 +319,8 @@ const formatInitialData = (
     const SHINY_ODDS = 100
     const unusedMoves = pokemon.moves.filter(
         (move) => !selectedPokemonData.moves.includes(move.move.name)
-    )
+    ).map(move => move.move.name).sort()
+
     const selectedMovesLength = selectedPokemonData.moves.length
     return {
         ability:
@@ -340,19 +341,19 @@ const formatInitialData = (
         moves: [
             createdPokemon?.moves[0].move ??
                 selectedPokemonData.moves[0] ??
-                unusedMoves[0].move.name,
+                unusedMoves[0],
 
             createdPokemon?.moves[1].move ??
                 selectedPokemonData.moves[1] ??
-                unusedMoves[1 - selectedMovesLength].move.name,
+                unusedMoves[1 - selectedMovesLength],
 
             createdPokemon?.moves[2].move ??
                 selectedPokemonData.moves[2] ??
-                unusedMoves[2 - selectedMovesLength].move.name,
+                unusedMoves[2 - selectedMovesLength],
 
             createdPokemon?.moves[3].move ??
                 selectedPokemonData.moves[3] ??
-                unusedMoves[3 - selectedMovesLength].move.name,
+                unusedMoves[3 - selectedMovesLength],
         ],
 
         shiny: createdPokemon?.shiny
