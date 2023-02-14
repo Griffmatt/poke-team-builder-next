@@ -14,5 +14,28 @@ const config = {
         locales: ["en"],
         defaultLocale: "en",
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "raw.githubusercontent.com",
+                port: "",
+                pathname: "/PokeAPI/sprites/master/sprites/pokemon/**",
+            },
+            {
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "cdn.discordapp.com",
+                port: "",
+                pathname: "/avatars/**",
+            },
+        ],
+    },
 }
+
 export default config

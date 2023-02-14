@@ -126,27 +126,27 @@ export const mostCommonRouter = createTRPCRouter({
                 return [
                     {
                         stat: "HP",
-                        value: Number(stats[2])
+                        value: Number(stats[2]),
                     },
                     {
                         stat: "Att",
-                        value: Number(stats[0])
+                        value: Number(stats[0]),
                     },
                     {
                         stat: "Def",
-                        value: Number(stats[1])
+                        value: Number(stats[1]),
                     },
                     {
                         stat: "SpA",
-                        value: Number(stats[3])
+                        value: Number(stats[3]),
                     },
                     {
                         stat: "SpD",
-                        value: Number(stats[4])
+                        value: Number(stats[4]),
                     },
                     {
                         stat: "Spe",
-                        value: Number(stats[5])
+                        value: Number(stats[5]),
                     },
                 ]
             })

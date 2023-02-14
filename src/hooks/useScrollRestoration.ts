@@ -11,7 +11,12 @@ function saveScrollPos(asPath: string) {
 
 function restoreScrollPos(asPath: string) {
     const json = sessionStorage.getItem(`scrollPos:${asPath}`)
-    const scrollPos = json ? JSON.parse(json) : undefined
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const scrollPos: { x: number; y: number } | undefined = json
+        ? JSON.parse(json)
+        : undefined
+
     if (scrollPos) {
         window.scrollTo(scrollPos.x, scrollPos.y)
     }

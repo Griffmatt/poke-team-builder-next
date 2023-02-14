@@ -33,14 +33,15 @@ export const MovesInput = ({
 
     const moveOrder = formatOrder(order)
 
+    const filterMoves = moves.filter(
+        (moveData) =>
+            formatString(move) === formatString(moveData.move.name) ||
+            !currentMoves.includes(formatString(moveData.move.name))
+    )
+
     useEffect(() => {
-        const filterMoves = moves.filter(
-            (moveData) =>
-                formatString(move) === formatString(moveData.move.name) ||
-                !currentMoves.includes(formatString(moveData.move.name))
-        )
         setFilterTakenMoves(filterMoves)
-    }, [...currentMoves])
+    }, [filterMoves])
 
     return (
         <label className="grid">

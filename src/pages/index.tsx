@@ -5,7 +5,8 @@ import { signIn, useSession } from "next-auth/react"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
-import { SkeletonTeamRows, TeamRows } from "components/teamRows"
+import { TeamRows } from "components/teams/teamRows"
+import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
 
 const Home: NextPage = () => {
     const {
@@ -81,7 +82,7 @@ const HomepageButtons = () => {
                 ) : (
                     <>
                         <div
-                            onClick={() => signIn()}
+                            onClick={() => void signIn()}
                             className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
                         >
                             <h2>Sign In</h2>

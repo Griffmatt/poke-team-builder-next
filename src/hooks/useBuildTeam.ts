@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CreatedPokemon } from "types/trpc"
+import { type CreatedPokemon } from "types/trpc"
 import { buildTeamMutation } from "mutations/buildTeamMutation"
 
 export function useBuildTeam(userId: string) {
@@ -9,20 +9,20 @@ export function useBuildTeam(userId: string) {
 
     const formatPokemon = pokemonOnTeam.map((pokemon) => {
         return {
-            id: pokemon!.id,
-            userId: pokemon!.userId,
-            name: pokemon!.name,
-            ability: pokemon!.ability,
-            nature: pokemon!.nature,
-            heldItem: pokemon!.heldItem,
-            shiny: pokemon!.shiny,
-            teraType: pokemon!.teraType,
-            createdAt: pokemon!.createdAt,
-            moves: pokemon!.moves,
-            ivs: pokemon!.ivs,
-            evs: pokemon!.evs,
-            teams: pokemon!.teams,
-            favorited: pokemon!.favorited,
+            id: pokemon.id,
+            userId: pokemon.userId,
+            name: pokemon.name,
+            ability: pokemon.ability,
+            nature: pokemon.nature,
+            heldItem: pokemon.heldItem,
+            shiny: pokemon.shiny,
+            teraType: pokemon.teraType,
+            createdAt: pokemon.createdAt,
+            moves: pokemon.moves,
+            ivs: pokemon.ivs,
+            evs: pokemon.evs,
+            teams: pokemon.teams,
+            favorited: pokemon.favorited,
         }
     })
 
@@ -58,13 +58,13 @@ export function useBuildTeam(userId: string) {
         setPokemonOnTeam(filterOutPokemon)
     }
 
-    const buildTeam = async () => {
+    const buildTeam = () => {
         if (pokemonOnTeam.length < 6) return null
 
         if (userId == null || pokemonOnTeam == null) return null
 
         const pokemonIds = pokemonOnTeam.map((pokemon) => {
-            return { pokemonId: pokemon?.id as string }
+            return { pokemonId: pokemon.id }
         })
         addTeam.mutate({
             teamName: teamName,

@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { user } from "types/trpc"
+import Image from "next/image"
+import { type user } from "types/trpc"
 
 interface Props {
     selected: "pokemon" | "teams" | "settings" | "favorites"
@@ -65,10 +66,13 @@ const UserHeader = ({ user }: { user: user }) => {
             <div className="row-span-2 grid h-fit w-fit gap-1">
                 <div className="aspect-square w-24 md:w-32">
                     {user?.image ? (
-                        <img
+                        <Image
                             src={user.image}
-                            className="rounded-full border-4 border-dark-3 w-full h-full"
+                            className="h-full w-full rounded-full border-4 border-dark-3"
                             referrerPolicy="no-referrer"
+                            alt="Profile Picture"
+                            width="96"
+                            height="96"
                         />
                     ) : (
                         <div className="rounded-full border-4 border-dark-3" />

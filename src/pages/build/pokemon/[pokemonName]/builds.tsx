@@ -60,7 +60,7 @@ const PokemonBuilds = () => {
                         const favorite =
                             favorites?.includes(pokemon.id) ?? false
                         return (
-                            <div className="pokemon-card">
+                            <div className="pokemon-card" key={pokemon.id}>
                                 <PokemonCardWithStats
                                     createdPokemon={pokemon}
                                     favorite={favorite}

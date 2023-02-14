@@ -4,7 +4,7 @@ import router from "next/router"
 export const deleteTeamMutation = (userId: string, teamId: string) => {
     const apiContext = api.useContext()
     const deleteTeam = api.teams.deleteTeam.useMutation({
-        onMutate: async () => {
+        onMutate: () => {
             const pastTeams = apiContext.teams.getUserTeams.getData({
                 userId: userId,
             })
@@ -20,7 +20,7 @@ export const deleteTeamMutation = (userId: string, teamId: string) => {
             return { pastTeams }
         },
         onSuccess: () => {
-            router.push(`/profile/${userId}/teams`)
+            void router.push(`/profile/${userId}/teams`)
         },
         onError: (error, variables, context) => {
             if (context?.pastTeams) {
@@ -31,7 +31,7 @@ export const deleteTeamMutation = (userId: string, teamId: string) => {
             }
         },
         onSettled: () => {
-            apiContext.teams.getUserTeams.invalidate({ userId: userId })
+            void apiContext.teams.getUserTeams.invalidate({ userId: userId })
         },
     })
     return deleteTeam

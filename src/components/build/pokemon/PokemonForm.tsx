@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react"
-import { FormEvent, useReducer } from "react"
+import { type FormEvent, useReducer } from "react"
 
 import { MovesInput } from "./movesInput"
 
@@ -8,10 +8,10 @@ import useHandleIvChange from "hooks/useHandleIvChange"
 import { formatString } from "utils/formatString"
 import { NATURES } from "assets/natures"
 
-import { updatePokemonMutation } from "mutations/updatePokemonMutation"
-import { buildPokemonMutation } from "mutations/buildPokemonMutation"
-import { Pokemon } from "pokenode-ts"
-import { CreatedPokemon } from "types/trpc"
+import { useUpdatePokemonMutation } from "mutations/updatePokemonMutation"
+import { useBuildPokemonMutation } from "mutations/buildPokemonMutation"
+import { type Pokemon } from "pokenode-ts"
+import { type CreatedPokemon } from "types/trpc"
 import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"
@@ -38,7 +38,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
             return { ...initial, ...data }
         },
-        formatInitialData(pokemon, heldItems, createdPokemon)
+        useFormatInitialData(pokemon, heldItems, createdPokemon)
     )
     const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
 
@@ -58,14 +58,18 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         handleIvChange,
     } = useHandleIvChange(createdPokemon?.ivs)
 
-    const buildPokemon = buildPokemonMutation(
-        session?.user!.id as string,
+    const buildPokemon = useBuildPokemonMutation(
+        session?.user?.id as string,
         pokemon,
-        { ...pokemonData, ivs, evs }
+        {
+            ...pokemonData,
+            ivs,
+            evs,
+        }
     )
 
-    const updatePokemon = updatePokemonMutation(
-        session?.user!.id as string,
+    const updatePokemon = useUpdatePokemonMutation(
+        session?.user?.id as string,
         createdPokemon as CreatedPokemon,
         { ...pokemonData, ivs, evs }
     )
@@ -109,7 +113,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         }
 
         const createPokemonData = {
-            userId: session?.user!.id,
+            userId: session?.user?.id,
             name: pokemon.name,
             ability: ability,
             nature: nature,
@@ -310,7 +314,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
     )
 }
 
-const formatInitialData = (
+const useFormatInitialData = (
     pokemon: Pokemon,
     heldItems: string[],
     createdPokemon?: CreatedPokemon
@@ -327,11 +331,18 @@ const formatInitialData = (
 
     const movesLength = selectedPokemonData.moves.length
 
-    const selectedAbility = pokemonAbilities.includes(
-        selectedPokemonData.ability ?? ""
-    )
-        ? selectedPokemonData.ability
-        : pokemonAbilities[0]
+    const checkAbility = () => {
+        if (
+            selectedPokemonData.ability &&
+            pokemonAbilities.includes(selectedPokemonData.ability)
+        ) {
+            return selectedPokemonData.ability
+        }
+
+        return pokemonAbilities[0]
+    }
+
+    const selectedAbility = checkAbility()
 
     const selectedMoves = selectedPokemonData.moves.map((move, index) => {
         //prevent moves that the pokemon doesn't know from being entered

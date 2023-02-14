@@ -1,6 +1,9 @@
-import { userPokemonArr, userTeamArr } from "server/utils/includeConfigs"
-import { formatTeams } from "server/utils/formatTeams"
-import { formattedTeam } from "types/trpc"
+import {
+    type userPokemonArr,
+    type userTeamArr,
+} from "server/utils/includeConfigs"
+import { type formatTeams } from "server/utils/formatTeams"
+import { type formattedTeam } from "types/trpc"
 
 type Arr = userPokemonArr | userTeamArr | formattedTeam
 

@@ -1,4 +1,4 @@
-import { teams } from "./includeConfigs"
+import { type teams } from "./includeConfigs"
 
 export const formatTeams = (teamArr: teams) => {
     return teamArr.map((team) => {

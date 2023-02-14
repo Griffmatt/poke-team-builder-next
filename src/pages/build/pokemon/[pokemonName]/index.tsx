@@ -52,14 +52,11 @@ const SinglePokemon: NextPage = () => {
         pokemonName: pokemonName as string,
     })
 
-
     useEffect(() => {
-        console.log("t")
-        if(pokemonBuilds?.length === 0){
-            console.log("x")
+        if (pokemonBuilds?.length === 0) {
             resetData()
         }
-    }, [pokemonBuilds?.length])
+    }, [pokemonBuilds?.length, resetData])
 
     if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)

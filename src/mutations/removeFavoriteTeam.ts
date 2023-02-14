@@ -81,9 +81,9 @@ export const removeFavoriteTeamMutation = (teamId: string, userId: string) => {
             )
         },
         onSettled: () => {
-            apiContext.favorite.checkUserFavoriteTeams.invalidate()
-            apiContext.teams.getUserTeams.invalidate()
-            apiContext.favorite.getUserFavoriteTeams.invalidate()
+            void apiContext.favorite.checkUserFavoriteTeams.invalidate()
+            void apiContext.teams.getUserTeams.invalidate()
+            void apiContext.favorite.getUserFavoriteTeams.invalidate()
         },
     })
     return removeFavoriteTeam

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { Pokemon } from "pokenode-ts"
+import { type Pokemon } from "pokenode-ts"
 import { api } from "utils/api"
 import { sortByFavorited } from "utils/sortByFavorited"
 
@@ -14,7 +14,7 @@ interface UpdateValues {
     ivs: { stat: string; value: number }[]
 }
 
-export const buildPokemonMutation = (
+export const useBuildPokemonMutation = (
     userId: string,
     pokemon: Pokemon,
     {
@@ -31,7 +31,7 @@ export const buildPokemonMutation = (
     const router = useRouter()
     const apiContext = api.useContext()
     const buildMutation = api.pokemon.buildPokemon.useMutation({
-        onMutate: async () => {
+        onMutate: () => {
             const pastPokemon = apiContext.pokemon.getUsersPokemon.getData({
                 userId: userId,
             })
@@ -100,7 +100,7 @@ export const buildPokemonMutation = (
             return { pastPokemon, topPokemonData }
         },
         onSuccess: () => {
-            router.push(`/profile/${userId}`)
+            void router.push(`/profile/${userId}`)
         },
         onError: (error, variables, context) => {
             if (context?.pastPokemon) {
@@ -117,10 +117,10 @@ export const buildPokemonMutation = (
             }
         },
         onSettled: () => {
-            apiContext.pokemon.getUsersPokemon.invalidate({
+            void apiContext.pokemon.getUsersPokemon.invalidate({
                 userId: userId,
             })
-            apiContext.statistics.getTopPokemon.invalidate()
+            void apiContext.statistics.getTopPokemon.invalidate()
         },
     })
     return buildMutation

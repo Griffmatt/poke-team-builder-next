@@ -9,7 +9,7 @@ export const useDebounceQuery = (query: string, time = 1000) => {
         timer = setTimeout(() => setDebouncedValue(query.toLowerCase()), time)
 
         return () => clearTimeout(timer)
-    }, [query])
+    }, [query, time])
 
     return debouncedValue
 }

@@ -5,16 +5,16 @@ import { api } from "utils/api"
 import Link from "next/link"
 import { DeleteModal } from "components/modals/deleteModal"
 import { useState } from "react"
-import { TeamRow } from "components/teamRows"
 import { BackButton } from "components/ui/backButton"
 import { FavoritedButton } from "components/ui/favoritedButton"
 import { BattleModal } from "components/modals/battleModal"
 import { formatPercentage } from "utils/formatPercentage"
 import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
-import { team } from "types/trpc"
+import { type team } from "types/trpc"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { firstNameOnly } from "utils/firstNameOnly"
+import { TeamRow } from "components/teams/teamRow"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -141,8 +141,8 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
 
     const copyTeam = api.teams.buildTeam.useMutation()
 
-    const addFavoriteTeam = addFavoriteTeamMutation(team!.id, userId, team)
-    const removeFavoriteTeam = removeFavoriteTeamMutation(team!.id, userId)
+    const addFavoriteTeam = addFavoriteTeamMutation(team.id, userId, team)
+    const removeFavoriteTeam = removeFavoriteTeamMutation(team.id, userId)
 
     const handleCopy = () => {
         const pokemonIds = team.pokemon.map((pokemon) => {
@@ -185,7 +185,7 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     return (
         <>
             <div className="flex w-full justify-between gap-3 md:w-fit">
-                {userId === team!.userId ? (
+                {userId === team.userId ? (
                     <>
                         <button
                             className="btn-red h-fit w-full rounded-2xl px-4 py-2"
@@ -224,15 +224,15 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
             {showDeleteModal && (
                 <DeleteModal
                     userId={userId}
-                    name={team!.teamName}
+                    name={team.teamName}
                     setShowModal={setShowDeleteModal}
-                    teamId={team!.id}
+                    teamId={team.id}
                 />
             )}
             {showBattleModal && (
                 <BattleModal
                     setShowModal={setShowBattleModal}
-                    teamId={team!.id}
+                    teamId={team.id}
                     battleStatus={battleStatus}
                 />
             )}

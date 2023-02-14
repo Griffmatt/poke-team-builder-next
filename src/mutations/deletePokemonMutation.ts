@@ -9,7 +9,7 @@ export const deletePokemonMutation = (
 ) => {
     const apiContext = api.useContext()
     const deletePokemon = api.pokemon.deletePokemon.useMutation({
-        onMutate: async () => {
+        onMutate: () => {
             const pastPokemon = apiContext.pokemon.getUsersPokemon.getData({
                 userId: userId,
             })
@@ -67,7 +67,7 @@ export const deletePokemonMutation = (
             return { pastPokemon, pastTeams }
         },
         onSuccess: () => {
-            router.push(`/profile/${userId}`)
+            void router.push(`/profile/${userId}`)
         },
         onError: (error, variables, context) => {
             if (context?.pastPokemon) {
@@ -87,11 +87,11 @@ export const deletePokemonMutation = (
             }
         },
         onSettled: () => {
-            apiContext.pokemon.getUsersPokemon.invalidate({
+            void apiContext.pokemon.getUsersPokemon.invalidate({
                 userId: userId,
             })
 
-            apiContext.teams.getUserTeams.invalidate()
+            void apiContext.teams.getUserTeams.invalidate()
         },
     })
     return deletePokemon

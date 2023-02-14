@@ -1,12 +1,12 @@
 import { api } from "../utils/api"
 import router from "next/router"
-import { team } from "types/trpc"
+import { type team } from "types/trpc"
 
 export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
     const apiContext = api.useContext()
 
     const buildTeam = api.teams.buildTeam.useMutation({
-        onMutate: async () => {
+        onMutate: () => {
             const pastTeams = apiContext.teams.getUserTeams.getData({
                 userId: userId,
             })
@@ -20,7 +20,7 @@ export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
             return { pastTeams }
         },
         onSuccess: () => {
-            router.push(`/profile/${userId}/teams`)
+            void router.push(`/profile/${userId}/teams`)
         },
         onError: (error, variables, context) => {
             if (context?.pastTeams) {
@@ -31,7 +31,7 @@ export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
             }
         },
         onSettled: () => {
-            apiContext.teams.getUserTeams.invalidate({ userId: userId })
+            void apiContext.teams.getUserTeams.invalidate({ userId: userId })
         },
     })
 

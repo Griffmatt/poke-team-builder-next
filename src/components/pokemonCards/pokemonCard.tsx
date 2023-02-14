@@ -1,9 +1,10 @@
-import { CreatedPokemon } from "../../types/trpc"
+import { type CreatedPokemon } from "../../types/trpc"
 
 import { api } from "utils/api"
 import { formatString } from "utils/formatString"
 
 import { LoadingCard } from "./ui/loadingCard"
+import Image from "next/image"
 
 interface Props {
     pokemonName: string
@@ -39,7 +40,15 @@ export const PokemonCard = ({
     return (
         <div className="flex h-full flex-col justify-around p-3">
             <div className="aspect-square rounded-full bg-dark-3">
-                {pokemonImage && <img src={pokemonImage} className="w-full" />}
+                {pokemonImage && (
+                    <Image
+                        src={pokemonImage}
+                        className="w-full"
+                        alt={pokemon.name}
+                        width="96"
+                        height="96"
+                    />
+                )}
             </div>
             <div>
                 <h4 className="text-center">{formatString(pokemon.name)}</h4>

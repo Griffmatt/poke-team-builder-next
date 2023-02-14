@@ -4,8 +4,9 @@ import Link from "next/link"
 import { BoxesNav } from "components/boxes/boxesNav"
 import { useState } from "react"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
-import { user } from "types/trpc"
+import { type user } from "types/trpc"
 import { firstNameOnly } from "utils/firstNameOnly"
+import Image from "next/image"
 
 const Boxes: NextPage = () => {
     const [query, setQuery] = useState("")
@@ -77,15 +78,20 @@ const Boxes: NextPage = () => {
                                 key={user.id}
                             >
                                 {user.image ? (
-                                    <img
+                                    <Image
                                         src={user.image}
                                         className="h-auto w-24 rounded-full"
                                         referrerPolicy="no-referrer"
+                                        alt="User Profile Picture"
+                                        width="96"
+                                        height="96"
                                     />
                                 ) : (
                                     <div className="h-auto w-24 rounded-full" />
                                 )}
-                                <h3 className="text-center">{firstNameOnly(user?.name)}</h3>
+                                <h3 className="text-center">
+                                    {firstNameOnly(user?.name)}
+                                </h3>
                             </Link>
                         )
                     })}
@@ -115,15 +121,20 @@ const SuggestedUsers = ({ users }: SuggestedProps) => {
                             key={user.id}
                         >
                             {user.image ? (
-                                <img
+                                <Image
                                     src={user.image}
                                     className="h-20 w-auto rounded-full"
                                     referrerPolicy="no-referrer"
+                                    alt="User Profile Picture"
+                                    width="96"
+                                    height="96"
                                 />
                             ) : (
                                 <div className="h-20 w-auto rounded-full" />
                             )}
-                            <h3 className="text-center">{firstNameOnly(user?.name)}</h3>
+                            <h3 className="text-center">
+                                {firstNameOnly(user?.name)}
+                            </h3>
                         </Link>
                     )
                 })}

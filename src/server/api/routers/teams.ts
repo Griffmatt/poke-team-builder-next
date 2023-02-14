@@ -1,7 +1,7 @@
 import { sortByFavorited } from "utils/sortByFavorited"
 import { z } from "zod"
 import { formatTeams } from "../../utils/formatTeams"
-import { teamsInclude, userTeamArr } from "../../utils/includeConfigs"
+import { teamsInclude, type userTeamArr } from "../../utils/includeConfigs"
 import { buildTeamInput } from "../../utils/inputs"
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
