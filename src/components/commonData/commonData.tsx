@@ -1,7 +1,7 @@
 import { useSelectedContext } from "context/selectedContext"
 import { useEffect } from "react"
 import { countStringArr } from "server/utils/countStringArr"
-import { CreatedPokemon } from "types/trpc"
+import { type CreatedPokemon } from "types/trpc"
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
 
@@ -14,7 +14,7 @@ interface Props {
 
 export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
     const data = pokemonBuilds.map((pokemon) => pokemon?.[dataType])
-    const { string, total } = countStringArr(data as string[])
+    const { string, total } = countStringArr(data)
     const formatDataType = (string: dataTypes) => {
         if (string === "teraType") return "Tera Type"
         return formatString(string)
@@ -25,9 +25,11 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
     const type = formatDataType(dataType)
     const selected = selectedPokemonData?.[dataType]
 
+    const firstInData = string[0].name
+
     useEffect(() => {
-        handleChange({ [dataType]: string[0].name })
-    }, [string[0].name])
+        handleChange({ [dataType]: firstInData })
+    }, [dataType, firstInData, handleChange])
 
     return (
         <>

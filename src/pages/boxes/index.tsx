@@ -3,7 +3,8 @@ import { BoxesNav } from "components/boxes/boxesNav"
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { api } from "utils/api"
 import { useSession } from "next-auth/react"
-import { SkeletonTeamRows, TeamRows } from "components/teamRows"
+import { TeamRows } from "components/teams/teamRows"
+import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 
 const Boxes: NextPage = () => {

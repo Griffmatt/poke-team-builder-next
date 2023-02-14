@@ -4,7 +4,8 @@ import { useRouter } from "next/router"
 import { api } from "utils/api"
 import { ProfileNav } from "components/profile/profileNav"
 import React from "react"
-import { SkeletonTeamRows, TeamRows } from "components/teamRows"
+import { TeamRows } from "components/teams/teamRows"
+import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
 
 const ProfileTeams: NextPage = () => {
     const router = useRouter()

@@ -13,7 +13,7 @@ export const CommonStats = ({ stats }: Props) => {
 
     useEffect(() => {
         handleStatsChange(stats[0], 0)
-    }, [])
+    }, [handleStatsChange, stats])
 
     return (
         <div className="w-full">

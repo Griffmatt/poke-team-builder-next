@@ -39,7 +39,7 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
             )
         },
         onSettled: () => {
-            apiContext.teams.getTeam.invalidate()
+            void apiContext.teams.getTeam.invalidate()
         },
     })
 

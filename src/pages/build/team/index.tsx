@@ -108,11 +108,11 @@ const BuildTeam: NextPage = () => {
                                     key={pokemon?.id}
                                     className="pokemon-card"
                                     onClick={() =>
-                                        removePokemonFromTeam(pokemon!.id)
+                                        removePokemonFromTeam(pokemon.id)
                                     }
                                 >
                                     <PokemonCard
-                                        pokemonName={pokemon!.name}
+                                        pokemonName={pokemon.name}
                                         createdPokemon={pokemon}
                                     />
                                 </button>
@@ -120,7 +120,10 @@ const BuildTeam: NextPage = () => {
                         })
                     )}
                 </div>
-                <button className="rounded-2xl p-3" onClick={buildTeam}>
+                <button
+                    className="rounded-2xl p-3"
+                    onClick={() => void buildTeam()}
+                >
                     Build Team
                 </button>
             </div>
@@ -134,7 +137,7 @@ const BuildTeam: NextPage = () => {
                     return (
                         <button
                             className={`pokemon-card ${
-                                favorited && "favorite"
+                                favorited ? "favorite" : ""
                             }`}
                             onClick={() => addPokemonToTeam(pokemon)}
                             key={pokemon.id}

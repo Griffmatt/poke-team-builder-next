@@ -1,6 +1,6 @@
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useSelectedContext } from "context/selectedContext"
 
 interface Props {
@@ -13,16 +13,18 @@ interface Props {
     }
 }
 export const CommonMoves = ({ movesData }: Props) => {
-    const moves = movesData.moves
-    const total = movesData.total
-    const initialMoves = moves.slice(0, 4).map((move) => move.name)
+    const { moves, total } = movesData
+    const initialMoves = useMemo(
+        () => movesData.moves.slice(0, 4).map((move) => move.name),
+        [movesData]
+    )
 
     const { selectedPokemonData, handleMovesChange, setInitialMoves } =
         useSelectedContext()
 
     useEffect(() => {
         setInitialMoves(initialMoves)
-    }, [...initialMoves])
+    }, [initialMoves, setInitialMoves])
 
     return (
         <>

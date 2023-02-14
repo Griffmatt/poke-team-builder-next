@@ -1,7 +1,9 @@
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { ProfileNav } from "components/profile/profileNav"
-import { SkeletonTeamRows, TeamRows } from "components/teamRows"
+import { TeamRows } from "components/teams/teamRows"
+import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
+
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import React from "react"
@@ -86,6 +88,7 @@ const Favorites: NextPage = () => {
             </div>
             <div className="grid gap-3">
                 <h2>Teams</h2>
+
                 <TeamRows
                     teams={teams}
                     favoriteTeams={favoriteTeams}

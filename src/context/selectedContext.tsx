@@ -1,9 +1,10 @@
 import {
     createContext,
-    ReactNode,
+    type ReactNode,
     useContext,
     useReducer,
     useState,
+    useCallback,
 } from "react"
 
 interface PokemonValues {
@@ -60,38 +61,41 @@ export function SelectedContextProvider({ children }: Props) {
         }
     )
 
-    const handleChange = (data: Partial<PokemonValues>) => {
+    const handleChange = useCallback((data: Partial<PokemonValues>) => {
         setSelectedPokemonData(data)
-    }
+    }, [])
 
-    const handleMovesChange = (moveName: string) => {
-        if (selectedPokemonData.moves.includes(moveName)) {
-            const filterName = selectedPokemonData.moves.filter(
-                (move) => move !== moveName
-            )
-            setSelectedPokemonData({ moves: filterName })
-            return
-        }
-        if (selectedPokemonData.moves.length >= 4) return
+    const handleMovesChange = useCallback(
+        (moveName: string) => {
+            if (selectedPokemonData.moves.includes(moveName)) {
+                const filterName = selectedPokemonData.moves.filter(
+                    (move) => move !== moveName
+                )
+                setSelectedPokemonData({ moves: filterName })
+                return
+            }
+            if (selectedPokemonData.moves.length >= 4) return
 
-        setSelectedPokemonData({
-            moves: [...selectedPokemonData.moves, moveName],
-        })
-    }
+            setSelectedPokemonData({
+                moves: [...selectedPokemonData.moves, moveName],
+            })
+        },
+        [selectedPokemonData.moves]
+    )
 
-    const setInitialMoves = (moves: string[]) => {
+    const setInitialMoves = useCallback((moves: string[]) => {
         setSelectedPokemonData({ moves: moves })
-    }
+    }, [])
 
-    const handleStatsChange = (
-        stats: { stat: string; value: number }[],
-        index: number
-    ) => {
-        setSelectedPokemonData({ stats: stats })
-        setStatsIndex(index)
-    }
+    const handleStatsChange = useCallback(
+        (stats: { stat: string; value: number }[], index: number) => {
+            setSelectedPokemonData({ stats: stats })
+            setStatsIndex(index)
+        },
+        []
+    )
 
-    const resetData = () => {
+    const resetData = useCallback(() => {
         setSelectedPokemonData({
             ability: null,
             nature: null,
@@ -100,8 +104,7 @@ export function SelectedContextProvider({ children }: Props) {
             moves: [],
             stats: [],
         })
-    }
-    
+    }, [])
 
     return (
         <SelectedContext.Provider
@@ -112,7 +115,7 @@ export function SelectedContextProvider({ children }: Props) {
                 setInitialMoves,
                 statsIndex,
                 handleStatsChange,
-                resetData
+                resetData,
             }}
         >
             {children}

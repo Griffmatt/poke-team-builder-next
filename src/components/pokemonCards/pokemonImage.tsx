@@ -1,4 +1,5 @@
-import { Pokemon } from "pokenode-ts"
+import Image from "next/image"
+import { type Pokemon } from "pokenode-ts"
 
 interface Props {
     pokemon: Pokemon
@@ -24,7 +25,15 @@ export const PokemonImage = ({ pokemon, shiny }: Props) => {
             <div
                 className={`aspect-square rounded-full border-8 bg-dark-3 ${pokemonTypes[0]} ${pokemonTypes[1]}`}
             >
-                {pokemonImage && <img src={pokemonImage} className="w-full" />}
+                {pokemonImage && (
+                    <Image
+                        src={pokemonImage}
+                        className="w-full"
+                        alt={pokemon.name}
+                        width="96"
+                        height="96"
+                    />
+                )}
             </div>
         </div>
     )

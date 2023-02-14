@@ -52,14 +52,11 @@ const SinglePokemon: NextPage = () => {
         pokemonName: pokemonName as string,
     })
 
-
     useEffect(() => {
-        console.log("t")
-        if(pokemonBuilds?.length === 0){
-            console.log("x")
+        if (pokemonBuilds?.length === 0) {
             resetData()
         }
-    }, [pokemonBuilds?.length])
+    }, [pokemonBuilds?.length, resetData])
 
     if (isLoading || isLoading2 || isLoading3) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
@@ -142,13 +139,15 @@ const SinglePokemon: NextPage = () => {
                 {pokemonBuilds.length > 0 && (
                     <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
                         <h2>Data</h2>
-                        <div>
-                            <h3>Common Teammates</h3>
-                            <PokemonDataGrid
-                                pokemonData={teammates}
-                                amount={6}
-                            />
-                        </div>
+                        {teammates.total > 0 && (
+                            <div className="gird gap-3">
+                                <h3>Common Teammates</h3>
+                                <PokemonDataGrid
+                                    pokemonData={teammates}
+                                    amount={6}
+                                />
+                            </div>
+                        )}
                         <div className="grid gap-2 md:grid-cols-2">
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}

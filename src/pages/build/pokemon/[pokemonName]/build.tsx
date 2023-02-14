@@ -1,7 +1,7 @@
 import { type NextPage } from "next"
 import { api } from "utils/api"
 import { useRouter } from "next/router"
-import { PokemonForm } from "components/build/pokemon/PokemonForm"
+import { PokemonForm } from "components/build/PokemonForm"
 import { BackButton } from "components/ui/backButton"
 import { formatString } from "utils/formatString"
 import { SkeletonPokemonForm } from "components/build/ui/SkeletonPokemonForm"

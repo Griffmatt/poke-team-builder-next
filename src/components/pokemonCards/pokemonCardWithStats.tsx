@@ -1,12 +1,13 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { addFavoritePokemonMutation } from "mutations/addFavoritePokemonMutation"
-import { removeFavoritePokemonMutation } from "mutations/removeFavoritePokemonMutation"
-import { CreatedPokemon } from "types/trpc"
+import { useAddFavoritePokemonMutation } from "mutations/addFavoritePokemonMutation"
+import { useRemoveFavoritePokemonMutation } from "mutations/removeFavoritePokemonMutation"
+import { type CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
 import { formatString } from "utils/formatString"
 import { FavoritedButton } from "../ui/favoritedButton"
 import { LoadingCard } from "./ui/loadingCard"
+import Image from "next/image"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -28,11 +29,12 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
         name: createdPokemon.name,
     })
 
-    const addFavoritePokemon = addFavoritePokemonMutation(createdPokemon)
-    const removeFavoritePokemon = removeFavoritePokemonMutation(createdPokemon)
+    const addFavoritePokemon = useAddFavoritePokemonMutation(createdPokemon)
+    const removeFavoritePokemon =
+        useRemoveFavoritePokemonMutation(createdPokemon)
 
     const ids = {
-        pokemonId: createdPokemon!.id,
+        pokemonId: createdPokemon.id,
     }
     const removeFavorite = () => {
         if (addFavoritePokemon.isLoading || removeFavoritePokemon.isLoading)
@@ -56,13 +58,16 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
         : pokemon.sprites.front_default
     return (
         <div className="flex aspect-[7/10] flex-col justify-between p-4 text-center">
-            <h2>{formatString(createdPokemon!.name)}</h2>
+            <h2>{formatString(createdPokemon.name)}</h2>
             <div className="h-fit justify-between lg:flex">
                 <div className="relative my-auto aspect-square w-full">
                     {pokemonImage && (
-                        <img
+                        <Image
                             src={pokemonImage}
                             className="aspect-square w-full"
+                            alt={pokemon.name}
+                            width="96"
+                            height="96"
                         />
                     )}
                     {session?.user?.id && (

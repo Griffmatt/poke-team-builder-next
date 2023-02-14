@@ -20,7 +20,10 @@ export const NavBar = () => {
                     <h2>Profile</h2>
                 </NavLink>
             ) : (
-                <button className="btn-transparent" onClick={() => signIn()}>
+                <button
+                    className="btn-transparent"
+                    onClick={() => void signIn()}
+                >
                     <h2>Sign In</h2>
                 </button>
             )}

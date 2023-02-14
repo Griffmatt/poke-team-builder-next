@@ -1,5 +1,5 @@
 import { api } from "utils/api"
-import { team } from "types/trpc"
+import { type team } from "types/trpc"
 
 export const addFavoriteTeamMutation = (
     teamId: string,
@@ -57,8 +57,8 @@ export const addFavoriteTeamMutation = (
             )
         },
         onSettled: () => {
-            apiContext.favorite.checkUserFavoriteTeams.invalidate()
-            apiContext.teams.getUserTeams.invalidate()
+            void apiContext.favorite.checkUserFavoriteTeams.invalidate()
+            void apiContext.teams.getUserTeams.invalidate()
         },
     })
 

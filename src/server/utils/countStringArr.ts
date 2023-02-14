@@ -20,6 +20,5 @@ export const countStringArr = (stringArr: string[]) => {
         return b.amount - a.amount
     })
 
-
     return { string, total }
 }

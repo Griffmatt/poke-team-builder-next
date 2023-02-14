@@ -4,11 +4,10 @@ import Link from "next/link"
 interface Props {
     href: string
     children: JSX.Element
-    className?: string
     exact?: boolean
 }
 
-export const NavLink = ({ href, children, className, exact }: Props) => {
+export const NavLink = ({ href, children, exact }: Props) => {
     const { pathname } = useRouter()
     let isActive = false
     if (exact) {
@@ -23,9 +22,7 @@ export const NavLink = ({ href, children, className, exact }: Props) => {
     return (
         <Link
             href={href}
-            className={`${
-                isActive ? `border-b-2 dark:border-primary` : null
-            } ${className}`}
+            className={`${isActive ? `border-b-2 dark:border-primary` : ""}`}
         >
             {children}
         </Link>

@@ -1,6 +1,6 @@
-import { inferProcedureOutput } from "@trpc/server"
-import { formatTeams } from "server/utils/formatTeams"
-import { AppRouter } from "../server/api/root"
+import { type inferProcedureOutput } from "@trpc/server"
+import { type formatTeams } from "server/utils/formatTeams"
+import { type AppRouter } from "../server/api/root"
 
 type CreatedPokemon = NonNullable<
     inferProcedureOutput<AppRouter["pokemon"]["getSinglePokemon"]>
