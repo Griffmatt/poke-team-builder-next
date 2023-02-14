@@ -52,8 +52,8 @@ button {
     @apply bg-transparent !important;
 }
 
-.btn-dark-2{
-    @apply bg-dark-2 !important
+.btn-dark-2 {
+    @apply bg-dark-2 !important;
 }
 
 .pokemon-card-grid {

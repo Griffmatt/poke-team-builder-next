@@ -16,9 +16,12 @@ export const PokemonEmpty = ({
 }: Props) => {
     const { data: session } = useSession()
 
+    const wrapperClass =
+        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center"
+
     if (query) {
         return (
-            <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+            <div className={wrapperClass}>
                 <h2>There were no results for your query</h2>
                 <h3>{query}</h3>
             </div>
@@ -27,7 +30,7 @@ export const PokemonEmpty = ({
 
     if (hasPokemon) {
         return (
-            <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+            <div className={wrapperClass}>
                 <h2>You have no pokemon left!</h2>
                 <Link href="/build/pokemon">
                     Click here to view pokemon to build
@@ -40,11 +43,11 @@ export const PokemonEmpty = ({
         return (
             <>
                 {favoriteGrid ? (
-                    <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+                    <div className={wrapperClass}>
                         <h2>You haven't favorited any pokemon yet!</h2>
                     </div>
                 ) : (
-                    <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+                    <div className={wrapperClass}>
                         <h2>You haven't built any pokemon yet!</h2>
                         <Link href="/build/pokemon">
                             Click here to view pokemon to build
@@ -58,11 +61,11 @@ export const PokemonEmpty = ({
     return (
         <>
             {favoriteGrid ? (
-                <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+                <div className={wrapperClass}>
                     <h2>They haven't favorited any pokemon yet!</h2>
                 </div>
             ) : (
-                <div className="mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center dark:bg-dark-2">
+                <div className={wrapperClass}>
                     <h2>They haven't built any pokemon yet!</h2>
                 </div>
             )}

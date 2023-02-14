@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
+import { firstNameOnly } from "utils/firstNameOnly"
 
 interface Props {
     query?: string
@@ -16,7 +17,7 @@ export const TeamsEmpty = ({
 }: Props) => {
     const { data: session } = useSession()
     const className =
-        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center dark:bg-dark-2"
+        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center"
     if (query) {
         return (
             <div className={className}>
@@ -50,15 +51,16 @@ export const TeamsEmpty = ({
             {favoriteRows ? (
                 <div className={className}>
                     <h2>
-                        {userName ?? "They"} {userName ? "hasn't" : "haven't"}{" "}
-                        favorited any Teams yet!
+                        {firstNameOnly(userName ?? "They")}{" "}
+                        {userName ? "hasn't" : "haven't"} favorited any Teams
+                        yet!
                     </h2>
                 </div>
             ) : (
                 <div className={className}>
                     <h2>
-                        {userName ?? "They"} {userName ? "hasn't" : "haven't"}{" "}
-                        created any Teams yet!
+                        {firstNameOnly(userName ?? "They")}{" "}
+                        {userName ? "hasn't" : "haven't"} created any Teams yet!
                     </h2>
                 </div>
             )}

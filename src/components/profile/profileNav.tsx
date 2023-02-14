@@ -44,7 +44,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                     </h3>
                 </Link>
                 {session?.user?.id === userId && (
-                    <Link href={`/profile/${userId}/settings`}>
+                    <Link href={`/profile/settings`}>
                         <h3
                             className={
                                 selected === "settings" ? "border-b-2" : ""
