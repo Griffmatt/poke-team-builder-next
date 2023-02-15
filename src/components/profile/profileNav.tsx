@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import Link from "next/link"
 import Image from "next/image"
 import { type user } from "types/trpc"
+import { ProfileSearch } from "./profileSearch"
 
 interface Props {
     selected: "pokemon" | "teams" | "settings" | "favorites"
@@ -13,6 +14,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
     return (
         <>
+            <ProfileSearch userId={userId} />
             {user == null ? (
                 <div className="grid h-44 grid-rows-2 px-1 text-center">
                     <div className="row-span-2 flex h-fit w-fit flex-col items-center gap-1">

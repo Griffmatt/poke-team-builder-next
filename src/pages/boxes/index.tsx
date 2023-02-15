@@ -1,5 +1,4 @@
 import { type NextPage } from "next"
-import { BoxesNav } from "components/boxes/boxesNav"
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { api } from "utils/api"
 import { useSession } from "next-auth/react"
@@ -55,7 +54,6 @@ const Boxes: NextPage = () => {
         return (
             <main>
                 <h1>Boxes</h1>
-                <BoxesNav selected="pokemon" />
                 <div className="grid gap-3">
                     <h2>Recent Pokemon</h2>
                     <SkeletonPokemonGrid amount={pokemonGridAmount} />
@@ -76,7 +74,6 @@ const Boxes: NextPage = () => {
     return (
         <main>
             <h1>Boxes</h1>
-            <BoxesNav selected="pokemon" />
             <div className="grid gap-3">
                 <h2>Recent Pokemon</h2>
                 <CreatedPokemonGrid
