@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { formatOrder } from "utils/formatOrder"
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
@@ -13,7 +13,7 @@ interface PokemonValues {
 }
 interface Props {
     order: number
-    moves: { move: { name: string } }[]
+    moves: string[]
     move: string
     setData: React.Dispatch<Partial<PokemonValues>>
     currentMoves: string[]
@@ -32,7 +32,6 @@ export const MovesInput = ({
     openInput,
     setOpenInput,
 }: Props) => {
-    const [unusedMoves, setUnusedMoves] = useState(moves)
     const [clicked, setClicked] = useState(0)
     const moveOrder = formatOrder(order)
     const percentage = formatPercentage(1)
@@ -57,26 +56,11 @@ export const MovesInput = ({
         setOpenInput("")
     }, [clicked, setOpenInput])
 
-    const filterMoves = useMemo(() => {
-        return moves.filter(
-            (moveData) =>
-                formatString(move) === formatString(moveData.move.name) ||
-                !currentMoves.includes(formatString(moveData.move.name))
+    const filterMoves = moves
+        .filter(
+            (moveName) => move === moveName || !currentMoves.includes(moveName)
         )
-    }, [currentMoves, move, moves])
-
-    useEffect(() => {
-        const sortFilterMoves = filterMoves.sort((a, b) => {
-            if (a.move.name < b.move.name) {
-                return -1
-            }
-            if (a.move.name > b.move.name) {
-                return 1
-            }
-            return 0
-        })
-        setUnusedMoves(sortFilterMoves)
-    }, [filterMoves])
+        .sort()
 
     return (
         <div>
@@ -92,17 +76,17 @@ export const MovesInput = ({
             <div className="relative">
                 {openInput === moveOrder && (
                     <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
-                        {unusedMoves.map((moveName) => {
+                        {filterMoves.map((moveName) => {
                             return (
                                 <button
-                                    key={moveName.move.name}
+                                    key={moveName}
                                     className="btn-dark-2 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
-                                        handleClick(moveName.move.name, event)
+                                        handleClick(moveName, event)
                                     }
                                 >
-                                    <h4>{formatString(moveName.move.name)}</h4>
+                                    <h4>{formatString(moveName)}</h4>
                                     <p>{percentage}</p>
                                 </button>
                             )
