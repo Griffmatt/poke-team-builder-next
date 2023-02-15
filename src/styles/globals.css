@@ -7,6 +7,9 @@ body {
     box-sizing: border-box;
     @apply w-full bg-dark text-light;
 }
+*:focus {
+    @apply outline-primary outline-8 outline-offset-4;
+}
 
 main {
     @apply grid gap-4;

@@ -61,12 +61,12 @@ export const ProfileSearch = ({ userId }: Props) => {
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onClick={(event) => handleClick(event)}
-                className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                className="rounded-2xl px-4 py-2 text-black md:w-60"
             />
             <div className="relative w-full">
                 {showUsers && (
                     <div
-                        className="absolute top-0 max-h-60 w-full rounded-2xl bg-dark-3"
+                        className="absolute top-0 max-h-60 w-full rounded-2xl bg-dark-2"
                         onClick={(event) => event.stopPropagation()}
                     >
                         {filterProfileUserOut?.map((user, index) => {
@@ -75,7 +75,9 @@ export const ProfileSearch = ({ userId }: Props) => {
                                 <Link
                                     href={`/profile/${user.id}`}
                                     className={`flex h-12 w-full items-center justify-between p-2 ${
-                                        firstUser ? "" : "border-t border-gray"
+                                        firstUser
+                                            ? ""
+                                            : "border-t border-dark-3"
                                     }`}
                                     onClick={handleProfileSelect}
                                     key={user.id}

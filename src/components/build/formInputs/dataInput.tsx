@@ -63,7 +63,7 @@ export const DataInput = ({
     }, [clicked, setOpenInput])
 
     return (
-        <div className="grid">
+        <div>
             <h3>{formatString(dataType)}</h3>
             <button
                 className="flex h-8 w-full items-center justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"
@@ -80,12 +80,17 @@ export const DataInput = ({
             </button>
             <div className="relative">
                 {openInput === dataType && (
-                    <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
-                        {items.map((item) => {
+                    <div className="no-scrollbar absolute z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
+                        {items.map((item, index) => {
+                            const firstItem = index === 0
                             return (
                                 <button
                                     key={item}
-                                    className="btn-dark-2 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8"
+                                    className={`btn-dark-2 top-1 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8 ${
+                                        firstItem
+                                            ? ""
+                                            : "border-t border-dark-3"
+                                    }`}
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(item, event)

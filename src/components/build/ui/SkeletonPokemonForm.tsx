@@ -19,19 +19,19 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                 <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                     <div>
                         <h2>Pokemon Info</h2>
-                        <div className="grid">
+                        <div>
                             <h3>Ability</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Nature</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Held item</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Tera type</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
