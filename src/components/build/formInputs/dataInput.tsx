@@ -80,19 +80,12 @@ export const DataInput = ({
             </button>
             <div className="relative">
                 {openInput === dataType && (
-                    <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl">
-                        {items.map((item, index) => {
-                            const length = items.length - 1
-                            const extraBorder =
-                                index === 0
-                                    ? "border-t-2 rounded-t-2xl"
-                                    : index === length
-                                    ? "border-b-2 rounded-b-2xl"
-                                    : ""
+                    <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl dark:bg-dark-2">
+                        {items.map((item) => {
                             return (
                                 <button
                                     key={item}
-                                    className={` ${extraBorder} btn-dark-2 flex h-10 w-full justify-between border-l-2 border-r-2 border-dark px-4 py-1 lg:h-8`}
+                                    className="btn-dark-2 flex h-10 w-full justify-between border-l-2 border-r-2 border-dark px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(item, event)
