@@ -46,6 +46,7 @@ export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
                     alt={pokemon.name}
                     width="96"
                     height="96"
+                    priority
                 />
             )}
         </div>
