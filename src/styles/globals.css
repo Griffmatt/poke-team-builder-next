@@ -65,7 +65,7 @@ button {
 }
 
 .pokemon-team-row {
-    @apply grid grid-cols-3 place-items-center gap-2 md:grid-cols-6 lg:gap-3;
+    @apply grid grid-cols-2 place-items-center gap-2 md:grid-cols-6 lg:gap-3;
 }
 
 .pokemon-card {
