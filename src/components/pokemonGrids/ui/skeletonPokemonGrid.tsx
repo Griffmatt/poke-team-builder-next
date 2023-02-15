@@ -16,7 +16,7 @@ export const SkeletonPokemonGrid = ({
         <div className={className}>
             {fillerArr.map((_, index) => (
                 <div className="pokemon-card" key={index}>
-                    <LoadingCard />
+                    <LoadingCard percentage={dataGrid} />
                 </div>
             ))}
         </div>

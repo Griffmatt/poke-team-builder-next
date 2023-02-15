@@ -33,7 +33,7 @@ const CreatePokemon: NextPage = () => {
     return (
         <main>
             <BackButton />
-            <h1>Building {formatString(pokemon.name)}</h1>
+            <h1 className="w-fit">Building {formatString(pokemon.name)}</h1>
             <PokemonForm pokemon={pokemon} heldItems={heldItems} />
         </main>
     )

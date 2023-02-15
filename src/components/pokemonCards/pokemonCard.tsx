@@ -28,7 +28,7 @@ export const PokemonCard = ({
     })
 
     //poke api sends invalid JSON at first so add error handling here so the error message doesn't flash in and out
-    if (isLoading || error) return <LoadingCard />
+    if (isLoading || error) return <LoadingCard percentage={!!percentage} />
 
     const firstType = pokemon.types[0].type.name
     const secondType = pokemon.types[1]?.type.name
@@ -52,7 +52,7 @@ export const PokemonCard = ({
                 )}
             </div>
             <div>
-                <h4 className="hidden text-center sm:block">
+                <h4 className="hidden text-center md:block">
                     {formatString(pokemon.name)}
                 </h4>
                 {percentage ? (
