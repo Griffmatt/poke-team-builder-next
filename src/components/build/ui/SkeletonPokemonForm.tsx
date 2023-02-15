@@ -11,29 +11,27 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
     return (
         <main>
             <BackButton />
-            <div className="h-8 w-40 animate-pulse bg-dark-2" />
+            <div className="h-8 w-48 animate-pulse bg-dark-2" />
             <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full lg:row-span-2">
-                    <div className="flex h-full flex-col justify-around p-3">
-                        <div className="aspect-square animate-pulse rounded-full bg-dark-3" />
-                    </div>
+                    <div className="aspect-square rounded-full border-8 border-dark bg-dark-3" />
                 </div>
                 <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                     <div>
                         <h2>Pokemon Info</h2>
-                        <div className="grid">
+                        <div>
                             <h3>Ability</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Nature</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Held item</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
-                        <div className="grid">
+                        <div>
                             <h3>Tera type</h3>
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
@@ -113,7 +111,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                     className="w-full rounded-xl p-4 md:col-start-2 lg:col-start-3"
                     disabled
                 >
-                    {build ? "Update Pokemon" : "Create Pokemon"}
+                    {build ? "Build Pokemon" : "Update Pokemon"}
                 </button>
             </div>
         </main>

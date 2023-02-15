@@ -148,8 +148,8 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         >
             <div className="h-fit w-full lg:row-span-2">
                 <PokemonImage
-                    pokemon={pokemon}
-                    shiny={createdPokemon?.shiny ?? false}
+                    pokemonName={pokemon.name}
+                    createdPokemon={createdPokemon}
                 />
             </div>
             <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">

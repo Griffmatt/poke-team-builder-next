@@ -6,8 +6,8 @@ import { type CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
 import { formatString } from "utils/formatString"
 import { FavoritedButton } from "../ui/favoritedButton"
-import { LoadingCard } from "./ui/loadingCard"
 import Image from "next/image"
+import { LoadingCardWithStats } from "./ui/loadingCardWithStats"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -49,7 +49,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
         addFavoritePokemon.mutate(ids)
     }
 
-    if (isLoading) return <LoadingCard />
+    if (isLoading) return <LoadingCardWithStats />
 
     if (error) return <div>Error: {error.message}</div>
 

@@ -50,9 +50,7 @@ export const FavoritedButton = ({
         <button className={wrapperClass} onClick={handleClick}>
             <div
                 className={`h-10 w-10 rounded-full ${
-                    favorite
-                        ? "bg-favorited"
-                        : "bg-dark-3 hover:bg-favorited/50"
+                    favorite ? "bg-gold" : "bg-dark-3 hover:bg-gold/50"
                 }`}
             />
         </button>

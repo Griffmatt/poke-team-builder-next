@@ -1,6 +1,7 @@
-import { PokemonCard } from "components/pokemonCards/pokemonCard"
 import { PokemonCardWithStats } from "components/pokemonCards/pokemonCardWithStats"
+import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { useSession } from "next-auth/react"
+import React from "react"
 import { type team } from "types/trpc"
 import { api } from "utils/api"
 
@@ -23,28 +24,36 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
     return (
         <div
             className={`${
-                withStats ? "grid gap-2 md:grid-cols-3" : "pokemon-team-row"
+                withStats
+                    ? "grid gap-2 md:grid-cols-3"
+                    : "pokemon-team-row rounded-2xl p-2 dark:bg-dark-2 "
             }`}
         >
             {team?.pokemon.map((pokemon) => {
                 const favorited = favoritePokemon?.includes(pokemon.id) ?? false
                 return (
-                    <div
-                        className={`pokemon-card ${favorite ? "favorite" : ""}`}
-                        key={pokemon.id}
-                    >
+                    <>
                         {withStats ? (
-                            <PokemonCardWithStats
-                                createdPokemon={pokemon}
-                                favorite={favorited}
-                            />
+                            <div
+                                className={`pokemon-card ${
+                                    favorite ? "favorite" : ""
+                                }`}
+                                key={pokemon.id}
+                            >
+                                <PokemonCardWithStats
+                                    createdPokemon={pokemon}
+                                    favorite={favorited}
+                                />
+                            </div>
                         ) : (
-                            <PokemonCard
-                                pokemonName={pokemon.name}
-                                createdPokemon={pokemon}
-                            />
+                            <React.Fragment key={pokemon.id}>
+                                <PokemonImage
+                                    pokemonName={pokemon.name}
+                                    createdPokemon={pokemon}
+                                />
+                            </React.Fragment>
                         )}
-                    </div>
+                    </>
                 )
             })}
         </div>

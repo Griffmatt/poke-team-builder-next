@@ -40,7 +40,7 @@ export const CommonMoves = ({ movesData }: Props) => {
                                 selectedPokemonData.moves.includes(move.name)
                             return (
                                 <button
-                                    className={`flex justify-between rounded border-2 px-4 py-2 dark:bg-dark-2 ${
+                                    className={`flex items-center justify-between rounded border-2 px-4 py-2 dark:bg-dark-2 ${
                                         moveSelected
                                             ? "border-primary"
                                             : "dark:border-dark-2"

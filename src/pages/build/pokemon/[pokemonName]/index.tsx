@@ -99,7 +99,7 @@ const SinglePokemon: NextPage = () => {
             <h1>{formatString(pokemon.name)}</h1>
             <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full xl:row-span-2">
-                    <PokemonImage pokemon={pokemon} />
+                    <PokemonImage pokemonName={pokemon.name} />
                 </div>
                 <div className="lg:col-span-2">
                     <h2>Stats</h2>

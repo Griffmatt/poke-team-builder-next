@@ -7,6 +7,9 @@ body {
     box-sizing: border-box;
     @apply w-full bg-dark text-light;
 }
+*:focus {
+    @apply outline-primary outline-8 outline-offset-4;
+}
 
 main {
     @apply grid gap-4;
@@ -65,7 +68,7 @@ button {
 }
 
 .pokemon-team-row {
-    @apply grid grid-cols-2 place-items-center gap-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-3;
+    @apply grid grid-cols-3 place-items-center gap-2 md:grid-cols-6 lg:gap-3;
 }
 
 .pokemon-card {

@@ -79,7 +79,7 @@ export const MovesInput = ({
     }, [filterMoves])
 
     return (
-        <div className="grid">
+        <div>
             <h3>{moveOrder} move</h3>
             <button
                 className="flex h-8 w-full items-center justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"

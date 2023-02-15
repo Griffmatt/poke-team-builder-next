@@ -57,7 +57,7 @@ const HomepageButtons = () => {
     return (
         <>
             <h2>What to do?</h2>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-2 xs:grid-cols-3">
                 <Link
                     href={"/build/pokemon"}
                     className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"

@@ -10,6 +10,7 @@ import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
+import { PokemonImage } from "components/pokemonCards/pokemonImage"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -60,7 +61,7 @@ const BuildTeam: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                    className="rounded-2xl px-4 py-2 text-black md:w-60"
                 />
             </div>
             <BuildNav selected="team" />
@@ -97,21 +98,21 @@ const BuildTeam: NextPage = () => {
                     </div>
                 </div>
 
-                <div className="pokemon-card-grid" ref={animationParent}>
+                <div className="pokemon-team-row" ref={animationParent}>
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
-                        <div className="aspect-[7/10] w-full" />
+                        <div className="aspect-square w-full" />
                     ) : (
                         pokemonOnTeam.map((pokemon) => {
                             return (
                                 <button
                                     key={pokemon?.id}
-                                    className="pokemon-card"
+                                    className="w-full rounded-full"
                                     onClick={() =>
                                         removePokemonFromTeam(pokemon.id)
                                     }
                                 >
-                                    <PokemonCard
+                                    <PokemonImage
                                         pokemonName={pokemon.name}
                                         createdPokemon={pokemon}
                                     />
@@ -164,7 +165,7 @@ const BuildTeamSkeleton = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
+                    className="rounded-2xl px-4 py-2 text-black md:w-60"
                 />
             </div>
             <BuildNav selected="team" />

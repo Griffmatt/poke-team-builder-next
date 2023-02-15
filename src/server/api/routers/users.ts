@@ -36,6 +36,7 @@ export const usersRouter = createTRPCRouter({
                 where: {
                     name: {
                         startsWith: input.query,
+                        mode: "insensitive",
                     },
                 },
                 select: {

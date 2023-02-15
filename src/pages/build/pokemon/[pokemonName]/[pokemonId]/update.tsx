@@ -43,7 +43,7 @@ const UpdatePokemon: NextPage = () => {
     return (
         <main>
             <BackButton />
-            <h1>Building {formatString(pokemon.name)}</h1>
+            <h1 className="w-fit">Building {formatString(pokemon.name)}</h1>
             {pokemon && heldItems && createdPokemon && (
                 <PokemonForm
                     pokemon={pokemon}
