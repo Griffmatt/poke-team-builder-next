@@ -58,7 +58,10 @@ const Boxes: NextPage = () => {
                 <BoxesNav selected="pokemon" />
                 <div className="grid gap-3">
                     <h2>Recent Pokemon</h2>
-                    <SkeletonPokemonGrid amount={pokemonGridAmount} />
+                    <SkeletonPokemonGrid
+                        amount={pokemonGridAmount}
+                        dataGrid={true}
+                    />
                 </div>
                 <div className="grid gap-3">
                     <h2>Recent Teams</h2>

@@ -82,12 +82,12 @@ export const MovesInput = ({
         <div className="grid">
             <h3>{moveOrder} move</h3>
             <button
-                className="flex h-8 w-full justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"
+                className="flex h-8 w-full items-center justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"
                 onClick={handleOpen}
                 type="button"
             >
                 <h4>{formatString(move)}</h4>
-                <h4>{percentage}</h4>
+                <p>{percentage}</p>
             </button>
             <div className="relative">
                 {openInput === moveOrder && (
@@ -96,14 +96,14 @@ export const MovesInput = ({
                             return (
                                 <button
                                     key={moveName.move.name}
-                                    className="btn-dark-2 flex h-10 w-full justify-between px-4 py-1 lg:h-8"
+                                    className="btn-dark-2 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(moveName.move.name, event)
                                     }
                                 >
                                     <h4>{formatString(moveName.move.name)}</h4>
-                                    <h4>{percentage}</h4>
+                                    <p>{percentage}</p>
                                 </button>
                             )
                         })}

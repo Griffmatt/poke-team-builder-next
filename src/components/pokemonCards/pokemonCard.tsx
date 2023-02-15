@@ -38,7 +38,7 @@ export const PokemonCard = ({
             : pokemon.sprites.front_default
 
     return (
-        <div className="flex h-full flex-col justify-around p-3">
+        <div className="flex h-full flex-col justify-around p-2">
             <div className="aspect-square rounded-full bg-dark-3">
                 {pokemonImage && (
                     <Image
@@ -52,22 +52,27 @@ export const PokemonCard = ({
                 )}
             </div>
             <div>
-                <h4 className="text-center">{formatString(pokemon.name)}</h4>
+                <h4 className="hidden text-center sm:block">
+                    {formatString(pokemon.name)}
+                </h4>
                 {percentage ? (
-                    <h4 className="text-center">{percentage}</h4>
+                    <p className="text-center">{percentage}</p>
                 ) : (
-                    <div className="flex justify-center gap-2">
-                        <h4
+                    <div className="flex items-center justify-center gap-1">
+                        <p
                             className={`${firstType} w-20 rounded-2xl border-2 p-1 text-center`}
                         >
                             {formatString(firstType)}
-                        </h4>
+                        </p>
+
                         {secondType && (
-                            <h4
-                                className={`${secondType} w-20 rounded-2xl border-2 p-1 text-center`}
-                            >
-                                {formatString(secondType)}
-                            </h4>
+                            <>
+                                <p
+                                    className={`${secondType}  w-20 rounded-2xl border-2 p-1 text-center `}
+                                >
+                                    {formatString(secondType)}
+                                </p>
+                            </>
                         )}
                     </div>
                 )}

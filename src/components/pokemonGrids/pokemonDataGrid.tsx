@@ -16,7 +16,7 @@ interface Props {
 
 export const PokemonDataGrid = ({ pokemonData, amount }: Props) => {
     return (
-        <div className="pokemon-card-grid">
+        <div className="pokemon-data-grid">
             {pokemonData.pokemon.slice(0, amount).map((pokemon) => {
                 const percentage = formatPercentage(
                     pokemon.amount / pokemonData.total

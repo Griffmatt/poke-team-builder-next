@@ -66,7 +66,7 @@ export const DataInput = ({
         <div className="grid">
             <h3>{formatString(dataType)}</h3>
             <button
-                className="flex h-8 w-full justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"
+                className="flex h-8 w-full items-center justify-between rounded-2xl px-4 py-1 dark:bg-dark-2"
                 onClick={handleOpen}
                 type="button"
             >
@@ -76,7 +76,7 @@ export const DataInput = ({
                         <Image src={image} alt={data} height={24} width={24} />
                     )}
                 </div>
-                <h4>{percentage}</h4>
+                <p>{percentage}</p>
             </button>
             <div className="relative">
                 {openInput === dataType && (
@@ -85,7 +85,7 @@ export const DataInput = ({
                             return (
                                 <button
                                     key={item}
-                                    className="btn-dark-2 flex h-10 w-full justify-between px-4 py-1 lg:h-8"
+                                    className="btn-dark-2 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(item, event)
@@ -102,7 +102,7 @@ export const DataInput = ({
                                             />
                                         )}
                                     </div>
-                                    <h4>{percentage}</h4>
+                                    <p>{percentage}</p>
                                 </button>
                             )
                         })}

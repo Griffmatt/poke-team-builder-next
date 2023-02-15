@@ -21,7 +21,7 @@ const Home: NextPage = () => {
                 <h1>Statistics</h1>
                 <div className="grid gap-3">
                     <h2>Trending Pokemon</h2>
-                    <SkeletonPokemonGrid amount={12} />
+                    <SkeletonPokemonGrid amount={12} dataGrid={true} />
                 </div>
                 <div className="grid gap-3">
                     <HomepageButtons />
@@ -126,7 +126,10 @@ const PopularPokemon = () => {
         return (
             <div className="grid gap-3">
                 <h2>Popular Pokemon</h2>
-                <SkeletonPokemonGrid amount={pokemonGridAmount} />
+                <SkeletonPokemonGrid
+                    amount={pokemonGridAmount}
+                    dataGrid={true}
+                />
             </div>
         )
     }
