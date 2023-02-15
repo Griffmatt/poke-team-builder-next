@@ -49,7 +49,7 @@ export const CommonMoves = ({ movesData }: Props) => {
                                     onClick={() => handleMovesChange(move.name)}
                                 >
                                     <h4>{formatString(move.name)}</h4>
-                                    <h5>{percentage}</h5>
+                                    <p>{percentage}</p>
                                 </button>
                             )
                         })}

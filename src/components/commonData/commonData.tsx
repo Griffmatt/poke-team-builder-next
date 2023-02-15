@@ -59,7 +59,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                                     }
                                 >
                                     <h4>{formatString(string.name)}</h4>
-                                    <h5>{percentage}</h5>
+                                    <p>{percentage}</p>
                                 </button>
                             )
                         })}
