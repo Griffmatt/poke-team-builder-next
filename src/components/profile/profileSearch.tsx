@@ -16,9 +16,12 @@ export const ProfileSearch = ({ userId }: Props) => {
     const [showUsers, setShowUsers] = useState(false)
     const debouncedValue = useDebounceQuery(query)
     const { data: suggestedUsers } = api.users.getSuggestedUsers.useQuery()
-    const { data: queryUsers } = api.users.getUserWithQuery.useQuery({
-        query: "gr",
-    })
+    const { data: queryUsers } = api.users.getUserWithQuery.useQuery(
+        {
+            query: query,
+        },
+        { enabled: query !== "" }
+    )
 
     const handleClick = (event: ClickInput) => {
         event.stopPropagation()
@@ -32,6 +35,11 @@ export const ProfileSearch = ({ userId }: Props) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value)
         setShowUsers(true)
+    }
+
+    const handleProfileSelect = () => {
+        setShowUsers(false)
+        setQuery("")
     }
 
     useEffect(() => {
@@ -69,7 +77,7 @@ export const ProfileSearch = ({ userId }: Props) => {
                                     className={`flex h-12 w-full items-center justify-between p-2 ${
                                         firstUser ? "" : "border-t border-gray"
                                     }`}
-                                    onClick={() => setShowUsers(false)}
+                                    onClick={handleProfileSelect}
                                     key={user.id}
                                 >
                                     {user.image ? (
