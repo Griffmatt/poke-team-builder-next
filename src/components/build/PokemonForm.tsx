@@ -195,11 +195,14 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 <div>
                     <h2>Moves</h2>
                     {pokemonData.moves.map((move, index) => {
+                        const moves = pokemon.moves.map(
+                            (moveData) => moveData.move.name
+                        )
                         return (
                             <React.Fragment key={move}>
                                 <MovesInput
                                     order={index}
-                                    moves={pokemon.moves}
+                                    moves={moves}
                                     move={move}
                                     setData={setPokemonData}
                                     currentMoves={pokemonData.moves}
