@@ -19,7 +19,7 @@ export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
 
     if (isLoading)
         return (
-            <div className="aspect-square rounded-full border-8 border-dark bg-dark-3" />
+            <div className="aspect-square h-full w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3" />
         )
 
     if (error) return <div>Error: {error.message}</div>
