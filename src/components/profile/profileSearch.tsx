@@ -25,18 +25,20 @@ export const ProfileSearch = ({ userId }: Props) => {
         setShowUsers(true)
     }
 
+    const handleFocus = () => {
+        setShowUsers(true)
+    }
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value)
         setShowUsers(true)
     }
 
     useEffect(() => {
-        if (showUsers) {
-            window.addEventListener("click", () => setShowUsers(false))
-        }
+        window.addEventListener("click", () => setShowUsers(false))
         return () =>
             window.removeEventListener("click", () => setShowUsers(false))
-    }, [showUsers])
+    }, [])
 
     const shownUsers = debouncedValue.length === 0 ? suggestedUsers : queryUsers
 
@@ -49,6 +51,7 @@ export const ProfileSearch = ({ userId }: Props) => {
             <input
                 placeholder="Search for trainers..."
                 onChange={handleChange}
+                onFocus={handleFocus}
                 onClick={(event) => handleClick(event)}
                 className="rounded-2xl px-4 py-2 text-black outline-none md:w-60"
             />
