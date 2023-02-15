@@ -8,8 +8,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { DeleteModal } from "components/modals/deleteModal"
 import { BackButton } from "components/ui/backButton"
-import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
 import { firstNameOnly } from "utils/firstNameOnly"
+import { LoadingCardWithStats } from "components/pokemonCards/ui/loadingCardWithStats"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
@@ -53,7 +53,7 @@ const SinglePokemon: NextPage = () => {
                 <h1 className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                     <div className="pokemon-card">
-                        <LoadingCard />
+                        <LoadingCardWithStats />
                     </div>
                 </div>
             </main>

@@ -23,8 +23,10 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
 
     return (
         <div
-            className={`rounded-2xl p-2 dark:bg-dark-2 ${
-                withStats ? "grid gap-2 md:grid-cols-3" : "pokemon-team-row"
+            className={`${
+                withStats
+                    ? "grid gap-2 md:grid-cols-3"
+                    : "pokemon-team-row rounded-2xl p-2 dark:bg-dark-2 "
             }`}
         >
             {team?.pokemon.map((pokemon) => {

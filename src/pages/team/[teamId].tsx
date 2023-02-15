@@ -12,9 +12,9 @@ import { formatPercentage } from "utils/formatPercentage"
 import { addFavoriteTeamMutation } from "mutations/addFavoriteTeam"
 import { removeFavoriteTeamMutation } from "mutations/removeFavoriteTeam"
 import { type team } from "types/trpc"
-import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { firstNameOnly } from "utils/firstNameOnly"
 import { TeamRow } from "components/teams/teamRow"
+import { SkeletonPokemonGridWithStats } from "components/pokemonGrids/ui/skeletonPokemonGridWithStats"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -54,7 +54,7 @@ const Team: NextPage = () => {
                         </div>
                     </div>
                 </div>
-                <SkeletonPokemonGrid amount={6} withStats={true} />
+                <SkeletonPokemonGridWithStats amount={6} />
             </main>
         )
     }
