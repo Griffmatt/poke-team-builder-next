@@ -80,12 +80,12 @@ export const DataInput = ({
             </button>
             <div className="relative">
                 {openInput === dataType && (
-                    <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl dark:bg-dark-2">
+                    <div className="no-scrollbar absolute top-1 z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
                         {items.map((item) => {
                             return (
                                 <button
                                     key={item}
-                                    className="btn-dark-2 flex h-10 w-full justify-between border-l-2 border-r-2 border-dark px-4 py-1 lg:h-8"
+                                    className="btn-dark-2 flex h-10 w-full justify-between px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(item, event)
