@@ -126,10 +126,7 @@ const PopularPokemon = () => {
         return (
             <div className="grid gap-3">
                 <h2>Popular Pokemon</h2>
-                <SkeletonPokemonGrid
-                    amount={pokemonGridAmount}
-                    dataGrid={true}
-                />
+                <SkeletonPokemonGrid amount={pokemonGridAmount} />
             </div>
         )
     }
