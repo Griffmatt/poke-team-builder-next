@@ -61,14 +61,14 @@ const BuildTeam: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="rounded-2xl px-4 py-2 text-black md:w-60"
+                    className="max-w-60 rounded-2xl px-4 py-2 text-black"
                 />
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
                     <input
-                        className="md:w-72"
+                        className="max-w-72"
                         value={teamName}
                         onChange={(event) =>
                             handleNameChange(event.target.value)
@@ -164,13 +164,14 @@ const BuildTeamSkeleton = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    className="rounded-2xl px-4 py-2 text-black md:w-60"
+                    className="max-w-60 rounded-2xl px-4 py-2 text-black"
+                    readOnly
                 />
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
-                    <input className="md:w-72" value={"Team Name"} />
+                    <input className="max-w-72" value={"Team Name"} readOnly />
                     <div className="flex gap-2">
                         <button className="btn-transparent text-xl font-extrabold text-primary">
                             Double
@@ -180,7 +181,7 @@ const BuildTeamSkeleton = () => {
                         </button>
                     </div>
                 </div>
-                <div className="pokemon-card-grid">
+                <div className="pokemon-team-row">
                     <div className="aspect-square w-full" />
                 </div>
                 <button className="rounded-2xl p-3">Build Team</button>

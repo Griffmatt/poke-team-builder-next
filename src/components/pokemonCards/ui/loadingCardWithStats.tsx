@@ -3,7 +3,7 @@ export const LoadingCardWithStats = () => {
     const stats = ["HP", "Att", "Def", "SpA", "SpD", "Spe"]
     return (
         <div className="flex aspect-[7/10] flex-col justify-between p-4 text-center">
-            <h2 className="mx-auto h-7 w-40 animate-pulse bg-dark-3" />
+            <h2 className="mx-auto mb-1 h-6 w-40 animate-pulse bg-dark-3" />
             <div className="h-fit justify-between lg:flex">
                 <div className="relative my-auto aspect-square w-full">
                     <div className="aspect-square w-full animate-pulse rounded-full bg-dark-3" />

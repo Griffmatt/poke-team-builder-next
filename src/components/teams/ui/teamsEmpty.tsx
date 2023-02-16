@@ -17,7 +17,7 @@ export const TeamsEmpty = ({
 }: Props) => {
     const { data: session } = useSession()
     const className =
-        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-6 text-center"
+        "mx-auto grid aspect-[2] place-items-center rounded-2xl text-center"
     if (query) {
         return (
             <div className={className}>
