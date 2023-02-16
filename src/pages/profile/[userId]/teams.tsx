@@ -40,10 +40,16 @@ const ProfileTeams: NextPage = () => {
     } = api.favorite.checkUserFavoriteTeams.useQuery({
         userId: userId as string,
     })
+
+    const user = userData || isFetching ? userData : session?.user
     if ((isLoading && isFetching) || isLoading2 || isLoading3) {
         return (
             <main>
-                <ProfileNav selected="teams" userId={userId as string} />
+                <ProfileNav
+                    selected="teams"
+                    userId={userId as string}
+                    user={user}
+                />
                 <div className="grid gap-3">
                     <SkeletonTeamRows />
                 </div>
@@ -54,7 +60,6 @@ const ProfileTeams: NextPage = () => {
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
-    const user = userData ? userData : session?.user
     return (
         <main>
             <ProfileNav
