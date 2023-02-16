@@ -13,6 +13,7 @@ interface Props {
 
 export const ProfileNav = ({ selected, userId, user }: Props) => {
     const { data: session } = useSession()
+
     return (
         <>
             <ProfileSearch userId={userId} />
