@@ -1,15 +1,12 @@
 import { type NextPage } from "next"
-import { useRouter } from "next/router"
 import { ProfileNav } from "components/profile/profileNav"
 import { signOut, useSession } from "next-auth/react"
 
 const ProfileSettings: NextPage = () => {
-    const router = useRouter()
     const { data: session } = useSession()
 
-    const handleSignOut = async () => {
-        await signOut()
-        await router.replace("/")
+    const handleSignOut = () => {
+        void signOut({ callbackUrl: "/" })
     }
 
     return (

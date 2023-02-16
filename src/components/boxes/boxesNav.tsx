@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 interface Props {
-    selected: "pokemon" | "trainers"
+    selected: "pokemon" | "teams"
 }
 
 export const BoxesNav = ({ selected }: Props) => {
@@ -12,9 +12,9 @@ export const BoxesNav = ({ selected }: Props) => {
                     Pokemon
                 </h3>
             </Link>
-            <Link href={"/boxes/userSearch"}>
-                <h3 className={selected === "trainers" ? "border-b-2" : ""}>
-                    Trainers
+            <Link href={"/boxes/teams"}>
+                <h3 className={selected === "teams" ? "border-b-2" : ""}>
+                    Teams
                 </h3>
             </Link>
         </div>

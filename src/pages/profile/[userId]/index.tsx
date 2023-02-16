@@ -48,7 +48,7 @@ const ProfilePokemon: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="ml-auto rounded-2xl px-4 py-2 text-black md:w-60"
+                    className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
                 />
                 <SkeletonPokemonGrid />
             </main>

@@ -139,22 +139,8 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     const [showBattleModal, setShowBattleModal] = useState(false)
     const [battleStatus, setBattleStatus] = useState<"Won" | "Lost">("Lost")
 
-    const copyTeam = api.teams.buildTeam.useMutation()
-
     const addFavoriteTeam = addFavoriteTeamMutation(team.id, userId, team)
     const removeFavoriteTeam = removeFavoriteTeamMutation(team.id, userId)
-
-    const handleCopy = () => {
-        const pokemonIds = team.pokemon.map((pokemon) => {
-            return { pokemonId: pokemon.id }
-        })
-        copyTeam.mutate({
-            teamName: team.teamName,
-            teamStyle: team.teamStyle,
-            originalTrainerId: team.userId,
-            pokemon: pokemonIds,
-        })
-    }
 
     const removeFavorite = () => {
         if (addFavoriteTeam.isLoading || removeFavoriteTeam.isLoading)
@@ -185,7 +171,7 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
     return (
         <>
             <div className="flex w-full justify-between gap-3 md:w-fit">
-                {userId === team.userId ? (
+                {userId === team.userId && (
                     <>
                         <button
                             className="btn-red h-fit w-full rounded-2xl px-4 py-2"
@@ -206,13 +192,6 @@ const ActionButtons = ({ userId, team, favorite }: ButtonProps) => {
                             Won
                         </button>
                     </>
-                ) : (
-                    <button
-                        className="h-fit w-full rounded-2xl px-4 py-2"
-                        onClick={handleCopy}
-                    >
-                        Copy Team
-                    </button>
                 )}
                 <FavoritedButton
                     favorited={favorite}

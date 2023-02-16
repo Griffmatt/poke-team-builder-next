@@ -12,9 +12,9 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
         <main>
             <BackButton />
             <div className="h-8 w-48 animate-pulse bg-dark-2" />
-            <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full lg:row-span-2">
-                    <div className="aspect-square rounded-full border-8 border-dark bg-dark-3" />
+                    <div className="aspect-square w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3 " />
                 </div>
                 <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                     <div>
@@ -52,7 +52,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                         })}
                     </div>
                 </div>
-                <div className="grid gap-4 md:col-span-2 md:grid-cols-2">
+                <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
                     <div>
                         <h2>Evs</h2>
                         {stats.map((stat, index) => {
@@ -108,7 +108,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                     </div>
                 </div>
                 <button
-                    className="w-full rounded-xl p-4 md:col-start-2 lg:col-start-3"
+                    className="w-full rounded-xl p-4 sm:col-start-2 lg:col-start-3"
                     disabled
                 >
                     {build ? "Build Pokemon" : "Update Pokemon"}

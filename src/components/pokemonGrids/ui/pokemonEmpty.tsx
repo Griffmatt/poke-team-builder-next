@@ -17,7 +17,7 @@ export const PokemonEmpty = ({
     const { data: session } = useSession()
 
     const wrapperClass =
-        "mx-auto grid aspect-[2] w-80 place-items-center rounded-2xl p-3 text-center"
+        "mx-auto grid aspect-[2] place-items-center rounded-2xl text-center"
 
     if (query) {
         return (
