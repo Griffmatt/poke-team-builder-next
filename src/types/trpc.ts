@@ -10,7 +10,12 @@ type teams = inferProcedureOutput<AppRouter["teams"]["getTeams"]>
 
 type team = inferProcedureOutput<AppRouter["teams"]["getTeam"]>
 
-type user = inferProcedureOutput<AppRouter["users"]["getUser"]>
+type user = {
+    id: string
+    name?: string | null
+    email?: string | null
+    image?: string | null
+}
 
 type formattedTeam = ReturnType<typeof formatTeams>
 

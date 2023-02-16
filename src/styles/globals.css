@@ -8,7 +8,7 @@ body {
     @apply w-full bg-dark text-light;
 }
 *:focus {
-    @apply outline-primary outline-8 outline-offset-4;
+    @apply outline-8 outline-offset-4 outline-primary;
 }
 
 main {
