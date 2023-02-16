@@ -1,13 +1,14 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import Image from "next/image"
-import { type user } from "types/trpc"
+
 import { ProfileSearch } from "./profileSearch"
+import { type user } from "types/trpc"
 
 interface Props {
     selected: "pokemon" | "teams" | "settings" | "favorites"
     userId: string
-    user?: user
+    user?: user | null
 }
 
 export const ProfileNav = ({ selected, userId, user }: Props) => {
