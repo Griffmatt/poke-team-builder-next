@@ -143,7 +143,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
     return (
         <form
-            className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
             <div className="h-fit w-full lg:row-span-2">
@@ -214,7 +214,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     })}
                 </div>
             </div>
-            <div className="grid gap-4 md:col-span-2 md:grid-cols-2">
+            <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
                 <div>
                     <h2>Evs</h2>
                     {evs.map((stat) => {
@@ -291,7 +291,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 </div>
             </div>
             <button
-                className="w-full rounded-xl p-4 md:col-start-2 lg:col-start-3"
+                className="w-full rounded-xl p-4 sm:col-start-2 lg:col-start-3"
                 type="submit"
                 disabled={buildPokemon.isLoading || updatePokemon.isLoading}
             >

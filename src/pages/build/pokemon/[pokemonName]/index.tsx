@@ -64,11 +64,9 @@ const SinglePokemon: NextPage = () => {
             <main>
                 <BackButton />
                 <div className="h-8 w-32 animate-pulse bg-dark-2" />
-                <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
-                        <div className="flex h-full flex-col justify-around p-3">
-                            <div className="aspect-square animate-pulse rounded-full bg-dark-3" />
-                        </div>
+                        <div className="aspect-square w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3 " />
                     </div>
                     <div className="lg:col-span-2">
                         <h2>Stats</h2>
@@ -97,7 +95,7 @@ const SinglePokemon: NextPage = () => {
         <main>
             <BackButton />
             <h1>{formatString(pokemon.name)}</h1>
-            <div className="grid gap-3 p-3 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full xl:row-span-2">
                     <PokemonImage pokemonName={pokemon.name} />
                 </div>
@@ -137,7 +135,7 @@ const SinglePokemon: NextPage = () => {
                     <h3>Total Stats: {totalStats}</h3>
                 </div>
                 {pokemonBuilds.length > 0 && (
-                    <div className="md:col-span-2 lg:col-span-3 xl:col-span-2">
+                    <div className="xs:col-span-2 lg:col-span-3 xl:col-span-2">
                         <h2>Data</h2>
                         {teammates.total > 0 && (
                             <div className="gird gap-3">
@@ -148,7 +146,7 @@ const SinglePokemon: NextPage = () => {
                                 />
                             </div>
                         )}
-                        <div className="grid gap-2 md:grid-cols-2">
+                        <div className="grid gap-2 xs:grid-cols-2">
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="nature"
@@ -158,7 +156,7 @@ const SinglePokemon: NextPage = () => {
                                 dataType="ability"
                             />
                         </div>
-                        <div className="grid gap-2 md:grid-cols-2">
+                        <div className="grid gap-2 xs:grid-cols-2">
                             <CommonData
                                 pokemonBuilds={pokemonBuilds}
                                 dataType="teraType"
@@ -175,8 +173,8 @@ const SinglePokemon: NextPage = () => {
                 <div
                     className={`grid gap-3 ${
                         session?.user?.id && pokemonBuilds.length > 0
-                            ? "md:col-span-2 md:grid-cols-2 lg:col-start-2"
-                            : "md:col-start-2 lg:col-start-3"
+                            ? "xs:col-span-2 xs:grid-cols-2 lg:col-start-2"
+                            : "xs:col-start-2 lg:col-start-3"
                     }`}
                 >
                     {pokemonBuilds.length > 0 && (
