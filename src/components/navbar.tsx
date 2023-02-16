@@ -5,7 +5,7 @@ export const NavBar = () => {
     const { data: session } = useSession()
 
     return (
-        <div className="mx-auto flex max-w-[40rem] justify-center gap-6 p-3">
+        <div className="mx-auto flex max-w-[40rem] justify-center gap-3 p-3 sm:gap-6">
             <NavLink href="/">
                 <h2>Home</h2>
             </NavLink>
@@ -22,7 +22,7 @@ export const NavBar = () => {
             ) : (
                 <button
                     className="btn-transparent"
-                    onClick={() => void signIn()}
+                    onClick={() => void signIn("", { callbackUrl: "/" })}
                 >
                     <h2>Sign In</h2>
                 </button>
