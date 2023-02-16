@@ -46,7 +46,7 @@ const Pokemon: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="max-w-60 rounded-2xl px-4 py-2 text-black"
+                    className="rounded-2xl px-4 py-2 text-black md:w-60"
                 />
             </div>
             <BuildNav selected="pokemon" />

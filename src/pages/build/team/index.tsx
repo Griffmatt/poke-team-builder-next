@@ -61,14 +61,14 @@ const BuildTeam: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="max-w-60 rounded-2xl px-4 py-2 text-black"
+                    className="rounded-2xl px-4 py-2 text-black md:w-60"
                 />
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
                     <input
-                        className="max-w-72"
+                        className="md:w-72"
                         value={teamName}
                         onChange={(event) =>
                             handleNameChange(event.target.value)
@@ -164,14 +164,14 @@ const BuildTeamSkeleton = () => {
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
-                    className="max-w-60 rounded-2xl px-4 py-2 text-black"
+                    className="-60 rounded-2xl px-4 py-2 text-black"
                     readOnly
                 />
             </div>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
-                    <input className="max-w-72" value={"Team Name"} readOnly />
+                    <input className="md:w-72" value={"Team Name"} readOnly />
                     <div className="flex gap-2">
                         <button className="btn-transparent text-xl font-extrabold text-primary">
                             Double

@@ -83,7 +83,7 @@ const SinglePokemon: NextPage = () => {
                 </div>
                 {session?.user !== undefined && (
                     <div className="flex justify-between">
-                        {session?.user?.id === user?.id ? (
+                        {session?.user?.id === user?.id && (
                             <>
                                 <button
                                     className="btn-red w-fit rounded-2xl py-2 px-4"
@@ -99,10 +99,6 @@ const SinglePokemon: NextPage = () => {
                                     </button>
                                 </Link>
                             </>
-                        ) : (
-                            <button className="ml-auto w-fit rounded-2xl py-2 px-4">
-                                Copy
-                            </button>
                         )}
                     </div>
                 )}

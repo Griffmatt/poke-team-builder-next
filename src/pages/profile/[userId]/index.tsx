@@ -48,7 +48,7 @@ const ProfilePokemon: NextPage = () => {
                     placeholder="Search for a pokemon..."
                     type="text"
                     onChange={(event) => setQuery(event.target.value)}
-                    className="max-w-60 ml-auto w-full rounded-2xl px-4 py-2 text-black"
+                    className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
                 />
                 <SkeletonPokemonGrid />
             </main>
@@ -75,7 +75,7 @@ const ProfilePokemon: NextPage = () => {
                 placeholder="Search for a pokemon..."
                 type="text"
                 onChange={(event) => setQuery(event.target.value)}
-                className="max-w-60 ml-auto w-full rounded-2xl px-4 py-2 text-black"
+                className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
             />
             <CreatedPokemonGrid
                 pokemons={filterPokemon}

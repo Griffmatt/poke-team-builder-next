@@ -55,27 +55,23 @@ export default Home
 
 const HomepageButtons = () => {
     const { data: session } = useSession()
+    const buttonClassName =
+        "flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3 w-60"
     return (
         <>
             <h2>What to do?</h2>
-            <div className="grid grid-cols-1 gap-2 xs:grid-cols-3">
-                <Link
-                    href={"/build/pokemon"}
-                    className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
-                >
+            <div className="flex flex-col items-center justify-center gap-2 xs:flex-row">
+                <Link href={"/build/pokemon"} className={buttonClassName}>
                     <h2>Build Pokemon</h2>
                 </Link>
                 {session?.user ? (
                     <>
-                        <Link
-                            href={"/build/team"}
-                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
-                        >
+                        <Link href={"/build/team"} className={buttonClassName}>
                             <h2>Build Team</h2>
                         </Link>
                         <Link
                             href={`/profile/${session?.user.id}`}
-                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                            className={buttonClassName}
                         >
                             <h2>View Profile</h2>
                         </Link>
@@ -84,14 +80,11 @@ const HomepageButtons = () => {
                     <>
                         <div
                             onClick={() => void signIn()}
-                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
+                            className={buttonClassName}
                         >
                             <h2>Sign In</h2>
                         </div>
-                        <Link
-                            href={`/boxes`}
-                            className="flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3"
-                        >
+                        <Link href={`/boxes`} className={buttonClassName}>
                             <h2>View Boxes</h2>
                         </Link>
                     </>
