@@ -97,7 +97,6 @@ const BuildTeam: NextPage = () => {
                         </button>
                     </div>
                 </div>
-
                 <div className="pokemon-team-row" ref={animationParent}>
                     {pokemonOnTeam.length === 0 ? (
                         //placeholder for when there are no cards to keep page structure
@@ -181,9 +180,8 @@ const BuildTeamSkeleton = () => {
                         </button>
                     </div>
                 </div>
-
                 <div className="pokemon-card-grid">
-                    <div className="aspect-[7/10] w-full" />
+                    <div className="aspect-square w-full" />
                 </div>
                 <button className="rounded-2xl p-3">Build Team</button>
             </div>
