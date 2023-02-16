@@ -35,10 +35,15 @@ const ProfilePokemon: NextPage = () => {
         }
     )
 
+    const user = userData || isFetching ? userData : session?.user
     if (isLoading || (isLoading2 && isFetching)) {
         return (
             <main>
-                <ProfileNav selected="pokemon" userId={userId as string} />
+                <ProfileNav
+                    selected="pokemon"
+                    userId={userId as string}
+                    user={user}
+                />
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
@@ -58,7 +63,6 @@ const ProfilePokemon: NextPage = () => {
             ? pokemon.shiny
             : pokemon.name.includes(debouncedValue)
     )
-    const user = userData ? userData : session?.user
 
     return (
         <main>
