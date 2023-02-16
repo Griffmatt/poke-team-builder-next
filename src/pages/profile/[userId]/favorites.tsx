@@ -5,11 +5,13 @@ import { TeamRows } from "components/teams/teamRows"
 import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
 
 import { type NextPage } from "next"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import React from "react"
 import { api } from "utils/api"
 
 const Favorites: NextPage = () => {
+    const { data: session } = useSession()
     const router = useRouter()
     const { userId } = router.query
 
@@ -22,12 +24,16 @@ const Favorites: NextPage = () => {
     })
 
     const {
-        data: user,
+        data: userData,
         isLoading: isLoading2,
         error: error2,
-    } = api.users.getUser.useQuery({
-        userId: userId as string,
-    })
+        isFetching,
+    } = api.users.getUser.useQuery(
+        { userId: userId as string },
+        {
+            enabled: session?.user?.id !== userId,
+        }
+    )
 
     const {
         data: teams,
@@ -45,14 +51,10 @@ const Favorites: NextPage = () => {
         userId: userId as string,
     })
 
-    if (isLoading || isLoading2 || isLoading3 || isLoading4) {
+    if (isLoading || (isLoading2 && isFetching) || isLoading3 || isLoading4) {
         return (
             <main>
-                <ProfileNav
-                    selected="favorites"
-                    userId={userId as string}
-                    user={user}
-                />
+                <ProfileNav selected="favorites" userId={userId as string} />
                 <div className="grid gap-3">
                     <h2>Pokemon</h2>
                     <SkeletonPokemonGrid />
@@ -70,6 +72,7 @@ const Favorites: NextPage = () => {
     if (error3) return <div>Error: {error3.message}</div>
     if (error4) return <div>Error: {error4.message}</div>
 
+    const user = userData ? userData : session?.user
     return (
         <main>
             <ProfileNav

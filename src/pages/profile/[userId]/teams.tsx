@@ -6,20 +6,28 @@ import { ProfileNav } from "components/profile/profileNav"
 import React from "react"
 import { TeamRows } from "components/teams/teamRows"
 import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
+import { useSession } from "next-auth/react"
 
 const ProfileTeams: NextPage = () => {
+    const { data: session } = useSession()
     const router = useRouter()
     const { userId } = router.query
 
     const {
-        data: user,
-        isLoading: userLoading,
+        data: userData,
+        isLoading,
         error,
-    } = api.users.getUser.useQuery({ userId: userId as string })
+        isFetching,
+    } = api.users.getUser.useQuery(
+        { userId: userId as string },
+        {
+            enabled: session?.user?.id !== userId,
+        }
+    )
 
     const {
         data: teams,
-        isLoading: teamsLoading,
+        isLoading: isLoading2,
         error: error2,
     } = api.teams.getUserTeams.useQuery({
         userId: userId as string,
@@ -27,20 +35,15 @@ const ProfileTeams: NextPage = () => {
 
     const {
         data: favoriteTeams,
-        isLoading: favoritesLoading,
+        isLoading: isLoading3,
         error: error3,
     } = api.favorite.checkUserFavoriteTeams.useQuery({
         userId: userId as string,
     })
-
-    if (userLoading || teamsLoading || favoritesLoading) {
+    if ((isLoading && isFetching) || isLoading2 || isLoading3) {
         return (
             <main>
-                <ProfileNav
-                    selected="teams"
-                    userId={userId as string}
-                    user={user}
-                />
+                <ProfileNav selected="teams" userId={userId as string} />
                 <div className="grid gap-3">
                     <SkeletonTeamRows />
                 </div>
@@ -51,7 +54,7 @@ const ProfileTeams: NextPage = () => {
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
-
+    const user = userData ? userData : session?.user
     return (
         <main>
             <ProfileNav

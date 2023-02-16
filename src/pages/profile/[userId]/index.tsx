@@ -6,8 +6,10 @@ import { ProfileNav } from "components/profile/profileNav"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
+import { useSession } from "next-auth/react"
 
 const ProfilePokemon: NextPage = () => {
+    const { data: session } = useSession()
     const router = useRouter()
     const { userId } = router.query
 
@@ -22,21 +24,21 @@ const ProfilePokemon: NextPage = () => {
         userId: userId as string,
     })
     const {
-        data: user,
+        data: userData,
         isLoading: isLoading2,
         error: error2,
-    } = api.users.getUser.useQuery({
-        userId: userId as string,
-    })
+        isFetching,
+    } = api.users.getUser.useQuery(
+        { userId: userId as string },
+        {
+            enabled: session?.user?.id !== userId,
+        }
+    )
 
-    if (isLoading || isLoading2) {
+    if (isLoading || (isLoading2 && isFetching)) {
         return (
             <main>
-                <ProfileNav
-                    selected="pokemon"
-                    userId={userId as string}
-                    user={user}
-                />
+                <ProfileNav selected="pokemon" userId={userId as string} />
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
@@ -56,6 +58,7 @@ const ProfilePokemon: NextPage = () => {
             ? pokemon.shiny
             : pokemon.name.includes(debouncedValue)
     )
+    const user = userData ? userData : session?.user
 
     return (
         <main>
