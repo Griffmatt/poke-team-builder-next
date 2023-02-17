@@ -1,5 +1,4 @@
 import { CommonMoves } from "components/commonData/commonMoves"
-import { BackButton } from "components/ui/backButton"
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
@@ -62,7 +61,6 @@ const SinglePokemon: NextPage = () => {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
-                <BackButton />
                 <div className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
@@ -93,7 +91,6 @@ const SinglePokemon: NextPage = () => {
     let totalStats = 0
     return (
         <main>
-            <BackButton />
             <h1>{formatString(pokemon.name)}</h1>
             <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full xl:row-span-2">

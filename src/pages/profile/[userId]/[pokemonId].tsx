@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 import { DeleteModal } from "components/modals/deleteModal"
-import { BackButton } from "components/ui/backButton"
 import { firstNameOnly } from "utils/firstNameOnly"
 import { LoadingCardWithStats } from "components/pokemonCards/ui/loadingCardWithStats"
 
@@ -49,7 +48,6 @@ const SinglePokemon: NextPage = () => {
     if (isLoading || isLoading2 || (isLoading3 && isFetching)) {
         return (
             <main>
-                <BackButton />
                 <h1 className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                     <div className="pokemon-card">
@@ -70,7 +68,6 @@ const SinglePokemon: NextPage = () => {
 
     return (
         <main>
-            <BackButton />
             <h1>
                 {firstNameOnly(user?.name ?? "")}'s {pokemon?.name}
             </h1>

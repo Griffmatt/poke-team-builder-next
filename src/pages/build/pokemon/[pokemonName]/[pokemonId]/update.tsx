@@ -3,7 +3,6 @@ import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import { PokemonForm } from "components/build/PokemonForm"
 import { api } from "utils/api"
-import { BackButton } from "components/ui/backButton"
 import { formatString } from "utils/formatString"
 import { SkeletonPokemonForm } from "components/build/ui/SkeletonPokemonForm"
 
@@ -42,7 +41,6 @@ const UpdatePokemon: NextPage = () => {
 
     return (
         <main>
-            <BackButton />
             <h1 className="w-fit">Building {formatString(pokemon.name)}</h1>
             {pokemon && heldItems && createdPokemon && (
                 <PokemonForm

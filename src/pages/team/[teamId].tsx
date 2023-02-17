@@ -5,7 +5,6 @@ import { api } from "utils/api"
 import Link from "next/link"
 import { DeleteModal } from "components/modals/deleteModal"
 import { useState } from "react"
-import { BackButton } from "components/ui/backButton"
 import { FavoritedButton } from "components/ui/favoritedButton"
 import { BattleModal } from "components/modals/battleModal"
 import { formatPercentage } from "utils/formatPercentage"
@@ -43,7 +42,6 @@ const Team: NextPage = () => {
     if (isLoading || isLoading2) {
         return (
             <main>
-                <BackButton />
                 <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                     <div className="grid w-full gap-2">
                         <div className="h-8 w-36 animate-pulse bg-dark-2" />
@@ -72,7 +70,6 @@ const Team: NextPage = () => {
 
     return (
         <main>
-            <BackButton />
             <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                 <div className="grid w-full gap-2">
                     <h1 className="w-fit">{team.teamName}</h1>

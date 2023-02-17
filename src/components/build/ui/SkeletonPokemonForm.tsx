@@ -1,4 +1,3 @@
-import { BackButton } from "components/ui/backButton"
 import { formatOrder } from "utils/formatOrder"
 
 interface Props {
@@ -10,7 +9,6 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
     const stats = ["HP", "Att", "Def", "SpA", "SpD", "Spe"]
     return (
         <main>
-            <BackButton />
             <div className="h-8 w-48 animate-pulse bg-dark-2" />
             <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full lg:row-span-2">
