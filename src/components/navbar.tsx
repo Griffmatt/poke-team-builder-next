@@ -1,6 +1,5 @@
 import { NavLink } from "./ui/navLink"
 import { signIn, useSession } from "next-auth/react"
-import { Button } from "./ui/button"
 
 export const NavBar = () => {
     const { data: session } = useSession()
@@ -21,11 +20,12 @@ export const NavBar = () => {
                     <h2>Profile</h2>
                 </NavLink>
             ) : (
-                <Button
-                    color="bg-transparent"
-                    text="Sign In"
+                <button
+                    className="btn-transparent"
                     onClick={() => void signIn("", { callbackUrl: "/" })}
-                />
+                >
+                    <h2>Sign In</h2>
+                </button>
             )}
         </div>
     )
