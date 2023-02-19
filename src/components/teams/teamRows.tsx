@@ -1,3 +1,4 @@
+import { FavoritedButton } from "components/ui/favoritedButton"
 import Link from "next/link"
 import React from "react"
 import { type teams } from "../../types/trpc"
@@ -35,7 +36,17 @@ export const TeamRows = ({
                     const favorited = favoriteTeams?.includes(team.id)
                     return (
                         <div className="grid gap-3" key={team.id}>
-                            <h3>{team.teamName}</h3>
+                            <div className="flex gap-2">
+                                <h3>{team.teamName}</h3>
+                                {favorited && (
+                                    <FavoritedButton
+                                        favorited={favorited}
+                                        absolute={false}
+                                        small={true}
+                                        displayOnly={true}
+                                    />
+                                )}
+                            </div>
                             <Link href={`/team/${team.id}`}>
                                 <TeamRow
                                     team={team}
