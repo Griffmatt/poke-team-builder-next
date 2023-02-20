@@ -23,7 +23,6 @@ const Home: NextPage = () => {
                     <SkeletonPokemonGrid amount={12} dataGrid={true} />
                 </div>
                 <div className="grid gap-3">
-                    <HomepageButtons />
                     <TeamOfTheWeek />
                 </div>
             </main>
@@ -40,7 +39,6 @@ const Home: NextPage = () => {
                 <PokemonDataGrid pokemonData={pokemonData} amount={12} />
             </div>
             <div className="grid gap-3">
-                <HomepageButtons />
                 <TeamOfTheWeek />
             </div>
         </main>
@@ -49,14 +47,14 @@ const Home: NextPage = () => {
 
 export default Home
 
-const HomepageButtons = () => {
+/*const HomepageButtons = () => {
     const { data: session } = useSession()
     const buttonClassName =
-        "flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3 w-60 shadow-md shadow-black"
+        "flex aspect-[4/2] w-60 items-center justify-center rounded-2xl shadow-black shadow-md dark:bg-dark-2 dark:hover:bg-dark-3"
     return (
         <>
             <h2>What to do?</h2>
-            <div className="flex flex-col items-center justify-center gap-2 xs:flex-row">
+            <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
                 <Link href={"/build/pokemon"} className={buttonClassName}>
                     <h2>Build Pokemon</h2>
                 </Link>
@@ -88,7 +86,7 @@ const HomepageButtons = () => {
             </div>
         </>
     )
-}
+}*/
 
 const TeamOfTheWeek = () => {
     const { data: team, isLoading, error } = api.teams.teamOfTheWeek.useQuery()
