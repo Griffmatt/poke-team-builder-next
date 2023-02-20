@@ -56,7 +56,7 @@ export const PokemonCard = ({
                 {percentage ? (
                     <p>{percentage}</p>
                 ) : (
-                    <p>{formatNumber(pokemon.order)}</p>
+                    <p>{formatNumber(pokemon.id)}</p>
                 )}
             </div>
             {favorited && (

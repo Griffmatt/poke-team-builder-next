@@ -24,10 +24,7 @@ const Home: NextPage = () => {
                 </div>
                 <div className="grid gap-3">
                     <HomepageButtons />
-                    <div className="grid gap-3">
-                        <h2>Team of the Week</h2>
-                        <p>Coming soon!</p>
-                    </div>
+                    <TeamOfTheWeek />
                 </div>
             </main>
         )
