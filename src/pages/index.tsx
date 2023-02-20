@@ -1,7 +1,5 @@
 import { type NextPage } from "next"
 import { api } from "utils/api"
-import Link from "next/link"
-import { signIn, useSession } from "next-auth/react"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
