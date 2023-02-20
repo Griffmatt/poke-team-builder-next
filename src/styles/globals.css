@@ -32,7 +32,7 @@ h3 {
 }
 
 h4 {
-    @apply text-sm md:font-medium md:text-base;
+    @apply text-sm md:text-base md:font-medium;
 }
 
 p {
@@ -64,12 +64,13 @@ button {
 }
 
 .pokemon-team-row {
-    @apply grid grid-cols-3 place-items-center gap-2 md:grid-cols-6 lg:gap-3;
+    @apply grid grid-cols-3 place-items-center rounded-2xl dark:bg-dark-2 md:grid-cols-6;
 }
 
 .pokemon-card {
-    @apply relative aspect-[7/10] w-full border border-gray dark:bg-dark-2;
+    @apply relative aspect-[7/10] w-full border border-gray p-2 dark:bg-dark-2;
 }
+
 a.pokemon-card {
     @apply dark:hover:bg-dark-2;
 }
@@ -79,7 +80,7 @@ a.pokemon-card {
 }
 
 .pokemon-grid-card-layout {
-    @apply grid grid-cols-2 rounded-xl xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6;
+    @apply grid grid-cols-2 rounded-2xl xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6;
 }
 
 .favorite {

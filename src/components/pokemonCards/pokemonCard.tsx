@@ -44,7 +44,7 @@ export const PokemonCard = ({
     }
 
     return (
-        <div className="flex h-full flex-col justify-between p-2">
+        <div className="flex h-full flex-col justify-between">
             <div className="aspect-square rounded-full bg-dark-3 shadow-black shadow-md">
                 <PokemonImage
                     pokemonName={pokemonName}

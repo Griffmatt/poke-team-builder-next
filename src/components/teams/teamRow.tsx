@@ -43,10 +43,12 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
                                 />
                             </div>
                         ) : (
-                            <PokemonImage
-                                pokemonName={pokemon.name}
-                                createdPokemon={pokemon}
-                            />
+                            <div className="w-full p-2 md:p-3">
+                                <PokemonImage
+                                    pokemonName={pokemon.name}
+                                    createdPokemon={pokemon}
+                                />
+                            </div>
                         )}
                     </React.Fragment>
                 )

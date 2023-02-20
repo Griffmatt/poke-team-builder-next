@@ -106,7 +106,7 @@ const BuildTeam: NextPage = () => {
                             return (
                                 <button
                                     key={pokemon?.id}
-                                    className="w-full rounded-full"
+                                    className="btn-transparent w-full rounded-full p-2"
                                     onClick={() =>
                                         removePokemonFromTeam(pokemon.id)
                                     }
