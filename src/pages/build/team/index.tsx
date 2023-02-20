@@ -130,7 +130,7 @@ const BuildTeam: NextPage = () => {
             {filteredPokemon.length === 0 && (
                 <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
             )}
-            <div className="pokemon-card-grid" ref={animationParent}>
+            <div className="pokemon-grid-card-layout " ref={animationParent}>
                 {filteredPokemon?.map((pokemon) => {
                     const favorited =
                         pokemon.favorited[0]?.userId === pokemon.userId

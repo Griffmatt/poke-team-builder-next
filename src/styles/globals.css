@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     padding-left: calc(100vw - 100%);
     box-sizing: border-box;
@@ -59,23 +63,23 @@ button {
     @apply bg-dark-2 !important;
 }
 
-.pokemon-card-grid {
-    @apply grid grid-cols-2 place-items-center gap-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 lg:gap-3;
-}
-
-.pokemon-data-grid {
-    @apply grid grid-cols-3 place-items-center gap-2 sm:grid-cols-6 lg:gap-3;
-}
-
 .pokemon-team-row {
     @apply grid grid-cols-3 place-items-center gap-2 md:grid-cols-6 lg:gap-3;
 }
 
 .pokemon-card {
-    @apply relative aspect-[7/10] w-full rounded-2xl border-2 border-silver dark:bg-dark-2 md:border-4;
+    @apply relative aspect-[7/10] w-full border border-gray dark:bg-dark-2;
 }
 a.pokemon-card {
-    @apply dark:hover:bg-dark-3;
+    @apply dark:hover:bg-dark-2;
+}
+
+.pokemon-grid-data-layout {
+    @apply grid grid-cols-3 rounded sm:grid-cols-6;
+}
+
+.pokemon-grid-card-layout {
+    @apply grid grid-cols-2 rounded-xl xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-6;
 }
 
 .favorite {

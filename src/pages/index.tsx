@@ -4,6 +4,8 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
+import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
+import { TeamRows } from "components/teams/teamRows"
 
 const Home: NextPage = () => {
     const {
@@ -42,10 +44,7 @@ const Home: NextPage = () => {
             </div>
             <div className="grid gap-3">
                 <HomepageButtons />
-                <div className="grid gap-3">
-                    <h2>Team of the Week</h2>
-                    <p>Coming soon!</p>
-                </div>
+                <TeamOfTheWeek />
             </div>
         </main>
     )
@@ -56,7 +55,7 @@ export default Home
 const HomepageButtons = () => {
     const { data: session } = useSession()
     const buttonClassName =
-        "flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3 w-60"
+        "flex aspect-[4/2] items-center justify-center rounded-2xl dark:bg-dark-2 dark:hover:bg-dark-3 w-60 shadow-md shadow-black"
     return (
         <>
             <h2>What to do?</h2>
@@ -91,5 +90,25 @@ const HomepageButtons = () => {
                 )}
             </div>
         </>
+    )
+}
+
+const TeamOfTheWeek = () => {
+    const { data: team, isLoading, error } = api.teams.teamOfTheWeek.useQuery()
+
+    if (isLoading)
+        return (
+            <div className="grid gap-3">
+                <h2>Team of the Week</h2> <SkeletonTeamRows rows={1} />
+            </div>
+        )
+
+    if (error) return <div>Error: {error.message}</div>
+
+    return (
+        <div className="grid gap-3">
+            <h2>Team of the Week</h2>
+            <TeamRows teams={team} />
+        </div>
     )
 }

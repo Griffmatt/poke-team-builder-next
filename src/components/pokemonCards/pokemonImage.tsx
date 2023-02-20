@@ -37,7 +37,7 @@ export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
 
     return (
         <div
-            className={`aspect-square w-full rounded-full border-8 bg-dark-3 ${pokemonTypes[0]} ${pokemonTypes[1]}`}
+            className={`aspect-square w-full rounded-full border-8 bg-dark-3 ${pokemonTypes[0]} ${pokemonTypes[1]} shadow-black shadow-md`}
         >
             {pokemonImage && (
                 <Image

@@ -6,8 +6,8 @@ import { type NextPage } from "next"
 const BoxesPokemon: NextPage = () => {
     return (
         <main>
-            <BoxesNav selected="teams" />
             <h1>Boxes</h1>
+            <BoxesNav selected="teams" />
             <PopularTeams />
             <RecentTeams />
         </main>

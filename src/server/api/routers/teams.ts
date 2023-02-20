@@ -117,4 +117,12 @@ export const teamsRouter = createTRPCRouter({
 
         return formatTeams(teams)
     }),
+    teamOfTheWeek: publicProcedure.query(async ({ ctx }) => {
+        const teams = await ctx.prisma.team.findMany({
+            take: 1,
+            ...teamsInclude,
+        })
+
+        return formatTeams(teams)
+    }),
 })

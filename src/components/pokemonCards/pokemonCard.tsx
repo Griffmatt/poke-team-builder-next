@@ -39,7 +39,7 @@ export const PokemonCard = ({
 
     return (
         <div className="flex h-full flex-col justify-around p-2">
-            <div className="aspect-square rounded-full bg-dark-3">
+            <div className="aspect-square rounded-full bg-dark-3 shadow-black shadow-md">
                 {pokemonImage && (
                     <Image
                         src={pokemonImage}

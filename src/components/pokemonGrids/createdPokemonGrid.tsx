@@ -36,7 +36,7 @@ export const CreatedPokemonGrid = ({
                     userId={userId}
                 />
             ) : (
-                <div className="pokemon-card-grid">
+                <div className="pokemon-grid-card-layout">
                     {pokemons?.map((pokemon) => {
                         const currentUserFavorited =
                             currentUserFavorites?.includes(pokemon.id) ?? false

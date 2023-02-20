@@ -9,8 +9,8 @@ export const SkeletonPokemonGrid = ({
     const className = withStats
         ? "grid gap-2 md:grid-cols-3"
         : dataGrid
-        ? "pokemon-data-grid"
-        : "pokemon-card-grid"
+        ? "pokemon-grid-data-layout "
+        : " pokemon-grid-card-layout"
 
     return (
         <div className={className}>
