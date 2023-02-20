@@ -6,8 +6,8 @@ import { BoxesNav } from "components/boxes/boxesNav"
 const BoxesPokemon: NextPage = () => {
     return (
         <main>
-            <BoxesNav selected="pokemon" />
             <h1>Boxes</h1>
+            <BoxesNav selected="pokemon" />
             <PopularPokemon />
             <RecentPokemon />
         </main>

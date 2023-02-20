@@ -1,8 +1,12 @@
 import React from "react"
 import { SkeletonTeamRow } from "./skeletonTeamRow"
 
-export const SkeletonTeamRows = () => {
-    const fillerArr = Array.from({ length: 5 }, () => 0)
+interface Props {
+    rows?: number
+}
+
+export const SkeletonTeamRows = ({ rows = 5 }: Props) => {
+    const fillerArr = Array.from({ length: rows }, () => 0)
     return (
         <>
             {fillerArr.map((_, index) => (

@@ -51,8 +51,6 @@ export const FavoritedButton = ({
         }
     }, [])*/
 
-    console.log(handleClick)
-
     return (
         <>
             {displayOnly ? (

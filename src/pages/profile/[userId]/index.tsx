@@ -6,10 +6,8 @@ import { ProfileNav } from "components/profile/profileNav"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { CreatedPokemonGrid } from "components/pokemonGrids/createdPokemonGrid"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
-import { useSession } from "next-auth/react"
 
 const ProfilePokemon: NextPage = () => {
-    const { data: session } = useSession()
     const router = useRouter()
     const { userId } = router.query
 
@@ -24,19 +22,12 @@ const ProfilePokemon: NextPage = () => {
         userId: userId as string,
     })
     const {
-        data: userData,
+        data: user,
         isLoading: isLoading2,
         error: error2,
-        isFetching,
-    } = api.users.getUser.useQuery(
-        { userId: userId as string },
-        {
-            enabled: session?.user?.id !== userId,
-        }
-    )
+    } = api.users.getUser.useQuery({ userId: userId as string })
 
-    const user = userData || isFetching ? userData : session?.user
-    if (isLoading || (isLoading2 && isFetching)) {
+    if (isLoading || isLoading2) {
         return (
             <main>
                 <ProfileNav

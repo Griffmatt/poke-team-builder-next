@@ -30,13 +30,12 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
             {team?.pokemon.map((pokemon) => {
                 const favorited = favoritePokemon?.includes(pokemon.id) ?? false
                 return (
-                    <>
+                    <React.Fragment key={pokemon.id}>
                         {withStats ? (
                             <div
                                 className={`pokemon-card ${
                                     favorite ? "favorite" : ""
                                 }`}
-                                key={pokemon.id}
                             >
                                 <PokemonCardWithStats
                                     createdPokemon={pokemon}
@@ -44,14 +43,14 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
                                 />
                             </div>
                         ) : (
-                            <React.Fragment key={pokemon.id}>
+                            <div className="w-full p-2 md:p-3">
                                 <PokemonImage
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
                                 />
-                            </React.Fragment>
+                            </div>
                         )}
-                    </>
+                    </React.Fragment>
                 )
             })}
         </div>

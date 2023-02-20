@@ -106,7 +106,7 @@ const BuildTeam: NextPage = () => {
                             return (
                                 <button
                                     key={pokemon?.id}
-                                    className="w-full rounded-full"
+                                    className="btn-transparent w-full rounded-full p-2"
                                     onClick={() =>
                                         removePokemonFromTeam(pokemon.id)
                                     }
@@ -130,21 +130,20 @@ const BuildTeam: NextPage = () => {
             {filteredPokemon.length === 0 && (
                 <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
             )}
-            <div className="pokemon-card-grid" ref={animationParent}>
+            <div className="pokemon-grid-card-layout " ref={animationParent}>
                 {filteredPokemon?.map((pokemon) => {
                     const favorited =
                         pokemon.favorited[0]?.userId === pokemon.userId
                     return (
                         <button
-                            className={`pokemon-card ${
-                                favorited ? "favorite" : ""
-                            }`}
+                            className="pokemon-card"
                             onClick={() => addPokemonToTeam(pokemon)}
                             key={pokemon.id}
                         >
                             <PokemonCard
                                 pokemonName={pokemon.name}
                                 createdPokemon={pokemon}
+                                favorited={favorited}
                             />
                         </button>
                     )

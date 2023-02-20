@@ -36,7 +36,7 @@ export const CreatedPokemonGrid = ({
                     userId={userId}
                 />
             ) : (
-                <div className="pokemon-card-grid">
+                <div className="pokemon-grid-card-layout">
                     {pokemons?.map((pokemon) => {
                         const currentUserFavorited =
                             currentUserFavorites?.includes(pokemon.id) ?? false
@@ -50,14 +50,13 @@ export const CreatedPokemonGrid = ({
                         return (
                             <Link
                                 key={pokemon.id}
-                                className={`pokemon-card ${
-                                    favorited ? "favorite" : ""
-                                }`}
+                                className="pokemon-card"
                                 href={`/profile/${pokemon.userId}/${pokemon.id}/`}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
+                                    favorited={favorited}
                                 />
                             </Link>
                         )

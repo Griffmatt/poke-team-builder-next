@@ -6,24 +6,16 @@ import { ProfileNav } from "components/profile/profileNav"
 import React from "react"
 import { TeamRows } from "components/teams/teamRows"
 import { SkeletonTeamRows } from "components/teams/ui/skeletonTeamRows"
-import { useSession } from "next-auth/react"
 
 const ProfileTeams: NextPage = () => {
-    const { data: session } = useSession()
     const router = useRouter()
     const { userId } = router.query
 
     const {
-        data: userData,
+        data: user,
         isLoading,
         error,
-        isFetching,
-    } = api.users.getUser.useQuery(
-        { userId: userId as string },
-        {
-            enabled: session?.user?.id !== userId,
-        }
-    )
+    } = api.users.getUser.useQuery({ userId: userId as string })
 
     const {
         data: teams,
@@ -41,8 +33,7 @@ const ProfileTeams: NextPage = () => {
         userId: userId as string,
     })
 
-    const user = userData || isFetching ? userData : session?.user
-    if ((isLoading && isFetching) || isLoading2 || isLoading3) {
+    if (isLoading || isLoading2 || isLoading3) {
         return (
             <main>
                 <ProfileNav

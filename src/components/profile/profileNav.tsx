@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 import Image from "next/image"
 
 import { ProfileSearch } from "./profileSearch"
 import { type user } from "types/trpc"
+import { firstNameOnly } from "utils/firstNameOnly"
 
 interface Props {
     selected: "pokemon" | "teams" | "settings" | "favorites"
@@ -12,8 +12,6 @@ interface Props {
 }
 
 export const ProfileNav = ({ selected, userId, user }: Props) => {
-    const { data: session } = useSession()
-
     return (
         <>
             <ProfileSearch userId={userId} />
@@ -47,24 +45,17 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                         Favorites
                     </h3>
                 </Link>
-                {session?.user?.id === userId && (
-                    <Link href={`/profile/settings`}>
-                        <h3
-                            className={
-                                selected === "settings" ? "border-b-2" : ""
-                            }
-                        >
-                            Settings
-                        </h3>
-                    </Link>
-                )}
+                <Link href={`/profile/${userId}/stats`}>
+                    <h3 className={selected === "settings" ? "border-b-2" : ""}>
+                        Stats
+                    </h3>
+                </Link>
             </div>
         </>
     )
 }
 
 const UserHeader = ({ user }: { user: user }) => {
-    const firstName = user?.name?.split(" ")[0] ?? ""
     return (
         <div className="grid h-44 grid-rows-2 px-1 text-center">
             <div className="row-span-2 grid h-fit w-fit gap-1">
@@ -82,7 +73,7 @@ const UserHeader = ({ user }: { user: user }) => {
                         <div className="rounded-full border-4 border-dark-3" />
                     )}
                 </div>
-                <h2>{firstName}</h2>
+                {user?.name && <h2>{firstNameOnly(user.name)}</h2>}
             </div>
         </div>
     )

@@ -20,7 +20,7 @@ export const PokemonGrid = ({ pokemons, query }: Props) => {
             {query && showPokemon.length === 0 ? (
                 <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
-                <div className="pokemon-card-grid">
+                <div className=" pokemon-grid-card-layout">
                     {showPokemon.map((pokemon) => {
                         return (
                             <Link
