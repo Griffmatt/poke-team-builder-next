@@ -50,14 +50,13 @@ export const CreatedPokemonGrid = ({
                         return (
                             <Link
                                 key={pokemon.id}
-                                className={`pokemon-card ${
-                                    favorited ? "favorite" : ""
-                                }`}
+                                className="pokemon-card"
                                 href={`/profile/${pokemon.userId}/${pokemon.id}/`}
                             >
                                 <PokemonCard
                                     pokemonName={pokemon.name}
                                     createdPokemon={pokemon}
+                                    favorited={favorited}
                                 />
                             </Link>
                         )
