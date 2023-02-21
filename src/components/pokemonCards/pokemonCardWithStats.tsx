@@ -6,8 +6,8 @@ import { type CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
 import { formatString } from "utils/formatString"
 import { FavoritedButton } from "../ui/favoritedButton"
-import Image from "next/image"
 import { LoadingCardWithStats } from "./ui/loadingCardWithStats"
+import { PokemonImage } from "./pokemonImage"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -52,24 +52,15 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     if (isLoading) return <LoadingCardWithStats />
 
     if (error) return <div>Error: {error.message}</div>
-
-    const pokemonImage = createdPokemon.shiny
-        ? pokemon.sprites.front_shiny
-        : pokemon.sprites.front_default
     return (
         <div className="grid gap-1 text-center">
             <h2>{formatString(createdPokemon.name)}</h2>
             <div className="justify-between lg:flex">
                 <div className="relative my-auto aspect-square w-full">
-                    {pokemonImage && (
-                        <Image
-                            src={pokemonImage}
-                            className="aspect-square w-full"
-                            alt={pokemon.name}
-                            width="96"
-                            height="96"
-                        />
-                    )}
+                    <PokemonImage
+                        pokemonName={pokemon.name}
+                        createdPokemon={createdPokemon}
+                    />
                     {session?.user?.id && (
                         <FavoritedButton
                             favorited={favorite}
