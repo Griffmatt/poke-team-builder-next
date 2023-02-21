@@ -56,7 +56,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
         <div className="grid gap-1 text-center">
             <h2>{formatString(createdPokemon.name)}</h2>
             <div className="justify-between lg:flex">
-                <div className="relative my-auto aspect-square w-full">
+                <div className="relative my-auto w-full">
                     <PokemonImage
                         pokemonName={pokemon.name}
                         createdPokemon={createdPokemon}
