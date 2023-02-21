@@ -78,7 +78,7 @@ const ProfileSettings: NextPage = () => {
             />
             <div className="flex justify-center">
                 <div className="grid w-72 gap-2">
-                    <div className="grid w-full gap-1 rounded-xl bg-dark-3 p-2">
+                    <div className="grid w-full gap-1 rounded-xl bg-dark-2 p-2">
                         <h4>Battles won</h4>
                         <p>0</p>
                         <h4>Total pokemon</h4>
