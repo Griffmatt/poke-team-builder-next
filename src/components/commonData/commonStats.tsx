@@ -19,7 +19,7 @@ export const CommonStats = ({ stats }: Props) => {
         <div className="w-full">
             <h3>Stats</h3>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                {stats.map((stats, index) => {
+                {stats.map((statsData, index) => {
                     const selectedStats = index === statsIndex
                     return (
                         <button
@@ -29,9 +29,9 @@ export const CommonStats = ({ stats }: Props) => {
                                     : "dark:border-dark-2"
                             }`}
                             key={`stats${index}`}
-                            onClick={() => handleStatsChange(stats, index)}
+                            onClick={() => handleStatsChange(statsData, index)}
                         >
-                            {stats.map((ev) => {
+                            {statsData.map((ev) => {
                                 return (
                                     <div key={`${ev.stat}EV${index}`}>
                                         <h3>{ev.stat}</h3>

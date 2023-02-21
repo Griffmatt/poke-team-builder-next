@@ -41,7 +41,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         },
         useFormatInitialData(pokemon, heldItems, createdPokemon)
     )
-    const { ability, nature, heldItem, shiny, teraType, moves } = pokemonData
+    const { ability, nature, heldItem, teraType, moves } = pokemonData
 
     const { selectedPokemonData } = useSelectedContext()
 
@@ -65,17 +65,13 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         handleIvChange,
     } = useHandleIvChange(createdPokemon?.ivs)
 
-    const buildPokemon = useBuildPokemonMutation(
+    const { buildPokemon, buildMutation } = useBuildPokemonMutation(
         session?.user?.id as string,
         pokemon,
-        {
-            ...pokemonData,
-            ivs,
-            evs,
-        }
+        { ...pokemonData, ivs, evs }
     )
 
-    const updatePokemon = useUpdatePokemonMutation(
+    const { updatePokemon, updateMutation } = useUpdatePokemonMutation(
         session?.user?.id as string,
         createdPokemon as CreatedPokemon,
         { ...pokemonData, ivs, evs }
@@ -85,55 +81,12 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         event.preventDefault()
         const user = session?.user
         if (!user) return null
-        const movesFormat = [
-            {
-                move: moves[0],
-                moveOrder: 1,
-            },
-            {
-                move: moves[1],
-                moveOrder: 2,
-            },
-            {
-                move: moves[2],
-                moveOrder: 3,
-            },
-            {
-                move: moves[3],
-                moveOrder: 4,
-            },
-        ]
 
         if (createdPokemon) {
-            const updatePokemonData = {
-                id: createdPokemon.id,
-                ability: ability,
-                nature: nature,
-                heldItem: heldItem,
-                teraType: teraType,
-                moves: movesFormat,
-                evs: evs,
-                ivs: ivs,
-            }
-            updatePokemon.mutate(updatePokemonData)
+            updatePokemon(createdPokemon.id)
             return null
         }
-
-        const createPokemonData = {
-            userId: session?.user?.id,
-            name: pokemon.name,
-            ability: ability,
-            nature: nature,
-            heldItem: heldItem,
-            shiny: shiny,
-            teraType: teraType,
-            moves: movesFormat,
-            evs: evs,
-            ivs: ivs,
-        }
-
-        buildPokemon.mutate(createPokemonData)
-
+        buildPokemon()
         return null
     }
 
@@ -194,18 +147,18 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 </div>
                 <div>
                     <h2>Moves</h2>
-                    {pokemonData.moves.map((move, index) => {
-                        const moves = pokemon.moves.map(
+                    {moves.map((move, index) => {
+                        const pokemonMoves = pokemon.moves.map(
                             (moveData) => moveData.move.name
                         )
                         return (
                             <React.Fragment key={move}>
                                 <MovesInput
                                     order={index}
-                                    moves={moves}
+                                    moves={pokemonMoves}
                                     move={move}
                                     setData={setPokemonData}
-                                    currentMoves={pokemonData.moves}
+                                    currentMoves={moves}
                                     openInput={openInput}
                                     setOpenInput={setOpenInput}
                                 />
@@ -293,7 +246,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             <button
                 className="w-full rounded-xl p-4 sm:col-start-2 lg:col-start-3"
                 type="submit"
-                disabled={buildPokemon.isLoading || updatePokemon.isLoading}
+                disabled={buildMutation.isLoading || updateMutation.isLoading}
             >
                 {createdPokemon ? "Update Pokemon" : "Build Pokemon"}
             </button>

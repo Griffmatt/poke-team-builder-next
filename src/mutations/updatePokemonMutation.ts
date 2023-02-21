@@ -8,6 +8,7 @@ interface UpdateValues {
     heldItem: string
     shiny: boolean
     moves: string[]
+    teraType: string
     evs: { stat: string; value: number }[]
     ivs: { stat: string; value: number }[]
 }
@@ -15,7 +16,16 @@ interface UpdateValues {
 export const useUpdatePokemonMutation = (
     userId: string,
     createdPokemon: CreatedPokemon,
-    { ability, nature, heldItem, shiny, moves, evs, ivs }: UpdateValues
+    {
+        ability,
+        nature,
+        heldItem,
+        moves,
+        evs,
+        ivs,
+        shiny,
+        teraType,
+    }: UpdateValues
 ) => {
     const router = useRouter()
     const apiContext = api.useContext()
@@ -38,7 +48,7 @@ export const useUpdatePokemonMutation = (
                 nature: nature,
                 heldItem: heldItem,
                 shiny: shiny,
-                teraType: createdPokemon.teraType,
+                teraType: teraType,
                 createdAt: createdPokemon.createdAt,
                 favorited: createdPokemon.favorited,
                 moves: [
@@ -94,5 +104,36 @@ export const useUpdatePokemonMutation = (
         },
     })
 
-    return updateMutation
+    const movesFormat = [
+        {
+            move: moves[0],
+            moveOrder: 1,
+        },
+        {
+            move: moves[1],
+            moveOrder: 2,
+        },
+        {
+            move: moves[2],
+            moveOrder: 3,
+        },
+        {
+            move: moves[3],
+            moveOrder: 4,
+        },
+    ]
+
+    const updatePokemon = (pokemonId: string) =>
+        updateMutation.mutate({
+            id: pokemonId,
+            ability: ability,
+            nature: nature,
+            heldItem: heldItem,
+            teraType: teraType,
+            moves: movesFormat,
+            evs: evs,
+            ivs: ivs,
+        })
+
+    return { updatePokemon, updateMutation }
 }
