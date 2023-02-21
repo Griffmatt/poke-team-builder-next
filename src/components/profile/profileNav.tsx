@@ -19,7 +19,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                 <div className="grid h-44 grid-rows-2 px-1 text-center">
                     <div className="row-span-2 flex h-fit w-fit flex-col items-center gap-1">
                         <div className="aspect-square w-24 md:w-32">
-                            <div className="h-full w-full animate-pulse rounded-full border-8 border-dark-3 bg-dark-2" />
+                            <div className="h-full w-full animate-pulse rounded-full border-2 border-dark-3 bg-dark-2" />
                         </div>
                         <div className="h-6 w-24 animate-pulse bg-dark-2" />
                     </div>
