@@ -85,7 +85,7 @@ export const ProfileSearch = ({ userId }: Props) => {
                                     {user.image ? (
                                         <Image
                                             src={user.image}
-                                            className="h-full w-auto rounded-full"
+                                            className="aspect-square w-full rounded-full"
                                             referrerPolicy="no-referrer"
                                             alt="User Profile Picture"
                                             width="96"
