@@ -17,7 +17,7 @@ export const CommonStats = ({ stats }: Props) => {
 
     return (
         <div className="w-full">
-            <h3>Common Stats</h3>
+            <h3>Stats</h3>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 {stats.map((stats, index) => {
                     const selectedStats = index === statsIndex

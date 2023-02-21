@@ -68,7 +68,7 @@ button {
 }
 
 .pokemon-card {
-    @apply relative w-full border border-gray p-2 dark:bg-dark-2;
+    @apply relative w-full border border-dark-3 p-2 dark:bg-dark-2;
 }
 
 a.pokemon-card {

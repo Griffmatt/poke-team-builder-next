@@ -17,6 +17,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
     const { string, total } = countStringArr(data)
     const formatDataType = (string: dataTypes) => {
         if (string === "teraType") return "Tera Type"
+        if (string === "heldItem") return "Held Item"
         return formatString(string)
     }
 
@@ -35,7 +36,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
         <>
             {data.length > 0 && (
                 <div className="w-full">
-                    <h3>Common {type}</h3>
+                    <h3>{type}</h3>
                     <div className="grid gap-1">
                         {string.slice(0, 6).map((string) => {
                             const percentage = formatPercentage(

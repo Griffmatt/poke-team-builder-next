@@ -1,3 +1,4 @@
+import { STATS } from "assets/stats"
 import { formatOrder } from "utils/formatOrder"
 
 interface Props {
@@ -5,8 +6,7 @@ interface Props {
 }
 
 export const SkeletonPokemonForm = ({ build }: Props) => {
-    const fillerArr4 = Array.from({ length: 4 }, () => 0)
-    const stats = ["HP", "Att", "Def", "SpA", "SpD", "Spe"]
+    const fillerArr = Array.from({ length: 4 }, () => 0)
     return (
         <main>
             <div className="h-8 w-48 animate-pulse bg-dark-2" />
@@ -36,7 +36,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                     </div>
                     <div>
                         <h2>Moves</h2>
-                        {fillerArr4.map((_, index) => {
+                        {fillerArr.map((_, index) => {
                             const moveOrder = formatOrder(index)
                             return (
                                 <div key={index}>
@@ -53,7 +53,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                 <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
                     <div>
                         <h2>Evs</h2>
-                        {stats.map((stat, index) => {
+                        {STATS.map((stat, index) => {
                             return (
                                 <div key={index * 100}>
                                     {stat}
@@ -81,7 +81,7 @@ export const SkeletonPokemonForm = ({ build }: Props) => {
                     </div>
                     <div>
                         <h2>Ivs</h2>
-                        {stats.map((stat, index) => {
+                        {STATS.map((stat, index) => {
                             return (
                                 <div key={index * 1000}>
                                     {stat}
