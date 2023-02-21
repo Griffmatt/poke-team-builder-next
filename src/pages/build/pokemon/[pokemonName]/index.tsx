@@ -64,7 +64,7 @@ const SinglePokemon: NextPage = () => {
                 <div className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
-                        <div className="aspect-square w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3 " />
+                        <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 " />
                     </div>
                     <div className="lg:col-span-2">
                         <h2>Stats</h2>
