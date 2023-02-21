@@ -22,7 +22,7 @@ export const FavoritedButton = ({
     const wrapperClass = absolute
         ? "absolute top-1 right-1 rounded-full"
         : "rounded-full"
-    const size = small ? "w-6 h-6" : "h-10 w-10"
+    const size = small ? "w-6 h-6" : "h-8 w-8"
 
     const [favorite, setFavorite] = useState(favorited)
     const handleFavorite = favorite ? removeFavorite : addFavorite
