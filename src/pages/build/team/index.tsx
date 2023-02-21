@@ -120,6 +120,7 @@ const BuildTeam: NextPage = () => {
                         })
                     )}
                 </div>
+
                 <button
                     className="rounded-2xl p-3"
                     onClick={() => void buildTeam()}
@@ -127,6 +128,7 @@ const BuildTeam: NextPage = () => {
                     Build Team
                 </button>
             </div>
+
             {filteredPokemon.length === 0 && (
                 <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
             )}

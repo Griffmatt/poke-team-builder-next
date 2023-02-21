@@ -39,7 +39,8 @@ export function useBuildTeam(userId: string) {
         pokemon: formatPokemon,
     })
 
-    const addPokemonToTeam = (pokemon: CreatedPokemon) => {
+    const addPokemonToTeam = (pokemon: CreatedPokemon | null) => {
+        if (pokemon === null) return null
         if (pokemonOnTeam.length >= 6) return null
         const containsPokemon = pokemonOnTeam.find(
             (pokemonOnTeam) => pokemonOnTeam?.id === pokemon?.id
