@@ -68,11 +68,7 @@ button {
 }
 
 .pokemon-card {
-    @apply relative w-full border border-gray p-2 dark:bg-dark-2 aspect-[4/5];
-}
-
-.data-card{
-    @apply relative aspect-[7/10] w-full border border-gray p-2 dark:bg-dark-2 lg:aspect-[4/5];
+    @apply relative w-full border border-gray p-2 dark:bg-dark-2;
 }
 
 a.pokemon-card {

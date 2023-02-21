@@ -25,7 +25,7 @@ export const PokemonDataGrid = ({ pokemonData, amount }: Props) => {
                     <Link
                         key={pokemon.name}
                         href={`/build/pokemon/${pokemon.name}`}
-                        className="data-card"
+                        className="pokemon-card"
                     >
                         <PokemonCard
                             pokemonName={pokemon.name}

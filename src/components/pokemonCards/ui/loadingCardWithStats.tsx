@@ -2,12 +2,10 @@ export const LoadingCardWithStats = () => {
     const movesFillerArr = Array.from({ length: 4 }, () => 0)
     const stats = ["HP", "Att", "Def", "SpA", "SpD", "Spe"]
     return (
-        <div className="flex aspect-[7/10] flex-col justify-between p-4 text-center">
+        <div className="grid gap-1 text-center">
             <h2 className="mx-auto mb-1 h-6 w-40 animate-pulse bg-dark-3" />
             <div className="h-fit justify-between lg:flex">
-                <div className="relative my-auto aspect-square w-full">
-                    <div className="aspect-square w-full animate-pulse rounded-full bg-dark-3" />
-                </div>
+                <div className="relative my-auto aspect-square w-full animate-pulse bg-dark-3" />
                 <div className="h-fit lg:w-[50%]">
                     <div>
                         <h2>Type</h2>
