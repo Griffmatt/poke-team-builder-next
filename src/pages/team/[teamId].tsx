@@ -44,7 +44,7 @@ const Team: NextPage = () => {
                 <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                     <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                         <div className="h-8 w-36 animate-pulse bg-dark-2" />
-                        <div className="flex flex-col gap-2 md:flex-row">
+                        <div className="row-start-2 flex flex-col gap-2 md:flex-row lg:col-span-2">
                             <div className="h-7 w-16 animate-pulse bg-dark-2 md:h-8" />
                             <div className="flex gap-2">
                                 <div className="h-7 w-24 animate-pulse bg-dark-2 md:h-8" />
