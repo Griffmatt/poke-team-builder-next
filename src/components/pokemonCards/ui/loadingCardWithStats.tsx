@@ -5,7 +5,9 @@ export const LoadingCardWithStats = () => {
         <div className="grid gap-1 text-center">
             <h2 className="mx-auto mb-1 h-6 w-40 animate-pulse bg-dark-3" />
             <div className="justify-between lg:flex">
-                <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 shadow-black shadow-md" />
+                <div className="my-auto w-full">
+                    <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 shadow-black shadow-md" />
+                </div>
                 <div className="lg:w-[50%]">
                     <div className="grid grid-cols-2 lg:grid-cols-1">
                         <div>
