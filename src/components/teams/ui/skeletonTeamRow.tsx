@@ -6,7 +6,7 @@ export const SkeletonTeamRow = ({ amount = 6 }) => {
             <div className="pokemon-team-row">
                 {fillerArr.map((_, index) => (
                     <div
-                        className="aspect-square w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3 "
+                        className="aspect-square w-full animate-pulse rounded-full border-8 border-dark-2 bg-dark-3 shadow-black shadow-md"
                         key={index}
                     />
                 ))}

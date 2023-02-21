@@ -4,30 +4,28 @@ export const LoadingCardWithStats = () => {
     return (
         <div className="grid gap-1 text-center">
             <h2 className="mx-auto mb-1 h-6 w-40 animate-pulse bg-dark-3" />
-            <div className="h-fit justify-between lg:flex">
-                <div className="relative my-auto aspect-square w-full animate-pulse bg-dark-3" />
-                <div className="h-fit lg:w-[50%]">
-                    <div>
-                        <h2>Type</h2>
-                        <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
+            <div className="justify-between lg:flex">
+                <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 shadow-black shadow-md" />
+                <div className="lg:w-[50%]">
+                    <div className="grid grid-cols-2 lg:grid-cols-1">
+                        <div>
+                            <h2>Tera</h2>
+                            <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
+                        </div>
+                        <div>
+                            <h2>Ability</h2>
+                            <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
+                        </div>
+                        <div>
+                            <h2>Nature</h2>
+                            <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
+                        </div>
+                        <div>
+                            <h2>Item</h2>
+                            <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
+                        </div>
                     </div>
                     <div>
-                        <h2>Tera Type</h2>
-                        <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
-                    </div>
-                    <div>
-                        <h2>Ability</h2>
-                        <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
-                    </div>
-                    <div>
-                        <h2>Nature</h2>
-                        <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
-                    </div>
-                    <div>
-                        <h2>Held Item</h2>
-                        <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
-                    </div>
-                    <div className="mx-auto w-fit">
                         <h2>Moves</h2>
                         <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
                             {movesFillerArr.map((_, index) => {
