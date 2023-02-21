@@ -34,6 +34,9 @@ h3 {
 h4 {
     @apply text-sm md:text-base md:font-medium;
 }
+h5 {
+    @apply text-sm;
+}
 
 p {
     @apply text-xs text-gray xs:text-sm;

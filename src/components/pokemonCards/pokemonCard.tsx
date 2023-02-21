@@ -64,6 +64,7 @@ export const PokemonCard = ({
                     favorited={true}
                     absolute={true}
                     small={true}
+                    displayOnly={true}
                 />
             )}
         </div>
