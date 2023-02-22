@@ -1,8 +1,8 @@
 import { type CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
 import { formatString } from "utils/formatString"
-import { LoadingCardWithStats } from "./ui/loadingCardWithStats"
 import { PokemonImage } from "./pokemonImage"
+import { LoadingPreviewCard } from "./ui/loadingPreviewCard"
 
 interface Props {
     createdPokemon: CreatedPokemon
@@ -17,7 +17,7 @@ export const PreviewCard = ({ createdPokemon }: Props) => {
         name: createdPokemon.name,
     })
 
-    if (isLoading) return <LoadingCardWithStats />
+    if (isLoading) return <LoadingPreviewCard />
 
     if (error) return <div>Error: {error.message}</div>
 

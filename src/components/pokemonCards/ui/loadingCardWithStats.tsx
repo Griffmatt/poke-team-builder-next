@@ -1,4 +1,5 @@
 import { STATS } from "assets/stats"
+import { SkeletonRoundImage } from "./skeletonPokemonImage"
 
 export const LoadingCardWithStats = () => {
     const movesFillerArr = Array.from({ length: 4 }, () => 0)
@@ -7,7 +8,7 @@ export const LoadingCardWithStats = () => {
             <h2 className="mx-auto mb-1 h-6 w-40 animate-pulse bg-dark-3" />
             <div className="justify-between lg:flex">
                 <div className="my-auto w-full">
-                    <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 shadow-black shadow-md" />
+                    <SkeletonRoundImage />
                 </div>
                 <div className="lg:w-[50%]">
                     <div className="grid grid-cols-2 lg:grid-cols-1">
