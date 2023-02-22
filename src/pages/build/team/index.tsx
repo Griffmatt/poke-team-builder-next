@@ -75,14 +75,12 @@ const BuildTeam: NextPage = () => {
             ) && pokemon.name.includes(debouncedValue)
     )
 
-    const groupPokemon = filteredPokemon
-        .map((_, index) => {
-            if (index % gridLength !== 0) return
-
-            return filteredPokemon.slice(index, index + gridLength)
-        })
-        .filter((x) => x !== undefined)
-
+    const pokemonRows = []
+    let i = 0
+    while (pokemonRows.length !== filteredPokemon.length) {
+        pokemonRows.push(filteredPokemon.slice(i, i + gridLength))
+        i += gridLength
+    }
     return (
         <main>
             <div className="flex flex-col justify-between gap-2 md:flex-row">
@@ -165,13 +163,15 @@ const BuildTeam: NextPage = () => {
                 )}
             </div>
             <div className="grid">
-                {groupPokemon.map((pokemonArr, index) => {
+                {pokemonRows.map((pokemonRow, index) => {
                     return (
                         <div className="pokemon-grid-card-layout" key={index}>
-                            {pokemonArr?.map((pokemon) => {
+                            {pokemonRow?.map((pokemon) => {
                                 const favorited =
                                     pokemon.favorited[0]?.userId ===
                                     pokemon.userId
+                                const selected =
+                                    pokemon.id === selectedPokemon?.id
                                 return (
                                     <React.Fragment key={pokemon.id}>
                                         <button
@@ -192,9 +192,15 @@ const BuildTeam: NextPage = () => {
                                                 favorited={favorited}
                                             />
                                         </button>
-                                        {pokemon.id === selectedPokemon?.id && (
+                                        {selected && (
                                             <div className="col-span-full row-start-1 w-full">
-                                                <div className="grid w-full gap-2 py-5">
+                                                <div
+                                                    className={`grid w-full gap-2 ${
+                                                        index === 0
+                                                            ? "pb-4"
+                                                            : "py-4"
+                                                    }`}
+                                                >
                                                     <div className="flex justify-center">
                                                         <PreviewCard
                                                             createdPokemon={

@@ -45,6 +45,9 @@ module.exports = {
                 steel: "#B7B7CE",
                 fairy: "#D685AD",
             },
+            transitionProperty: {
+                height: "height",
+            },
         },
         screens: {
             xs: "425px",
