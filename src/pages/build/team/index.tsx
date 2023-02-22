@@ -1,6 +1,6 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
-import React, { useEffect, useState } from "react"
+import React, { useLayoutEffect, useState } from "react"
 import { BuildNav } from "components/build/buildNav"
 import { PokemonCard } from "components/pokemonCards/pokemonCard"
 import { PokemonEmpty } from "components/pokemonGrids/ui/pokemonEmpty"
@@ -13,10 +13,12 @@ import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonG
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { HorizontalPokemonCard } from "components/pokemonCards/horizontalPokemonCard"
 import { type CreatedPokemon } from "types/trpc"
+import { useScreenSize } from "hooks/useScreenSize"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
     const [animationParent] = useAutoAnimate()
+    const { width } = useScreenSize()
 
     const [query, setQuery] = useState("")
     const debouncedValue = useDebounceQuery(query)
@@ -24,18 +26,20 @@ const BuildTeam: NextPage = () => {
     const [selectedPokemon, setSelectedPokemon] =
         useState<CreatedPokemon | null>(null)
 
-    useEffect(() => {
-        const width = window.innerWidth
-        if (width <= 1024 && width > 640) {
+    useLayoutEffect(() => {
+        if (width >= 1024) {
+            setGridLength(6)
+        }
+        if (width < 1024 && width > 640) {
             setGridLength(4)
         }
-        if (width <= 640 && width > 425) {
+        if (width <= 640 && width >= 425) {
             setGridLength(3)
         }
-        if (width <= 425) {
+        if (width < 425) {
             setGridLength(2)
         }
-    }, [])
+    }, [width])
 
     const {
         data: pokemons,
