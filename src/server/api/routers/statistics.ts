@@ -1,4 +1,4 @@
-import { countStringArr } from "../../utils/countStringArr"
+import { countStringArr } from "../../../utils/countStringArr"
 import { formatTeams } from "../../utils/formatTeams"
 import { pokemonInclude, teamsInclude } from "../../utils/includeConfigs"
 import { createTRPCRouter, publicProcedure } from "../trpc"

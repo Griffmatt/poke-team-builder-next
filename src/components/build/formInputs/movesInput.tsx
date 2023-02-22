@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { api } from "utils/api"
 import { formatOrder } from "utils/formatOrder"
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
@@ -19,6 +20,7 @@ interface Props {
     currentMoves: string[]
     openInput: string
     setOpenInput: React.Dispatch<React.SetStateAction<string>>
+    pokemonName: string
 }
 
 type ButtonEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -31,10 +33,18 @@ export const MovesInput = ({
     currentMoves,
     openInput,
     setOpenInput,
+    pokemonName,
 }: Props) => {
     const [clicked, setClicked] = useState(0)
     const moveOrder = formatOrder(order)
-    const percentage = formatPercentage(1)
+
+    const { data: commonMoves } = api.mostCommon.moves.useQuery({
+        pokemonName: pokemonName,
+    })
+
+    useEffect(() => {
+        setOpenInput("")
+    }, [clicked, setOpenInput])
 
     const handleClick = (move: string, event: ButtonEvent) => {
         event.stopPropagation()
@@ -52,15 +62,15 @@ export const MovesInput = ({
         setOpenInput(moveOrder)
     }
 
-    useEffect(() => {
-        setOpenInput("")
-    }, [clicked, setOpenInput])
-
     const filterMoves = moves
-        .filter(
-            (moveName) => move === moveName || !currentMoves.includes(moveName)
-        )
+        .filter((moveName) => !currentMoves.includes(moveName))
         .sort()
+
+    const commonMovesMap = new Map<string, number>()
+
+    commonMoves?.moves.forEach((commonMove) => {
+        commonMovesMap.set(commonMove.name, commonMove.amount)
+    })
 
     return (
         <div>
@@ -70,29 +80,33 @@ export const MovesInput = ({
                 onClick={handleOpen}
                 type="button"
             >
-                <h4>{formatString(move)}</h4>
-                <p>{percentage}</p>
+                <div className="flex w-full justify-between">
+                    <h4>{formatString(move)}</h4>
+                    {openInput === moveOrder ? <p>⌄</p> : <p>^</p>}
+                </div>
             </button>
             <div className="relative">
                 {openInput === moveOrder && (
-                    <div className="no-scrollbar absolute z-50 h-fit max-h-96 w-full overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
-                        {filterMoves.map((moveName, index) => {
-                            const firstItem = index === 0
+                    <div className="no-scrollbar absolute z-50 h-fit max-h-96 w-full divide-y-2 divide-dark-3 overflow-y-scroll rounded-2xl border-2 border-dark dark:bg-dark-2">
+                        {filterMoves.map((moveName) => {
+                            const amount = commonMovesMap.get(moveName)
+                            const percentage =
+                                amount && commonMoves
+                                    ? formatPercentage(
+                                          amount / commonMoves.total
+                                      )
+                                    : undefined
                             return (
                                 <button
                                     key={moveName}
-                                    className={`btn-dark-2 top-1 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8 ${
-                                        firstItem
-                                            ? ""
-                                            : "border-t border-dark-3"
-                                    }`}
+                                    className="btn-dark-2 top-1 flex h-10 w-full items-center justify-between px-4 py-1 lg:h-8"
                                     type="button"
                                     onClick={(event) =>
                                         handleClick(moveName, event)
                                     }
                                 >
                                     <h4>{formatString(moveName)}</h4>
-                                    <p>{percentage}</p>
+                                    {percentage && <p>{percentage}</p>}
                                 </button>
                             )
                         })}

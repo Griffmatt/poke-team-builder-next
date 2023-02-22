@@ -8,7 +8,7 @@ interface Props {
     createdPokemon: CreatedPokemon
 }
 
-export const HorizontalPokemonCard = ({ createdPokemon }: Props) => {
+export const InfoCard = ({ createdPokemon }: Props) => {
     const {
         data: pokemon,
         isLoading,

@@ -112,37 +112,37 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                         dataType="ability"
                         data={ability}
                         setData={setPokemonData}
-                        total={1}
                         items={abilities}
                         openInput={openInput}
                         setOpenInput={setOpenInput}
+                        pokemonName={pokemon.name}
                     />
                     <DataInput
                         dataType="nature"
                         data={nature}
                         setData={setPokemonData}
-                        total={1}
                         items={NATURES}
                         openInput={openInput}
                         setOpenInput={setOpenInput}
+                        pokemonName={pokemon.name}
                     />
                     <DataInput
-                        dataType="held-item"
+                        dataType="heldItem"
                         data={heldItem}
                         setData={setPokemonData}
-                        total={1}
                         items={heldItems}
                         openInput={openInput}
                         setOpenInput={setOpenInput}
+                        pokemonName={pokemon.name}
                     />
                     <DataInput
-                        dataType="tera-type"
+                        dataType="teraType"
                         data={teraType}
                         setData={setPokemonData}
-                        total={1}
                         items={TERA_TYPES}
                         openInput={openInput}
                         setOpenInput={setOpenInput}
+                        pokemonName={pokemon.name}
                     />
                 </div>
                 <div>
@@ -161,6 +161,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                     currentMoves={moves}
                                     openInput={openInput}
                                     setOpenInput={setOpenInput}
+                                    pokemonName={pokemon.name}
                                 />
                             </React.Fragment>
                         )

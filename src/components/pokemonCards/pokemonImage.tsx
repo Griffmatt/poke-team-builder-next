@@ -2,6 +2,7 @@ import Image from "next/image"
 
 import { type CreatedPokemon } from "types/trpc"
 import { api } from "utils/api"
+import { SkeletonRoundImage } from "./ui/skeletonPokemonImage"
 
 interface Props {
     pokemonName: string
@@ -17,10 +18,7 @@ export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
         error,
     } = api.pokeApi.getPokemonByName.useQuery({ name: pokemonName })
 
-    if (isLoading)
-        return (
-            <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 shadow-black shadow-md" />
-        )
+    if (isLoading) return <SkeletonRoundImage />
 
     if (error) return <div>Error: {error.message}</div>
 

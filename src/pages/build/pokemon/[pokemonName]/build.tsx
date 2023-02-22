@@ -23,7 +23,12 @@ const CreatePokemon: NextPage = () => {
     } = api.pokeApi.getHeldItems.useQuery()
 
     if (isLoading || isLoading2) {
-        return <SkeletonPokemonForm build={true} />
+        return (
+            <SkeletonPokemonForm
+                build={true}
+                pokemonName={pokemonName as string}
+            />
+        )
     }
 
     if (error) return <div>Error: {error.message}</div>
