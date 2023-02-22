@@ -1,9 +1,9 @@
 export const formatStat = (stat: string) => {
     const lowerCase = stat.toLowerCase()
-    if (lowerCase === "hp") return "hp"
-    if (lowerCase === "attack") return "att"
-    if (lowerCase === "defense") return "def"
-    if (lowerCase === "special-attack") return "spa"
-    if (lowerCase === "special-defense") return "spd"
-    return "spe"
+    if (lowerCase === "hp") return "HP"
+    if (lowerCase === "attack") return "Att"
+    if (lowerCase === "defense") return "Def"
+    if (lowerCase === "special-attack") return "SpA"
+    if (lowerCase === "special-defense") return "SpD"
+    return "Spe"
 }

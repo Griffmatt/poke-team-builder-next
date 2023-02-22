@@ -12,6 +12,7 @@ import { CommonData } from "components/commonData/commonData"
 import { CommonStats } from "components/commonData/commonStats"
 import { useEffect } from "react"
 import { useSelectedContext } from "context/selectedContext"
+import { STATS } from "assets/stats"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -58,7 +59,6 @@ const SinglePokemon: NextPage = () => {
     }, [pokemonBuilds?.length, resetData])
 
     if (isLoading || isLoading2 || isLoading3) {
-        const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main>
                 <div className="h-8 w-32 animate-pulse bg-dark-2" />
@@ -69,15 +69,16 @@ const SinglePokemon: NextPage = () => {
                     <div className="lg:col-span-2">
                         <h2>Stats</h2>
                         <div>
-                            {fillerArr.map((_, index) => {
+                            {STATS.map((stat, index) => {
                                 return (
                                     <div key={index}>
-                                        <div className="h-6" />
+                                        <h3>{formatString(stat)}:</h3>
                                         <div className="h-6 animate-pulse rounded-full bg-dark-2" />
                                     </div>
                                 )
                             })}
                         </div>
+                        <h3>Total Stats:</h3>
                     </div>
                 </div>
             </main>
@@ -110,12 +111,12 @@ const SinglePokemon: NextPage = () => {
                                 (limitNumber / maxNumber) * 100
                             )
                             totalStats += stat.base_stat
-                            const bgColor = formatStat(stat.stat.name)
+                            const statFormatted = formatStat(stat.stat.name)
+                            const bgColor = statFormatted
                             return (
                                 <div key={stat.stat.name}>
                                     <h3>
-                                        {formatString(stat.stat.name)}:{" "}
-                                        {stat.base_stat}
+                                        {statFormatted}: {stat.base_stat}
                                     </h3>
                                     <div className="h-6 rounded-full bg-dark-2">
                                         <div
@@ -133,10 +134,10 @@ const SinglePokemon: NextPage = () => {
                 </div>
                 {pokemonBuilds.length > 0 && (
                     <div className="xs:col-span-2 lg:col-span-3 xl:col-span-2">
-                        <h2>Data</h2>
+                        <h2>Commonly Used</h2>
                         {teammates.total > 0 && (
                             <div className="gird gap-3">
-                                <h3>Common Teammates</h3>
+                                <h3>Teammates</h3>
                                 <PokemonDataGrid
                                     pokemonData={teammates}
                                     amount={6}

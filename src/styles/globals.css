@@ -34,6 +34,9 @@ h3 {
 h4 {
     @apply text-sm md:text-base md:font-medium;
 }
+h5 {
+    @apply text-sm;
+}
 
 p {
     @apply text-xs text-gray xs:text-sm;
@@ -68,7 +71,7 @@ button {
 }
 
 .pokemon-card {
-    @apply relative w-full border border-gray p-2 dark:bg-dark-2;
+    @apply relative w-full border border-dark-3 p-2 dark:bg-dark-2;
 }
 
 a.pokemon-card {

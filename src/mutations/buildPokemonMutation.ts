@@ -123,5 +123,38 @@ export const useBuildPokemonMutation = (
             void apiContext.statistics.getTopPokemon.invalidate()
         },
     })
-    return buildMutation
+
+    const movesFormat = [
+        {
+            move: moves[0],
+            moveOrder: 1,
+        },
+        {
+            move: moves[1],
+            moveOrder: 2,
+        },
+        {
+            move: moves[2],
+            moveOrder: 3,
+        },
+        {
+            move: moves[3],
+            moveOrder: 4,
+        },
+    ]
+
+    const buildPokemon = () =>
+        buildMutation.mutate({
+            name: pokemon.name,
+            ability: ability,
+            nature: nature,
+            heldItem: heldItem,
+            shiny: shiny,
+            teraType: teraType,
+            moves: movesFormat,
+            evs: evs,
+            ivs: ivs,
+        })
+
+    return { buildMutation, buildPokemon }
 }

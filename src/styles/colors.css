@@ -1,19 +1,19 @@
-.hp {
+.HP {
     @apply bg-hp;
 }
-.att {
+.Att {
     @apply bg-att;
 }
-.def {
+.Def {
     @apply bg-def;
 }
-.spa {
+.SpA {
     @apply bg-spa;
 }
-.spd {
+.SpD {
     @apply bg-spd;
 }
-.spe {
+.Spe {
     @apply bg-spe;
 }
 

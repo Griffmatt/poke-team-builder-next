@@ -19,12 +19,18 @@ const teamsInclude = Prisma.validator<Prisma.TeamArgs>()({
                             },
                         },
                         evs: {
+                            orderBy: {
+                                stat: "asc",
+                            },
                             select: {
                                 stat: true,
                                 value: true,
                             },
                         },
                         ivs: {
+                            orderBy: {
+                                stat: "asc",
+                            },
                             select: {
                                 stat: true,
                                 value: true,
@@ -53,12 +59,18 @@ const pokemonInclude = Prisma.validator<Prisma.CreatedPokemonArgs>()({
             },
         },
         evs: {
+            orderBy: {
+                stat: "asc",
+            },
             select: {
                 stat: true,
                 value: true,
             },
         },
         ivs: {
+            orderBy: {
+                stat: "asc",
+            },
             select: {
                 stat: true,
                 value: true,
