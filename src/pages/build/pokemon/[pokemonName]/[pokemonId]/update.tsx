@@ -32,7 +32,12 @@ const UpdatePokemon: NextPage = () => {
     })
 
     if (isLoading || isLoading2 || isLoading3) {
-        return <SkeletonPokemonForm build={false} />
+        return (
+            <SkeletonPokemonForm
+                build={false}
+                pokemonName={pokemonName as string}
+            />
+        )
     }
 
     if (error) return <div>Error: {error.message}</div>

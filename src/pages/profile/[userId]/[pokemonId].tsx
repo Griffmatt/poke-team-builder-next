@@ -9,6 +9,7 @@ import { useState } from "react"
 import { DeleteModal } from "components/modals/deleteModal"
 import { firstNameOnly } from "utils/firstNameOnly"
 import { LoadingCardWithStats } from "components/pokemonCards/ui/loadingCardWithStats"
+import { formatString } from "utils/formatString"
 
 const SinglePokemon: NextPage = () => {
     const { data: session } = useSession()
@@ -68,8 +69,9 @@ const SinglePokemon: NextPage = () => {
 
     return (
         <main>
-            <h1>
-                {firstNameOnly(user?.name ?? "")}'s {pokemon?.name}
+            <h1 className="truncate">
+                {user?.name && `${firstNameOnly(user.name ?? "")}'s`}{" "}
+                {formatString(pokemon.name)}
             </h1>
             <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
                 <div className="pokemon-card">

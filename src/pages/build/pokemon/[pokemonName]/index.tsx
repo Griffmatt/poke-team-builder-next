@@ -61,7 +61,7 @@ const SinglePokemon: NextPage = () => {
     if (isLoading || isLoading2 || isLoading3) {
         return (
             <main>
-                <div className="h-8 w-32 animate-pulse bg-dark-2" />
+                <h1>{formatString(pokemonName as string)}</h1>
                 <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
                         <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 " />

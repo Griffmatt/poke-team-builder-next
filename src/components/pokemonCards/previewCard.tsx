@@ -8,7 +8,7 @@ interface Props {
     createdPokemon: CreatedPokemon
 }
 
-export const HorizontalPokemonCard = ({ createdPokemon }: Props) => {
+export const PreviewCard = ({ createdPokemon }: Props) => {
     const {
         data: pokemon,
         isLoading,
@@ -33,27 +33,24 @@ export const HorizontalPokemonCard = ({ createdPokemon }: Props) => {
                     </div>
                 </div>
                 <div className="grid w-full grid-cols-2">
-                    <div className="grid">
-                        <div className="border border-dark-3">
+                    <div className="grid border border-dark-3">
+                        <div className="p-1">
                             <p>{formatString(createdPokemon.teraType)}</p>
                         </div>
-                        <div className="border border-dark-3">
+                        <div className="border-t border-dark-3 p-1">
                             <p>{formatString(createdPokemon.ability)}</p>
                         </div>
-                        <div className="border border-dark-3">
+                        <div className="border-t border-dark-3 p-1">
                             <p>{formatString(createdPokemon.nature)}</p>
                         </div>
-                        <div className="border border-dark-3">
+                        <div className="border-t border-dark-3 p-1">
                             <p>{formatString(createdPokemon.heldItem)}</p>
                         </div>
                     </div>
-                    <div className="grid">
+                    <div className="grid border border-dark-3">
                         {createdPokemon.moves.map((move) => {
                             return (
-                                <div
-                                    key={move.move}
-                                    className="border border-dark-3"
-                                >
+                                <div key={move.move} className="p-1">
                                     <p className="truncate">
                                         {formatString(move.move)}
                                     </p>
@@ -64,8 +61,8 @@ export const HorizontalPokemonCard = ({ createdPokemon }: Props) => {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-2">
-                <div className="border border-dark-3">
+            <div className="grid border border-dark-3 md:grid-cols-2">
+                <div className="p-1">
                     <div className="grid grid-cols-6">
                         {createdPokemon.evs.map((ev) => {
                             return (
@@ -77,7 +74,7 @@ export const HorizontalPokemonCard = ({ createdPokemon }: Props) => {
                         })}
                     </div>
                 </div>
-                <div className="border border-dark-3">
+                <div className="p-1">
                     <div className="grid grid-cols-6">
                         {createdPokemon.ivs.map((iv) => {
                             return (

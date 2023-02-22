@@ -1,15 +1,17 @@
 import { STATS } from "assets/stats"
 import { formatOrder } from "utils/formatOrder"
+import { formatString } from "utils/formatString"
 
 interface Props {
     build: boolean
+    pokemonName: string
 }
 
-export const SkeletonPokemonForm = ({ build }: Props) => {
+export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
     const fillerArr = Array.from({ length: 4 }, () => 0)
     return (
         <main>
-            <div className="h-8 w-48 animate-pulse bg-dark-2" />
+            <h1>{formatString(pokemonName)}</h1>
             <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full lg:row-span-2">
                     <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 " />

@@ -11,7 +11,7 @@ import { useDebounceQuery } from "hooks/useDebounceQuery"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
-import { HorizontalPokemonCard } from "components/pokemonCards/horizontalPokemonCard"
+import { PreviewCard } from "components/pokemonCards/previewCard"
 import { type CreatedPokemon } from "types/trpc"
 import { useScreenSize } from "hooks/useScreenSize"
 
@@ -196,7 +196,7 @@ const BuildTeam: NextPage = () => {
                                             <div className="col-span-full row-start-1 w-full">
                                                 <div className="grid w-full gap-2 py-5">
                                                     <div className="flex justify-center">
-                                                        <HorizontalPokemonCard
+                                                        <PreviewCard
                                                             createdPokemon={
                                                                 pokemon
                                                             }
