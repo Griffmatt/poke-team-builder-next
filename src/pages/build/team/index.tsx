@@ -79,7 +79,7 @@ const BuildTeam: NextPage = () => {
         .map((_, index) => {
             if (index % gridLength !== 0) return
 
-            return pokemons.slice(index, index + gridLength)
+            return filteredPokemon.slice(index, index + gridLength)
         })
         .filter((x) => x !== undefined)
 
@@ -163,68 +163,64 @@ const BuildTeam: NextPage = () => {
                         hasPokemon={pokemons.length > 0}
                     />
                 )}
-                <div className="grid">
-                    {groupPokemon.map((pokemonArr, index) => {
-                        return (
-                            <div
-                                className="pokemon-grid-card-layout"
-                                key={index}
-                            >
-                                {pokemonArr?.map((pokemon) => {
-                                    const favorited =
-                                        pokemon.favorited[0]?.userId ===
-                                        pokemon.userId
-                                    return (
-                                        <React.Fragment key={pokemon.id}>
-                                            <button
-                                                className="pokemon-card"
-                                                onClick={() => {
-                                                    if (
-                                                        pokemon ===
-                                                        selectedPokemon
-                                                    ) {
-                                                        setSelectedPokemon(null)
-                                                        return
-                                                    }
-                                                    setSelectedPokemon(pokemon)
-                                                }}
-                                            >
-                                                <PokemonCard
-                                                    pokemonName={pokemon.name}
-                                                    createdPokemon={pokemon}
-                                                    favorited={favorited}
-                                                />
-                                            </button>
-                                            {pokemon === selectedPokemon && (
-                                                <div className="col-span-full row-start-2 w-full">
-                                                    <div className="grid w-full gap-2 py-5">
-                                                        <div className="flex justify-center">
-                                                            <HorizontalPokemonCard
-                                                                createdPokemon={
-                                                                    pokemon
-                                                                }
-                                                            />
-                                                        </div>
-                                                        <button
-                                                            className="rounded-2xl p-3"
-                                                            onClick={() =>
-                                                                void addPokemonToTeam(
-                                                                    selectedPokemon
-                                                                )
+            </div>
+            <div className="grid">
+                {groupPokemon.map((pokemonArr, index) => {
+                    return (
+                        <div className="pokemon-grid-card-layout" key={index}>
+                            {pokemonArr?.map((pokemon) => {
+                                const favorited =
+                                    pokemon.favorited[0]?.userId ===
+                                    pokemon.userId
+                                return (
+                                    <React.Fragment key={pokemon.id}>
+                                        <button
+                                            className="pokemon-card"
+                                            onClick={() => {
+                                                if (
+                                                    pokemon === selectedPokemon
+                                                ) {
+                                                    setSelectedPokemon(null)
+                                                    return
+                                                }
+                                                setSelectedPokemon(pokemon)
+                                            }}
+                                        >
+                                            <PokemonCard
+                                                pokemonName={pokemon.name}
+                                                createdPokemon={pokemon}
+                                                favorited={favorited}
+                                            />
+                                        </button>
+                                        {pokemon.id === selectedPokemon?.id && (
+                                            <div className="col-span-full row-start-2 w-full">
+                                                <div className="grid w-full gap-2 py-5">
+                                                    <div className="flex justify-center">
+                                                        <HorizontalPokemonCard
+                                                            createdPokemon={
+                                                                pokemon
                                                             }
-                                                        >
-                                                            Add To Team
-                                                        </button>
+                                                        />
                                                     </div>
+                                                    <button
+                                                        className="rounded-2xl p-3"
+                                                        onClick={() =>
+                                                            void addPokemonToTeam(
+                                                                selectedPokemon
+                                                            )
+                                                        }
+                                                    >
+                                                        Add To Team
+                                                    </button>
                                                 </div>
-                                            )}
-                                        </React.Fragment>
-                                    )
-                                })}
-                            </div>
-                        )
-                    })}
-                </div>
+                                            </div>
+                                        )}
+                                    </React.Fragment>
+                                )
+                            })}
+                        </div>
+                    )
+                })}
             </div>
         </main>
     )
