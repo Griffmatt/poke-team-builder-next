@@ -86,7 +86,10 @@ export const DataInput = ({
                 onClick={handleOpen}
                 type="button"
             >
-                <h4>{formatString(data)}</h4>
+                <div className="flex w-full justify-between align-middle">
+                    <h4>{formatString(data)}</h4>
+                    {openInput === dataType ? <p>⌄</p> : <p>^</p>}
+                </div>
             </button>
             <div className="relative">
                 {openInput === dataType && (

@@ -80,7 +80,10 @@ export const MovesInput = ({
                 onClick={handleOpen}
                 type="button"
             >
-                <h4>{formatString(move)}</h4>
+                <div className="flex w-full justify-between">
+                    <h4>{formatString(move)}</h4>
+                    {openInput === moveOrder ? <p>⌄</p> : <p>^</p>}
+                </div>
             </button>
             <div className="relative">
                 {openInput === moveOrder && (
