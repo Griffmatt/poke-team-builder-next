@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { countStringArr } from "server/utils/countStringArr"
+import { countStringArr } from "utils/countStringArr"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const mostCommonRouter = createTRPCRouter({

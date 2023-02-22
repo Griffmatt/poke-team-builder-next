@@ -1,6 +1,6 @@
 import { useSelectedContext } from "context/selectedContext"
 import { useEffect } from "react"
-import { countStringArr } from "server/utils/countStringArr"
+import { countStringArr } from "utils/countStringArr"
 import { type CreatedPokemon } from "types/trpc"
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
