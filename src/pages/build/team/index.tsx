@@ -25,6 +25,7 @@ const BuildTeam: NextPage = () => {
     const [gridLength, setGridLength] = useState(6)
     const [selectedPokemon, setSelectedPokemon] =
         useState<CreatedPokemon | null>(null)
+    const [selectedRow, setSelectedRow] = useState(0)
 
     useLayoutEffect(() => {
         if (width >= 1024) {
@@ -164,14 +165,13 @@ const BuildTeam: NextPage = () => {
             </div>
             <div className="grid">
                 {pokemonRows.map((pokemonRow, index) => {
+                    const selected = index === selectedRow && selectedPokemon
                     return (
                         <div className="pokemon-grid-card-layout" key={index}>
                             {pokemonRow?.map((pokemon) => {
                                 const favorited =
                                     pokemon.favorited[0]?.userId ===
                                     pokemon.userId
-                                const selected =
-                                    pokemon.id === selectedPokemon?.id
                                 return (
                                     <React.Fragment key={pokemon.id}>
                                         <button
@@ -183,6 +183,7 @@ const BuildTeam: NextPage = () => {
                                                     setSelectedPokemon(null)
                                                     return
                                                 }
+                                                setSelectedRow(index)
                                                 setSelectedPokemon(pokemon)
                                             }}
                                         >
@@ -192,38 +193,34 @@ const BuildTeam: NextPage = () => {
                                                 favorited={favorited}
                                             />
                                         </button>
-                                        {selected && (
-                                            <div className="col-span-full row-start-1 w-full">
-                                                <div
-                                                    className={`grid w-full gap-2 ${
-                                                        index === 0
-                                                            ? "pb-4"
-                                                            : "py-4"
-                                                    }`}
-                                                >
-                                                    <div className="flex justify-center">
-                                                        <PreviewCard
-                                                            createdPokemon={
-                                                                pokemon
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <button
-                                                        className="rounded-2xl p-3"
-                                                        onClick={() =>
-                                                            void addPokemonToTeam(
-                                                                selectedPokemon
-                                                            )
-                                                        }
-                                                    >
-                                                        Add To Team
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )}
                                     </React.Fragment>
                                 )
                             })}
+                            <div className="col-span-full row-start-1 w-full transition-max-height ease-in-out">
+                                {selected && (
+                                    <div
+                                        className={`grid h-fit w-full gap-2 ${
+                                            index === 0 ? "pb-4" : "py-4"
+                                        }`}
+                                    >
+                                        <div className="flex justify-center">
+                                            <PreviewCard
+                                                createdPokemon={selectedPokemon}
+                                            />
+                                        </div>
+                                        <button
+                                            className="rounded-2xl p-3"
+                                            onClick={() =>
+                                                void addPokemonToTeam(
+                                                    selectedPokemon
+                                                )
+                                            }
+                                        >
+                                            Add To Team
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )
                 })}
