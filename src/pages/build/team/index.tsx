@@ -193,7 +193,7 @@ const BuildTeam: NextPage = () => {
                                             />
                                         </button>
                                         {pokemon.id === selectedPokemon?.id && (
-                                            <div className="col-span-full row-start-2 w-full">
+                                            <div className="col-span-full row-start-1 w-full">
                                                 <div className="grid w-full gap-2 py-5">
                                                     <div className="flex justify-center">
                                                         <HorizontalPokemonCard
