@@ -88,8 +88,8 @@ export const ProfileSearch = ({ userId }: Props) => {
                                             className="aspect-square w-full rounded-full"
                                             referrerPolicy="no-referrer"
                                             alt="User Profile Picture"
-                                            width="96"
-                                            height="96"
+                                            width="32"
+                                            height="32"
                                         />
                                     ) : (
                                         <div className="h-8 w-8 rounded-full" />
