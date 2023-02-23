@@ -7,60 +7,68 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
     const [page, setPage] = useState(1)
 
     const [loadLimit, setLoadLimit] = useState(6)
-    const [initialLimit, setInitialLimit] = useState(6)
+    const [initialLimit, setInitialLimit] = useState(30)
+    const [pastLimit, setPastLimit] = useState(30)
     const { width } = useScreenSize()
-    const pastLimit = useRef(0)
 
     useLayoutEffect(() => {
         setPage(1)
         if (width >= 1024) {
-            const dif = pastLimit.current % 6
+            const dif = pastLimit % 6
+            const max = Math.max(30, pastLimit + 6 - dif)
+            setPastLimit(max)
             setInitialLimit(30)
-            setItems(itemsArr?.slice(0, pastLimit.current + 6 - dif))
+            setItems(itemsArr?.slice(0, max))
             setLoadLimit(6)
         }
         if (width < 1024 && width > 640) {
             const dif = pastLimit.current % 4
             setInitialLimit(20)
-            setItems(itemsArr?.slice(0, pastLimit.current + 4 - dif))
+            setItems(itemsArr?.slice(0, pastLimit + 4 - dif))
             setLoadLimit(4)
         }
         if (width <= 640 && width >= 425) {
             const dif = pastLimit.current % 3
             setInitialLimit(12)
-            setItems(itemsArr?.slice(0, pastLimit.current + 3 - dif))
+            setItems(itemsArr?.slice(0, pastLimit + 3 - dif))
             setLoadLimit(3)
         }
         if (width < 425) {
             const dif = pastLimit.current % 2
             setInitialLimit(8)
-            setItems(itemsArr?.slice(0, pastLimit.current + 2 - dif))
+            setItems(itemsArr?.slice(0, pastLimit + 2 - dif))
             setLoadLimit(2)
         }
     }, [width, itemsArr])
-
-    useEffect(() => {
-        const setData = (page: number) => {
+    
+    const setData = (page: number) => {
             if (!itemsArr || items === null) return
             const newItems = itemsArr.slice(
-                pastLimit.current,
-                pastLimit.current + loadLimit
+                0,
+                pastLimit + loadLimit
             )
-            if (page >= itemsArr.length) {
+            const newLength = newItems.length + items.length
+            const maxLimit = Math.min(itemsArr.length, 120)
+            if (newLength >= maxLimit) {
                 setHasMore(false)
             }
-            pastLimit.current = initialLimit + loadLimit * page
-            setItems((prev) => [...prev, ...newItems])
+            setItems(newItems)
             setPage((prev) => prev + 1)
         }
 
+    
+    useEffect(()=>{
+        setData()
+    }, [pastLimit])
+
+    useEffect(() => {
         const onScroll = () => {
             const scrollTop = document.documentElement.scrollTop
             const scrollHeight = document.documentElement.scrollHeight
             const clientHeight = document.documentElement.clientHeight
 
             if (scrollTop + clientHeight >= scrollHeight * 0.95 && hasMore) {
-                setData(page)
+                setPastLimit(initialLimit + loadLimit * page)
             }
         }
 
