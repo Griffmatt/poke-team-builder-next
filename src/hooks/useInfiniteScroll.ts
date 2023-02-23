@@ -44,15 +44,15 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
     const setData = (page: number) => {
             if (!itemsArr || items === null) return
             const newItems = itemsArr.slice(
-                pastLimit.current,
-                pastLimit.current + loadLimit
+                0,
+                pastLimit + loadLimit
             )
             const newLength = newItems.length + items.length
             const maxLimit = Math.min(itemsArr.length, 120)
             if (newLength >= maxLimit) {
                 setHasMore(false)
             }
-            setItems([...items, ...newItems])
+            setItems(newItems)
             setPage((prev) => prev + 1)
         }
 
