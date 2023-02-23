@@ -15,8 +15,9 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
         setPage(1)
         if (width >= 1024) {
             const dif = pastLimit.current % 6
+            const max = Math.max(30, pastLimit.current + 6 - dif)
             setInitialLimit(30)
-            setItems(itemsArr?.slice(0, pastLimit.current + 6 - dif))
+            setItems(itemsArr?.slice(0, max))
             setLoadLimit(6)
         }
         if (width < 1024 && width > 640) {
