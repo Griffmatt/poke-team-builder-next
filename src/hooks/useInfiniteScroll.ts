@@ -54,7 +54,7 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
                 setHasMore(false)
             }
             pastLimit.current = initialLimit + loadLimit * page
-            setItems((prev) => [...prev, ...newItems])
+            setItems([...items, ...newItems])
             setPage((prev) => prev + 1)
         }
 
