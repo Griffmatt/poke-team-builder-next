@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useScreenSize } from "./useScreenSize"
 
 export const useInfiniteScroll = <T>(
     itemsArr: T[],
@@ -11,13 +12,14 @@ export const useInfiniteScroll = <T>(
     const pastLimit = useRef(initialLimit)
     const [pokemonLimit, setPokemonLimit] = useState(initialLimit)
 
-    useEffect(() => {
-        if (screen.width < 1024) {
-            setItems(itemsArr?.slice(0, 18) ?? null)
+    const { width } = useScreenSize()
+
+    useLayoutEffect(() => {
+        if (width < 1024) {
             setPokemonLimit(18)
             pastLimit.current = 18
         }
-    }, [itemsArr])
+    }, [width])
 
     useEffect(() => {
         const setData = (page: number) => {
@@ -33,6 +35,7 @@ export const useInfiniteScroll = <T>(
             setItems([...items, ...newItems])
             setPage(page + 1)
         }
+
         const onScroll = () => {
             const scrollTop = document.documentElement.scrollTop
             const scrollHeight = document.documentElement.scrollHeight
