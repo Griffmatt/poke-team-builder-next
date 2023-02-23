@@ -22,7 +22,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                         <div className="aspect-square w-24 md:w-32">
                             <SkeletonRoundImage />
                         </div>
-                        <div className="h-6 w-24 animate-pulse bg-dark-2" />
+                        <h2 className="h-6 w-24 animate-pulse bg-dark-2" />
                     </div>
                 </div>
             ) : (
