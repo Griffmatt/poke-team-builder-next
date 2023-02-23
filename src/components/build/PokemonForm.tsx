@@ -9,8 +9,8 @@ import { NATURES } from "assets/natures"
 
 import { useUpdatePokemonMutation } from "mutations/updatePokemonMutation"
 import { useBuildPokemonMutation } from "mutations/buildPokemonMutation"
-import { type Pokemon } from "pokenode-ts"
-import { type CreatedPokemon } from "types/trpc"
+
+import { type Pokemon, type CreatedPokemon } from "types/trpc"
 import React from "react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"

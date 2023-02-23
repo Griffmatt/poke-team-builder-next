@@ -10,6 +10,8 @@ type teams = inferProcedureOutput<AppRouter["teams"]["getTeams"]>
 
 type team = inferProcedureOutput<AppRouter["teams"]["getTeam"]>
 
+type Pokemon = inferProcedureOutput<AppRouter["pokeApi"]["getPokemonByName"]>
+
 type user = {
     id: string
     name?: string | null
@@ -19,4 +21,4 @@ type user = {
 
 type formattedTeam = ReturnType<typeof formatTeams>
 
-export type { CreatedPokemon, teams, team, user, formattedTeam }
+export type { CreatedPokemon, teams, team, user, formattedTeam, Pokemon }

@@ -14,8 +14,20 @@ export const pokeApiRouter = createTRPCRouter({
     }),
     getPokemonByName: publicProcedure
         .input(z.object({ name: z.string() }))
-        .query(({ input }) => {
-            return api.getPokemonByName(input.name)
+        .query(async ({ input }) => {
+            const pokemon = await api.getPokemonByName(input.name)
+
+            const pokemonData = {
+                id: pokemon.id,
+                name: pokemon.name,
+                types: pokemon.types,
+                stats: pokemon.stats,
+                sprites: pokemon.sprites,
+                abilities: pokemon.abilities,
+                moves: pokemon.moves,
+            }
+
+            return pokemonData
         }),
     getHeldItems: publicProcedure.query(async () => {
         const itemsData = await itemApi.getItemCategoryByName("held-items")

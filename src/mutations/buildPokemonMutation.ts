@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { type Pokemon } from "pokenode-ts"
+import { type Pokemon } from "types/trpc"
 import { api } from "utils/api"
 import { sortByFavorited } from "utils/sortByFavorited"
 
