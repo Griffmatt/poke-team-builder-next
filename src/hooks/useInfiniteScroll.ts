@@ -16,22 +16,25 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
         if (width >= 1024) {
             const dif = pastLimit.current % 6
             setInitialLimit(30)
-            setItems(itemsArr?.slice(0, pastLimit.current + 6 + dif))
+            setItems(itemsArr?.slice(0, pastLimit.current + 6 - dif))
             setLoadLimit(6)
         }
         if (width < 1024 && width > 640) {
+            const dif = pastLimit.current % 4
             setInitialLimit(20)
-            setItems(itemsArr?.slice(0, 20))
+            setItems(itemsArr?.slice(0, pastLimit.current + 4 - dif))
             setLoadLimit(4)
         }
         if (width <= 640 && width >= 425) {
+            const dif = pastLimit.current % 3
             setInitialLimit(12)
-            setItems(itemsArr?.slice(0, 12))
+            setItems(itemsArr?.slice(0, pastLimit.current + 3 - dif))
             setLoadLimit(3)
         }
         if (width < 425) {
+            const dif = pastLimit.current % 2
             setInitialLimit(8)
-            setItems(itemsArr?.slice(0, 8))
+            setItems(itemsArr?.slice(0, pastLimit.current + 2 - dif))
             setLoadLimit(2)
         }
     }, [width, itemsArr])
