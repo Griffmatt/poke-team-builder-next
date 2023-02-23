@@ -22,7 +22,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
                         <div className="aspect-square w-24 md:w-32">
                             <SkeletonRoundImage />
                         </div>
-                        <div className="h-6 w-24 animate-pulse bg-dark-2" />
+                        <h2 className="h-6 w-24 animate-pulse bg-dark-2" />
                     </div>
                 </div>
             ) : (
@@ -30,24 +30,40 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
             )}
             <div className="flex justify-center gap-3">
                 <Link href={`/profile/${userId}`}>
-                    <h3 className={selected === "pokemon" ? "border-b-2" : ""}>
+                    <h3
+                        className={
+                            selected === "pokemon" ? "border-b-2" : "text-gray"
+                        }
+                    >
                         Pokemon
                     </h3>
                 </Link>
                 <Link href={`/profile/${userId}/teams`}>
-                    <h3 className={selected === "teams" ? "border-b-2" : ""}>
+                    <h3
+                        className={
+                            selected === "teams" ? "border-b-2" : "text-gray"
+                        }
+                    >
                         Teams
                     </h3>
                 </Link>
                 <Link href={`/profile/${userId}/favorites`}>
                     <h3
-                        className={selected === "favorites" ? "border-b-2" : ""}
+                        className={
+                            selected === "favorites"
+                                ? "border-b-2"
+                                : "text-gray"
+                        }
                     >
                         Favorites
                     </h3>
                 </Link>
                 <Link href={`/profile/${userId}/stats`}>
-                    <h3 className={selected === "settings" ? "border-b-2" : ""}>
+                    <h3
+                        className={
+                            selected === "settings" ? "border-b-2" : "text-gray"
+                        }
+                    >
                         Stats
                     </h3>
                 </Link>

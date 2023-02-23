@@ -13,24 +13,24 @@ export const LoadingCardWithStats = () => {
                 <div className="lg:w-[50%]">
                     <div className="grid grid-cols-2 lg:grid-cols-1">
                         <div>
-                            <h2>Tera</h2>
+                            <h4>Tera</h4>
                             <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
                         </div>
                         <div>
-                            <h2>Ability</h2>
+                            <h4>Ability</h4>
                             <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
                         </div>
                         <div>
-                            <h2>Nature</h2>
+                            <h4>Nature</h4>
                             <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
                         </div>
                         <div>
-                            <h2>Item</h2>
+                            <h4>Item</h4>
                             <p className="mx-auto h-4 w-20 animate-pulse bg-dark-3 xs:h-5" />
                         </div>
                     </div>
                     <div>
-                        <h2>Moves</h2>
+                        <h4>Moves</h4>
                         <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
                             {movesFillerArr.map((_, index) => {
                                 return (
@@ -46,12 +46,12 @@ export const LoadingCardWithStats = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div>
-                    <h2>EVs</h2>
+                    <h4>EVs</h4>
                     <div className="grid grid-cols-3">
                         {STATS.map((stat) => {
                             return (
                                 <div key={`${stat}EV`}>
-                                    <h3>{stat}</h3>
+                                    <h5>{stat}</h5>
                                     <p className=" mx-auto h-4 w-8 animate-pulse bg-dark-3 xs:h-5" />
                                 </div>
                             )
@@ -59,12 +59,12 @@ export const LoadingCardWithStats = () => {
                     </div>
                 </div>
                 <div>
-                    <h2>IVs</h2>
+                    <h4>IVs</h4>
                     <div className="grid grid-cols-3">
                         {STATS.map((stat) => {
                             return (
                                 <div key={`${stat}IV`}>
-                                    <h3>{stat}</h3>
+                                    <h5>{stat}</h5>
                                     <p className="mx-auto h-4 w-8 animate-pulse bg-dark-3 xs:h-5" />
                                 </div>
                             )
