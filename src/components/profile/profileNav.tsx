@@ -64,11 +64,11 @@ const UserHeader = ({ user }: { user: user }) => {
                     {user?.image ? (
                         <Image
                             src={user.image}
-                            className="w-full rounded-full border-4 border-dark-3"
+                            className="rounded-full border-4 border-dark-3"
                             referrerPolicy="no-referrer"
                             alt="Profile Picture"
-                            width="96"
-                            height="96"
+                            width="32"
+                            height="32"
                         />
                     ) : (
                         <div className="rounded-full border-4 border-dark-3" />
