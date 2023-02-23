@@ -9,30 +9,22 @@ export const useInfiniteScroll = <T>(
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(1)
     const pastLimit = useRef(initialLimit)
-    const [pokemonLimit, setPokemonLimit] = useState(initialLimit)
-
-    useEffect(() => {
-        if (screen.width < 1024) {
-            setItems(itemsArr?.slice(0, 18) ?? null)
-            setPokemonLimit(18)
-            pastLimit.current = 18
-        }
-    }, [itemsArr])
 
     useEffect(() => {
         const setData = (page: number) => {
             if (!itemsArr || items === null) return
             const newItems = itemsArr.slice(
                 pastLimit.current,
-                pokemonLimit + limit * page
+                initialLimit + limit * page
             )
             if (page >= itemsArr.length) {
                 setHasMore(false)
             }
-            pastLimit.current = pokemonLimit + limit * page
-            setItems([...items, ...newItems])
-            setPage(page + 1)
+            pastLimit.current = initialLimit + limit * page
+            setItems((prev) => [...prev, ...newItems])
+            setPage((prev) => prev + 1)
         }
+
         const onScroll = () => {
             const scrollTop = document.documentElement.scrollTop
             const scrollHeight = document.documentElement.scrollHeight
@@ -42,9 +34,10 @@ export const useInfiniteScroll = <T>(
                 setData(page)
             }
         }
+
         window.addEventListener("scroll", onScroll)
         return () => window.removeEventListener("scroll", onScroll)
-    }, [hasMore, items, itemsArr, limit, page, pokemonLimit])
+    }, [hasMore, initialLimit, items, itemsArr, limit, page])
 
     return items
 }
