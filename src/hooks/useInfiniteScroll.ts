@@ -9,13 +9,14 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
     const [loadLimit, setLoadLimit] = useState(6)
     const [initialLimit, setInitialLimit] = useState(6)
     const { width } = useScreenSize()
-    const pastLimit = useRef(0)
+    const pastLimit = useRef(30)
 
     useLayoutEffect(() => {
         setPage(1)
         if (width >= 1024) {
             const dif = pastLimit.current % 6
             const max = Math.max(30, pastLimit.current + 6 - dif)
+            pastLimit.current = max
             setInitialLimit(30)
             setItems(itemsArr?.slice(0, max))
             setLoadLimit(6)
