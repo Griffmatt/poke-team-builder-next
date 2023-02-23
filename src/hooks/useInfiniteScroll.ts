@@ -40,7 +40,7 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
             if (!itemsArr || items === null) return
             const newItems = itemsArr.slice(
                 pastLimit.current,
-                pastLimit.current
+                pastLimit.current + loadLimit
             )
             if (page >= itemsArr.length) {
                 setHasMore(false)
