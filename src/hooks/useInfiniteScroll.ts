@@ -2,79 +2,81 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useScreenSize } from "./useScreenSize"
 
 export const useInfiniteScroll = <T>(itemsArr: T[]) => {
-    const [items, setItems] = useState<T[]>(itemsArr?.slice(0, 30))
+    const [items, setItems] = useState<T[]>(itemsArr)
     const [hasMore, setHasMore] = useState(true)
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
 
     const [loadLimit, setLoadLimit] = useState(6)
     const [initialLimit, setInitialLimit] = useState(30)
-    const [pastLimit, setPastLimit] = useState(30)
+    const pastLimit = useRef(30)
     const { width } = useScreenSize()
 
     useLayoutEffect(() => {
-        setPage(1)
         if (width >= 1024) {
-            const dif = pastLimit % 6
-            const max = Math.max(30, pastLimit + 6 - dif)
-            setPastLimit(max)
+            const dif = pastLimit.current % 6
+            const max = Math.max(30, pastLimit.current + 6 - dif)
+            pastLimit.current = max
             setInitialLimit(30)
             setItems(itemsArr?.slice(0, max))
             setLoadLimit(6)
         }
         if (width < 1024 && width > 640) {
             const dif = pastLimit.current % 4
+            const max = Math.max(20, pastLimit.current + 4 - dif)
             setInitialLimit(20)
-            setItems(itemsArr?.slice(0, pastLimit + 4 - dif))
+            setItems(itemsArr?.slice(0, max))
             setLoadLimit(4)
         }
         if (width <= 640 && width >= 425) {
             const dif = pastLimit.current % 3
+            const max = Math.max(12, pastLimit.current + 3 - dif)
             setInitialLimit(12)
-            setItems(itemsArr?.slice(0, pastLimit + 3 - dif))
+            setItems(itemsArr?.slice(0, max))
             setLoadLimit(3)
         }
         if (width < 425) {
             const dif = pastLimit.current % 2
+            const max = Math.max(8, pastLimit.current + 4 - dif)
             setInitialLimit(8)
-            setItems(itemsArr?.slice(0, pastLimit + 2 - dif))
+            setItems(itemsArr?.slice(0, max))
             setLoadLimit(2)
         }
-    }, [width, itemsArr])
-    
-    const setData = (page: number) => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [width])
+
+    useEffect(() => {
+        setItems(itemsArr.slice(0, initialLimit))
+        setHasMore(true)
+        setPage(0)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [itemsArr])
+
+    useEffect(() => {
+        const setData = () => {
             if (!itemsArr || items === null) return
-            const newItems = itemsArr.slice(
-                0,
-                pastLimit + loadLimit
-            )
-            const newLength = newItems.length + items.length
             const maxLimit = Math.min(itemsArr.length, 120)
-            if (newLength >= maxLimit) {
+            const sliceLimit = Math.min(pastLimit.current + loadLimit, maxLimit)
+            const newItems = itemsArr.slice(0, sliceLimit)
+            if (sliceLimit === maxLimit) {
                 setHasMore(false)
             }
             setItems(newItems)
             setPage((prev) => prev + 1)
         }
 
-    
-    useEffect(()=>{
-        setData()
-    }, [pastLimit])
-
-    useEffect(() => {
         const onScroll = () => {
             const scrollTop = document.documentElement.scrollTop
             const scrollHeight = document.documentElement.scrollHeight
             const clientHeight = document.documentElement.clientHeight
-
-            if (scrollTop + clientHeight >= scrollHeight * 0.95 && hasMore) {
-                setPastLimit(initialLimit + loadLimit * page)
+            if (scrollTop + clientHeight >= scrollHeight * 0.98 && hasMore) {
+                pastLimit.current = initialLimit + loadLimit * page
+                setData()
             }
         }
 
         window.addEventListener("scroll", onScroll)
         return () => window.removeEventListener("scroll", onScroll)
-    }, [hasMore, initialLimit, items, itemsArr, loadLimit, page])
+    }, [hasMore, initialLimit, items, itemsArr, loadLimit, page, pastLimit])
 
     return items
 }

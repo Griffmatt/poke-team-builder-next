@@ -1,6 +1,7 @@
 import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import Link from "next/link"
-import { type Pokemon } from "pokenode-ts"
+import { type Pokemon } from "types/trpc"
+
 import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
 
@@ -11,17 +12,14 @@ interface Props {
 
 export const PokemonGrid = ({ pokemons, query }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons)
-    const showPokemon = query
-        ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
-        : pokemonScrolled
 
     return (
         <>
-            {query && showPokemon.length === 0 ? (
+            {query && pokemons.length === 0 ? (
                 <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
                 <div className=" pokemon-grid-card-layout">
-                    {showPokemon.map((pokemon) => {
+                    {pokemonScrolled.map((pokemon) => {
                         return (
                             <Link
                                 key={pokemon.name}
