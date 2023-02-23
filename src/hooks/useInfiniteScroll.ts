@@ -7,16 +7,16 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
     const [page, setPage] = useState(1)
 
     const [loadLimit, setLoadLimit] = useState(6)
-    const [initialLimit, setInitialLimit] = useState(6)
+    const [initialLimit, setInitialLimit] = useState(30)
+    const [pastLimit, setPastLimit] = useState(30)
     const { width } = useScreenSize()
-    const pastLimit = useRef(30)
 
     useLayoutEffect(() => {
         setPage(1)
         if (width >= 1024) {
             const dif = pastLimit.current % 6
             const max = Math.max(30, pastLimit.current + 6 - dif)
-            pastLimit.current = max
+            setPastLimit(max)
             setInitialLimit(30)
             setItems(itemsArr?.slice(0, max))
             setLoadLimit(6)
@@ -40,9 +40,8 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
             setLoadLimit(2)
         }
     }, [width, itemsArr])
-
-    useEffect(() => {
-        const setData = (page: number) => {
+    
+    const setData = (page: number) => {
             if (!itemsArr || items === null) return
             const newItems = itemsArr.slice(
                 pastLimit.current,
@@ -53,18 +52,23 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
             if (newLength >= maxLimit) {
                 setHasMore(false)
             }
-            pastLimit.current = initialLimit + loadLimit * page
             setItems([...items, ...newItems])
             setPage((prev) => prev + 1)
         }
 
+    
+    useEffect(()=>{
+        setData()
+    }, [pastLimit])
+
+    useEffect(() => {
         const onScroll = () => {
             const scrollTop = document.documentElement.scrollTop
             const scrollHeight = document.documentElement.scrollHeight
             const clientHeight = document.documentElement.clientHeight
 
             if (scrollTop + clientHeight >= scrollHeight * 0.95 && hasMore) {
-                setData(page)
+                setPastLimit(initialLimit + loadLimit * page)
             }
         }
 
