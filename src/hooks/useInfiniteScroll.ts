@@ -2,13 +2,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useScreenSize } from "./useScreenSize"
 
 export const useInfiniteScroll = <T>(itemsArr: T[]) => {
-    const [items, setItems] = useState<T[]>(itemsArr)
+    const [items, setItems] = useState<T[] | null>(null)
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(0)
 
     const [loadLimit, setLoadLimit] = useState(6)
     const [initialLimit, setInitialLimit] = useState(30)
-    const pastLimit = useRef(30)
+    const pastLimit = useRef(0)
     const { width } = useScreenSize()
 
     useLayoutEffect(() => {
@@ -78,5 +78,5 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
         return () => window.removeEventListener("scroll", onScroll)
     }, [hasMore, initialLimit, items, itemsArr, loadLimit, page, pastLimit])
 
-    return items
+    return items ?? []
 }
