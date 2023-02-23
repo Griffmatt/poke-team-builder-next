@@ -14,7 +14,7 @@ const Pokemon: NextPage = () => {
         error,
     } = api.pokeApi.getPokemon.useQuery()
     const [query, setQuery] = useState("")
-    const debouncedValue = useDebounceQuery(query)
+    const debouncedQuery = useDebounceQuery(query)
 
     if (isLoading) {
         return (
@@ -37,6 +37,9 @@ const Pokemon: NextPage = () => {
     if (error) return <div>Error: {error.message}</div>
 
     const pokemons = pokemonData.results as unknown as Pokemon[]
+    const showPokemon = pokemons.filter((pokemon) =>
+        pokemon.name.includes(debouncedQuery)
+    )
 
     return (
         <main>
@@ -50,7 +53,7 @@ const Pokemon: NextPage = () => {
                 />
             </div>
             <BuildNav selected="pokemon" />
-            <PokemonGrid pokemons={pokemons} query={debouncedValue} />
+            <PokemonGrid pokemons={showPokemon} query={debouncedQuery} />
         </main>
     )
 }

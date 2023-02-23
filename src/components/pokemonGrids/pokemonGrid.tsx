@@ -11,17 +11,14 @@ interface Props {
 
 export const PokemonGrid = ({ pokemons, query }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons)
-    const showPokemon = query
-        ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
-        : pokemonScrolled
 
     return (
         <>
-            {query && showPokemon.length === 0 ? (
+            {query && pokemons.length === 0 ? (
                 <PokemonEmpty query={query} hasPokemon={pokemons?.length > 0} />
             ) : (
                 <div className=" pokemon-grid-card-layout">
-                    {showPokemon.map((pokemon) => {
+                    {pokemonScrolled.map((pokemon) => {
                         return (
                             <Link
                                 key={pokemon.name}

@@ -22,13 +22,10 @@ export const CreatedPokemonGrid = ({
     profileGrid,
 }: Props) => {
     const pokemonScrolled = useInfiniteScroll(pokemons)
-    const showPokemon = query
-        ? pokemons?.filter((pokemon) => pokemon.name.includes(query))
-        : pokemonScrolled
 
     return (
         <>
-            {showPokemon.length === 0 ? (
+            {pokemons.length === 0 ? (
                 <PokemonEmpty
                     query={query}
                     hasPokemon={pokemons?.length > 0}
@@ -37,7 +34,7 @@ export const CreatedPokemonGrid = ({
                 />
             ) : (
                 <div className="pokemon-grid-card-layout">
-                    {pokemons?.map((pokemon) => {
+                    {pokemonScrolled.map((pokemon) => {
                         const currentUserFavorited =
                             currentUserFavorites?.includes(pokemon.id) ?? false
 
