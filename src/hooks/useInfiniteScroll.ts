@@ -47,7 +47,7 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
                 pastLimit.current,
                 pastLimit.current + loadLimit
             )
-            if (itemsArr.length === 120) {
+            if (items.length >= itemsArr.length || items.length >= 120) {
                 setHasMore(false)
             }
             pastLimit.current = initialLimit + loadLimit * page
