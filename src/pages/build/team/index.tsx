@@ -175,7 +175,11 @@ const BuildTeam: NextPage = () => {
                                 return (
                                     <React.Fragment key={pokemon.id}>
                                         <button
-                                            className="pokemon-card"
+                                            className={` ${
+                                                selected
+                                                    ? "pokemon-card-selected"
+                                                    : "pokemon-card"
+                                            }`}
                                             onClick={() => {
                                                 if (
                                                     pokemon === selectedPokemon
@@ -193,7 +197,7 @@ const BuildTeam: NextPage = () => {
                                             />
                                         </button>
                                         {selected && (
-                                            <div className="col-span-full row-start-1 w-full">
+                                            <div className="col-span-full row-start-2 w-full">
                                                 <div
                                                     className={`grid h-fit w-full gap-2 ${
                                                         index === 0
