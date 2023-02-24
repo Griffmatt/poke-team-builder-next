@@ -180,7 +180,7 @@ const SinglePokemon: NextPage = () => {
                             href={`/build/pokemon/${pokemon?.name}/builds`}
                             className="grid h-fit w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                         >
-                            <h4>See Builds</h4>
+                            <h3>See Builds</h3>
                         </Link>
                     )}
                     {session?.user?.id && (
@@ -188,7 +188,7 @@ const SinglePokemon: NextPage = () => {
                             href={`/build/pokemon/${pokemon?.name}/build`}
                             className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
                         >
-                            <h4>Build Pokemon</h4>
+                            <h3>Build Pokemon</h3>
                         </Link>
                     )}
                 </div>

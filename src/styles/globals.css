@@ -28,14 +28,11 @@ h2 {
 }
 
 h3 {
-    @apply text-base font-semibold;
+    @apply text-sm md:text-lg md:font-medium;
 }
 
-h4 {
-    @apply text-sm md:text-base md:font-medium;
-}
-h5 {
-    @apply text-sm;
+h3 {
+    @apply text-sm md:text-base;
 }
 
 p {
@@ -74,7 +71,7 @@ button {
     @apply relative w-full border border-dark-3 p-2 dark:bg-dark-2;
 }
 
-.pokemon-card-selected{
+.pokemon-card-selected {
     @apply relative w-full border border-primary p-2 dark:bg-dark-2;
 }
 

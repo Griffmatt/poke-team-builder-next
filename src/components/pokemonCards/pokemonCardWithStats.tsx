@@ -77,24 +77,24 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 <div className="lg:w-[50%]">
                     <div className="grid grid-cols-2 lg:grid-cols-1">
                         <div>
-                            <h4>Tera</h4>
+                            <h3>Tera</h3>
                             <p>{formatString(createdPokemon.teraType)}</p>
                         </div>
                         <div>
-                            <h4>Ability</h4>
+                            <h3>Ability</h3>
                             <p>{formatString(createdPokemon.ability)}</p>
                         </div>
                         <div>
-                            <h4>Nature</h4>
+                            <h3>Nature</h3>
                             <p>{formatString(createdPokemon.nature)}</p>
                         </div>
                         <div>
-                            <h4>Item</h4>
+                            <h3>Item</h3>
                             <p>{formatString(createdPokemon.heldItem)}</p>
                         </div>
                     </div>
                     <div>
-                        <h4>Moves</h4>
+                        <h3>Moves</h3>
                         <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
                             {createdPokemon.moves.map((move) => {
                                 return (
@@ -109,12 +109,12 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div>
-                    <h4>EVs</h4>
+                    <h3>EVs</h3>
                     <div className="grid grid-cols-3">
                         {createdPokemon.evs.map((ev) => {
                             return (
                                 <div key={`${ev.stat}EV`}>
-                                    <h5>{ev.stat}</h5>
+                                    <h4>{ev.stat}</h4>
                                     <p>{ev.value}</p>
                                 </div>
                             )
@@ -122,12 +122,12 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                     </div>
                 </div>
                 <div>
-                    <h4>IVs</h4>
+                    <h3>IVs</h3>
                     <div className="grid grid-cols-3">
                         {createdPokemon.ivs.map((iv) => {
                             return (
                                 <div key={`${iv.stat}IV`}>
-                                    <h5>{iv.stat}</h5>
+                                    <h4>{iv.stat}</h4>
                                     <p>{iv.value}</p>
                                 </div>
                             )

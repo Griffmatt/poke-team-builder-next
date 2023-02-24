@@ -87,7 +87,7 @@ export const DataInput = ({
                 type="button"
             >
                 <div className="flex w-full justify-between align-middle">
-                    <h4>{formatString(data)}</h4>
+                    <h3>{formatString(data)}</h3>
                     {openInput === dataType ? <p>⌄</p> : <p>^</p>}
                 </div>
             </button>
@@ -112,7 +112,7 @@ export const DataInput = ({
                                     }
                                 >
                                     <div className="flex gap-3">
-                                        <h4>{formatString(item)}</h4>
+                                        <h3>{formatString(item)}</h3>
                                     </div>
                                     {percentage && <p>{percentage}</p>}
                                 </button>

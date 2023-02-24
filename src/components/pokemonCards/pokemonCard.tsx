@@ -52,7 +52,7 @@ export const PokemonCard = ({
                 />
             </div>
             <div className="text-right">
-                <h4>{formatString(pokemon.name)}</h4>
+                <h3>{formatString(pokemon.name)}</h3>
                 {percentage ? (
                     <p>{percentage}</p>
                 ) : (

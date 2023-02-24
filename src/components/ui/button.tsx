@@ -8,7 +8,7 @@ export const Button = ({ text, secondaryText, ...props }: button) => {
 
     return (
         <button {...props} className={`${bgColor} text-light `}>
-            <h4>{text}</h4>
+            <h3>{text}</h3>
             {secondaryText && <p>{secondaryText}</p>}
         </button>
     )
