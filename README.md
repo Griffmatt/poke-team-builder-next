@@ -13,13 +13,14 @@ View the details of each Pokemon in your team, including their stats, moves, and
 Share your team and pokemon with others through a unique URL.
 
 # Technologies Used
-HTML/CSS/JavaScript
 TypeScript
-Tailwind
 React.js
-Trcp
-Next.Js
+Next.js
+HTML/CSS/JavaScript
+Tailwind
+tRPC
 Prisma
+NextAuth.js
 
 # Installation
 Clone the repository: git clone https://github.com/Griffmatt/poke-team-builder-next/
