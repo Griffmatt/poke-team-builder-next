@@ -1,5 +1,5 @@
 import { NavLink } from "./ui/navLink"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 interface NavBarProps {
     setShowLoginModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -26,7 +26,7 @@ export const NavBar = ({ setShowLoginModal }: NavBarProps) => {
             ) : (
                 <button
                     className="btn-transparent"
-                    onClick={() => setShowLoginModal(true)}
+                    onClick={() => void signIn(" ", { callbackUrl: "/" })}
                 >
                     <h2>Sign In</h2>
                 </button>
