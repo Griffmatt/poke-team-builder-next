@@ -50,10 +50,8 @@ const SinglePokemon: NextPage = () => {
         return (
             <main>
                 <h1 className="h-8 w-32 animate-pulse bg-dark-2" />
-                <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
-                    <div className="pokemon-card">
-                        <LoadingCardWithStats />
-                    </div>
+                <div className="mx-auto grid w-full max-w-xl gap-3">
+                    <LoadingCardWithStats />
                 </div>
             </main>
         )
@@ -73,13 +71,11 @@ const SinglePokemon: NextPage = () => {
                 {user?.name && `${firstNameOnly(user.name ?? "")}'s`}{" "}
                 {formatString(pokemon.name)}
             </h1>
-            <div className="mx-auto grid w-[80%] gap-3 md:w-[50%] lg:w-[40%]">
-                <div className="pokemon-card">
-                    <PokemonCardWithStats
-                        createdPokemon={pokemon}
-                        favorite={favorites?.includes(pokemon.id) ?? false}
-                    />
-                </div>
+            <div className="mx-auto grid w-full max-w-xl gap-3">
+                <PokemonCardWithStats
+                    createdPokemon={pokemon}
+                    favorite={favorites?.includes(pokemon.id) ?? false}
+                />
                 {session?.user !== undefined && (
                     <div className="flex justify-between">
                         {session?.user?.id === user?.id && (

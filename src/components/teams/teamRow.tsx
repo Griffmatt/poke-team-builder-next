@@ -24,9 +24,7 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
     return (
         <div
             className={`${
-                withStats
-                    ? "grid gap-2 sm:grid-cols-2 md:grid-cols-3"
-                    : "pokemon-team-row"
+                withStats ? "grid gap-2 sm:grid-cols-2" : "pokemon-team-row"
             }`}
         >
             {team?.pokemon.map((pokemon) => {
@@ -34,11 +32,7 @@ export const TeamRow = ({ team, withStats, favorite }: Props) => {
                 return (
                     <React.Fragment key={pokemon.id}>
                         {withStats ? (
-                            <div
-                                className={`pokemon-card ${
-                                    favorite ? "favorite" : ""
-                                }`}
-                            >
+                            <div className={`${favorite ? "favorite" : ""}`}>
                                 <PokemonCardWithStats
                                     createdPokemon={pokemon}
                                     favorite={favorited}

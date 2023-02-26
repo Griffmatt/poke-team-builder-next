@@ -42,16 +42,15 @@ export const PokemonCard = ({
 
         return `#${formattedNumber}`
     }
-
     return (
-        <div className="grid gap-1 md:gap-3 lg:gap-5">
+        <div className="grid gap-1 text-right md:gap-3 lg:gap-5">
             <div className="aspect-square rounded-full bg-dark-3 shadow-black shadow-md">
                 <PokemonImage
                     pokemonName={pokemonName}
                     createdPokemon={createdPokemon}
                 />
             </div>
-            <div className="text-right">
+            <div>
                 <h3>{formatString(pokemon.name)}</h3>
                 {percentage ? (
                     <p>{percentage}</p>

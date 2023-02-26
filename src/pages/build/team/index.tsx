@@ -106,9 +106,9 @@ const BuildTeam: NextPage = () => {
                         <button
                             className={`${
                                 teamStyle === "Double"
-                                    ? "font-extrabold text-primary"
+                                    ? "text-primary"
                                     : "text-gray"
-                            } btn-transparent text-xl`}
+                            } btn-transparent text-xl font-extrabold`}
                             onClick={() => setTeamStyle("Double")}
                         >
                             Double
@@ -116,9 +116,9 @@ const BuildTeam: NextPage = () => {
                         <button
                             className={`${
                                 teamStyle === "Single"
-                                    ? "font-extrabold text-primary"
+                                    ? "text-primary"
                                     : "text-gray"
-                            } btn-transparent text-xl`}
+                            } btn-transparent text-xl font-extrabold`}
                             onClick={() => setTeamStyle("Single")}
                         >
                             Single
@@ -198,13 +198,7 @@ const BuildTeam: NextPage = () => {
                                         </button>
                                         {selected && (
                                             <div className="col-span-full row-start-2 w-full">
-                                                <div
-                                                    className={`grid h-fit w-full gap-2 ${
-                                                        index === 0
-                                                            ? "pb-4"
-                                                            : "py-4"
-                                                    }`}
-                                                >
+                                                <div className="grid h-fit w-full gap-2 py-4">
                                                     <div className="flex justify-center">
                                                         <PreviewCard
                                                             createdPokemon={
