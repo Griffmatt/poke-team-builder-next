@@ -19,16 +19,14 @@ const Pokemon: NextPage = () => {
     if (isLoading) {
         return (
             <main>
-                <div className="flex flex-col justify-between gap-2 md:flex-row">
-                    <h1>Pokedex</h1>
-                    <input
-                        placeholder="Search for a pokemon..."
-                        type="text"
-                        onChange={(event) => setQuery(event.target.value)}
-                        className="rounded-2xl px-4 py-2 text-black md:w-60"
-                    />
-                </div>
+                <h1>Pokedex</h1>
                 <BuildNav selected="pokemon" />
+                <input
+                    placeholder="Search for a pokemon..."
+                    type="text"
+                    onChange={(event) => setQuery(event.target.value)}
+                    className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
+                />
                 <SkeletonPokemonGrid />
             </main>
         )
@@ -43,16 +41,14 @@ const Pokemon: NextPage = () => {
 
     return (
         <main>
-            <div className="flex flex-col justify-between gap-2 md:flex-row">
-                <h1>Pokedex</h1>
-                <input
-                    placeholder="Search for a pokemon..."
-                    type="text"
-                    onChange={(event) => setQuery(event.target.value)}
-                    className="rounded-2xl px-4 py-2 text-black md:w-60"
-                />
-            </div>
+            <h1>Pokedex</h1>
             <BuildNav selected="pokemon" />
+            <input
+                placeholder="Search for a pokemon..."
+                type="text"
+                onChange={(event) => setQuery(event.target.value)}
+                className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
+            />
             <PokemonGrid pokemons={showPokemon} query={debouncedQuery} />
         </main>
     )
