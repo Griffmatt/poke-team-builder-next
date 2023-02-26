@@ -177,7 +177,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                 {stat.stat}
                                 <div className="flex w-full gap-2">
                                     <button
-                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                        className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => decreaseEv(stat.stat)}
                                         type="button"
                                     >
@@ -195,7 +195,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                                         }
                                     />
                                     <button
-                                        className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                        className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                         onClick={() => increaseEv(stat.stat)}
                                         type="button"
                                     >

@@ -61,17 +61,17 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
-                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             -
                                         </button>
                                         <div
                                             key={index}
-                                            className="h-8 w-full animate-pulse bg-dark-2"
+                                            className="h-7 w-full animate-pulse bg-dark-2"
                                         />
                                         <button
-                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
                                             type="button"
                                         >
                                             +

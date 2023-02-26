@@ -40,11 +40,7 @@ p {
 }
 
 input {
-    @apply rounded-xl p-1 px-3  dark:bg-dark-2 dark:text-light;
-}
-
-select {
-    @apply h-8 rounded-xl p-1 px-3 dark:bg-dark-2 dark:text-light;
+    @apply rounded-xl px-3  dark:bg-dark-2 dark:text-light;
 }
 
 button {
