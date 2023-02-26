@@ -4,15 +4,7 @@ import { BuildNav } from "../buildNav"
 export const SkeletonTeamBuildPage = () => {
     return (
         <main>
-            <div className="flex flex-col justify-between gap-2 md:flex-row">
-                <h1>Building Team</h1>
-                <input
-                    placeholder="Search for a pokemon..."
-                    type="text"
-                    className="-60 rounded-2xl px-4 py-2 text-black"
-                    readOnly
-                />
-            </div>
+            <h1>Building Team</h1>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
@@ -21,7 +13,7 @@ export const SkeletonTeamBuildPage = () => {
                         <button className="btn-transparent text-xl font-extrabold text-primary">
                             Double
                         </button>
-                        <button className="btn-transparent text-xl text-gray">
+                        <button className="btn-transparent text-xl font-extrabold text-gray">
                             Single
                         </button>
                     </div>
@@ -31,6 +23,12 @@ export const SkeletonTeamBuildPage = () => {
                 </div>
                 <button className="rounded-2xl p-3">Build Team</button>
             </div>
+            <input
+                placeholder="Search for a pokemon..."
+                type="text"
+                className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
+                readOnly
+            />
             <SkeletonPokemonGrid />
         </main>
     )

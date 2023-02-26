@@ -83,15 +83,7 @@ const BuildTeam: NextPage = () => {
     }
     return (
         <main>
-            <div className="flex flex-col justify-between gap-2 md:flex-row">
-                <h1>Building Team</h1>
-                <input
-                    placeholder="Search for a pokemon..."
-                    type="text"
-                    onChange={(event) => setQuery(event.target.value)}
-                    className="rounded-2xl px-4 py-2 text-black md:w-60"
-                />
-            </div>
+            <h1>Building Team</h1>
             <BuildNav selected="team" />
             <div className="grid gap-3">
                 <div className="flex flex-col gap-2 md:flex-row">
@@ -155,13 +147,31 @@ const BuildTeam: NextPage = () => {
                 >
                     Build Team
                 </button>
-                {filteredPokemon.length === 0 && (
-                    <PokemonEmpty
-                        query={query}
-                        hasPokemon={pokemons.length > 0}
-                    />
-                )}
             </div>
+            <div className="sticky top-[3.375rem] z-30 grid gap-2 bg-dark/95 p-2 md:grid-cols-2">
+                <div className="grid h-10 w-full grid-cols-6 rounded bg-dark-2 p-1 md:w-60">
+                    {pokemonOnTeam.map((pokemon) => {
+                        return (
+                            <div key={pokemon.id} className="aspect-square h-8">
+                                <PokemonImage
+                                    pokemonName={pokemon.name}
+                                    createdPokemon={pokemon}
+                                />
+                            </div>
+                        )
+                    })}
+                </div>
+                <input
+                    placeholder="Search for a pokemon..."
+                    type="text"
+                    onChange={(event) => setQuery(event.target.value)}
+                    className="ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
+                />
+            </div>
+
+            {filteredPokemon.length === 0 && (
+                <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
+            )}
             <div>
                 {pokemonRows.map((pokemonRow, index) => {
                     return (
