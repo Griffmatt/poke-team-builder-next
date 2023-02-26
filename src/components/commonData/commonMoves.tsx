@@ -31,7 +31,7 @@ export const CommonMoves = ({ movesData }: Props) => {
             {moves && total > 0 && (
                 <div className="w-full">
                     <h3>Moves</h3>
-                    <div className="grid grid-cols-1 gap-1 md:grid-cols-3">
+                    <div className="grid gap-1 xs:grid-cols-2 md:grid-cols-3">
                         {moves.slice(0, 6).map((move) => {
                             const percentage = formatPercentage(
                                 move.amount / total
