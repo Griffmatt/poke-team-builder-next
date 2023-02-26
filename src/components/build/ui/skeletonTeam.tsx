@@ -24,7 +24,7 @@ export const SkeletonTeamBuildPage = () => {
                 <button className="rounded-2xl p-3">Build Team</button>
             </div>
             <div>
-                <div className="sticky top-[3.375rem] z-30 grid gap-2 bg-dark/95 p-2 md:grid-cols-2">
+                <div className="sticky top-[3.375rem] z-30 grid gap-2 bg-dark/95 py-2 md:grid-cols-2">
                     <div className="grid h-10 w-full grid-cols-6 rounded bg-dark-2 p-1 md:w-60" />
                     <input
                         placeholder="Search for a pokemon..."
