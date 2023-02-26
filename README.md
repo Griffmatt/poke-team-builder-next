@@ -1,5 +1,6 @@
-# Pokedex Team Builder App
-Welcome to the Pokedex Team Builder App! This is a web application designed to help you build your ideal Pokemon team for battles. With this app, you can browse through hundreds of Pokemon, view their stats, moves, and abilities, and add them to your team.
+# Competetive Team Builder 
+This is a web application designed to help you build your ideal Pokemon team for battles. With this app, 
+you can browse through hundreds of Pokemon, view their stats, moves, abilities, and moves, stats, and abilities that are commonly used for battling that specific pokemon, as well as favorite teams others have built to test them out for yourself
 
 # Features
 Browse through a comprehensive list of Pokemon with their images, stats, moves, and abilities.
