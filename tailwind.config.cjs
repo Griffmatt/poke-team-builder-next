@@ -54,6 +54,10 @@ module.exports = {
             xl: "1280px",
             "2xl": "1536px",
         },
+
+        transitionProperty: {
+            "max-height": "max-height",
+        },
     },
     plugins: [require("tailwindcss-inner-border")],
 }

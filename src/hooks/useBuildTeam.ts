@@ -49,6 +49,7 @@ export function useBuildTeam(userId: string) {
         if (containsPokemon) return null
 
         setPokemonOnTeam([...pokemonOnTeam, pokemon])
+        return null
     }
 
     const removePokemonFromTeam = (id: string) => {
