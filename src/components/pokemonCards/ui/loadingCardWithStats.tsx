@@ -56,21 +56,26 @@ export const LoadingCardWithStats = () => {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-2">
-                <div className="border border-dark-3">
+            <div className="grid border border-dark-3 md:grid-cols-2">
+                <div className="grid grid-cols-6 md:hidden">
+                    {STATS.sort().map((stat) => (
+                        <h4 key={stat}>{stat}</h4>
+                    ))}
+                </div>
+                <div className="p-1">
                     <h3>EVs</h3>
                     <div className="grid grid-cols-6">
                         {STATS.map((stat) => {
                             return (
                                 <div key={`${stat}EV`}>
-                                    <h4>{stat}</h4>
+                                    <h4 className="hidden md:block">{stat}</h4>
                                     <p className="h-[1rem] p-1 xs:h-[1.25rem]" />
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div className="border border-dark-3">
+                <div className="p-1">
                     <h3>IVs</h3>
                     <div className="grid grid-cols-6">
                         {STATS.map((stat) => {
