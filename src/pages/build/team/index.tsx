@@ -152,7 +152,7 @@ const BuildTeam: NextPage = () => {
                 <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
             )}
             <div>
-                <div className="pointer-events-none sticky top-[3.375rem] z-50 grid gap-2 bg-dark/95 p-2 md:grid-cols-2 lg:top-0 lg:bg-transparent">
+                <div className="pointer-events-none sticky top-[3.375rem] z-50 flex justify-between bg-dark/95 py-2 lg:top-0 lg:bg-transparent">
                     <div className="hidden h-10 grid-cols-6 rounded bg-dark-2 p-1 md:grid md:w-60">
                         {pokemonOnTeam.map((pokemon) => {
                             return (
@@ -172,7 +172,7 @@ const BuildTeam: NextPage = () => {
                         placeholder="Search for a pokemon..."
                         type="text"
                         onChange={(event) => setQuery(event.target.value)}
-                        className="pointer-events-auto ml-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
+                        className="pointer-events-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
                     />
                 </div>
                 <div>
