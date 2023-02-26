@@ -50,8 +50,8 @@ export const PokemonCard = ({
                     createdPokemon={createdPokemon}
                 />
             </div>
-            <div>
-                <h3>{formatString(pokemon.name)}</h3>
+            <div className="w-full">
+                <h3 className="truncate">{formatString(pokemon.name)}</h3>
                 {percentage ? (
                     <p>{percentage}</p>
                 ) : (

@@ -13,6 +13,7 @@ import { CommonStats } from "components/commonData/commonStats"
 import { useEffect } from "react"
 import { useSelectedContext } from "context/selectedContext"
 import { STATS } from "assets/stats"
+import { SkeletonRoundImage } from "components/pokemonCards/ui/skeletonPokemonImage"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -64,7 +65,7 @@ const SinglePokemon: NextPage = () => {
                 <h1>{formatString(pokemonName as string)}</h1>
                 <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
-                        <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 " />
+                        <SkeletonRoundImage />
                     </div>
                     <div className="lg:col-span-2">
                         <h2>Stats</h2>

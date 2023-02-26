@@ -9,11 +9,11 @@ import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
 
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { SkeletonPokemonGrid } from "components/pokemonGrids/ui/skeletonPokemonGrid"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { PreviewCard } from "components/pokemonCards/previewCard"
 import { type CreatedPokemon } from "types/trpc"
 import { useScreenSize } from "hooks/useScreenSize"
+import { SkeletonTeamBuildPage } from "components/build/ui/skeletonTeam"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -22,9 +22,9 @@ const BuildTeam: NextPage = () => {
 
     const [query, setQuery] = useState("")
     const debouncedValue = useDebounceQuery(query)
+
     const [gridLength, setGridLength] = useState(6)
-    const [selectedPokemon, setSelectedPokemon] =
-        useState<CreatedPokemon | null>(null)
+    const [selectedRow, setSelectedRow] = useState<number | null>(null)
 
     useLayoutEffect(() => {
         if (width >= 1024) {
@@ -65,7 +65,7 @@ const BuildTeam: NextPage = () => {
         pokemonOnTeam,
     } = useBuildTeam(session?.user?.id as string)
 
-    if (isLoading) return <BuildTeamSkeleton />
+    if (isLoading) return <SkeletonTeamBuildPage />
     if (error) return <div>Error: {error.message}</div>
 
     const filteredPokemon = pokemons.filter(
@@ -162,66 +162,17 @@ const BuildTeam: NextPage = () => {
                     />
                 )}
             </div>
-            <div className="grid">
+            <div>
                 {pokemonRows.map((pokemonRow, index) => {
                     return (
                         <div className="pokemon-grid-card-layout" key={index}>
-                            {pokemonRow?.map((pokemon) => {
-                                const favorited =
-                                    pokemon.favorited[0]?.userId ===
-                                    pokemon.userId
-                                const selected =
-                                    pokemon.id === selectedPokemon?.id
-                                return (
-                                    <React.Fragment key={pokemon.id}>
-                                        <button
-                                            className={` ${
-                                                selected
-                                                    ? "pokemon-card-selected"
-                                                    : "pokemon-card"
-                                            }`}
-                                            onClick={() => {
-                                                if (
-                                                    pokemon === selectedPokemon
-                                                ) {
-                                                    setSelectedPokemon(null)
-                                                    return
-                                                }
-                                                setSelectedPokemon(pokemon)
-                                            }}
-                                        >
-                                            <PokemonCard
-                                                pokemonName={pokemon.name}
-                                                createdPokemon={pokemon}
-                                                favorited={favorited}
-                                            />
-                                        </button>
-                                        {selected && (
-                                            <div className="col-span-full row-start-2 w-full">
-                                                <div className="grid h-fit w-full gap-2 py-4">
-                                                    <div className="flex justify-center">
-                                                        <PreviewCard
-                                                            createdPokemon={
-                                                                selectedPokemon
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <button
-                                                        className="rounded-2xl p-3"
-                                                        onClick={() => {
-                                                            void addPokemonToTeam(
-                                                                selectedPokemon
-                                                            )
-                                                        }}
-                                                    >
-                                                        Add To Team
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </React.Fragment>
-                                )
-                            })}
+                            <PokemonGridRow
+                                pokemonRow={pokemonRow}
+                                addPokemonToTeam={addPokemonToTeam}
+                                selectedRow={selectedRow}
+                                setSelectedRow={setSelectedRow}
+                                index={index}
+                            />
                         </div>
                     )
                 })}
@@ -232,37 +183,84 @@ const BuildTeam: NextPage = () => {
 
 export default BuildTeam
 
-const BuildTeamSkeleton = () => {
+interface GridRowProps {
+    pokemonRow: CreatedPokemon[]
+    addPokemonToTeam: (pokemon: CreatedPokemon | null) => null
+    setSelectedRow: (value: React.SetStateAction<number | null>) => void
+    selectedRow: number | null
+    index: number
+}
+
+const PokemonGridRow = ({
+    pokemonRow,
+    addPokemonToTeam,
+    setSelectedRow,
+    selectedRow,
+    index,
+}: GridRowProps) => {
+    const [selectedPokemon, setSelectedPokemon] =
+        useState<CreatedPokemon | null>(null)
+    const rowSelected = index === selectedRow
+    const selected = selectedPokemon && rowSelected
     return (
-        <main>
-            <div className="flex flex-col justify-between gap-2 md:flex-row">
-                <h1>Building Team</h1>
-                <input
-                    placeholder="Search for a pokemon..."
-                    type="text"
-                    className="-60 rounded-2xl px-4 py-2 text-black"
-                    readOnly
-                />
-            </div>
-            <BuildNav selected="team" />
-            <div className="grid gap-3">
-                <div className="flex flex-col gap-2 md:flex-row">
-                    <input className="md:w-72" value={"Team Name"} readOnly />
-                    <div className="flex gap-2">
-                        <button className="btn-transparent text-xl font-extrabold text-primary">
-                            Double
+        <>
+            {pokemonRow?.map((pokemon) => {
+                const favorited =
+                    pokemon.favorited[0]?.userId === pokemon.userId
+                const pokemonSelected =
+                    pokemon.id === selectedPokemon?.id && rowSelected
+                return (
+                    <React.Fragment key={pokemon.id}>
+                        <button
+                            className={` ${
+                                pokemonSelected
+                                    ? "pokemon-card-selected"
+                                    : "pokemon-card"
+                            }`}
+                            onClick={() => {
+                                if (
+                                    selectedPokemon?.id === pokemon.id &&
+                                    rowSelected
+                                ) {
+                                    setSelectedRow(null)
+                                    return
+                                }
+                                setSelectedPokemon(pokemon)
+                                setSelectedRow(index)
+                            }}
+                        >
+                            <PokemonCard
+                                pokemonName={pokemon.name}
+                                createdPokemon={pokemon}
+                                favorited={favorited}
+                            />
                         </button>
-                        <button className="btn-transparent text-xl text-gray">
-                            Single
-                        </button>
+                    </React.Fragment>
+                )
+            })}
+
+            <div
+                className={` col-span-full row-start-2 h-fit w-full overflow-hidden transition-max-height duration-300 ${
+                    selected ? "max-h-80" : "max-h-0"
+                }`}
+            >
+                <div className="grid h-fit w-full gap-2 py-4">
+                    <div className="flex justify-center">
+                        {selectedPokemon && (
+                            <PreviewCard createdPokemon={selectedPokemon} />
+                        )}
                     </div>
+                    <button
+                        className="rounded-2xl p-3"
+                        onClick={() => {
+                            void addPokemonToTeam(selectedPokemon)
+                            setSelectedRow(null)
+                        }}
+                    >
+                        Add To Team
+                    </button>
                 </div>
-                <div className="pokemon-team-row">
-                    <div className="aspect-square w-full" />
-                </div>
-                <button className="rounded-2xl p-3">Build Team</button>
             </div>
-            <SkeletonPokemonGrid />
-        </main>
+        </>
     )
 }
