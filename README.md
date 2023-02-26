@@ -47,4 +47,4 @@ Add team data to show strengths and aweaknesses of team
 Add way to show Team of the Week
 
 # Credits
-This app was created by Griffin. The data for this app was sourced from The Pokemon API.
+This app was created by Griffin. The data for this app was sourced from The Pokemon API. App was scaffolded out using Create T3 App
