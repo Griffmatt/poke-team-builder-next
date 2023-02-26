@@ -67,7 +67,7 @@ export const PreviewCard = ({ createdPokemon }: Props) => {
                         {createdPokemon.evs.map((ev) => {
                             return (
                                 <div key={`${ev.stat}EV`}>
-                                    <h5>{ev.stat}</h5>
+                                    <h4>{ev.stat}</h4>
                                     <p>{ev.value}</p>
                                 </div>
                             )
@@ -79,9 +79,9 @@ export const PreviewCard = ({ createdPokemon }: Props) => {
                         {createdPokemon.ivs.map((iv) => {
                             return (
                                 <div key={`${iv.stat}IV`}>
-                                    <h5 className="hidden md:block">
+                                    <h4 className="hidden md:block">
                                         {iv.stat}
-                                    </h5>
+                                    </h4>
                                     <p>{iv.value}</p>
                                 </div>
                             )

@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react"
-import { useState } from "react"
 import { useAddFavoritePokemonMutation } from "mutations/addFavoritePokemonMutation"
 import { useRemoveFavoritePokemonMutation } from "mutations/removeFavoritePokemonMutation"
 import { type CreatedPokemon } from "types/trpc"
@@ -18,8 +17,6 @@ interface Props {
 
 export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     const { data: session } = useSession()
-
-    const [topPoke] = useState((createdPokemon?.favorited?.length ?? 0) > 100)
 
     const {
         data: pokemon,
@@ -53,81 +50,108 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
 
     if (error) return <div>Error: {error.message}</div>
     return (
-        <div className="grid gap-1 text-center">
-            <h2>{formatString(createdPokemon.name)}</h2>
-            <div className="justify-between lg:flex">
-                <div className="relative my-auto w-full">
-                    <PokemonImage
-                        pokemonName={pokemon.name}
-                        createdPokemon={createdPokemon}
-                    />
-                    {session?.user?.id && (
-                        <FavoritedButton
-                            favorited={favorite}
-                            addFavorite={addFavorite}
-                            removeFavorite={removeFavorite}
+        <div className="relative w-full bg-dark-2 text-center">
+            <h2 className="border p-1 dark:border-dark-3">
+                {formatString(pokemon.name)}
+            </h2>
+            {session?.user?.id && (
+                <FavoritedButton
+                    favorited={favorite}
+                    addFavorite={addFavorite}
+                    removeFavorite={removeFavorite}
+                    small={true}
+                />
+            )}
+            <div className="flex">
+                <div className="flex items-center justify-center border border-dark-3 p-2">
+                    <div className="aspect-square h-12">
+                        <PokemonImage
+                            pokemonName={pokemon.name}
+                            createdPokemon={createdPokemon}
                         />
-                    )}
-                    {topPoke && (
-                        <div className="absolute top-0 left-0 h-10 w-10 rounded-full">
-                            Top Poke
-                        </div>
-                    )}
+                    </div>
                 </div>
-                <div className="lg:w-[50%]">
-                    <div className="grid grid-cols-2 lg:grid-cols-1">
-                        <div>
-                            <h4>Tera</h4>
+                <div className="grid w-full md:grid-cols-2">
+                    <div className="grid">
+                        <div className="flex items-center gap-2 border border-dark-3 p-1">
+                            <h3>Tera type:</h3>
                             <p>{formatString(createdPokemon.teraType)}</p>
                         </div>
-                        <div>
-                            <h4>Ability</h4>
+                        <div className="flex items-center gap-2 border border-dark-3 p-1">
+                            <h3>Ability:</h3>
                             <p>{formatString(createdPokemon.ability)}</p>
                         </div>
-                        <div>
-                            <h4>Nature</h4>
+                        <div className="flex items-center gap-2 border border-dark-3 p-1">
+                            <h3>Nature:</h3>
                             <p>{formatString(createdPokemon.nature)}</p>
                         </div>
-                        <div>
-                            <h4>Item</h4>
+                        <div className="flex items-center gap-2 border border-dark-3 p-1">
+                            <h3>Held item:</h3>
                             <p>{formatString(createdPokemon.heldItem)}</p>
                         </div>
                     </div>
-                    <div>
-                        <h4>Moves</h4>
-                        <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
+                    <div className="hidden flex-col items-center md:flex">
+                        <h3 className="w-full border border-dark-3 p-1">
+                            Moves
+                        </h3>
+                        <div className="flex h-full w-full flex-col justify-between border p-1 dark:border-dark-3">
                             {createdPokemon.moves.map((move) => {
                                 return (
-                                    <p key={move.move}>
-                                        {formatString(move.move)}
-                                    </p>
+                                    <div
+                                        key={move.move}
+                                        className="flex w-full items-center justify-center"
+                                    >
+                                        <p className="truncate">
+                                            {formatString(move.move)}
+                                        </p>
+                                    </div>
                                 )
                             })}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2">
-                <div>
-                    <h4>EVs</h4>
-                    <div className="grid grid-cols-3">
+            <div className="grid md:hidden">
+                <h3 className="border p-1 dark:border-dark-3">Moves</h3>
+                <div className="grid grid-cols-2 border dark:border-dark-3">
+                    {createdPokemon.moves.map((move) => {
+                        return (
+                            <div
+                                key={move.move}
+                                className="flex w-full items-center justify-center p-1"
+                            >
+                                <p className="truncate">
+                                    {formatString(move.move)}
+                                </p>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+
+            <div className="grid md:grid-cols-2">
+                <div className="border border-dark-3">
+                    <h3>EVs</h3>
+                    <div className="grid grid-cols-6">
                         {createdPokemon.evs.map((ev) => {
                             return (
                                 <div key={`${ev.stat}EV`}>
-                                    <h5>{ev.stat}</h5>
+                                    <h4>{ev.stat}</h4>
                                     <p>{ev.value}</p>
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div>
-                    <h4>IVs</h4>
-                    <div className="grid grid-cols-3">
+                <div className="border border-dark-3">
+                    <h3>IVs</h3>
+                    <div className="grid grid-cols-6">
                         {createdPokemon.ivs.map((iv) => {
                             return (
                                 <div key={`${iv.stat}IV`}>
-                                    <h5>{iv.stat}</h5>
+                                    <h4 className="hidden md:block">
+                                        {iv.stat}
+                                    </h4>
                                     <p>{iv.value}</p>
                                 </div>
                             )

@@ -44,7 +44,7 @@ export const LoadingPreviewCard = () => {
                         {STATS.map((ev) => {
                             return (
                                 <div key={`${ev}EV`}>
-                                    <h5>{ev}</h5>
+                                    <h4>{ev}</h4>
                                     <p className="h-4 xs:h-5" />
                                 </div>
                             )
@@ -56,7 +56,7 @@ export const LoadingPreviewCard = () => {
                         {STATS.map((iv) => {
                             return (
                                 <div key={`${iv}IV`}>
-                                    <h5>{iv}</h5>
+                                    <h4>{iv}</h4>
                                     <p className="h-4 xs:h-5" />
                                 </div>
                             )

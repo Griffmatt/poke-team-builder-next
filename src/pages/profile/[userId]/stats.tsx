@@ -30,15 +30,15 @@ const ProfileSettings: NextPage = () => {
                 <div className="flex justify-center">
                     <div className="grid w-72 gap-2">
                         <div className="grid w-full gap-1 rounded-xl bg-dark-2 p-2">
-                            <h4>Battles won</h4>
+                            <h3>Battles won</h3>
                             <p>0</p>
-                            <h4>Total pokemon</h4>
+                            <h3>Total pokemon</h3>
                             <p>0</p>
-                            <h4>Total teams</h4>
+                            <h3>Total teams</h3>
                             <p>0</p>
-                            <h4>Favorite team</h4>
+                            <h3>Favorite team</h3>
                             <p>none</p>
-                            <h4>Favorite pokemon</h4>
+                            <h3>Favorite pokemon</h3>
                             <p>Bulbasaur</p>
                         </div>
                         {session?.user?.id === userId && (
@@ -79,15 +79,15 @@ const ProfileSettings: NextPage = () => {
             <div className="flex justify-center">
                 <div className="grid w-72 gap-2">
                     <div className="grid w-full gap-1 rounded-xl bg-dark-2 p-2">
-                        <h4>Battles won</h4>
+                        <h3>Battles won</h3>
                         <p>0</p>
-                        <h4>Total pokemon</h4>
+                        <h3>Total pokemon</h3>
                         <p>0</p>
-                        <h4>Total teams</h4>
+                        <h3>Total teams</h3>
                         <p>0</p>
-                        <h4>Favorite team</h4>
+                        <h3>Favorite team</h3>
                         <p>none</p>
-                        <h4>Favorite pokemon</h4>
+                        <h3>Favorite pokemon</h3>
                         <p>Bulbasaur</p>
                     </div>
                     {session?.user?.id === userId && (

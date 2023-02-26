@@ -78,14 +78,14 @@ const Team: NextPage = () => {
                         <h2>{team?.teamStyle}</h2>
                         <div className="flex gap-2">
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                                <h4 className="align-middle">
+                                <h3 className="align-middle">
                                     Wins: {team.wins}
-                                </h4>
+                                </h3>
                             </div>
                             <div className="rounded-2xl bg-dark-2 px-4 py-1">
-                                <h4 className="align-middle">
+                                <h3 className="align-middle">
                                     Percentage: {percentage}
-                                </h4>
+                                </h3>
                             </div>
                             {session?.user?.id !== team.userId &&
                                 session?.user && (

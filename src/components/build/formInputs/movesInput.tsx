@@ -81,7 +81,7 @@ export const MovesInput = ({
                 type="button"
             >
                 <div className="flex w-full justify-between">
-                    <h4>{formatString(move)}</h4>
+                    <h3>{formatString(move)}</h3>
                     {openInput === moveOrder ? <p>⌄</p> : <p>^</p>}
                 </div>
             </button>
@@ -105,7 +105,7 @@ export const MovesInput = ({
                                         handleClick(moveName, event)
                                     }
                                 >
-                                    <h4>{formatString(moveName)}</h4>
+                                    <h3>{formatString(moveName)}</h3>
                                     {percentage && <p>{percentage}</p>}
                                 </button>
                             )
