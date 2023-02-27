@@ -24,11 +24,11 @@ h1 {
 }
 
 h2 {
-    @apply text-lg md:text-xl font-bold text-primary;
+    @apply text-lg lg:text-xl font-bold text-primary;
 }
 
 h3 {
-    @apply text-sm md:text-base md:font-medium;
+    @apply text-sm lg:text-base md:font-medium;
 }
 
 h4 {
