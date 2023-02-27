@@ -74,20 +74,20 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 </div>
                 <div className="grid w-full md:grid-cols-2">
                     <div className="grid">
-                        <div className="flex items-center gap-2 border border-dark-3 p-1">
-                            <h3>Tera type:</h3>
+                        <div className="flex items-center border border-dark-3 p-1">
+                            <h3>Tera: </h3>
                             <p>{formatString(createdPokemon.teraType)}</p>
                         </div>
-                        <div className="flex items-center gap-2 border border-dark-3 p-1">
-                            <h3>Ability:</h3>
+                        <div className="flex items-center border border-dark-3 p-1">
+                            <h3>Ability: </h3>
                             <p>{formatString(createdPokemon.ability)}</p>
                         </div>
-                        <div className="flex items-center gap-2 border border-dark-3 p-1">
-                            <h3>Nature:</h3>
+                        <div className="flex items-center border border-dark-3 p-1">
+                            <h3>Nature: </h3>
                             <p>{formatString(createdPokemon.nature)}</p>
                         </div>
-                        <div className="flex items-center gap-2 border border-dark-3 p-1">
-                            <h3>Held item:</h3>
+                        <div className="flex items-center border border-dark-3 p-1">
+                            <h3>Item: </h3>
                             <p>{formatString(createdPokemon.heldItem)}</p>
                         </div>
                     </div>
