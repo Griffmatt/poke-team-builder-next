@@ -50,6 +50,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     if (isLoading) return <LoadingCardWithStats />
 
     if (error) return <div>Error: {error.message}</div>
+
     return (
         <div className="relative w-full bg-dark-2 text-center">
             <div className="flex justify-between border border-dark-3">
@@ -59,9 +60,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                         createdPokemon={createdPokemon}
                     />
                 </div>
-                <h2>
-                    {formatString(pokemon.name)}
-                </h2>
+                <h2>{formatString(pokemon.name)}</h2>
                 <div className="flex items-center p-2">
                     {session?.user?.id && (
                         <FavoritedButton
