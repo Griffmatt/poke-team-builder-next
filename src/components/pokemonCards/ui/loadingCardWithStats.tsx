@@ -14,18 +14,18 @@ export const LoadingCardWithStats = () => {
                 </div>
                 <div className="grid w-full md:grid-cols-2">
                     <div className="grid">
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Tera</h3>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Ability</h3>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Nature</h3>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Item</h3>
-                        </div>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Tera
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Ability
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Nature
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Item
+                        </h3>
                     </div>
                     <div className="hidden flex-col items-center md:flex">
                         <h3 className="w-full border border-dark-3 p-1">
