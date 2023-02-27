@@ -64,7 +64,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 />
             )}
             <div className="flex">
-                <div className="flex justify-center border border-dark-3 p-2">
+                <div className="flex items-center border border-dark-3 p-2">
                     <div className="aspect-square h-12">
                         <PokemonImage
                             pokemonName={pokemon.name}
@@ -74,24 +74,32 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 </div>
                 <div className="grid w-full md:grid-cols-2">
                     <div className="grid">
-                        <div className="inline-block align-middle border border-dark-3 p-1">
-                            <h3>Tera</h3>
-                            <p>{formatString(createdPokemon.teraType)}</p>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Ability</h3>
-                            <p>{formatString(createdPokemon.ability)}</p>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Nature</h3>
-                            <p>{formatString(createdPokemon.nature)}</p>
-                        </div>
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
-                            <h3>Item</h3>
-                            <p>{formatString(createdPokemon.heldItem)}</p>
-                        </div>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Tera{" "}
+                            <span className="text-sm font-normal text-gray">
+                                {formatString(createdPokemon.teraType)}
+                            </span>
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Ability{" "}
+                            <span className="text-sm font-normal text-gray">
+                                {formatString(createdPokemon.ability)}
+                            </span>
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Nature{" "}
+                            <span className="text-sm font-normal text-gray">
+                                {formatString(createdPokemon.nature)}
+                            </span>
+                        </h3>
+                        <h3 className="border border-dark-3 p-1 text-left">
+                            Item{" "}
+                            <span className="text-sm font-normal text-gray">
+                                {formatString(createdPokemon.heldItem)}
+                            </span>
+                        </h3>
                     </div>
-                    <div className="hidden flex-col items-center md:flex">
+                    <div className="hidden flex-col md:flex">
                         <h3 className="w-full border border-dark-3 p-1">
                             Moves
                         </h3>
