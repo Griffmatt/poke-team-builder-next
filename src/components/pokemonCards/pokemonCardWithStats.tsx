@@ -74,7 +74,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 </div>
                 <div className="grid w-full md:grid-cols-2">
                     <div className="grid">
-                        <div className="flex items-center gap-1 border border-dark-3 p-1">
+                        <div className="inline-block align-middle border border-dark-3 p-1">
                             <h3>Tera</h3>
                             <p>{formatString(createdPokemon.teraType)}</p>
                         </div>
