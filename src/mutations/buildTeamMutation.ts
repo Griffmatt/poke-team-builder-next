@@ -13,8 +13,8 @@ export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
 
             if (pastTeams) {
                 apiContext.teams.getUserTeams.setData({ userId: userId }, [
+                   team, 
                     ...pastTeams,
-                    team,
                 ])
             }
             return { pastTeams }
