@@ -28,11 +28,11 @@ h2 {
 }
 
 h3 {
-    @apply text-sm md:text-lg md:font-medium;
+    @apply text-sm md:text-base md:font-medium;
 }
 
 h4 {
-    @apply text-sm md:text-base;
+    @apply text-sm ;
 }
 
 p {
