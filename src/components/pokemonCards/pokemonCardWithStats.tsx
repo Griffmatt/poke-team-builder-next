@@ -52,7 +52,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     if (error) return <div>Error: {error.message}</div>
     return (
         <div className="relative w-full bg-dark-2 text-center">
-            <h2 className="border p-1 dark:border-dark-3">
+            <h2 className="border border-dark-3 p-1">
                 {formatString(pokemon.name)}
             </h2>
             {session?.user?.id && (
@@ -95,7 +95,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                         <h3 className="w-full border border-dark-3 p-1">
                             Moves
                         </h3>
-                        <div className="flex h-full w-full flex-col justify-between border p-1 dark:border-dark-3">
+                        <div className="flex h-full w-full flex-col justify-between border border-dark-3 p-1">
                             {createdPokemon.moves.map((move) => {
                                 return (
                                     <div
@@ -113,8 +113,8 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 </div>
             </div>
             <div className="grid md:hidden">
-                <h3 className="border p-1 dark:border-dark-3">Moves</h3>
-                <div className="grid grid-cols-2 border dark:border-dark-3">
+                <h3 className="border border-dark-3 p-1">Moves</h3>
+                <div className="grid grid-cols-2 border border-dark-3">
                     {createdPokemon.moves.map((move) => {
                         return (
                             <div

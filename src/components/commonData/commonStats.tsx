@@ -23,10 +23,10 @@ export const CommonStats = ({ stats }: Props) => {
                     const selectedStats = index === statsIndex
                     return (
                         <button
-                            className={`grid grid-cols-6 rounded border-2 px-4 py-2 text-center dark:bg-dark-2 ${
+                            className={`grid grid-cols-6 rounded border-2 bg-dark-2 px-4 py-2 text-center ${
                                 selectedStats
                                     ? "border-primary"
-                                    : "dark:border-dark-2"
+                                    : "border-dark-2"
                             }`}
                             key={`stats${index}`}
                             onClick={() => handleStatsChange(statsData, index)}

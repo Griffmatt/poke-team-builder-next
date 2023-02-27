@@ -74,7 +74,7 @@ export const ProfileNav = ({ selected, userId, user }: Props) => {
 
 const UserHeader = ({ user }: { user: user }) => {
     return (
-        <div className="grid h-44 grid-rows-2 px-1 text-center">
+        <nav className="grid h-44 grid-rows-2 px-1 text-center">
             <div className="row-span-2 grid h-fit w-fit gap-1">
                 <div className="aspect-square w-24 md:w-32">
                     {user?.image ? (
@@ -92,6 +92,6 @@ const UserHeader = ({ user }: { user: user }) => {
                 </div>
                 {user?.name && <h2>{firstNameOnly(user.name)}</h2>}
             </div>
-        </div>
+        </nav>
     )
 }

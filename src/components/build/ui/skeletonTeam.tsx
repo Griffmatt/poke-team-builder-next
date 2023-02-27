@@ -3,7 +3,7 @@ import { BuildNav } from "../buildNav"
 
 export const SkeletonTeamBuildPage = () => {
     return (
-        <main>
+        <main aria-label="Loading">
             <h1>Building Team</h1>
             <BuildNav selected="team" />
             <div className="grid gap-3">

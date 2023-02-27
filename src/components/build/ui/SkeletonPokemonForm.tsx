@@ -10,7 +10,7 @@ interface Props {
 export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
     const fillerArr = Array.from({ length: 4 }, () => 0)
     return (
-        <main>
+        <main aria-label="Loading">
             <h1 className="truncate">Building {formatString(pokemonName)}</h1>
             <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full lg:row-span-2">
@@ -61,7 +61,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
-                                            className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="aspect-square h-7 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
                                         >
                                             -
@@ -71,7 +71,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                             className="h-7 w-full animate-pulse bg-dark-2"
                                         />
                                         <button
-                                            className="aspect-square h-7 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="aspect-square h-7 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
                                         >
                                             +
@@ -89,14 +89,14 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
-                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="w-8 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
                                         >
                                             -
                                         </button>
                                         <div className="h-8 w-full animate-pulse bg-dark-2" />
                                         <button
-                                            className="w-8 rounded-xl text-xl font-bold text-primary dark:bg-dark-3"
+                                            className="w-8 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
                                         >
                                             +

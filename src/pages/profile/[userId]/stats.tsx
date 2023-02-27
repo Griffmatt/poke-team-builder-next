@@ -21,7 +21,7 @@ const ProfileSettings: NextPage = () => {
 
     if (isLoading) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <ProfileNav
                     selected="teams"
                     userId={userId as string}

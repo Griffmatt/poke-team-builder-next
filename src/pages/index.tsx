@@ -14,15 +14,13 @@ const Home: NextPage = () => {
 
     if (isLoading) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <h1>Statistics</h1>
-                <div className="grid gap-3">
+                <section className="grid gap-3">
                     <h2>Trending Pokemon</h2>
                     <SkeletonPokemonGrid amount={12} dataGrid={true} />
-                </div>
-                <div className="grid gap-3">
-                    <TeamOfTheWeek />
-                </div>
+                </section>
+                <TeamOfTheWeek />
             </main>
         )
     }
@@ -32,13 +30,11 @@ const Home: NextPage = () => {
     return (
         <main>
             <h1>Statistics</h1>
-            <div className="grid gap-3">
+            <section className="grid gap-3">
                 <h2>Trending Pokemon</h2>
                 <PokemonDataGrid pokemonData={pokemonData} amount={12} />
-            </div>
-            <div className="grid gap-3">
-                <TeamOfTheWeek />
-            </div>
+            </section>
+            <TeamOfTheWeek />
         </main>
     )
 }
@@ -48,7 +44,7 @@ export default Home
 /*const HomepageButtons = () => {
     const { data: session } = useSession()
     const buttonClassName =
-        "flex aspect-[4/2] w-60 items-center justify-center rounded-2xl shadow-black shadow-md dark:bg-dark-2 dark:hover:bg-dark-3"
+        "flex aspect-[4/2] w-60 items-center justify-center rounded-2xl shadow-black shadow-md bg-dark-2 hover:bg-dark-3"
     return (
         <>
             <h2>What to do?</h2>
@@ -91,17 +87,18 @@ const TeamOfTheWeek = () => {
 
     if (isLoading)
         return (
-            <div className="grid gap-3">
-                <h2>Team of the Week</h2> <SkeletonTeamRows rows={1} />
-            </div>
+            <section className="grid gap-3">
+                <h2>Team of the Week</h2>
+                <SkeletonTeamRows rows={1} />
+            </section>
         )
 
     if (error) return <div>Error: {error.message}</div>
 
     return (
-        <div className="grid gap-3">
+        <section className="grid gap-3">
             <h2>Team of the Week</h2>
             <TeamRows teams={team} />
-        </div>
+        </section>
     )
 }
