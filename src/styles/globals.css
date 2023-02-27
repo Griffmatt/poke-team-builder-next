@@ -40,15 +40,15 @@ p {
 }
 
 input {
-    @apply rounded-xl px-3  dark:bg-dark-2 dark:text-light;
+    @apply rounded-xl bg-dark-2  px-3 text-light;
 }
 
 button {
-    @apply text-light dark:bg-dark-3;
+    @apply bg-dark-3 text-light;
 }
 
 .btn-red {
-    @apply bg-red-600 dark:hover:bg-red-700 !important;
+    @apply bg-red-600 hover:bg-red-700 !important;
 }
 
 .btn-transparent {
@@ -60,19 +60,19 @@ button {
 }
 
 .pokemon-team-row {
-    @apply grid grid-cols-3 place-items-center rounded-2xl shadow-black shadow-md dark:bg-dark-2 md:grid-cols-6;
+    @apply grid grid-cols-3 place-items-center rounded-2xl bg-dark-2 shadow-black shadow-md md:grid-cols-6;
 }
 
 .pokemon-card {
-    @apply relative w-full border border-dark-3 p-2 dark:bg-dark-2;
+    @apply relative w-full border border-dark-3 bg-dark-2 p-2;
 }
 
 .pokemon-card-selected {
-    @apply relative w-full border border-primary p-2 dark:bg-dark-2;
+    @apply relative w-full border border-primary bg-dark-2 p-2;
 }
 
 a.pokemon-card {
-    @apply dark:hover:bg-dark-2;
+    @apply hover:bg-dark-2;
 }
 
 .pokemon-grid-data-layout {

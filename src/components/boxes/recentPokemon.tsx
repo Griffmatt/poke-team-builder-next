@@ -27,22 +27,22 @@ export const RecentPokemon = () => {
 
     if (isLoading || (isLoading2 && isFetching)) {
         return (
-            <div className="grid gap-3">
+            <section className="grid gap-3" aria-label="Loading">
                 <h2>Recent Pokemon</h2>
                 <SkeletonPokemonGrid amount={pokemonGridAmount} />
-            </div>
+            </section>
         )
     }
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
 
     return (
-        <div className="grid gap-3">
+        <section className="grid gap-3">
             <h2>Recent Pokemon</h2>
             <CreatedPokemonGrid
                 pokemons={recentPokemon?.slice(0, pokemonGridAmount)}
                 currentUserFavorites={favorites}
             />
-        </div>
+        </section>
     )
 }

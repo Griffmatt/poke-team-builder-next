@@ -18,7 +18,7 @@ const Pokemon: NextPage = () => {
 
     if (isLoading) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <h1>Pokedex</h1>
                 <BuildNav selected="pokemon" />
                 <input

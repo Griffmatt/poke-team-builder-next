@@ -22,23 +22,19 @@ export const RecentTeams = () => {
 
     if (isLoading || (isLoading2 && isFetching)) {
         return (
-            <div className="grid gap-3">
+            <section className="grid gap-3" aria-label="Loading">
                 <h2>Recent Teams</h2>
                 <SkeletonTeamRows />
-            </div>
+            </section>
         )
     }
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
 
     return (
-        <>
-            {teams.length > 0 && (
-                <div className="grid gap-3">
-                    <h2>Recent Teams</h2>
-                    <TeamRows teams={teams} favoriteTeams={favorites} />
-                </div>
-            )}
-        </>
+        <section className="grid gap-3">
+            <h2>Recent Teams</h2>
+            <TeamRows teams={teams} favoriteTeams={favorites} />
+        </section>
     )
 }

@@ -61,7 +61,7 @@ const SinglePokemon: NextPage = () => {
 
     if (isLoading || isLoading2 || isLoading3) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <h1>{formatString(pokemonName as string)}</h1>
                 <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                     <div className="h-fit w-full xl:row-span-2">
@@ -94,7 +94,7 @@ const SinglePokemon: NextPage = () => {
     return (
         <main>
             <h1>{formatString(pokemon.name)}</h1>
-            <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
+            <section className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
                 <div className="h-fit w-full xl:row-span-2">
                     <PokemonImage pokemonName={pokemon.name} />
                 </div>
@@ -179,7 +179,7 @@ const SinglePokemon: NextPage = () => {
                     {pokemonBuilds.length > 0 && (
                         <Link
                             href={`/build/pokemon/${pokemon?.name}/builds`}
-                            className="grid h-fit w-full place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                            className="grid h-fit w-full place-items-center rounded-2xl bg-dark-3 px-4 py-2 text-center"
                         >
                             <h3>See Builds</h3>
                         </Link>
@@ -187,13 +187,13 @@ const SinglePokemon: NextPage = () => {
                     {session?.user?.id && (
                         <Link
                             href={`/build/pokemon/${pokemon?.name}/build`}
-                            className="grid h-fit w-full  place-items-center rounded-2xl px-4 py-2 text-center dark:bg-dark-3"
+                            className="grid h-fit w-full  place-items-center rounded-2xl bg-dark-3 px-4 py-2 text-center"
                         >
                             <h3>Build Pokemon</h3>
                         </Link>
                     )}
                 </div>
-            </div>
+            </section>
         </main>
     )
 }

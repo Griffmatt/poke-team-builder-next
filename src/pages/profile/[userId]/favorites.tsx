@@ -44,7 +44,7 @@ const Favorites: NextPage = () => {
     })
     if (isLoading || isLoading2 || isLoading3 || isLoading4) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <ProfileNav
                     selected="favorites"
                     userId={userId as string}
@@ -74,7 +74,7 @@ const Favorites: NextPage = () => {
                 userId={userId as string}
                 user={user}
             />
-            <div className="grid gap-3">
+            <section className="grid gap-3">
                 <h2>Pokemon</h2>
                 <CreatedPokemonGrid
                     pokemons={pokemons}
@@ -82,8 +82,8 @@ const Favorites: NextPage = () => {
                     userId={userId as string}
                     profileGrid={true}
                 />
-            </div>
-            <div className="grid gap-3">
+            </section>
+            <section className="grid gap-3">
                 <h2>Teams</h2>
 
                 <TeamRows
@@ -92,7 +92,7 @@ const Favorites: NextPage = () => {
                     favoriteRows={true}
                     userId={userId as string}
                 />
-            </div>
+            </section>
         </main>
     )
 }

@@ -8,7 +8,7 @@ interface Props {
 export const BuildNav = ({ selected }: Props) => {
     const { data: session } = useSession()
     return (
-        <div className="flex justify-center gap-2">
+        <nav className="flex justify-center gap-2">
             <Link href={"/build/pokemon"}>
                 <h3
                     className={
@@ -29,6 +29,6 @@ export const BuildNav = ({ selected }: Props) => {
                     </h3>
                 </Link>
             )}
-        </div>
+        </nav>
     )
 }

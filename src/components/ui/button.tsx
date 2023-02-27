@@ -4,7 +4,7 @@ interface button extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = ({ text, secondaryText, ...props }: button) => {
-    const bgColor = props.className ?? "dark:bg-dark-3"
+    const bgColor = props.className ?? "bg-dark-3"
 
     return (
         <button {...props} className={`${bgColor} text-light `}>

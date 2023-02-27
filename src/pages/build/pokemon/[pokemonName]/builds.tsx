@@ -31,9 +31,9 @@ const PokemonBuilds = () => {
     if (isLoading || (isLoading2 && isFetching)) {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
-            <main>
+            <main aria-label="Loading">
                 {pokemonName && <h1>{pokemonName} Builds</h1>}
-                <div className="grid gap-3">
+                <section className="grid gap-3">
                     <div className="grid place-items-center gap-2 md:grid-cols-3">
                         {fillerArr.map((_, index) => {
                             return (
@@ -43,7 +43,7 @@ const PokemonBuilds = () => {
                             )
                         })}
                     </div>
-                </div>
+                </section>
             </main>
         )
     }

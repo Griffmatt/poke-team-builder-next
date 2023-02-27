@@ -35,7 +35,7 @@ const ProfileTeams: NextPage = () => {
 
     if (isLoading || isLoading2 || isLoading3) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <ProfileNav
                     selected="teams"
                     userId={userId as string}
@@ -58,14 +58,14 @@ const ProfileTeams: NextPage = () => {
                 userId={userId as string}
                 user={user}
             />
-            <div className="grid gap-3">
+            <section className="grid gap-3">
                 <TeamRows
                     teams={teams}
                     favoriteTeams={favoriteTeams}
                     userId={user?.id}
                     userName={user?.name}
                 />
-            </div>
+            </section>
         </main>
     )
 }

@@ -29,7 +29,7 @@ const ProfilePokemon: NextPage = () => {
 
     if (isLoading || isLoading2) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <ProfileNav
                     selected="pokemon"
                     userId={userId as string}

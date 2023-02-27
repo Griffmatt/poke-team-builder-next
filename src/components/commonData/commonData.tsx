@@ -47,10 +47,10 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                                 selected?.toLowerCase()
                             return (
                                 <button
-                                    className={`flex items-center justify-between rounded border-2 px-4 py-2  dark:bg-dark-2 ${
+                                    className={`flex items-center justify-between rounded border-2 bg-dark-2 px-4  py-2 ${
                                         stringSelected
                                             ? "border-primary"
-                                            : "dark:border-dark-2"
+                                            : "border-dark-2"
                                     }`}
                                     key={string.name}
                                     onClick={() =>

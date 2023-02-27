@@ -22,7 +22,7 @@ export const NavLink = ({ href, children, exact }: Props) => {
     return (
         <Link
             href={href}
-            className={`${isActive ? `border-b-2 dark:border-primary` : ""}`}
+            className={`${isActive ? `border-b-2 border-primary` : ""}`}
         >
             {children}
         </Link>

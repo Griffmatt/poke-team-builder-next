@@ -48,7 +48,7 @@ const SinglePokemon: NextPage = () => {
 
     if (isLoading || isLoading2 || (isLoading3 && isFetching)) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <h1 className="h-8 w-32 animate-pulse bg-dark-2" />
                 <div className="mx-auto grid w-full max-w-xl gap-3">
                     <LoadingCardWithStats />

@@ -40,7 +40,7 @@ const Team: NextPage = () => {
 
     if (isLoading || (isLoading2 && isFetching)) {
         return (
-            <main>
+            <main aria-label="Loading">
                 <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                     <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                         <div className="h-8 w-36 animate-pulse bg-dark-2" />

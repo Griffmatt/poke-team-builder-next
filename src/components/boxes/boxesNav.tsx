@@ -6,7 +6,7 @@ interface Props {
 
 export const BoxesNav = ({ selected }: Props) => {
     return (
-        <div className="flex justify-center gap-2">
+        <nav className="flex justify-center gap-2">
             <Link href={"/boxes"}>
                 <h3
                     className={
@@ -25,6 +25,6 @@ export const BoxesNav = ({ selected }: Props) => {
                     Teams
                 </h3>
             </Link>
-        </div>
+        </nav>
     )
 }
