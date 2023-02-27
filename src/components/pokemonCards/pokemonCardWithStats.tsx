@@ -59,7 +59,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                         createdPokemon={createdPokemon}
                     />
                 </div>
-                <h2 className="inline-block align-middle">
+                <h2>
                     {formatString(pokemon.name)}
                 </h2>
                 <div className="flex items-center p-2">

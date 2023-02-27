@@ -180,12 +180,14 @@ const ActionButtons = ({ userId, team, favorite = false }: ButtonProps) => {
                         </button>
                     </>
                 )}
-                <FavoritedButton
-                    favorited={favorite}
-                    addFavorite={addFavorite}
-                    removeFavorite={removeFavorite}
-                    absolute={false}
-                />
+                <div className="flex items-center">
+                    <FavoritedButton
+                        favorited={favorite}
+                        addFavorite={addFavorite}
+                        removeFavorite={removeFavorite}
+                        absolute={false}
+                    />
+                </div>
             </div>
             {showDeleteModal && (
                 <DeleteModal
