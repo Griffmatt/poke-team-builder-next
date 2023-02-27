@@ -64,7 +64,7 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
                 />
             )}
             <div className="flex">
-                <div className="flex items-center justify-center border border-dark-3 p-2">
+                <div className="flex justify-center border border-dark-3 p-2">
                     <div className="aspect-square h-12">
                         <PokemonImage
                             pokemonName={pokemon.name}
