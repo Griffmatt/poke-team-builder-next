@@ -19,9 +19,7 @@ export const FavoritedButton = ({
     small = false,
     displayOnly,
 }: Props) => {
-    const wrapperClass = absolute
-        ? "absolute top-1 right-1 rounded-full"
-        : "rounded-full"
+    const absoluteClass = absolute ? "absolute top-1 right-1 " : ""
     const size = small ? "w-6 h-6" : "h-8 w-8"
 
     const [favorite, setFavorite] = useState(favorited)
@@ -54,21 +52,18 @@ export const FavoritedButton = ({
     return (
         <>
             {displayOnly ? (
-                <div className={wrapperClass}>
-                    <div
-                        className={`${size} rounded-full ${
-                            favorite ? "bg-gold" : "bg-dark-3 hover:bg-gold/50"
-                        }`}
-                    />
-                </div>
+                <div
+                    className={`${size} ${absoluteClass} rounded-full ${
+                        favorite ? "bg-gold" : "bg-dark-3 hover:bg-gold/50"
+                    }`}
+                />
             ) : (
-                <button className={wrapperClass} onClick={handleClick}>
-                    <div
-                        className={`${size} rounded-full ${
-                            favorite ? "bg-gold" : "bg-dark-3 hover:bg-gold/50"
-                        }`}
-                    />
-                </button>
+                <button
+                    className={`${size} ${absoluteClass} rounded-full ${
+                        favorite ? "bg-gold" : "bg-dark-3 hover:bg-gold/50"
+                    }`}
+                    onClick={handleClick}
+                />
             )}
         </>
     )

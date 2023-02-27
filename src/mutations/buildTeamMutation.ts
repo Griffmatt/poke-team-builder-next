@@ -14,7 +14,6 @@ export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
 
             if (pastTeams) {
                 const sortedTeams = sortByFavorited([team, ...pastTeams])
-
                 apiContext.teams.getUserTeams.setData(
                     { userId: userId },
                     sortedTeams

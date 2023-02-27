@@ -52,92 +52,73 @@ export const PokemonCardWithStats = ({ createdPokemon, favorite }: Props) => {
     if (error) return <div>Error: {error.message}</div>
     return (
         <div className="relative w-full bg-dark-2 text-center">
-            <h2 className="border border-dark-3 p-1">
-                {formatString(pokemon.name)}
-            </h2>
-            {session?.user?.id && (
-                <FavoritedButton
-                    favorited={favorite}
-                    addFavorite={addFavorite}
-                    removeFavorite={removeFavorite}
-                    small={true}
-                />
-            )}
-            <div className="flex">
-                <div className="flex items-center border border-dark-3 p-2">
-                    <div className="aspect-square h-12">
-                        <PokemonImage
-                            pokemonName={pokemon.name}
-                            createdPokemon={createdPokemon}
+            <div className="flex justify-between border border-dark-3">
+                <div className="aspect-square h-12 p-2">
+                    <PokemonImage
+                        pokemonName={pokemon.name}
+                        createdPokemon={createdPokemon}
+                    />
+                </div>
+                <h2 className="inline-block align-middle">
+                    {formatString(pokemon.name)}
+                </h2>
+                <div className="flex items-center p-2">
+                    {session?.user?.id && (
+                        <FavoritedButton
+                            favorited={favorite}
+                            addFavorite={addFavorite}
+                            removeFavorite={removeFavorite}
+                            absolute={false}
                         />
-                    </div>
-                </div>
-                <div className="grid w-full md:grid-cols-2">
-                    <div className="grid">
-                        <h3 className="border border-dark-3 p-1 text-left">
-                            Tera{" "}
-                            <span className="text-sm font-normal text-gray">
-                                {formatString(createdPokemon.teraType)}
-                            </span>
-                        </h3>
-                        <h3 className="border border-dark-3 p-1 text-left">
-                            Ability{" "}
-                            <span className="text-sm font-normal text-gray">
-                                {formatString(createdPokemon.ability)}
-                            </span>
-                        </h3>
-                        <h3 className="border border-dark-3 p-1 text-left">
-                            Nature{" "}
-                            <span className="text-sm font-normal text-gray">
-                                {formatString(createdPokemon.nature)}
-                            </span>
-                        </h3>
-                        <h3 className="border border-dark-3 p-1 text-left">
-                            Item{" "}
-                            <span className="text-sm font-normal text-gray">
-                                {formatString(createdPokemon.heldItem)}
-                            </span>
-                        </h3>
-                    </div>
-                    <div className="hidden flex-col md:flex">
-                        <h3 className="w-full border border-dark-3 p-1">
-                            Moves
-                        </h3>
-                        <div className="flex h-full w-full flex-col justify-between border border-dark-3 p-1">
-                            {createdPokemon.moves.map((move) => {
-                                return (
-                                    <div
-                                        key={move.move}
-                                        className="flex w-full items-center justify-center"
-                                    >
-                                        <p className="truncate">
-                                            {formatString(move.move)}
-                                        </p>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
-            <div className="grid md:hidden">
-                <h3 className="border border-dark-3 p-1">Moves</h3>
-                <div className="grid grid-cols-2 border border-dark-3">
-                    {createdPokemon.moves.map((move) => {
-                        return (
-                            <div
-                                key={move.move}
-                                className="flex w-full items-center justify-center p-1"
-                            >
-                                <p className="truncate">
-                                    {formatString(move.move)}
-                                </p>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+            <div className="grid w-full md:grid-cols-2">
+                <div className="grid">
+                    <h3 className="border border-dark-3 p-1 text-left">
+                        Tera{" "}
+                        <span className="text-sm font-normal text-gray">
+                            {formatString(createdPokemon.teraType)}
+                        </span>
+                    </h3>
 
+                    <h3 className="border border-dark-3 p-1 text-left">
+                        Ability{" "}
+                        <span className="text-sm font-normal text-gray">
+                            {formatString(createdPokemon.ability)}
+                        </span>
+                    </h3>
+                    <h3 className="border border-dark-3 p-1 text-left">
+                        Nature{" "}
+                        <span className="text-sm font-normal text-gray">
+                            {formatString(createdPokemon.nature)}
+                        </span>
+                    </h3>
+                    <h3 className="border border-dark-3 p-1 text-left">
+                        Item{" "}
+                        <span className="text-sm font-normal text-gray">
+                            {formatString(createdPokemon.heldItem)}
+                        </span>
+                    </h3>
+                </div>
+                <div className="flex flex-col">
+                    <h3 className="border border-dark-3 p-1">Moves</h3>
+                    <div className="grid h-full grid-cols-2 border border-dark-3 md:grid-cols-1">
+                        {createdPokemon.moves.map((move) => {
+                            return (
+                                <div
+                                    key={move.move}
+                                    className="flex w-full items-center justify-center"
+                                >
+                                    <p className="truncate">
+                                        {formatString(move.move)}
+                                    </p>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            </div>
             <div className="grid border border-dark-3 md:grid-cols-2">
                 <div className="grid grid-cols-6 md:hidden">
                     {STATS.sort().map((stat) => (
