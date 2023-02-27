@@ -24,15 +24,15 @@ h1 {
 }
 
 h2 {
-    @apply text-xl font-bold text-primary;
+    @apply text-lg lg:text-xl font-bold text-primary;
 }
 
 h3 {
-    @apply text-sm md:text-lg md:font-medium;
+    @apply text-sm lg:text-base md:font-medium;
 }
 
-h3 {
-    @apply text-sm md:text-base;
+h4 {
+    @apply text-sm ;
 }
 
 p {
