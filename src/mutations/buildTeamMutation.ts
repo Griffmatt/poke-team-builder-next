@@ -1,6 +1,7 @@
 import { api } from "../utils/api"
 import router from "next/router"
 import { type team } from "types/trpc"
+import { sortByFavorited } from "utils/sortByFavorited"
 
 export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
     const apiContext = api.useContext()
@@ -12,10 +13,11 @@ export const buildTeamMutation = (userId: string, team: NonNullable<team>) => {
             })
 
             if (pastTeams) {
-                apiContext.teams.getUserTeams.setData({ userId: userId }, [
-                   team, 
-                    ...pastTeams,
-                ])
+                const sortedTeams = sortByFavorited([team, ...pastTeams])
+                apiContext.teams.getUserTeams.setData(
+                    { userId: userId },
+                    sortedTeams
+                )
             }
             return { pastTeams }
         },
