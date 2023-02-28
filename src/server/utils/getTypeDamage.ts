@@ -8,14 +8,12 @@ export const getTypeDamage = (typeDamageArr: TypeRelations[]) => {
         ...combinedTypeDamage.no_damage_from,
     ])
     const doubleDamageFromSet = new Set(combinedTypeDamage.double_damage_from)
-    const halfDamageFromSet = new Set(combinedTypeDamage.half_damage_from)
-
     const doubleDamageFromArr = Array.from(doubleDamageFromSet)
-    const halfDamageFromArr = Array.from(halfDamageFromSet)
 
     const weakAgainst = [
         ...doubleDamageFromArr.filter(
-            (type) => !halfDamageFromArr.includes(type)
+            (type) => !combinedTypeDamage.half_damage_from.includes(type) && 
+            !combinedTypeDamage.no_damage_from.includes(type)
         ),
         ...combinedTypeDamage.no_damage_to,
     ]
