@@ -13,9 +13,9 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
     return (
         <main aria-label="Loading">
             <h1 className="truncate">Building {formatString(pokemonName)}</h1>
-            <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
-                <LoadingInfoCard />
-                <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
+            <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+                <div className="col-span-full grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <LoadingInfoCard />
                     <div>
                         <h2>Pokemon Info</h2>
                         <div>
@@ -35,28 +35,30 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                             <div className="h-8 w-full animate-pulse bg-dark-2" />
                         </div>
                     </div>
-                    <div>
+                    <div className="col-span-full lg:col-span-1">
                         <h2>Moves</h2>
-                        {fillerArr.map((_, index) => {
-                            const moveOrder = formatOrder(index)
-                            return (
-                                <div key={index}>
-                                    <h3>{moveOrder} move</h3>
-                                    <div
-                                        key={index}
-                                        className="h-8 w-full animate-pulse bg-dark-2"
-                                    />
-                                </div>
-                            )
-                        })}
+                        <div className="col-span-full grid md:grid-cols-2 md:gap-2 lg:grid-cols-1 lg:gap-0">
+                            {fillerArr.map((_, index) => {
+                                const moveOrder = formatOrder(index)
+                                return (
+                                    <div key={index}>
+                                        <h3>{moveOrder} move</h3>
+                                        <div
+                                            key={index}
+                                            className="h-8 w-full animate-pulse bg-dark-2"
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
-                <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
+                <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2 lg:col-start-2">
                     <div>
                         <h2>Evs</h2>
                         {STATS.map((stat, index) => {
                             return (
-                                <div key={index * 100}>
+                                <label key={index * 100}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
@@ -65,10 +67,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                         >
                                             -
                                         </button>
-                                        <div
-                                            key={index}
-                                            className="h-7 w-full animate-pulse bg-dark-2"
-                                        />
+                                        <div className="h-7 w-full animate-pulse bg-dark-2" />
                                         <button
                                             className="aspect-square h-7 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
@@ -76,7 +75,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                             +
                                         </button>
                                     </div>
-                                </div>
+                                </label>
                             )
                         })}
                     </div>
@@ -84,7 +83,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                         <h2>Ivs</h2>
                         {STATS.map((stat, index) => {
                             return (
-                                <div key={index * 1000}>
+                                <label key={index * 1000}>
                                     {stat}
                                     <div className="flex w-full gap-2">
                                         <button
@@ -93,7 +92,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                         >
                                             -
                                         </button>
-                                        <div className="h-8 w-full animate-pulse bg-dark-2" />
+                                        <div className="h-7 w-full animate-pulse bg-dark-2" />
                                         <button
                                             className="w-8 rounded-xl bg-dark-3 text-xl font-bold text-primary"
                                             type="button"
@@ -101,13 +100,13 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
                                             +
                                         </button>
                                     </div>
-                                </div>
+                                </label>
                             )
                         })}
                     </div>
                 </div>
                 <button
-                    className="w-full rounded-xl p-4 sm:col-start-2 lg:col-start-3"
+                    className="h-fit w-full rounded-xl py-2 sm:col-start-2 lg:col-start-3"
                     disabled
                 >
                     {build ? "Build Pokemon" : "Update Pokemon"}

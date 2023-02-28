@@ -1,4 +1,5 @@
 import { api } from "utils/api"
+import { Modal } from "./modal"
 
 interface Props {
     teamId: string
@@ -52,35 +53,27 @@ export const BattleModal = ({ setShowModal, teamId, battleStatus }: Props) => {
     }
 
     return (
-        <div
-            className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-light/5"
-            onClick={() => setShowModal(false)}
-        >
-            <div
-                className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-light bg-dark p-10"
-                onClick={(event) => event?.stopPropagation()}
-            >
-                <h2>Confirm Battle</h2>
-                <h3 className="text-center">
-                    Are you sure you {battleStatus} the battle? You will not be
-                    able to revert this change!
-                </h3>
-                <div className="flex justify-around">
-                    <button
-                        className="w-fit rounded-2xl py-2 px-4"
-                        onClick={() => setShowModal(false)}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        className="btn-red w-fit rounded-2xl py-2 px-4"
-                        onClick={handleUpdate}
-                        disabled={battleMutation.isLoading}
-                    >
-                        Confirm
-                    </button>
-                </div>
+        <Modal setShowModal={setShowModal}>
+            <h2>Confirm Battle</h2>
+            <h3 className="text-center">
+                Are you sure you {battleStatus} the battle? You will not be able
+                to revert this change!
+            </h3>
+            <div className="flex justify-around">
+                <button
+                    className="w-fit rounded-2xl py-2 px-4"
+                    onClick={() => setShowModal(false)}
+                >
+                    Cancel
+                </button>
+                <button
+                    className="btn-red w-fit rounded-2xl py-2 px-4"
+                    onClick={handleUpdate}
+                    disabled={battleMutation.isLoading}
+                >
+                    Confirm
+                </button>
             </div>
-        </div>
+        </Modal>
     )
 }
