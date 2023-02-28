@@ -10,7 +10,6 @@ interface Props {
     favoriteTeams?: string[]
     query?: string
     userId?: string
-    userName?: string | null
     favoriteRows?: boolean
 }
 
@@ -19,7 +18,6 @@ export const TeamRows = ({
     favoriteTeams,
     query,
     userId,
-    userName,
     favoriteRows,
 }: Props) => {
     return (
@@ -28,7 +26,6 @@ export const TeamRows = ({
                 <TeamsEmpty
                     query={query}
                     userId={userId}
-                    userName={userName}
                     favoriteRows={favoriteRows}
                 />
             ) : (
@@ -47,7 +44,9 @@ export const TeamRows = ({
                                     />
                                 )}
                             </div>
-                            <Link href={`/team/${team.id}`}>
+                            <Link
+                                href={`/profile/${team.userId}/team/${team.id}`}
+                            >
                                 <TeamRow
                                     team={team}
                                     withStats={false}

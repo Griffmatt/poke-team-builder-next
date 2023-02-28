@@ -68,7 +68,7 @@ const SinglePokemon: NextPage = () => {
     return (
         <main>
             <h1 className="truncate">
-                {user?.name && `${firstNameOnly(user.name ?? "")}'s`}{" "}
+                {user?.name && `${firstNameOnly(user.name)}'s`}{" "}
                 {formatString(pokemon.name)}
             </h1>
             <div className="mx-auto grid w-full max-w-xl gap-3">
@@ -78,7 +78,7 @@ const SinglePokemon: NextPage = () => {
                 />
                 {session?.user !== undefined && (
                     <div className="flex justify-between">
-                        {session?.user?.id === user?.id && (
+                        {session?.user?.id === userId && (
                             <>
                                 <button
                                     className="btn-red w-fit rounded-2xl py-2 px-4"

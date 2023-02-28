@@ -1,20 +1,12 @@
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { firstNameOnly } from "utils/firstNameOnly"
-
 interface Props {
     query?: string
     userId?: string
-    userName?: string | null
     favoriteRows?: boolean
 }
 
-export const TeamsEmpty = ({
-    query,
-    userId,
-    userName,
-    favoriteRows,
-}: Props) => {
+export const TeamsEmpty = ({ query, userId, favoriteRows }: Props) => {
     const { data: session } = useSession()
     const className =
         "mx-auto grid aspect-[2] place-items-center rounded-2xl text-center"
@@ -50,18 +42,11 @@ export const TeamsEmpty = ({
         <>
             {favoriteRows ? (
                 <div className={className}>
-                    <h2>
-                        {firstNameOnly(userName ?? "They")}{" "}
-                        {userName ? "hasn't" : "haven't"} favorited any Teams
-                        yet!
-                    </h2>
+                    <h2>They haven't favorited any Teams yet!</h2>
                 </div>
             ) : (
                 <div className={className}>
-                    <h2>
-                        {firstNameOnly(userName ?? "They")}{" "}
-                        {userName ? "hasn't" : "haven't"} created any Teams yet!
-                    </h2>
+                    <h2>They haven't created any Teams yet!</h2>
                 </div>
             )}
         </>

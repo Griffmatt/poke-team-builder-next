@@ -32,7 +32,7 @@ const PokemonBuilds = () => {
         const fillerArr = Array.from({ length: 6 }, () => 0)
         return (
             <main aria-label="Loading">
-                {pokemonName && <h1>{pokemonName} Builds</h1>}
+                <h1>{pokemonName as string} Builds</h1>
                 <section className="grid gap-3">
                     <div className="grid place-items-center gap-2 md:grid-cols-3">
                         {fillerArr.map((_, index) => {
@@ -53,7 +53,7 @@ const PokemonBuilds = () => {
 
     return (
         <main>
-            {pokemonName && <h1>{pokemonName} Builds</h1>}
+            <h1>{pokemonName as string} Builds</h1>
             <div className="grid gap-3">
                 <div className="grid place-items-center gap-2 md:grid-cols-3">
                     {pokemonData.map((pokemon) => {

@@ -2,18 +2,15 @@ import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import React, { useLayoutEffect, useState } from "react"
 import { BuildNav } from "components/build/buildNav"
-import { PokemonCard } from "components/pokemonCards/pokemonCard"
 import { PokemonEmpty } from "components/pokemonGrids/ui/pokemonEmpty"
 import { useBuildTeam } from "hooks/useBuildTeam"
 import { api } from "utils/api"
 import { useDebounceQuery } from "hooks/useDebounceQuery"
-
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { PokemonImage } from "components/pokemonCards/pokemonImage"
-import { PreviewCard } from "components/pokemonCards/previewCard"
-import { type CreatedPokemon } from "types/trpc"
 import { useScreenSize } from "hooks/useScreenSize"
 import { SkeletonTeamBuildPage } from "components/build/ui/skeletonTeam"
+import { BuildTeamGridRow } from "components/build/team/buildTeamGridRow"
 
 const BuildTeam: NextPage = () => {
     const { data: session } = useSession()
@@ -148,9 +145,6 @@ const BuildTeam: NextPage = () => {
                     Build Team
                 </button>
             </div>
-            {filteredPokemon.length === 0 && (
-                <PokemonEmpty query={query} hasPokemon={pokemons.length > 0} />
-            )}
             <div>
                 <div className="pointer-events-none sticky top-[3.375rem] z-50 flex justify-between bg-dark/95 py-2 lg:top-0 lg:bg-transparent">
                     <div className="hidden h-10 grid-cols-6 rounded bg-dark-2 p-1 md:grid md:w-60">
@@ -175,109 +169,34 @@ const BuildTeam: NextPage = () => {
                         className="pointer-events-auto w-full rounded-2xl px-4 py-2 text-black md:w-60"
                     />
                 </div>
-                <div>
-                    {pokemonRows.map((pokemonRow, index) => {
-                        return (
-                            <div
-                                className="pokemon-grid-card-layout"
-                                key={index}
-                            >
-                                <PokemonGridRow
-                                    pokemonRow={pokemonRow}
-                                    addPokemonToTeam={addPokemonToTeam}
-                                    selectedRow={selectedRow}
-                                    setSelectedRow={setSelectedRow}
-                                    index={index}
-                                />
-                            </div>
-                        )
-                    })}
-                </div>
+                {filteredPokemon.length === 0 ? (
+                    <PokemonEmpty
+                        query={query}
+                        hasPokemon={pokemons.length > 0}
+                    />
+                ) : (
+                    <div>
+                        {pokemonRows.map((pokemonRow, index) => {
+                            return (
+                                <div
+                                    className="pokemon-grid-card-layout"
+                                    key={index}
+                                >
+                                    <BuildTeamGridRow
+                                        pokemonRow={pokemonRow}
+                                        addPokemonToTeam={addPokemonToTeam}
+                                        selectedRow={selectedRow}
+                                        setSelectedRow={setSelectedRow}
+                                        index={index}
+                                    />
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
             </div>
         </main>
     )
 }
 
 export default BuildTeam
-
-interface GridRowProps {
-    pokemonRow: CreatedPokemon[]
-    addPokemonToTeam: (pokemon: CreatedPokemon | null) => null
-    setSelectedRow: (value: React.SetStateAction<number | null>) => void
-    selectedRow: number | null
-    index: number
-}
-
-const PokemonGridRow = ({
-    pokemonRow,
-    addPokemonToTeam,
-    setSelectedRow,
-    selectedRow,
-    index,
-}: GridRowProps) => {
-    const [selectedPokemon, setSelectedPokemon] =
-        useState<CreatedPokemon | null>(null)
-    const rowSelected = index === selectedRow
-    const selected = selectedPokemon && rowSelected
-    return (
-        <>
-            {pokemonRow?.map((pokemon) => {
-                const favorited =
-                    pokemon.favorited[0]?.userId === pokemon.userId
-                const pokemonSelected =
-                    pokemon.id === selectedPokemon?.id && rowSelected
-                return (
-                    <React.Fragment key={pokemon.id}>
-                        <button
-                            className={` ${
-                                pokemonSelected
-                                    ? "pokemon-card-selected"
-                                    : "pokemon-card"
-                            }`}
-                            onClick={() => {
-                                if (
-                                    selectedPokemon?.id === pokemon.id &&
-                                    rowSelected
-                                ) {
-                                    setSelectedRow(null)
-                                    return
-                                }
-                                setSelectedPokemon(pokemon)
-                                setSelectedRow(index)
-                            }}
-                        >
-                            <PokemonCard
-                                pokemonName={pokemon.name}
-                                createdPokemon={pokemon}
-                                favorited={favorited}
-                            />
-                        </button>
-                    </React.Fragment>
-                )
-            })}
-
-            <div
-                className={` col-span-full row-start-2 h-fit w-full overflow-hidden transition-max-height duration-300 ${
-                    selected ? "max-h-80" : "max-h-0"
-                }`}
-            >
-                <div className="grid h-fit w-full gap-2 py-4">
-                    <div className="flex justify-center">
-                        {selectedPokemon && (
-                            <PreviewCard createdPokemon={selectedPokemon} />
-                        )}
-                    </div>
-                    <button
-                        className="rounded-2xl p-3"
-                        onClick={() => {
-                            void addPokemonToTeam(selectedPokemon)
-                            setSelectedRow(null)
-                        }}
-                    >
-                        Add To Team
-                    </button>
-                </div>
-            </div>
-        </>
-    )
-}
