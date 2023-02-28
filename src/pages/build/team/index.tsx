@@ -82,7 +82,7 @@ const BuildTeam: NextPage = () => {
                 </div>
 
                 <button
-                    className="rounded-2xl p-3"
+                    className="rounded-2xl p-2"
                     onClick={() => void buildTeam()}
                 >
                     Build Team
