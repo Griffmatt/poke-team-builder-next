@@ -7,13 +7,13 @@ import { api } from "utils/api"
 import { formatStat } from "utils/formatStat"
 import { formatString } from "utils/formatString"
 import { PokemonDataGrid } from "components/pokemonGrids/pokemonDataGrid"
-import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { CommonData } from "components/commonData/commonData"
 import { CommonStats } from "components/commonData/commonStats"
 import { useEffect } from "react"
 import { useSelectedContext } from "context/selectedContext"
 import { STATS } from "assets/stats"
-import { SkeletonRoundImage } from "components/pokemonCards/ui/skeletonPokemonImage"
+import { InfoCard } from "components/pokemonCards/infoCard"
+import { LoadingInfoCard } from "components/pokemonCards/ui/loadingInfoCard"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()
@@ -63,10 +63,8 @@ const SinglePokemon: NextPage = () => {
         return (
             <main aria-label="Loading">
                 <h1>{formatString(pokemonName as string)}</h1>
-                <div className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
-                    <div className="h-fit w-full xl:row-span-2">
-                        <SkeletonRoundImage />
-                    </div>
+                <div className="grid gap-3 xs:grid-cols-2 lg:grid-cols-3">
+                    <LoadingInfoCard />
                     <div className="lg:col-span-2">
                         <h2>Stats</h2>
                         <div>
@@ -74,7 +72,7 @@ const SinglePokemon: NextPage = () => {
                                 return (
                                     <div key={index}>
                                         <h3>{formatString(stat)}:</h3>
-                                        <div className="h-6 animate-pulse rounded-full bg-dark-2" />
+                                        <div className="h-4 animate-pulse rounded-full bg-dark-2" />
                                     </div>
                                 )
                             })}
@@ -94,10 +92,8 @@ const SinglePokemon: NextPage = () => {
     return (
         <main>
             <h1>{formatString(pokemon.name)}</h1>
-            <section className="grid gap-3 p-3 xs:grid-cols-2 lg:grid-cols-3">
-                <div className="h-fit w-full xl:row-span-2">
-                    <PokemonImage pokemonName={pokemon.name} />
-                </div>
+            <section className="grid gap-3 xs:grid-cols-2 lg:grid-cols-3">
+                <InfoCard pokemon={pokemon} />
                 <div className="lg:col-span-2">
                     <h2>Stats</h2>
                     <div>
@@ -119,12 +115,12 @@ const SinglePokemon: NextPage = () => {
                                     <h3>
                                         {statFormatted}: {stat.base_stat}
                                     </h3>
-                                    <div className="h-6 rounded-full bg-dark-2">
+                                    <div className="h-4 rounded-full bg-dark-2">
                                         <div
                                             style={{
                                                 width: `${percentage}%`,
                                             }}
-                                            className={`${bgColor} h-6 rounded-full`}
+                                            className={`${bgColor} h-4 rounded-full`}
                                         />
                                     </div>
                                 </div>
@@ -134,7 +130,7 @@ const SinglePokemon: NextPage = () => {
                     <h3>Total Stats: {totalStats}</h3>
                 </div>
                 {pokemonBuilds.length > 0 && (
-                    <div className="xs:col-span-2 lg:col-span-3 xl:col-span-2">
+                    <div className="xs:col-span-2 lg:col-span-3 xl:col-span-2 xl:col-start-2">
                         <h2>Commonly Used</h2>
                         {teammates.total > 0 && (
                             <div className="gird gap-3">

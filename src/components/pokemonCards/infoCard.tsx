@@ -1,97 +1,63 @@
-import { type CreatedPokemon } from "types/trpc"
-import { api } from "utils/api"
-import { formatString } from "utils/formatString"
-import { LoadingCardWithStats } from "./ui/loadingCardWithStats"
+import { type Pokemon } from "types/trpc"
 import { PokemonImage } from "./pokemonImage"
+import Image from "next/image"
+
+import "assets/images/darkType.png"
 
 interface Props {
-    createdPokemon: CreatedPokemon
+    pokemon: Pokemon
 }
 
-export const InfoCard = ({ createdPokemon }: Props) => {
-    const {
-        data: pokemon,
-        isLoading,
-        error,
-    } = api.pokeApi.getPokemonByName.useQuery({
-        name: createdPokemon.name,
-    })
-
-    if (isLoading) return <LoadingCardWithStats />
-
-    if (error) return <div>Error: {error.message}</div>
-
+export const InfoCard = ({ pokemon }: Props) => {
     return (
-        <div className="w-full bg-dark-2 text-center lg:w-fit lg:min-w-[60%]">
-            <div className="flex">
-                <div className="flex items-center justify-center border border-dark-3 p-2">
-                    <div className="aspect-square h-12">
-                        <PokemonImage
-                            pokemonName={pokemon.name}
-                            createdPokemon={createdPokemon}
-                        />
+        <section className="h-full rounded text-center">
+            <div className="flex items-center justify-center p-2">
+                <div className="aspect-square w-[50%]">
+                    <PokemonImage pokemonName={pokemon.name} />
+                </div>
+            </div>
+            <div className="col-span-full grid h-fit grid-cols-2 place-items-center gap-2">
+                <div>
+                    <h3>Strengths</h3>
+                    <div className="flex gap-1">
+                        {pokemon.typeDamage.strongAgainst.map((type) => {
+                            return (
+                                <div key={type}>
+                                    <Image
+                                        src={
+                                            // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment
+                                            require(`assets/images/${type}Type.png`)
+                                        }
+                                        alt={`${type} type symbol`}
+                                        height="20"
+                                        width="20"
+                                        className="lg:h-7 lg:w-7"
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
-                <div className="grid w-full grid-cols-2">
-                    <div className="grid">
-                        <div className="border border-dark-3">
-                            <p>{formatString(createdPokemon.teraType)}</p>
-                        </div>
-                        <div className="border border-dark-3">
-                            <p>{formatString(createdPokemon.ability)}</p>
-                        </div>
-                        <div className="border border-dark-3">
-                            <p>{formatString(createdPokemon.nature)}</p>
-                        </div>
-                        <div className="border border-dark-3">
-                            <p>{formatString(createdPokemon.heldItem)}</p>
-                        </div>
-                    </div>
-                    <div className="grid">
-                        {createdPokemon.moves.map((move) => {
+                <div>
+                    <h3>Weaknesses</h3>
+                    <div className="flex gap-1">
+                        {pokemon.typeDamage.weakAgainst.map((type) => {
                             return (
-                                <div
-                                    key={move.move}
-                                    className="border border-dark-3"
-                                >
-                                    <p className="truncate">
-                                        {formatString(move.move)}
-                                    </p>
+                                <div key={type}>
+                                    <Image
+                                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                        src={require(`assets/images/${type}Type.png`)}
+                                        alt={`${type} type symbol`}
+                                        height="20"
+                                        width="20"
+                                        className="lg:h-7 lg:w-7"
+                                    />
                                 </div>
                             )
                         })}
                     </div>
                 </div>
             </div>
-
-            <div className="grid md:grid-cols-2">
-                <div className="border border-dark-3">
-                    <div className="grid grid-cols-6">
-                        {createdPokemon.evs.map((ev) => {
-                            return (
-                                <div key={`${ev.stat}EV`}>
-                                    <h4>{ev.stat}</h4>
-                                    <p>{ev.value}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-                <div className="border border-dark-3">
-                    <div className="grid grid-cols-6">
-                        {createdPokemon.ivs.map((iv) => {
-                            return (
-                                <div key={`${iv.stat}IV`}>
-                                    <h4 className="hidden md:block">
-                                        {iv.stat}
-                                    </h4>
-                                    <p>{iv.value}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     )
 }

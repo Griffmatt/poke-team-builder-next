@@ -2,20 +2,36 @@ import { createTRPCRouter, publicProcedure } from "../trpc"
 
 import { z } from "zod"
 
-import { PokemonClient, ItemClient, BerryClient } from "pokenode-ts"
+import { PokemonClient, ItemClient, BerryClient, type Type } from "pokenode-ts"
+import { getTypeDamage } from "server/utils/getTypeDamage"
 
-const api = new PokemonClient()
+const pokemonApi = new PokemonClient()
 const itemApi = new ItemClient()
 const berryApi = new BerryClient()
 
 export const pokeApiRouter = createTRPCRouter({
     getPokemon: publicProcedure.query(() => {
-        return api.listPokemons(0, 1008)
+        return pokemonApi.listPokemons(0, 1008)
     }),
     getPokemonByName: publicProcedure
         .input(z.object({ name: z.string() }))
         .query(async ({ input }) => {
-            const pokemon = await api.getPokemonByName(input.name)
+            const pokemon = await pokemonApi.getPokemonByName(input.name)
+
+            const firstType = await pokemonApi.getTypeByName(
+                pokemon.types[0].type.name
+            )
+            const typeDamageArr = [firstType.damage_relations]
+
+            let secondType: Type
+            if (pokemon.types[1]?.type.name) {
+                secondType = await pokemonApi.getTypeByName(
+                    pokemon.types[1].type.name
+                )
+                typeDamageArr.push(secondType.damage_relations)
+            }
+
+            const typeDamage = getTypeDamage(typeDamageArr)
 
             const pokemonData = {
                 id: pokemon.id,
@@ -25,6 +41,7 @@ export const pokeApiRouter = createTRPCRouter({
                 sprites: pokemon.sprites,
                 abilities: pokemon.abilities,
                 moves: pokemon.moves,
+                typeDamage: typeDamage,
             }
 
             return pokemonData

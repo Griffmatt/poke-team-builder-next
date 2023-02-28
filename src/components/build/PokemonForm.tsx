@@ -12,10 +12,10 @@ import { useBuildPokemonMutation } from "mutations/buildPokemonMutation"
 
 import { type Pokemon, type CreatedPokemon } from "types/trpc"
 import React from "react"
-import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { TERA_TYPES } from "assets/teraTypes"
 import { useSelectedContext } from "context/selectedContext"
 import { DataInput } from "./formInputs/dataInput"
+import { InfoCard } from "components/pokemonCards/infoCard"
 
 interface Props {
     pokemon: Pokemon
@@ -99,12 +99,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
-            <div className="h-fit w-full lg:row-span-2">
-                <PokemonImage
-                    pokemonName={pokemon.name}
-                    createdPokemon={createdPokemon}
-                />
-            </div>
+            <InfoCard pokemon={pokemon} />
             <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                 <div>
                     <h2>Pokemon Info</h2>

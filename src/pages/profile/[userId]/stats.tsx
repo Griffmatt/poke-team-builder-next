@@ -42,20 +42,12 @@ const ProfileSettings: NextPage = () => {
                             <p>Bulbasaur</p>
                         </div>
                         {session?.user?.id === userId && (
-                            <>
-                                <button className="w-full rounded-2xl px-4 py-2">
-                                    Change Info
-                                </button>
-                                <button className="w-full rounded-2xl px-4 py-2">
-                                    Dark Mode
-                                </button>
-                                <button
-                                    className="w-full rounded-2xl px-4 py-2"
-                                    onClick={() => void handleSignOut()}
-                                >
-                                    Log Out
-                                </button>
-                            </>
+                            <button
+                                className="w-full rounded-2xl px-4 py-2"
+                                onClick={() => void handleSignOut()}
+                            >
+                                Log Out
+                            </button>
                         )}
                     </div>
                 </div>
