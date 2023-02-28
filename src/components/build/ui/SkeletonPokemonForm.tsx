@@ -1,4 +1,5 @@
 import { STATS } from "assets/stats"
+import { LoadingInfoCard } from "components/pokemonCards/ui/loadingInfoCard"
 import { formatOrder } from "utils/formatOrder"
 import { formatString } from "utils/formatString"
 
@@ -13,9 +14,7 @@ export const SkeletonPokemonForm = ({ build, pokemonName }: Props) => {
         <main aria-label="Loading">
             <h1 className="truncate">Building {formatString(pokemonName)}</h1>
             <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
-                <div className="h-fit w-full lg:row-span-2">
-                    <div className="aspect-square w-full animate-pulse rounded-full border-2 border-dark-2 bg-dark-3 " />
-                </div>
+                <LoadingInfoCard />
                 <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
                     <div>
                         <h2>Pokemon Info</h2>
