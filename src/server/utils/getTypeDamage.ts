@@ -2,23 +2,25 @@ import { type TypeRelations } from "pokenode-ts"
 
 export const getTypeDamage = (typeDamageArr: TypeRelations[]) => {
     const combinedTypeDamage = combineTypeDamage(typeDamageArr)
+    const {
+        double_damage_to,
+        double_damage_from,
+        half_damage_from,
+        no_damage_from,
+        no_damage_to,
+    } = combinedTypeDamage
 
-    const strongAgainstSet = new Set([
-        ...combinedTypeDamage.double_damage_to,
-        ...combinedTypeDamage.no_damage_from,
-    ])
-    const doubleDamageFromSet = new Set(combinedTypeDamage.double_damage_from)
-    const doubleDamageFromArr = Array.from(doubleDamageFromSet)
+    const doubleDamageFromArr = [...new Set(double_damage_from)]
+    const reducedDamageFrom = [...half_damage_from, ...no_damage_from]
 
     const weakAgainst = [
         ...doubleDamageFromArr.filter(
-            (type) => !combinedTypeDamage.half_damage_from.includes(type) && 
-            !combinedTypeDamage.no_damage_from.includes(type)
+            (type) => !reducedDamageFrom.includes(type)
         ),
-        ...combinedTypeDamage.no_damage_to,
+        ...no_damage_to,
     ]
 
-    const strongAgainst = Array.from(strongAgainstSet)
+    const strongAgainst = [...new Set([...double_damage_to, ...no_damage_from])]
 
     return { strongAgainst: strongAgainst, weakAgainst: weakAgainst }
 }
