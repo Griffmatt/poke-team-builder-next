@@ -12,35 +12,25 @@ const ProfileTeams: NextPage = () => {
     const { userId } = router.query
 
     const {
-        data: user,
+        data: teams,
         isLoading,
         error,
-    } = api.users.getUser.useQuery({ userId: userId as string })
-
-    const {
-        data: teams,
-        isLoading: isLoading2,
-        error: error2,
     } = api.teams.getUserTeams.useQuery({
         userId: userId as string,
     })
 
     const {
         data: favoriteTeams,
-        isLoading: isLoading3,
-        error: error3,
+        isLoading: isLoading2,
+        error: error2,
     } = api.favorite.checkUserFavoriteTeams.useQuery({
         userId: userId as string,
     })
 
-    if (isLoading || isLoading2 || isLoading3) {
+    if (isLoading || isLoading2) {
         return (
             <main aria-label="Loading">
-                <ProfileNav
-                    selected="teams"
-                    userId={userId as string}
-                    user={user}
-                />
+                <ProfileNav selected="teams" />
                 <div className="grid gap-3">
                     <SkeletonTeamRows />
                 </div>
@@ -50,20 +40,15 @@ const ProfileTeams: NextPage = () => {
 
     if (error) return <div>Error: {error.message}</div>
     if (error2) return <div>Error: {error2.message}</div>
-    if (error3) return <div>Error: {error3.message}</div>
+
     return (
         <main>
-            <ProfileNav
-                selected="teams"
-                userId={userId as string}
-                user={user}
-            />
+            <ProfileNav selected="teams" />
             <section className="grid gap-3">
                 <TeamRows
                     teams={teams}
                     favoriteTeams={favoriteTeams}
-                    userId={user?.id}
-                    userName={user?.name}
+                    userId={userId as string}
                 />
             </section>
         </main>

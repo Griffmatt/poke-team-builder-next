@@ -21,20 +21,11 @@ const ProfilePokemon: NextPage = () => {
     } = api.pokemon.getUsersPokemon.useQuery({
         userId: userId as string,
     })
-    const {
-        data: user,
-        isLoading: isLoading2,
-        error: error2,
-    } = api.users.getUser.useQuery({ userId: userId as string })
 
-    if (isLoading || isLoading2) {
+    if (isLoading) {
         return (
             <main aria-label="Loading">
-                <ProfileNav
-                    selected="pokemon"
-                    userId={userId as string}
-                    user={user}
-                />
+                <ProfileNav selected="pokemon" />
                 <input
                     placeholder="Search for a pokemon..."
                     type="text"
@@ -47,7 +38,6 @@ const ProfilePokemon: NextPage = () => {
     }
 
     if (error) return <div>Error: {error.message}</div>
-    if (error2) return <div>Error: {error2.message}</div>
 
     const filterPokemon = pokemons?.filter((pokemon) =>
         query === "shiny"
@@ -57,11 +47,7 @@ const ProfilePokemon: NextPage = () => {
 
     return (
         <main>
-            <ProfileNav
-                selected="pokemon"
-                userId={userId as string}
-                user={user}
-            />
+            <ProfileNav selected="pokemon" />
             <input
                 placeholder="Search for a pokemon..."
                 type="text"
