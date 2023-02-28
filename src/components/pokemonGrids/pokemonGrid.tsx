@@ -1,6 +1,6 @@
 import { useInfiniteScroll } from "hooks/useInfiniteScroll"
 import Link from "next/link"
-import { type Pokemon } from "types/trpc"
+import { type Pokemon } from "pokenode-ts"
 
 import { PokemonCard } from "../pokemonCards/pokemonCard"
 import { PokemonEmpty } from "./ui/pokemonEmpty"
