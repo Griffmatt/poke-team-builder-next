@@ -72,6 +72,8 @@ export const MovesInput = ({
         commonMovesMap.set(commonMove.name, commonMove.amount)
     })
 
+    const isOpen = openInput === moveOrder
+
     return (
         <div>
             <h3>{moveOrder} move</h3>
@@ -82,11 +84,11 @@ export const MovesInput = ({
             >
                 <div className="flex w-full justify-between">
                     <h3>{formatString(move)}</h3>
-                    {openInput === moveOrder ? <p>⌄</p> : <p>^</p>}
+                    {isOpen ? <p>⌄</p> : <p>^</p>}
                 </div>
             </button>
             <div className="relative">
-                {openInput === moveOrder && (
+                {isOpen && (
                     <div className="no-scrollbar absolute z-50 h-fit max-h-96 w-full divide-y-2 divide-dark-3 overflow-y-scroll rounded-2xl border-2 border-dark bg-dark-2">
                         {filterMoves.map((moveName) => {
                             const amount = commonMovesMap.get(moveName)

@@ -105,7 +105,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     <h2>Pokemon Info</h2>
                     <DataInput
                         dataType="ability"
-                        data={ability}
+                        selected={ability}
                         setData={setPokemonData}
                         items={abilities}
                         openInput={openInput}
@@ -114,7 +114,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     />
                     <DataInput
                         dataType="nature"
-                        data={nature}
+                        selected={nature}
                         setData={setPokemonData}
                         items={NATURES}
                         openInput={openInput}
@@ -123,7 +123,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     />
                     <DataInput
                         dataType="heldItem"
-                        data={heldItem}
+                        selected={heldItem}
                         setData={setPokemonData}
                         items={heldItems}
                         openInput={openInput}
@@ -132,7 +132,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                     />
                     <DataInput
                         dataType="teraType"
-                        data={teraType}
+                        selected={teraType}
                         setData={setPokemonData}
                         items={TERA_TYPES}
                         openInput={openInput}

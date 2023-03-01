@@ -16,7 +16,7 @@ interface PokemonValues {
 
 interface Props {
     dataType: dataTypes
-    data: string
+    selected: string
     setData: React.Dispatch<Partial<PokemonValues>>
     items: string[]
     openInput: string
@@ -28,7 +28,7 @@ type ButtonEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>
 
 export const DataInput = ({
     dataType,
-    data,
+    selected,
     setData,
     items,
     openInput,
@@ -78,21 +78,24 @@ export const DataInput = ({
         commonDataMap.set(dataName.name, dataName.amount)
     })
 
+    const title = dataTypes?.[dataType]
+    const isOpen = openInput === dataType
+
     return (
         <div>
-            <h3>{dataTypes?.[dataType]}</h3>
+            <h3>{title}</h3>
             <button
                 className="flex h-8 w-full items-center justify-between rounded-2xl bg-dark-2 px-4 py-1"
                 onClick={handleOpen}
                 type="button"
             >
                 <div className="flex w-full justify-between align-middle">
-                    <h3>{formatString(data)}</h3>
-                    {openInput === dataType ? <p>⌄</p> : <p>^</p>}
+                    <h3>{formatString(selected)}</h3>
+                    {isOpen ? <p>⌄</p> : <p>^</p>}
                 </div>
             </button>
             <div className="relative">
-                {openInput === dataType && (
+                {isOpen && (
                     <div className="no-scrollbar absolute z-50 h-fit max-h-96 w-full divide-y-2 divide-dark-3 overflow-y-scroll rounded-2xl border-2 border-dark bg-dark-2">
                         {items.map((item) => {
                             const amount = commonDataMap.get(item)
