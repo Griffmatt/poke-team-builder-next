@@ -112,7 +112,7 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                                         })
                                     }
                                 >
-                                    <h3>{formatString(string.name)}</h3>
+                                    <h4>{formatString(string.name)}</h4>
                                     <p>{percentage}</p>
                                 </button>
                             )
@@ -148,7 +148,7 @@ const SkeletonDataCards = ({ dataType }: SkeletonProps) => {
                             className="flex animate-pulse items-center justify-between rounded border-2 border-dark-2 bg-dark-2 px-4 py-2"
                             key={index}
                         >
-                            <h3 className="text-transparent">x</h3>
+                            <h4 className="text-transparent">x</h4>
                         </button>
                     )
                 })}

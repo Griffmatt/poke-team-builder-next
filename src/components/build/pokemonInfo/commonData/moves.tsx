@@ -54,7 +54,7 @@ export const CommonMoves = ({ pokemonName }: Props) => {
                                     key={move.name}
                                     onClick={() => handleMovesChange(move.name)}
                                 >
-                                    <h3>{formatString(move.name)}</h3>
+                                    <h4>{formatString(move.name)}</h4>
                                     <p>{percentage}</p>
                                 </button>
                             )
@@ -79,7 +79,7 @@ const SkeletonDataCards = () => {
                             className="flex animate-pulse items-center justify-between rounded border-2 border-dark-2 bg-dark-2 py-2"
                             key={index}
                         >
-                            <h3 className="text-transparent">x</h3>
+                            <h4 className="text-transparent">x</h4>
                         </button>
                     )
                 })}
