@@ -49,7 +49,7 @@ export const CommonStats = ({ pokemonName }: Props) => {
                                     {statsData.map((ev) => {
                                         return (
                                             <div key={`${ev.stat}EV${index}`}>
-                                                <h3>{ev.stat}</h3>
+                                                <h4>{ev.stat}</h4>
                                                 <p>{ev.value}</p>
                                             </div>
                                         )
@@ -78,7 +78,7 @@ const SkeletonDataCards = () => {
                             key={index}
                         >
                             <div>
-                                <h3 className="text-transparent">x</h3>
+                                <h4 className="text-transparent">x</h4>
                                 <p className="text-transparent">x</p>
                             </div>
                         </button>
