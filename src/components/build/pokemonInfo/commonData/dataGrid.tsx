@@ -1,15 +1,68 @@
 import { useSelectedContext } from "context/selectedContext"
-import { useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import { countStringArr } from "utils/countStringArr"
 import { type CreatedPokemon } from "types/trpc"
 import { formatPercentage } from "utils/formatPercentage"
 import { formatString } from "utils/formatString"
+import { api } from "utils/api"
 
 type dataTypes = "nature" | "heldItem" | "ability" | "teraType"
 
 interface Props {
     pokemonBuilds: CreatedPokemon[]
     dataType: dataTypes
+}
+
+interface GridProps {
+    pokemonName: string
+}
+
+export const CommonDataGrid = ({ pokemonName }: GridProps) => {
+    const {
+        data: pokemonBuilds,
+        isLoading,
+        error,
+    } = api.pokemon.getPokemonBuilds.useQuery({
+        pokemonName,
+    })
+
+    const dataTypes: dataTypes[] = ["nature", "ability", "teraType", "heldItem"]
+
+    if (isLoading)
+        return (
+            <div className="grid gap-1 xs:grid-cols-2">
+                {dataTypes.map((type) => {
+                    return (
+                        <Fragment key={type}>
+                            <SkeletonDataCards dataType={type} />
+                        </Fragment>
+                    )
+                })}
+            </div>
+        )
+
+    if (error) return <div>Error: {error.message}</div>
+
+    return (
+        <div className="grid gap-1 xs:grid-cols-2">
+            {pokemonBuilds.length > 0 ? (
+                <>
+                    {dataTypes.map((type) => {
+                        return (
+                            <Fragment key={type}>
+                                <CommonData
+                                    pokemonBuilds={pokemonBuilds}
+                                    dataType={type}
+                                />
+                            </Fragment>
+                        )
+                    })}
+                </>
+            ) : (
+                "No Data"
+            )}
+        </div>
+    )
 }
 
 export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
@@ -35,10 +88,10 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
     return (
         <>
             {data.length > 0 && (
-                <div className="w-full">
+                <div>
                     <h3>{type}</h3>
                     <div className="grid gap-1">
-                        {string.slice(0, 6).map((string) => {
+                        {string.slice(0, 4).map((string) => {
                             const percentage = formatPercentage(
                                 string.amount / total
                             )
@@ -68,5 +121,38 @@ export const CommonData = ({ pokemonBuilds, dataType }: Props) => {
                 </div>
             )}
         </>
+    )
+}
+
+interface SkeletonProps {
+    dataType: dataTypes
+}
+
+const SkeletonDataCards = ({ dataType }: SkeletonProps) => {
+    const formatDataType = (string: dataTypes) => {
+        if (string === "teraType") return "Tera Type"
+        if (string === "heldItem") return "Held Item"
+        return formatString(string)
+    }
+    const fillerArr = Array.from({ length: 4 }, () => 0)
+
+    const type = formatDataType(dataType)
+
+    return (
+        <div>
+            <h3>{type}</h3>
+            <div className="grid gap-1">
+                {fillerArr.map((_, index) => {
+                    return (
+                        <button
+                            className="flex animate-pulse items-center justify-between rounded border-2 border-dark-2 bg-dark-2 px-4 py-2"
+                            key={index}
+                        >
+                            <h3 className="text-transparent">x</h3>
+                        </button>
+                    )
+                })}
+            </div>
+        </div>
     )
 }

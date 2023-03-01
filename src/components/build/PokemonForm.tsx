@@ -96,12 +96,12 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
 
     return (
         <form
-            className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-2 md:grid-cols-2 lg:grid-cols-3"
             onSubmit={(event) => handleSubmit(event)}
         >
-            <InfoCard pokemon={pokemon} />
-            <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
-                <div>
+            <div className="col-span-full grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <InfoCard pokemon={pokemon} />
+                <div className="">
                     <h2>Pokemon Info</h2>
                     <DataInput
                         dataType="ability"
@@ -140,30 +140,32 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                         pokemonName={pokemon.name}
                     />
                 </div>
-                <div>
+                <div className="col-span-full lg:col-span-1">
                     <h2>Moves</h2>
-                    {moves.map((move, index) => {
-                        const pokemonMoves = pokemon.moves.map(
-                            (moveData) => moveData.move.name
-                        )
-                        return (
-                            <React.Fragment key={move}>
-                                <MovesInput
-                                    order={index}
-                                    moves={pokemonMoves}
-                                    move={move}
-                                    setData={setPokemonData}
-                                    currentMoves={moves}
-                                    openInput={openInput}
-                                    setOpenInput={setOpenInput}
-                                    pokemonName={pokemon.name}
-                                />
-                            </React.Fragment>
-                        )
-                    })}
+                    <div className="col-span-full grid md:grid-cols-2 md:gap-2 lg:grid-cols-1 lg:gap-0">
+                        {moves.map((move, index) => {
+                            const pokemonMoves = pokemon.moves.map(
+                                (moveData) => moveData.move.name
+                            )
+                            return (
+                                <React.Fragment key={move}>
+                                    <MovesInput
+                                        order={index}
+                                        moves={pokemonMoves}
+                                        move={move}
+                                        setData={setPokemonData}
+                                        currentMoves={moves}
+                                        openInput={openInput}
+                                        setOpenInput={setOpenInput}
+                                        pokemonName={pokemon.name}
+                                    />
+                                </React.Fragment>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
-            <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
+            <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2 lg:col-start-2">
                 <div>
                     <h2>Evs</h2>
                     {evs.map((stat) => {
@@ -240,8 +242,7 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 </div>
             </div>
             <button
-                className="w-full rounded-xl p-4 sm:col-start-2 lg:col-start-3"
-                type="submit"
+                className="h-fit w-full rounded-xl py-2 sm:col-start-2 lg:col-start-3"
                 disabled={buildMutation.isLoading || updateMutation.isLoading}
             >
                 {createdPokemon ? "Update Pokemon" : "Build Pokemon"}

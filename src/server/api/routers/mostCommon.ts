@@ -3,7 +3,7 @@ import { countStringArr } from "utils/countStringArr"
 import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const mostCommonRouter = createTRPCRouter({
-    teamMates: publicProcedure
+    teammates: publicProcedure
         .input(z.object({ pokemonName: z.string() }))
         .query(async ({ ctx, input }) => {
             const pokemonWithTeams = await ctx.prisma.createdPokemon.findMany({

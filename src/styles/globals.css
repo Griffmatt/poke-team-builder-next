@@ -60,7 +60,7 @@ button {
 }
 
 .pokemon-team-row {
-    @apply grid grid-cols-3 place-items-center rounded-2xl bg-dark-2 shadow-black shadow-md md:grid-cols-6;
+    @apply grid grid-cols-3 place-items-center rounded-2xl bg-dark-2 shadow-md shadow-black md:grid-cols-6;
 }
 
 .pokemon-card {

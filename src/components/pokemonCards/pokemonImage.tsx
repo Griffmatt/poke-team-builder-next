@@ -9,8 +9,6 @@ interface Props {
     createdPokemon?: CreatedPokemon
 }
 
-// Don't wrap with class so that there is skeleton of card when loading data
-
 export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
     const {
         data: pokemon,
@@ -35,7 +33,7 @@ export const PokemonImage = ({ pokemonName, createdPokemon }: Props) => {
 
     return (
         <div
-            className={`aspect-square w-full rounded-full border-2 bg-dark-3 ${pokemonTypes[0]} ${pokemonTypes[1]} shadow-black shadow-md`}
+            className={`aspect-square w-full rounded-full border-2 bg-dark-3 ${pokemonTypes[0]} ${pokemonTypes[1]} shadow-md shadow-black`}
         >
             {pokemonImage && (
                 <Image

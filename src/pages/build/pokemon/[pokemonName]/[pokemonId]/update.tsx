@@ -44,16 +44,17 @@ const UpdatePokemon: NextPage = () => {
     if (error2) return <div>Error: {error2.message}</div>
     if (error3) return <div>Error: {error3.message}</div>
 
+    if (createdPokemon === null) return <div>Pokemon not found!</div>
+
     return (
         <main>
             <h1>Building {formatString(pokemon.name)}</h1>
-            {pokemon && heldItems && createdPokemon && (
-                <PokemonForm
-                    pokemon={pokemon}
-                    heldItems={heldItems}
-                    createdPokemon={createdPokemon}
-                />
-            )}
+
+            <PokemonForm
+                pokemon={pokemon}
+                heldItems={heldItems}
+                createdPokemon={createdPokemon}
+            />
         </main>
     )
 }

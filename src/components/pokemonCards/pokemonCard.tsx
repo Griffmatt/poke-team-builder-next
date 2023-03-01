@@ -44,7 +44,7 @@ export const PokemonCard = ({
     }
     return (
         <div className="grid gap-1 text-right md:gap-3 lg:gap-5">
-            <div className="aspect-square rounded-full bg-dark-3 shadow-black shadow-md">
+            <div className="aspect-square rounded-full bg-dark-3 shadow-md shadow-black">
                 <PokemonImage
                     pokemonName={pokemonName}
                     createdPokemon={createdPokemon}

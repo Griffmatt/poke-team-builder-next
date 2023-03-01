@@ -59,5 +59,4 @@ module.exports = {
             "max-height": "max-height",
         },
     },
-    plugins: [require("tailwindcss-inner-border")],
 }

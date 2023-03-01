@@ -2,7 +2,7 @@ import { PokemonCardWithStats } from "components/pokemonCards/pokemonCardWithSta
 import { LoadingCard } from "components/pokemonCards/ui/loadingCard"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { Fragment } from "react"
 import { api } from "utils/api"
 
 const PokemonBuilds = () => {
@@ -60,12 +60,12 @@ const PokemonBuilds = () => {
                         const favorite =
                             favorites?.includes(pokemon.id) ?? false
                         return (
-                            <div className="pokemon-card" key={pokemon.id}>
+                            <Fragment key={pokemon.id}>
                                 <PokemonCardWithStats
                                     createdPokemon={pokemon}
                                     favorite={favorite}
                                 />
-                            </div>
+                            </Fragment>
                         )
                     })}
                 </div>

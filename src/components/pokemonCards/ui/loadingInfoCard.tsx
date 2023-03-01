@@ -11,11 +11,11 @@ export const LoadingInfoCard = () => {
             <div className="col-span-full mx-auto grid grid-cols-2 place-items-center gap-2">
                 <div className="w-fit">
                     <h3>Strengths</h3>
-                    <div className="h-5" />
+                    <div className="h-5 lg:h-7" />
                 </div>
                 <div>
                     <h3>Weaknesses</h3>
-                    <div className="h-5" />
+                    <div className="h-5 lg:h-7" />
                 </div>
             </div>
         </section>
