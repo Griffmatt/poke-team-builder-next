@@ -39,6 +39,10 @@ p {
     @apply text-xs text-gray xs:text-sm;
 }
 
+dd {
+    @apply text-gray;
+}
+
 input {
     @apply rounded-xl bg-dark-2  px-3 text-light;
 }
