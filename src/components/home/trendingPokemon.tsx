@@ -12,7 +12,7 @@ export const TrendingPokemon = () => {
     if (isLoading) {
         return (
             <section className="grid gap-3">
-                <h2>Trending Pokemon</h2>
+                <h2>Pokemon</h2>
                 <SkeletonPokemonGrid amount={12} dataGrid={true} />
             </section>
         )
