@@ -14,7 +14,7 @@ export const Modal = ({ setShowModal, children }: ModalProps) => {
                 onClick={() => setShowModal(false)}
             >
                 <div
-                    className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-dark p-10"
+                    className="grid w-[90vw] max-w-[24rem] gap-4 rounded-xl bg-dark p-6"
                     onClick={(event) => event?.stopPropagation()}
                 >
                     {children}

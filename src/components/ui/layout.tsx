@@ -2,7 +2,7 @@ import { NavBar } from "../navbar"
 import Head from "next/head"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { LoginModal } from "components/modals/loginModal"
+import { SignInModal } from "components/modals/signInModal"
 
 interface Props {
     children: JSX.Element
@@ -21,7 +21,7 @@ export const Layout = ({ children }: Props) => {
             </Head>
             <NavBar setShowLoginModal={setShowLoginModal} />
             <div className="mx-auto max-w-screen-xl p-4">{children}</div>
-            {showLoginModal && <LoginModal setShowModal={setShowLoginModal} />}
+            {showLoginModal && <SignInModal setShowModal={setShowLoginModal} />}
         </>
     )
 }
