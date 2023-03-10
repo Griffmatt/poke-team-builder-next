@@ -1,7 +1,7 @@
 # Competetive Team Builder
 
 This is a web application designed to help you build your ideal Pokemon team for battles. With this app,
-you can browse through hundreds of Pokemon, view their stats, moves, abilities, and moves, stats, and abilities that are commonly used for battling with that specific pokemon. You can also add favorite teams and pokemon others have built to test them out for yourself
+you can browse through hundreds of Pokemon, view their stats, moves, and abilities, as well as commonly used moves, stats, and abilities by others. You can also add favorite teams and pokemon others have built to test them out for yourself
 
 # Features
 
