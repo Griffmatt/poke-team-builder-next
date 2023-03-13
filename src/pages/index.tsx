@@ -5,7 +5,7 @@ import { TrendingPokemon } from "components/home/trendingPokemon"
 const Home: NextPage = () => {
     return (
         <main>
-            <h1>Statistics</h1>
+            <h1>Trending</h1>
             <TrendingPokemon />
             <TeamOfTheWeek />
         </main>

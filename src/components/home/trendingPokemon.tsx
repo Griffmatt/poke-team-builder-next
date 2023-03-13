@@ -12,7 +12,7 @@ export const TrendingPokemon = () => {
     if (isLoading) {
         return (
             <section className="grid gap-3">
-                <h2>Trending Pokemon</h2>
+                <h2>Pokemon</h2>
                 <SkeletonPokemonGrid amount={12} dataGrid={true} />
             </section>
         )
@@ -21,7 +21,7 @@ export const TrendingPokemon = () => {
     if (error) return <div>Error: {error.message}</div>
     return (
         <section className="grid gap-3">
-            <h2>Trending Pokemon</h2>
+            <h2>Pokemon</h2>
             <PokemonDataGrid pokemonData={pokemonData} amount={12} />
         </section>
     )
