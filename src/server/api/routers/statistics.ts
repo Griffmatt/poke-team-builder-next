@@ -6,7 +6,7 @@ import { createTRPCRouter, publicProcedure } from "../trpc"
 
 export const statisticsRouter = createTRPCRouter({
     getTopPokemon: publicProcedure.query(async ({ ctx }) => {
-        const pokemonArr = await ctx.prisma.createdPokemon.findMany({})
+        const pokemonArr = await ctx.prisma.createdPokemon.findMany()
         const pokemonNameArr = pokemonArr.map((pokemon) => pokemon.name)
         const { string: pokemon, total } = countStringArr(pokemonNameArr)
 

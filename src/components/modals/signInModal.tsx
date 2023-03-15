@@ -21,12 +21,6 @@ export const SignInModal = ({ setShowModal }: LoginModalProps) => {
             >
                 Sign in with Google
             </button>
-            <button
-                className="w-full  rounded-2xl py-2 px-4"
-                onClick={() => setShowModal(false)}
-            >
-                Sign in as Test User
-            </button>
         </Modal>
     )
 }
