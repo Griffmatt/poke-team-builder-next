@@ -62,13 +62,16 @@ const SinglePokemon: NextPage = () => {
     if (error3) return <div>Error: {error3.message}</div>
 
     if (pokemon === null) return <div>Pokemon not found!</div>
+    if (user === null) return <div>User not found!</div>
 
     const pokemonTeams = pokemon?.teams.map((team) => team.teamId)
 
     return (
         <main>
             <h1 className="truncate">
-                {user?.name && `${firstNameOnly(user.name)}'s`}{" "}
+                <Link href={`/profile/${user.id}`}>
+                    {user.name && `${firstNameOnly(user.name)}'s`}
+                </Link>{" "}
                 {formatString(pokemon.name)}
             </h1>
             <div className="mx-auto grid w-full max-w-xl gap-3">

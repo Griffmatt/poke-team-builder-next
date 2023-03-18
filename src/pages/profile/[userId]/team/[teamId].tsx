@@ -6,6 +6,7 @@ import { formatPercentage } from "utils/formatPercentage"
 import { TeamRow } from "components/teams/teamRow"
 import { SkeletonPokemonGridWithStats } from "components/pokemonGrids/ui/skeletonPokemonGridWithStats"
 import { ActionButtons } from "components/profile/team/actionButtons"
+import Link from "next/link"
 
 const Team: NextPage = () => {
     const { data: session } = useSession()
@@ -52,7 +53,9 @@ const Team: NextPage = () => {
         <main>
             <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
                 <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-                    <h1>{team.teamName}</h1>
+                    <Link href={`/profile/${team.userId}`}>
+                        <h1>{team.teamName}</h1>
+                    </Link>
                     <div className="row-start-2 flex flex-col gap-2 md:flex-row lg:col-span-2">
                         <h2>{team?.teamStyle}</h2>
                         <div className="flex gap-2">
