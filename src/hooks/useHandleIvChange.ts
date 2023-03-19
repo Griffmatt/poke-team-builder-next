@@ -15,20 +15,7 @@ interface Stats {
 }
 
 export default function useHandleEvChange(currentStats?: StatsArr[]) {
-    const defaultStats = {
-        HP: 31,
-        Att: 31,
-        Def: 31,
-        SpA: 31,
-        SpD: 31,
-        Spe: 31,
-    }
-
-    const currentStatsObj = currentStats?.reduce((statObj, { stat, value }) => {
-        return { ...statObj, [stat]: value }
-    }, {} as Stats)
-
-    const [ivs, setIvs] = useState(currentStatsObj ?? defaultStats)
+    const [ivs, setIvs] = useState(getInitialIvs(currentStats))
 
     //potential bug setting ivs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseIv = (currentStat: string) => {
@@ -89,4 +76,21 @@ export default function useHandleEvChange(currentStats?: StatsArr[]) {
     }
 
     return { ivsArr, decreaseIv, increaseIv, handleIvChange }
+}
+
+const getInitialIvs = (currentStats?: StatsArr[]) => {
+    const defaultStats = {
+        HP: 31,
+        Att: 31,
+        Def: 31,
+        SpA: 31,
+        SpD: 31,
+        Spe: 31,
+    }
+
+    const currentStatsObj = currentStats?.reduce((statObj, { stat, value }) => {
+        return { ...statObj, [stat]: value }
+    }, defaultStats)
+
+    return currentStatsObj ?? defaultStats
 }
