@@ -14,21 +14,21 @@ interface Stats {
     Spe: number
 }
 
-export default function useHandleEvChange(defaultStats?: StatsArr[]) {
-    let currentStats = null
-    if (defaultStats) {
-        currentStats = defaultStats.reduce((statObj, stat) => {
+export default function useHandleEvChange(currentStats?: StatsArr[]) {
+    let defaultStats = {
+        HP: 0,
+        Att: 0,
+        Def: 0,
+        SpA: 0,
+        SpD: 0,
+        Spe: 0,
+    }
+    if (currentStats) {
+        defaultStats = currentStats.reduce((statObj, stat) => {
             return { ...statObj, [stat.stat]: stat.value }
         }, {} as Stats)
     }
-    const [evs, setEvs] = useState({
-        HP: currentStats?.HP ?? 0,
-        Att: currentStats?.Att ?? 0,
-        Def: currentStats?.Def ?? 0,
-        SpA: currentStats?.SpA ?? 0,
-        SpD: currentStats?.SpD ?? 0,
-        Spe: currentStats?.Spe ?? 0,
-    })
+    const [evs, setEvs] = useState(defaultStats)
 
     const decreaseEv = (currentStat: string) => {
         if (evs[currentStat as keyof Stats] <= 0) return
@@ -43,8 +43,8 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
 
     const increaseEv = (currentStat: string) => {
         let total = 4
-        for (const stat in evs) {
-            total += evs[stat as keyof Stats]
+        for (const stat of Object.values(evs)) {
+            total += stat
         }
         if (total > 511 || evs[currentStat as keyof Stats] + 4 > 255) return
         setEvs({
@@ -62,9 +62,10 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
             setEvs({ ...evs, [currentStat]: 0 })
             return
         }
-        for (const stat in evs) {
+        //sets total to the max amount that the stat can be
+        for (const [stat, value] of Object.entries(evs)) {
             if (stat === currentStat) continue
-            total -= evs[stat as keyof Stats]
+            total -= value
         }
 
         if (value > total || value >= 252) {
@@ -75,11 +76,11 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
         setEvs({ ...evs, [currentStat]: value })
     }
 
-    const evsArr = []
-    for (const key in evs) {
+    const evsArr: StatsArr[] = []
+    for (const [stat, value] of Object.entries(evs)) {
         evsArr.push({
-            stat: key,
-            value: evs[key as keyof Stats],
+            stat: stat,
+            value: value,
         })
     }
 

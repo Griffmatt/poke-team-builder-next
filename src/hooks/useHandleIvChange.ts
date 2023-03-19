@@ -14,22 +14,22 @@ interface Stats {
     Spe: number
 }
 
-export default function useHandleEvChange(defaultStats?: StatsArr[]) {
-    let currentStats = null
-    if (defaultStats) {
-        currentStats = defaultStats.reduce((statObj, stat) => {
+export default function useHandleEvChange(currentStats?: StatsArr[]) {
+    let defaultStats = {
+        HP: 31,
+        Att: 31,
+        Def: 31,
+        SpA: 31,
+        SpD: 31,
+        Spe: 31,
+    }
+    if (currentStats) {
+        defaultStats = currentStats.reduce((statObj, stat) => {
             return { ...statObj, [stat.stat]: stat.value }
         }, {} as Stats)
     }
 
-    const [ivs, setIvs] = useState({
-        HP: currentStats?.HP ?? 31,
-        Att: currentStats?.Att ?? 31,
-        Def: currentStats?.Def ?? 31,
-        SpA: currentStats?.SpA ?? 31,
-        SpD: currentStats?.SpD ?? 31,
-        Spe: currentStats?.Spe ?? 31,
-    })
+    const [ivs, setIvs] = useState(defaultStats)
 
     const decreaseIv = (currentStat: string) => {
         if (ivs[currentStat as keyof Stats] <= 0) return
@@ -72,12 +72,12 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
         setIvs({ ...ivs, [currentStat]: value })
     }
 
-    const ivsArr = []
+    const ivsArr: StatsArr[] = []
 
-    for (const key in ivs) {
+    for (const [stat, value] of Object.entries(ivs)) {
         ivsArr.push({
-            stat: key,
-            value: ivs[key as keyof Stats],
+            stat: stat,
+            value: value,
         })
     }
 
