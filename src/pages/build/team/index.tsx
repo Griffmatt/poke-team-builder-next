@@ -7,7 +7,9 @@ import { PokemonImage } from "components/pokemonCards/pokemonImage"
 import { BuildTeamGrid } from "components/build/team/buildTeamGrid"
 
 const BuildTeam: NextPage = () => {
-    const { data: session } = useSession()
+    const { data: session } = useSession({
+        required: true,
+    })
     const [animationParent] = useAutoAnimate()
 
     const {

@@ -7,6 +7,9 @@ interface Props {
 
 export const BuildNav = ({ selected }: Props) => {
     const { data: session } = useSession()
+
+    if (session === null) return null
+
     return (
         <nav className="flex justify-center gap-2">
             <Link href={"/build/pokemon"}>
@@ -18,17 +21,13 @@ export const BuildNav = ({ selected }: Props) => {
                     Pokemon
                 </h3>
             </Link>
-            {session?.user && (
-                <Link href={"/build/team"}>
-                    <h3
-                        className={
-                            selected === "team" ? "border-b-2" : "text-gray"
-                        }
-                    >
-                        Team
-                    </h3>
-                </Link>
-            )}
+            <Link href={"/build/team"}>
+                <h3
+                    className={selected === "team" ? "border-b-2" : "text-gray"}
+                >
+                    Team
+                </h3>
+            </Link>
         </nav>
     )
 }
