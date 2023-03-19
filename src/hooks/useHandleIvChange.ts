@@ -15,7 +15,7 @@ interface Stats {
 }
 
 export default function useHandleEvChange(currentStats?: StatsArr[]) {
-    let defaultStats = {
+    const defaultStats = {
         HP: 31,
         Att: 31,
         Def: 31,
@@ -23,34 +23,40 @@ export default function useHandleEvChange(currentStats?: StatsArr[]) {
         SpD: 31,
         Spe: 31,
     }
-    if (currentStats) {
-        defaultStats = currentStats.reduce((statObj, stat) => {
-            return { ...statObj, [stat.stat]: stat.value }
-        }, {} as Stats)
-    }
 
-    const [ivs, setIvs] = useState(defaultStats)
+    const currentStatsObj = currentStats?.reduce((statObj, { stat, value }) => {
+        return { ...statObj, [stat]: value }
+    }, {} as Stats)
+
+    const [ivs, setIvs] = useState(currentStatsObj ?? defaultStats)
 
     //potential bug setting ivs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseIv = (currentStat: string) => {
-        if (ivs[currentStat as keyof Stats] <= 0) return
+        if (!(currentStat in ivs)) return
+        const currentValue = ivs[currentStat as keyof Stats]
+
+        if (currentValue <= 0) return
 
         setIvs({
             ...ivs,
-            [currentStat]: ivs[currentStat as keyof Stats] - 1,
+            [currentStat]: currentValue - 1,
         })
     }
 
     const increaseIv = (currentStat: string) => {
-        if (ivs[currentStat as keyof Stats] >= 31) return
+        if (!(currentStat in ivs)) return
+        const currentValue = ivs[currentStat as keyof Stats]
+
+        if (currentValue >= 31) return
 
         setIvs({
             ...ivs,
-            [currentStat]: ivs[currentStat as keyof Stats] + 1,
+            [currentStat]: currentValue + 1,
         })
     }
 
     const handleIvChange = (value: number, currentStat: string) => {
+        if (!(currentStat in ivs)) return
         if (isNaN(value)) return
         if (value > 31) {
             setIvs({

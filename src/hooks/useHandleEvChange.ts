@@ -15,7 +15,7 @@ interface Stats {
 }
 
 export default function useHandleEvChange(currentStats?: StatsArr[]) {
-    let defaultStats = {
+    const defaultStats = {
         HP: 0,
         Att: 0,
         Def: 0,
@@ -23,40 +23,46 @@ export default function useHandleEvChange(currentStats?: StatsArr[]) {
         SpD: 0,
         Spe: 0,
     }
-    if (currentStats) {
-        defaultStats = currentStats.reduce((statObj, stat) => {
-            return { ...statObj, [stat.stat]: stat.value }
-        }, {} as Stats)
-    }
-    const [evs, setEvs] = useState(defaultStats)
+
+    const currentStatsObj = currentStats?.reduce((statObj, { stat, value }) => {
+        return { ...statObj, [stat]: value }
+    }, {} as Stats)
+
+    const [evs, setEvs] = useState(currentStatsObj ?? defaultStats)
 
     //potential bug setting evs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseEv = (currentStat: string) => {
-        if (evs[currentStat as keyof Stats] <= 0) return
+        if (!(currentStat in evs)) return
+
+        const currentValue = evs[currentStat as keyof Stats]
+
+        if (currentValue <= 0) return
 
         setEvs({
             ...evs,
-            [currentStat]:
-                evs[currentStat as keyof Stats] -
-                (evs[currentStat as keyof Stats] % 4 || 4),
+            [currentStat]: currentValue - (currentValue % 4 || 4),
         })
     }
 
     const increaseEv = (currentStat: string) => {
+        if (!(currentStat in evs)) return
+
         let total = 4
+        const currentValue = evs[currentStat as keyof Stats]
+
         for (const stat of Object.values(evs)) {
             total += stat
         }
-        if (total > 511 || evs[currentStat as keyof Stats] + 4 > 255) return
+        if (total > 511 || currentValue + 4 > 255) return
+
         setEvs({
             ...evs,
-            [currentStat]:
-                evs[currentStat as keyof Stats] +
-                (4 - (evs[currentStat as keyof Stats] % 4)),
+            [currentStat]: currentValue + (4 - (currentValue % 4)),
         })
     }
 
     const handleEvChange = (value: number, currentStat: string) => {
+        if (!(currentStat in evs)) return
         if (isNaN(value)) return
         let total = 510
         if (value < 0) {
