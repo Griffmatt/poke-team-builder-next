@@ -30,6 +30,7 @@ export default function useHandleEvChange(currentStats?: StatsArr[]) {
     }
     const [evs, setEvs] = useState(defaultStats)
 
+    //potential bug setting evs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseEv = (currentStat: string) => {
         if (evs[currentStat as keyof Stats] <= 0) return
 
