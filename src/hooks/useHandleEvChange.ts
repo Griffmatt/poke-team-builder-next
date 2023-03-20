@@ -42,7 +42,7 @@ export default function useHandleEvChange(currentStats?: StatsArr[]) {
             return
         }
         //sets total to the max amount that the stat can be
-        for (const [stat, value] of Object.entries(evs)) {
+        for (const [stat, value] of evs) {
             if (stat === currentStat) continue
             total -= value
         }
