@@ -282,7 +282,6 @@ const useFormatInitialData = (
         ability: createdPokemon?.ability ?? selectedAbility,
         nature:
             createdPokemon?.nature ?? selectedPokemonData.nature ?? NATURES[0],
-
         heldItem:
             createdPokemon?.heldItem ??
             selectedPokemonData.heldItem ??
@@ -303,9 +302,8 @@ const useFormatInitialData = (
                 selectedMoves[3] ??
                 unusedMoves[3 - movesLength],
         ],
-
-        shiny: createdPokemon?.shiny
-            ? createdPokemon.shiny
-            : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+        shiny:
+            createdPokemon?.shiny ??
+            Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
     }
 }
