@@ -73,6 +73,7 @@ const getInitialEvs = (currentStats?: StatsArr[]) => {
         Def: 0,
         SpA: 0,
         SpD: 0,
+        Spe: 0,
     })
 
     const statsMap = new Map(defaultStats)
