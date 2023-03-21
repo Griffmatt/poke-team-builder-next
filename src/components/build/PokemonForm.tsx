@@ -33,7 +33,11 @@ interface PokemonValues {
 }
 
 export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
-    const { data: session } = useSession()
+    const { data: session } = useSession({
+        required: true,
+    })
+    const { selectedPokemonData } = useSelectedContext()
+
     const [openInput, setOpenInput] = useState("")
     const [pokemonData, setPokemonData] = useReducer(
         (initial: PokemonValues, data: Partial<PokemonValues>) => {
@@ -42,8 +46,6 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
         useFormatInitialData(pokemon, heldItems, createdPokemon)
     )
     const { ability, nature, heldItem, teraType, moves } = pokemonData
-
-    const { selectedPokemonData } = useSelectedContext()
 
     useEffect(() => {
         window.addEventListener("click", () => setOpenInput(""))

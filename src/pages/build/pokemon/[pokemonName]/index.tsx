@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { formatString } from "utils/formatString"
 import { CommonlyUsedData } from "components/build/pokemonInfo/commonlyUsedData"
 import { PokemonInfoHead } from "components/build/pokemonInfo/pokemonInfoHead"
-import { BuildButtons } from "components/build/pokemonInfo/buildButtons"
+import { BuildButtons } from "components/build/buildButtons"
 
 const SinglePokemon: NextPage = () => {
     const router = useRouter()

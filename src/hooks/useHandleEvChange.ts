@@ -5,83 +5,80 @@ interface StatsArr {
     value: number
 }
 
-interface Stats {
-    HP: number
-    Att: number
-    Def: number
-    SpA: number
-    SpD: number
-    Spe: number
-}
+export default function useHandleEvChange(currentStats?: StatsArr[]) {
+    const [evs, setEvs] = useState(getInitialEvs(currentStats))
 
-export default function useHandleEvChange(defaultStats?: StatsArr[]) {
-    let currentStats = null
-    if (defaultStats) {
-        currentStats = defaultStats.reduce((statObj, stat) => {
-            return { ...statObj, [stat.stat]: stat.value }
-        }, {} as Stats)
-    }
-    const [evs, setEvs] = useState({
-        HP: currentStats?.HP ?? 0,
-        Att: currentStats?.Att ?? 0,
-        Def: currentStats?.Def ?? 0,
-        SpA: currentStats?.SpA ?? 0,
-        SpD: currentStats?.SpD ?? 0,
-        Spe: currentStats?.Spe ?? 0,
-    })
-
+    //potential bug setting evs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseEv = (currentStat: string) => {
-        if (evs[currentStat as keyof Stats] <= 0) return
+        const currentValue = evs.get(currentStat)
+        if (currentValue === undefined) return
+        if (currentValue <= 0) return
 
-        setEvs({
-            ...evs,
-            [currentStat]:
-                evs[currentStat as keyof Stats] -
-                (evs[currentStat as keyof Stats] % 4 || 4),
-        })
+        const newValue = currentValue - (currentValue % 4 || 4)
+        setEvs((map) => new Map(map.set(currentStat, newValue)))
     }
 
     const increaseEv = (currentStat: string) => {
+        const currentValue = evs.get(currentStat)
+        if (currentValue === undefined) return
+
         let total = 4
-        for (const stat in evs) {
-            total += evs[stat as keyof Stats]
+
+        for (const stat of Object.values(evs)) {
+            total += stat
         }
-        if (total > 511 || evs[currentStat as keyof Stats] + 4 > 255) return
-        setEvs({
-            ...evs,
-            [currentStat]:
-                evs[currentStat as keyof Stats] +
-                (4 - (evs[currentStat as keyof Stats] % 4)),
-        })
+        if (total > 511 || currentValue + 4 > 255) return
+        const newValue = currentValue + (4 - (currentValue % 4))
+        setEvs((map) => new Map(map.set(currentStat, newValue)))
     }
 
     const handleEvChange = (value: number, currentStat: string) => {
+        const currentValue = evs.get(currentStat)
+        if (currentValue === undefined) return
         if (isNaN(value)) return
         let total = 510
         if (value < 0) {
-            setEvs({ ...evs, [currentStat]: 0 })
+            setEvs((map) => new Map(map.set(currentStat, 0)))
             return
         }
-        for (const stat in evs) {
+        //sets total to the max amount that the stat can be
+        for (const [stat, value] of evs) {
             if (stat === currentStat) continue
-            total -= evs[stat as keyof Stats]
+            total -= value
         }
 
         if (value > total || value >= 252) {
-            setEvs({ ...evs, [currentStat]: Math.min(252, total) })
+            const newValue = Math.min(252, total)
+            setEvs((map) => new Map(map.set(currentStat, newValue)))
             return
         }
-
-        setEvs({ ...evs, [currentStat]: value })
+        setEvs((map) => new Map(map.set(currentStat, value)))
     }
 
-    const evsArr = []
-    for (const key in evs) {
+    const evsArr: StatsArr[] = []
+    for (const [key, value] of evs) {
         evsArr.push({
             stat: key,
-            value: evs[key as keyof Stats],
+            value: value,
         })
     }
 
     return { evsArr, decreaseEv, increaseEv, handleEvChange }
+}
+
+const getInitialEvs = (currentStats?: StatsArr[]) => {
+    const defaultStats = Object.entries({
+        HP: 0,
+        Att: 0,
+        Def: 0,
+        SpA: 0,
+        SpD: 0,
+    })
+
+    const statsMap = new Map(defaultStats)
+
+    currentStats?.forEach(({ stat, value }) => {
+        statsMap.set(stat, value)
+    })
+    return statsMap
 }

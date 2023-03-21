@@ -5,58 +5,34 @@ interface StatsArr {
     value: number
 }
 
-interface Stats {
-    HP: number
-    Att: number
-    Def: number
-    SpA: number
-    SpD: number
-    Spe: number
-}
+export default function useHandleEvChange(currentStats?: StatsArr[]) {
+    const [ivs, setIvs] = useState(getInitialIvs(currentStats))
 
-export default function useHandleEvChange(defaultStats?: StatsArr[]) {
-    let currentStats = null
-    if (defaultStats) {
-        currentStats = defaultStats.reduce((statObj, stat) => {
-            return { ...statObj, [stat.stat]: stat.value }
-        }, {} as Stats)
-    }
-
-    const [ivs, setIvs] = useState({
-        HP: currentStats?.HP ?? 31,
-        Att: currentStats?.Att ?? 31,
-        Def: currentStats?.Def ?? 31,
-        SpA: currentStats?.SpA ?? 31,
-        SpD: currentStats?.SpD ?? 31,
-        Spe: currentStats?.Spe ?? 31,
-    })
-
+    //potential bug setting ivs using string instead of partial keyof Stats allows anything to be used as input
     const decreaseIv = (currentStat: string) => {
-        if (ivs[currentStat as keyof Stats] <= 0) return
+        const currentValue = ivs.get(currentStat)
+        if (currentValue === undefined) return
+        if (currentValue <= 0) return
 
-        setIvs({
-            ...ivs,
-            [currentStat]: ivs[currentStat as keyof Stats] - 1,
-        })
+        const newValue = currentValue - 1
+        setIvs((map) => new Map(map.set(currentStat, newValue)))
     }
 
     const increaseIv = (currentStat: string) => {
-        if (ivs[currentStat as keyof Stats] >= 31) return
+        const currentValue = ivs.get(currentStat)
+        if (currentValue === undefined) return
+        if (currentValue >= 31) return
 
-        setIvs({
-            ...ivs,
-            [currentStat]: ivs[currentStat as keyof Stats] + 1,
-        })
+        const newValue = currentValue + 1
+        setIvs((map) => new Map(map.set(currentStat, newValue)))
     }
 
     const handleIvChange = (value: number, currentStat: string) => {
+        const currentValue = ivs.get(currentStat)
+        if (currentValue === undefined) return
         if (isNaN(value)) return
         if (value > 31) {
-            setIvs({
-                ...ivs,
-                [currentStat]: 31,
-            })
-
+            setIvs((map) => new Map(map.set(currentStat, 31)))
             return
         }
 
@@ -69,17 +45,34 @@ export default function useHandleEvChange(defaultStats?: StatsArr[]) {
             return
         }
 
-        setIvs({ ...ivs, [currentStat]: value })
+        setIvs((map) => new Map(map.set(currentStat, value)))
     }
 
-    const ivsArr = []
+    const ivsArr: StatsArr[] = []
 
-    for (const key in ivs) {
+    for (const [stat, value] of ivs) {
         ivsArr.push({
-            stat: key,
-            value: ivs[key as keyof Stats],
+            stat: stat,
+            value: value,
         })
     }
 
     return { ivsArr, decreaseIv, increaseIv, handleIvChange }
+}
+
+const getInitialIvs = (currentStats?: StatsArr[]) => {
+    const defaultStats = Object.entries({
+        HP: 31,
+        Att: 31,
+        Def: 31,
+        SpA: 31,
+        SpD: 31,
+    })
+
+    const statsMap = new Map(defaultStats)
+
+    currentStats?.forEach(({ stat, value }) => {
+        statsMap.set(stat, value)
+    })
+    return statsMap
 }
