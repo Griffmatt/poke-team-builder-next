@@ -41,15 +41,13 @@ export const useInfiniteScroll = <T>(itemsArr: T[]) => {
             setItems(itemsArr?.slice(0, max))
             setLoadLimit(2)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [width])
+    }, [itemsArr, width])
 
     useEffect(() => {
         setItems(itemsArr.slice(0, initialLimit))
         setHasMore(true)
         setPage(0)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [itemsArr])
+    }, [initialLimit, itemsArr])
 
     useEffect(() => {
         const setData = () => {
