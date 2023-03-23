@@ -16,6 +16,7 @@ import { TERA_TYPES } from "assets/teraTypes"
 import { useSelectedContext } from "context/selectedContext"
 import { DataInput } from "./formInputs/dataInput"
 import { InfoCard } from "components/pokemonCards/infoCard"
+import { StatButton } from "./ui/statButton"
 
 interface Props {
     pokemon: Pokemon
@@ -170,36 +171,30 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
             <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2 lg:col-start-2">
                 <div>
                     <h2>Evs</h2>
-                    {evs.map((stat) => {
+                    {evs.map(({ stat, value }) => {
                         return (
-                            <label key={`${stat.stat}EV`}>
-                                {stat.stat}
+                            <label key={`${stat}EV`}>
+                                {stat}
                                 <div className="flex w-full gap-2">
-                                    <button
-                                        className="aspect-square h-7 rounded-xl bg-dark-3 text-xl font-bold text-primary"
-                                        onClick={() => decreaseEv(stat.stat)}
-                                        type="button"
-                                    >
-                                        -
-                                    </button>
+                                    <StatButton
+                                        handleClick={() => decreaseEv(stat)}
+                                        type="-"
+                                    />
                                     <input
                                         className="w-full"
-                                        value={stat.value}
+                                        value={value}
                                         inputMode="numeric"
                                         onChange={(event) =>
                                             handleEvChange(
                                                 Number(event.target.value),
-                                                stat.stat
+                                                stat
                                             )
                                         }
                                     />
-                                    <button
-                                        className="aspect-square h-7 rounded-xl bg-dark-3 text-xl font-bold text-primary"
-                                        onClick={() => increaseEv(stat.stat)}
-                                        type="button"
-                                    >
-                                        +
-                                    </button>
+                                    <StatButton
+                                        handleClick={() => increaseEv(stat)}
+                                        type="+"
+                                    />
                                 </div>
                             </label>
                         )
@@ -207,36 +202,30 @@ export const PokemonForm = ({ pokemon, heldItems, createdPokemon }: Props) => {
                 </div>
                 <div>
                     <h2>Ivs</h2>
-                    {ivs.map((stat) => {
+                    {ivs.map(({ stat, value }) => {
                         return (
-                            <label key={`${stat.stat}IV`}>
-                                {stat.stat}
+                            <label key={`${stat}IV`}>
+                                {stat}
                                 <div className="flex w-full gap-2">
-                                    <button
-                                        className="w-8 rounded-xl bg-dark-3 text-xl font-bold text-primary"
-                                        onClick={() => decreaseIv(stat.stat)}
-                                        type="button"
-                                    >
-                                        -
-                                    </button>
+                                    <StatButton
+                                        handleClick={() => decreaseIv(stat)}
+                                        type="-"
+                                    />
                                     <input
                                         className="w-full"
                                         inputMode="numeric"
-                                        value={stat.value}
+                                        value={value}
                                         onChange={(event) =>
                                             handleIvChange(
                                                 Number(event.target.value),
-                                                stat.stat
+                                                stat
                                             )
                                         }
                                     />
-                                    <button
-                                        className="w-8 rounded-xl bg-dark-3 text-xl font-bold text-primary"
-                                        onClick={() => increaseIv(stat.stat)}
-                                        type="button"
-                                    >
-                                        +
-                                    </button>
+                                    <StatButton
+                                        handleClick={() => increaseIv(stat)}
+                                        type="+"
+                                    />
                                 </div>
                             </label>
                         )
@@ -293,7 +282,6 @@ const useFormatInitialData = (
         ability: createdPokemon?.ability ?? selectedAbility,
         nature:
             createdPokemon?.nature ?? selectedPokemonData.nature ?? NATURES[0],
-
         heldItem:
             createdPokemon?.heldItem ??
             selectedPokemonData.heldItem ??
@@ -314,9 +302,8 @@ const useFormatInitialData = (
                 selectedMoves[3] ??
                 unusedMoves[3 - movesLength],
         ],
-
-        shiny: createdPokemon?.shiny
-            ? createdPokemon.shiny
-            : Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
+        shiny:
+            createdPokemon?.shiny ??
+            Math.floor(Math.random() * SHINY_ODDS) + 1 === 7,
     }
 }

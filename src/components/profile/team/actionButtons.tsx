@@ -55,7 +55,7 @@ export const ActionButtons = ({ userId, team }: Props) => {
     const favorite = favoriteTeams?.includes(team?.id ?? "")
     return (
         <>
-            <div className="flex gap-3">
+            <div className="flex justify-end gap-3">
                 {userId === team.userId && (
                     <>
                         <button

@@ -67,6 +67,7 @@ const getInitialIvs = (currentStats?: StatsArr[]) => {
         Def: 31,
         SpA: 31,
         SpD: 31,
+        Spe: 31,
     })
 
     const statsMap = new Map(defaultStats)

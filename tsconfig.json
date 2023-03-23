@@ -19,6 +19,13 @@
         "noUnusedLocals": true,
         "baseUrl": "src"
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "src/components/errorBoundary.jsx"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.cjs",
+        "**/*.mjs",
+        "src/components/errorBoundary.jsx"
+    ],
     "exclude": ["node_modules"]
 }
